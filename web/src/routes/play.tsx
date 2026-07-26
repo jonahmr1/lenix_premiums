@@ -45,9 +45,19 @@ export const Play = () => {
 				))}
 			</ToggleGroup>
 			<ButtonGroup className="flex-1 items-center justify-center h-full w-full">
-				{Array.from({ length: playersAmountSelected }, (_, i) => (
-					<Button className="h-7/10 w-2/10">+</Button>
-				))}
+				{Array.from({ length: playersAmountSelected }, (_, i) => {
+					const height = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
+
+					return (
+						<Button
+							key={i}
+							style={{ height: `${height}%` }}
+							className="w-[20%]"
+						>
+							{i === 0 ? '' : '+'}
+						</Button>
+					)
+				})}
 			</ButtonGroup>
 			<Outlet />
 		</Layout>
