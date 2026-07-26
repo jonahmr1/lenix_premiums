@@ -7,9 +7,22 @@ import { useState } from "react"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
+const getRenderOrder = (count: number) => {
+	const order: number[] = []
+
+	for (let i = 0; i < count; i++) {
+		if (i === 0) order.push(i)      // first item
+		else if (i % 2 === 1) order.push(i) // add on right side first
+		else order.unshift(i)            // then add on left side
+	}
+
+	return order
+}
+
 export const Play = () => {
 	const [selectedMode, setSelectedMode] = useState<typeof GAME_MODES[number]['name']>()
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
+  const renderOrder = getRenderOrder(playersAmountSelected)
 
 	return (
 		<Layout className="gap-2">
@@ -44,16 +57,12 @@ export const Play = () => {
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
-			<ButtonGroup className="flex-1 items-center justify-center h-full w-full">
-				{Array.from({ length: playersAmountSelected }, (_, i) => {
-					const height = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
+			<ButtonGroup className="flex-1 items-center justify-center h-full w-full gap-2">
+				{renderOrder.map((i) => {
+					const h = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
 
 					return (
-						<Button
-							key={i}
-							style={{ height: `${height}%` }}
-							className="w-[20%]"
-						>
+						<Button key={i} className="w-[15%] bg-foreground/15 ring-foreground/33 border-0 ring-1" style={{ height: `${h}%` }}>
 							{i === 0 ? '' : '+'}
 						</Button>
 					)
