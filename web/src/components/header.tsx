@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router"
 import { Button } from "./ui/button"
 import { NavigationMenu } from "./ui/navigation-menu"
-import { Dot } from "lucide-react"
+import { IconDiamondsFilled } from '@tabler/icons-react';
 
 const routes = [
 	{
@@ -23,26 +23,29 @@ export const Header = () => {
 	const nav = useNavigate()
 
 	return (
-		<div className="flex justify-between absolute min-h-6/100 w-full px-20 border-b">
-			<div className="flex items-center">Rankzone</div>
+		<div className="flex justify-between absolute min-h-5/100 w-full px-20 border-b">
+			<div className="flex items-center cursor-default select-none">Rankzone</div>
 			<div>
 				<NavigationMenu className="h-full">
-					{routes.map(route => (
-						<Button
-							key={route.to}
-							className="border-0 h-full px-10 text-md relative"
-							variant={pathname === route.to ? 'default' : 'ghost'}
-							onClick={() => {
-								nav(route.to)
-							}
-						}>
-							{route.label}
-							<Dot className="absolute top-full" size={0} />
-						</Button>
-					))}
+					{routes.map(route => {
+						const isInCurrentRoute = pathname === route.to
+						return (
+							<Button
+								key={route.to}
+								className={`relative border-0 h-full flex flex-col ${route.to === '/modes' ? 'px-20 text-xl' : 'px-10 text-xs'}`}
+								variant={isInCurrentRoute ? 'default' : 'ghost'}
+								onClick={() => nav(route.to)}
+							>
+								{route.label}
+								<IconDiamondsFilled
+									className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-white ${isInCurrentRoute ? 'size-3' : 'size-2'}`}
+								/>
+							</Button>
+						)
+					})}
 				</NavigationMenu>
 			</div>
-			<div className="flex items-center">Lenix</div>
+			<div className="flex items-center cursor-default select-none">Lenix</div>
 		</div>
 	)
 }
