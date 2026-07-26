@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 import { Outlet } from "react-router"
 import { GAME_MODES } from "@/constants"
-import { Dot } from "lucide-react"
+import { Dot, Plus } from "lucide-react"
 import { useState } from "react"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -66,39 +66,45 @@ export const Play = () => {
 
 					return (
 						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full" style={{ height: `${h}%` }}>
-							<div className="flex flex-1 items-start">
-								<img src={user.avatar} alt="" />
-							</div>
-							<div className="flex flex-1 flex-col justify-center w-full items-center">
-								<div className="w-full text-4xl tracking-tighter font-bold">{user.name}</div>
-								<Badge variant={user.isReady ? 'outline' : 'destructive'} className="uppercase text-[0.5rem]">{user.isReady ? 'Ready' : 'Not-Ready'}</Badge>
-							</div>
-							<div className="flex flex-1 flex-col w-full justify-around h-full">
-								<Separator />
-								<div className="flex flex-1 justify-around items-center">
-									<div className="flex-1">
-										<div>{user.stats.kills}</div>
-										<div>Total Kills</div>
+							{i === 0 ? (
+								<>
+									<div className="flex flex-1 items-start">
+										<img src={user.avatar} alt="" />
 									</div>
-									<Separator orientation='vertical' />
-									<div className="flex-1">
-										<div>{user.stats.deaths}</div>
-										<div>Total Deaths</div>
+									<div className="flex flex-1 flex-col justify-center w-full items-center">
+										<div className="w-full text-4xl tracking-tighter font-bold">{user.name}</div>
+										<Badge variant={user.isReady ? 'outline' : 'destructive'} className="uppercase text-[0.5rem]">{user.isReady ? 'Ready' : 'Not-Ready'}</Badge>
 									</div>
-								</div>
-								<Separator />
-								<div className="flex flex-1 justify-around items-center">
-									<div className="flex-1">
-										<div>{user.stats.assits}</div>
-										<div>Total Assists</div>
+									<div className="flex flex-1 flex-col w-full justify-around h-full">
+										<Separator />
+										<div className="flex flex-1 justify-around items-center">
+											<div className="flex-1">
+												<div>{user.stats.kills}</div>
+												<div>Total Kills</div>
+											</div>
+											<Separator orientation='vertical' />
+											<div className="flex-1">
+												<div>{user.stats.deaths}</div>
+												<div>Total Deaths</div>
+											</div>
+										</div>
+										<Separator />
+										<div className="flex flex-1 justify-around items-center">
+											<div className="flex-1">
+												<div>{user.stats.assits}</div>
+												<div>Total Assists</div>
+											</div>
+											<Separator orientation='vertical' />
+											<div className="flex-1">
+												<div>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</div>
+												<div>Win Ratio</div>
+											</div>
+										</div>
 									</div>
-									<Separator orientation='vertical' />
-									<div className="flex-1">
-										<div>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</div>
-										<div>Win Ratio</div>
-									</div>
-								</div>
-							</div>
+								</>
+							) : (
+								<Plus />
+							)}
 						</Button>
 					)
 				})}

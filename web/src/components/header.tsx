@@ -4,6 +4,8 @@ import { NavigationMenu } from "./ui/navigation-menu"
 import { IconDiamondsFilled } from '@tabler/icons-react';
 import { routes } from "@/routes/data";
 import { user } from "@/lib/user";
+import { getTheme, toggleTheme } from "@/lib/theme";
+import { Moon, Sun } from "lucide-react";
 
 export const Header = () => {
 	const { pathname } = useLocation()
@@ -34,7 +36,14 @@ export const Header = () => {
 					</div>
 				</NavigationMenu>
 			</div>
-			<div className="flex items-center cursor-default select-none w-1/10 uppercase">{user.name}</div>
+			<div className="flex items-center w-1/10 gap-3">
+				<div className=" cursor-default select-none uppercase">{user.name}</div>
+				<Button
+					variant='ghost'
+					onClick={() => toggleTheme()}
+				>{getTheme() === 'dark' ? <Sun /> : <Moon />}
+				</Button>
+			</div>
 		</div>
 	)
 }
