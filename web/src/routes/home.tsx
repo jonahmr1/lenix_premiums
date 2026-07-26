@@ -1,9 +1,10 @@
+import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 
 export const Home = () => {
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-center">
+		<Layout>
 			<Button>Test</Button>
-		</div>
+		</Layout>
 	)
 }
