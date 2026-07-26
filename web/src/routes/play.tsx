@@ -1,18 +1,18 @@
 import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
-import { NavigationMenu } from "@/components/ui/navigation-menu"
 import { Outlet } from "react-router"
 import { GAME_MODES } from "@/constants"
 import { Dot } from "lucide-react"
 import { useState } from "react"
+import { ButtonGroup } from "@/components/ui/button-group"
 
 export const Play = () => {
 	const [selectedMode, setSelectedMode] = useState<typeof GAME_MODES[number]['name']>()
 
 	return (
-		<Layout>
-			<NavigationMenu className="items-start py-5">
-				<div className="grid grid-flow-col auto-cols-fr gap-5">
+		<Layout className="justify-start">
+			<ButtonGroup className="items-start py-5 ">
+				<div className="grid grid-flow-col auto-cols-fr gap-5 shrink-0 h-auto">
 					{GAME_MODES.map(mode => (
 						<Button
 							key={mode.name}
@@ -27,7 +27,10 @@ export const Play = () => {
 						</Button>
 					))}
 				</div>
-			</NavigationMenu>
+			</ButtonGroup>
+			<Button>
+
+			</Button>
 			<Outlet />
 		</Layout>
 	)
