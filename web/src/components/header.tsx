@@ -3,6 +3,7 @@ import { Button } from "./ui/button"
 import { NavigationMenu } from "./ui/navigation-menu"
 import { IconDiamondsFilled } from '@tabler/icons-react';
 import { routes } from "@/routes/data";
+import { user } from "@/lib/user";
 
 export const Header = () => {
 	const { pathname } = useLocation()
@@ -33,7 +34,7 @@ export const Header = () => {
 					</div>
 				</NavigationMenu>
 			</div>
-			<div className="flex items-center cursor-default select-none w-1/10">LENIX</div>
+			<div className="flex items-center cursor-default select-none w-1/10 uppercase">{user.name}</div>
 		</div>
 	)
 }

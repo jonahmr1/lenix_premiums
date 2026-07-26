@@ -6,6 +6,9 @@ import { Dot } from "lucide-react"
 import { useState } from "react"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { user } from "@/lib/user"
+import { Separator } from "@/components/ui/separator"
+import { Badge } from "@/components/ui/badge"
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -25,8 +28,8 @@ export const Play = () => {
   const renderOrder = getRenderOrder(playersAmountSelected)
 
 	return (
-		<Layout className="gap-2">
-			<ButtonGroup className="items-start border-b grid grid-flow-col auto-cols-fr gap-5">
+		<Layout className="gap-2 pt-5">
+			<ButtonGroup className="items-start border-b grid grid-flow-col auto-cols-fr gap-10">
 				{GAME_MODES.map(mode => (
 					<Button
 						key={mode.name}
@@ -62,8 +65,40 @@ export const Play = () => {
 					const h = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
 
 					return (
-						<Button key={i} className="w-[15%] bg-foreground/15 ring-foreground/33 border-0 ring-1 hover:bg-foreground/20" style={{ height: `${h}%` }}>
-							{i === 0 ? '' : '+'}
+						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full" style={{ height: `${h}%` }}>
+							<div className="flex flex-1 items-start">
+								<img src={user.avatar} alt="" />
+							</div>
+							<div className="flex flex-1 flex-col justify-center w-full items-center">
+								<div className="w-full text-4xl tracking-tighter font-bold">{user.name}</div>
+								<Badge variant={user.isReady ? 'outline' : 'destructive'} className="uppercase text-[0.5rem]">{user.isReady ? 'Ready' : 'Not-Ready'}</Badge>
+							</div>
+							<div className="flex flex-1 flex-col w-full justify-around h-full">
+								<Separator />
+								<div className="flex flex-1 justify-around items-center">
+									<div className="flex-1">
+										<div>19.247</div>
+										<div>Total Kills</div>
+									</div>
+									<Separator orientation='vertical' />
+									<div className="flex-1">
+										<div>8.354</div>
+										<div>Total Deaths</div>
+									</div>
+								</div>
+								<Separator />
+								<div className="flex flex-1 justify-around items-center">
+									<div className="flex-1">
+										<div>17.898</div>
+										<div>Total Assists</div>
+									</div>
+									<Separator orientation='vertical' />
+									<div className="flex-1">
+										<div>74%</div>
+										<div>Win Ratio</div>
+									</div>
+								</div>
+							</div>
 						</Button>
 					)
 				})}
