@@ -11,7 +11,8 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
+			"types": ["../types/index"]
     },
 
     /* Bundler mode */
