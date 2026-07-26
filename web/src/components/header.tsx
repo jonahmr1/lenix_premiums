@@ -2,21 +2,7 @@ import { useLocation, useNavigate } from "react-router"
 import { Button } from "./ui/button"
 import { NavigationMenu } from "./ui/navigation-menu"
 import { IconDiamondsFilled } from '@tabler/icons-react';
-
-const routes = [
-	{
-		label: 'LOBBY',
-		to: '/'
-	},
-	{
-		label: 'PLAY',
-		to: '/modes'
-	},
-	{
-		label: 'LEADERBOARD',
-		to: '/leaderboard'
-	},
-]
+import { routes } from "@/lib/constants";
 
 export const Header = () => {
 	const { pathname } = useLocation()
@@ -32,7 +18,7 @@ export const Header = () => {
 						return (
 							<Button
 								key={route.to}
-								className={`relative border-0 h-full flex flex-col ${route.to === '/modes' ? 'px-20 text-xl' : 'px-10 text-xs'}`}
+								className={`relative border-0 h-full flex flex-col ${route.to === '/play' ? 'px-20 text-xl' : 'px-10 text-xs'}`}
 								variant={isInCurrentRoute ? 'default' : 'ghost'}
 								onClick={() => nav(route.to)}
 							>

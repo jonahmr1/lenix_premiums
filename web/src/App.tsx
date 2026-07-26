@@ -10,7 +10,7 @@ import { Leaderboard } from './routes/leaderboard'
 import { BombPlant } from './routes/bomb-plant'
 import { GroundBattle } from './routes/ground-battle'
 import { CustomGame } from './routes/custom-game'
-import { Modes } from './routes/modes'
+import { Play } from './routes/play'
 
 const theme = getStorage<Storage>('theme')
 if (theme) toggleTheme(theme)
@@ -24,12 +24,13 @@ function App() {
 					<Header />
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/Modes" element={<Modes />} />
-						<Route path="/back-to-back" element={<BackToBack />} />
-						<Route path="/leaderboard" element={<Leaderboard />} />
-						<Route path="/bomb-plant" element={<BombPlant />} />
-						<Route path="/ground-battle" element={<GroundBattle />} />
-						<Route path="/custom-game" element={<CustomGame />} />
+						<Route path="/play" element={<Play />}>
+							<Route path="back-to-back" element={<BackToBack />} />
+							<Route path="leaderboard" element={<Leaderboard />} />
+							<Route path="bomb-plant" element={<BombPlant />} />
+							<Route path="ground-battle" element={<GroundBattle />} />
+							<Route path="custom-game" element={<CustomGame />} />
+						</Route>
 					</Routes>
 				</MemoryRouter>
 			</div>
