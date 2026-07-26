@@ -44,9 +44,9 @@ export const Play = () => {
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
-			<ButtonGroup className="bg-background w-full justify-center flex-1">
-				{Array.from({ length: playersAmountSelected }, () => (
-					<Button className="h-full">+</Button>
+			<ButtonGroup className="flex-1 items-center justify-center h-full w-full">
+				{Array.from({ length: playersAmountSelected }, (_, i) => (
+					<Button className="h-7/10 w-2/10">+</Button>
 				))}
 			</ButtonGroup>
 			<Outlet />
