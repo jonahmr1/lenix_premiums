@@ -1,5 +1,5 @@
 export interface Route {
-	to: string;
+	to: `/${string}`;
 	label: string;
 	element: React.JSX.Element;
 	children?: {

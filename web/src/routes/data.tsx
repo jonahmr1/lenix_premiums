@@ -14,7 +14,7 @@ export const routes: Route[] = [
     element: <Play />,
   },
 	{
-		to: 'leaderboard',
+		to: '/leaderboard',
 		label: 'LEADERBOARD',
 		element: <Leaderboard />
 	},

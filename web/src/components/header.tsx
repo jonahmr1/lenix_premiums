@@ -9,7 +9,7 @@ export const Header = () => {
 	const nav = useNavigate()
 
 	return (
-		<div className="flex justify-between min-h-[5vh] w-full px-20 border-b">
+		<div className="flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/10">
 			<div className="flex items-center cursor-default select-none w-1/10">Rankzone</div>
 			<div>
 				<NavigationMenu className="h-full">
@@ -19,7 +19,7 @@ export const Header = () => {
 							return (
 								<Button
 									key={route.to}
-									className={`relative border-0 h-full w-full flex tracking-widest px-5 flex-col ${route.to === '/play' ? 'text-2xl' : 'text-sm'}`}
+									className={`relative border-0 h-full w-full flex tracking-widest px-5 flex-col ${route.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
 									variant={isInCurrentRoute ? 'default' : 'ghost'}
 									onClick={() => nav(route.to)}
 								>

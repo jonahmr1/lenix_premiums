@@ -11,4 +11,4 @@ export const GAME_MODES = [
 	{
 		name: 'Custom Game'
 	},
-]
+] as const
