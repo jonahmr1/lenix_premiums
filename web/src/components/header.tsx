@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router"
 import { Button } from "./ui/button"
 import { NavigationMenu } from "./ui/navigation-menu"
 import { IconDiamondsFilled } from '@tabler/icons-react';
-import { routes } from "@/lib/constants";
+import { routes } from "@/routes/data";
 
 export const Header = () => {
 	const { pathname } = useLocation()
