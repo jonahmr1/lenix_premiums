@@ -18,7 +18,7 @@ export const Play = () => {
 							key={mode.name}
 							className={`relative border-0 flex flex-col px-0 text-xs text-foreground w-full ${selectedMode === mode.name ? 'text-primary' : ''}`}
 							variant="link"
-							onClick={() => setSelectedMode(mode.name)}
+							onClick={() => selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined)}
 						>
 							{mode.name}
 							<Dot

@@ -1,3 +1,4 @@
+import { Home } from './home'
 import { Leaderboard } from './leaderboard'
 import { Play } from './play'
 import type { Route } from '@/types'
@@ -6,7 +7,7 @@ export const routes: Route[] = [
   {
     to: '/',
     label: 'LOBBY',
-    element: <Play />,
+    element: <Home />,
   },
   {
     to: '/play',
