@@ -9,10 +9,10 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 export const Play = () => {
 	const [selectedMode, setSelectedMode] = useState<typeof GAME_MODES[number]['name']>()
-	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>()
+	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
 
 	return (
-		<Layout className="justify-start gap-2">
+		<Layout className="gap-2">
 			<ButtonGroup className="items-start border-b grid grid-flow-col auto-cols-fr gap-5">
 				{GAME_MODES.map(mode => (
 					<Button
@@ -28,23 +28,27 @@ export const Play = () => {
 					</Button>
 				))}
 			</ButtonGroup>
-			{selectedMode && (
-				<ToggleGroup
-					variant="outline"
-					type="single"
-					value={playersAmountSelected?.toString()}
-					onValueChange={value => setPlayersAmountSelected(Number(value))}
-				>
-					{Array.from({ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 0 }, (_, amountOfPlayers) => (
-						<ToggleGroupItem 
-							value={String(amountOfPlayers + 1)}
-							className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
-						>
-							{amountOfPlayers + 1}v{amountOfPlayers + 1}
-						</ToggleGroupItem>
-					))}
-				</ToggleGroup>
-				)}
+			<ToggleGroup
+				className={selectedMode ? 'opacity-100' : 'opacity-0'}
+				variant="outline"
+				type="single"
+				value={playersAmountSelected?.toString()}
+				onValueChange={value => Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)}
+			>
+				{Array.from({ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 }, (_, amountOfPlayers) => (
+					<ToggleGroupItem 
+						value={String(amountOfPlayers + 1)}
+						className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+					>
+						{amountOfPlayers + 1}v{amountOfPlayers + 1}
+					</ToggleGroupItem>
+				))}
+			</ToggleGroup>
+			<ButtonGroup className="bg-background w-full justify-center flex-1">
+				{Array.from({ length: playersAmountSelected }, () => (
+					<Button className="h-full">+</Button>
+				))}
+			</ButtonGroup>
 			<Outlet />
 		</Layout>
 	)
