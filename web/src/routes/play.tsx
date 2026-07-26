@@ -77,24 +77,24 @@ export const Play = () => {
 								<Separator />
 								<div className="flex flex-1 justify-around items-center">
 									<div className="flex-1">
-										<div>19.247</div>
+										<div>{user.stats.kills}</div>
 										<div>Total Kills</div>
 									</div>
 									<Separator orientation='vertical' />
 									<div className="flex-1">
-										<div>8.354</div>
+										<div>{user.stats.deaths}</div>
 										<div>Total Deaths</div>
 									</div>
 								</div>
 								<Separator />
 								<div className="flex flex-1 justify-around items-center">
 									<div className="flex-1">
-										<div>17.898</div>
+										<div>{user.stats.assits}</div>
 										<div>Total Assists</div>
 									</div>
 									<Separator orientation='vertical' />
 									<div className="flex-1">
-										<div>74%</div>
+										<div>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</div>
 										<div>Win Ratio</div>
 									</div>
 								</div>
