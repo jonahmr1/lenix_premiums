@@ -20,12 +20,12 @@ function App() {
 	return (
 		<>
 			<img src={ped} className="absolute h-full object-cover pointer-events-none -z-1" />
-			<div className='backdrop-blur-lg'>
-				<MemoryRouter>
+			<MemoryRouter>
+				<div className='backdrop-blur-lg'>
 					<Header />
 					<Routes>{renderRoutes(routes)}</Routes>
-				</MemoryRouter>
-			</div>
+				</div>
+			</MemoryRouter>
 		</>
 	)
 }
