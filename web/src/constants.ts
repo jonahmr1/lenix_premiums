@@ -5,14 +5,14 @@ export const GAME_MODES = [
 	},
 	{
 		name: 'Bomb Plant',
-		playersPerTeam: 3,
+		playersPerTeam: 4,
 	},
 	{
 		name: 'Ground Battle',
-		playersPerTeam: 3,
+		playersPerTeam: 5,
 	},
 	{
 		name: 'Custom Game',
-		playersPerTeam: 3,
+		playersPerTeam: 6,
 	},
 ] as const

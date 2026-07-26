@@ -10,7 +10,7 @@ export const Header = () => {
 
 	return (
 		<div className="flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/10">
-			<div className="flex items-center cursor-default select-none w-1/10">Rankzone</div>
+			<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 			<div>
 				<NavigationMenu className="h-full">
 					<div className="grid grid-flow-col auto-cols-fr h-full">
@@ -33,7 +33,7 @@ export const Header = () => {
 					</div>
 				</NavigationMenu>
 			</div>
-			<div className="flex items-center cursor-default select-none w-1/10">Lenix</div>
+			<div className="flex items-center cursor-default select-none w-1/10">LENIX</div>
 		</div>
 	)
 }
