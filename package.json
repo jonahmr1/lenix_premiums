@@ -5,17 +5,17 @@
   "description": "",
   "keywords": [
     "fivem",
-    "overextended"
+    "lenix"
   ],
-  "bugs": "https://github.com/overextended/fivem-ts/issues",
+  "bugs": "https://github.com/jonahmr1/lenix_rank/issues",
   "license": "",
   "author": {
-    "name": "Overextended",
-    "url": "https://overextended.dev"
+    "name": "Lenix",
+    "url": "https://lenix.dev"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/overextended/fivem-ts"
+    "url": "https://github.com/jonahmr1/lenix_rank"
   },
   "type": "module",
   "scripts": {
@@ -26,7 +26,11 @@
     "dev": "bun-tasks tsd --watch ::: webbuild --watch",
     "webdev": "bun --cwd web vite dev --outDir ../dist/web --emptyOutDir",
     "webbuild": "bun --cwd web vite build --outDir ../dist/web --emptyOutDir",
-    "build": "bun-tasks tsd ::: bun webbuild"
+    "build": "bun-tasks tsd ::: bun webbuild",
+		"obf.c": "bunx javascript-obfuscator dist/client.js --output dist/client.js --config obfuscator.config.json",
+		"obf.s": "bunx javascript-obfuscator dist/server.js --output dist/server.js --config obfuscator.config.json",
+		"obf.n": "for f in dist/web/assets/index-*.js; do bunx javascript-obfuscator \"$f\" --output \"$f\" --config obfuscator.config.json; done",
+		"obf": "bun obf.c && bun obf.s && bun obf.n"
   },
   "dependencies": {
     "@overextended/core": "^0.3.1",
