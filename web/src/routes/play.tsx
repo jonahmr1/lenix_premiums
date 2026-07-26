@@ -30,7 +30,7 @@ export const Play = () => {
 				{GAME_MODES.map(mode => (
 					<Button
 						key={mode.name}
-						className={`relative underline-offset-10 border-0 flex flex-col px-0 text-xs text-foreground w-full ${selectedMode === mode.name ? 'text-primary underline' : ''}`}
+						className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
 						variant="link"
 						onClick={() => selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined)}
 					>
@@ -62,7 +62,7 @@ export const Play = () => {
 					const h = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
 
 					return (
-						<Button key={i} className="w-[15%] bg-foreground/15 ring-foreground/33 border-0 ring-1" style={{ height: `${h}%` }}>
+						<Button key={i} className="w-[15%] bg-foreground/15 ring-foreground/33 border-0 ring-1 hover:bg-foreground/20" style={{ height: `${h}%` }}>
 							{i === 0 ? '' : '+'}
 						</Button>
 					)
