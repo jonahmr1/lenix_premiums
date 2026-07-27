@@ -60,12 +60,12 @@ export const Play = () => {
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
-			<ButtonGroup className="flex-1 items-center justify-center h-full w-full gap-2">
+			<ButtonGroup className="flex-8 items-center justify-center w-full gap-2">
 				{renderOrder.map((i) => {
 					const h = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
 
 					return (
-						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full" style={{ height: `${h}%` }}>
+						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden" style={{ height: `${h}%` }}>
 							{i === 0 ? (
 								<>
 									<div className="flex flex-1 items-start">
@@ -73,31 +73,31 @@ export const Play = () => {
 									</div>
 									<div className="flex flex-1 flex-col justify-center w-full items-center">
 										<div className="w-full text-4xl tracking-tighter font-bold">{user.name}</div>
-										<Badge variant={user.isReady ? 'outline' : 'destructive'} className="uppercase text-[0.5rem]">{user.isReady ? 'Ready' : 'Not-Ready'}</Badge>
+										<Badge variant={user.isReady ? 'outline' : 'destructive'} className="text-[0.5rem]">{user.isReady ? 'Ready' : 'Not Ready'}</Badge>
 									</div>
 									<div className="flex flex-1 flex-col w-full justify-around h-full">
 										<Separator />
 										<div className="flex flex-1 justify-around items-center">
 											<div className="flex-1">
-												<div>{user.stats.kills}</div>
-												<div>Total Kills</div>
+												<p>{user.stats.kills}</p>
+												<p className="text-[0.625rem]">Total Kills</p>
 											</div>
 											<Separator orientation='vertical' />
 											<div className="flex-1">
-												<div>{user.stats.deaths}</div>
-												<div>Total Deaths</div>
+												<p>{user.stats.deaths}</p>
+												<p className="text-[0.625rem]">Total Deaths</p>
 											</div>
 										</div>
 										<Separator />
 										<div className="flex flex-1 justify-around items-center">
 											<div className="flex-1">
-												<div>{user.stats.assits}</div>
-												<div>Total Assists</div>
+												<p>{user.stats.assits}</p>
+												<p className="text-[0.625rem]">Total Assists</p>
 											</div>
 											<Separator orientation='vertical' />
 											<div className="flex-1">
-												<div>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</div>
-												<div>Win Ratio</div>
+												<p>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</p>
+												<p className="text-[0.625rem]">Win Ratio</p>
 											</div>
 										</div>
 									</div>
@@ -108,6 +108,15 @@ export const Play = () => {
 						</Button>
 					)
 				})}
+			</ButtonGroup>
+			<ButtonGroup className="flex-1 items-start">
+				<div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center">
+					<Button variant='outline'>Practive</Button>
+					<Separator />
+					<Button className="text-xl px-20 py-5">Start</Button>
+					<Separator />
+					<Button variant='outline'>Leave Lobby</Button>
+				</div>
 			</ButtonGroup>
 			<Outlet />
 		</Layout>

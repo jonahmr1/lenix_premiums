@@ -2,7 +2,7 @@ import avatar from '../assets/user.png'
 
 export const user = {
 	name: 'Lenix',
-	isReady: true,
+	isReady: false,
 	avatar,
 	stats: {
 		kills: 19247,

@@ -22,7 +22,7 @@ export const Header = () => {
 							return (
 								<Button
 									key={route.to}
-									className={`relative border-0 h-full w-full flex tracking-widest px-10 flex-col ${route.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
+									className={`relative border-0 h-full w-full flex tracking-widest px-7 flex-col ${route.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
 									variant={isInCurrentRoute ? 'default' : 'ghost'}
 									onClick={() => nav(route.to)}
 								>
@@ -37,7 +37,7 @@ export const Header = () => {
 				</NavigationMenu>
 			</div>
 			<div className="flex items-center w-1/10 gap-3">
-				<div className=" cursor-default select-none uppercase">{user.name}</div>
+				<div className=" cursor-default select-none">{user.name}</div>
 				<Button
 					variant='ghost'
 					onClick={() => toggleTheme()}
