@@ -10,6 +10,8 @@ import { Moon, Sun } from "lucide-react";
 export const Header = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
+  const homeRoute = routes.find(route => route.to === "/")
+  const headerRoutes = homeRoute ? [homeRoute, ...(homeRoute.children ?? [])] : []
 
 	return (
 		<div className="flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/10">
@@ -17,7 +19,7 @@ export const Header = () => {
 			<div>
 				<NavigationMenu className="h-full">
 					<div className="grid grid-flow-col auto-cols-fr h-full">
-						{routes.map(route => {
+						{headerRoutes.map(route => {
 							const isInCurrentRoute = pathname === route.to
 							return (
 								<Button

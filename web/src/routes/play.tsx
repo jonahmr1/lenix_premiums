@@ -62,7 +62,7 @@ export const Play = () => {
 			</ToggleGroup>
 			<ButtonGroup className="flex-8 items-center justify-center w-full gap-2">
 				{renderOrder.map((i) => {
-					const h = 70 - Math.floor((i + 1) / 2) * 5 // 70,65,65,60,60,...
+					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 
 					return (
 						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden" style={{ height: `${h}%` }}>
@@ -118,7 +118,6 @@ export const Play = () => {
 					<Button variant='outline'>Leave Lobby</Button>
 				</div>
 			</ButtonGroup>
-			<Outlet />
 		</Layout>
 	)
 }
