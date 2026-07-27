@@ -52,7 +52,8 @@ export const Play = () => {
 				onValueChange={value => Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)}
 			>
 				{Array.from({ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 }, (_, amountOfPlayers) => (
-					<ToggleGroupItem 
+					<ToggleGroupItem
+						key={amountOfPlayers}
 						value={String(amountOfPlayers + 1)}
 						className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
 					>
@@ -65,7 +66,7 @@ export const Play = () => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 
 					return (
-						<Button key={i} className="w-[15%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden" style={{ height: `${h}%` }}>
+						<Button key={i} className="w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden" style={{ height: `${h}%` }}>
 							{i === 0 ? (
 								<>
 									<div className="flex flex-1 items-start">
