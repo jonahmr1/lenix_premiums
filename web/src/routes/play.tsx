@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
-import { Outlet } from "react-router"
+import { Outlet, useNavigate } from "react-router"
 import { GAME_MODES } from "@/constants"
 import { Dot, Plus } from "lucide-react"
 import { useState } from "react"
@@ -26,10 +26,11 @@ export const Play = () => {
 	const [selectedMode, setSelectedMode] = useState<typeof GAME_MODES[number]['name']>()
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
   const renderOrder = getRenderOrder(playersAmountSelected)
+	const nav = useNavigate()
 
 	return (
 		<Layout className="gap-2 pt-5">
-			<ButtonGroup className="items-start border-b grid grid-flow-col auto-cols-fr gap-10">
+			<div className="items-start border-b grid grid-flow-col auto-cols-fr gap-10">
 				{GAME_MODES.map(mode => (
 					<Button
 						key={mode.name}
@@ -43,7 +44,7 @@ export const Play = () => {
 						/>
 					</Button>
 				))}
-			</ButtonGroup>
+			</div>
 			<ToggleGroup
 				className={selectedMode ? 'opacity-100' : 'opacity-0'}
 				variant="outline"
@@ -61,7 +62,7 @@ export const Play = () => {
 					</ToggleGroupItem>
 				))}
 			</ToggleGroup>
-			<ButtonGroup className="flex-8 items-center justify-center w-full gap-2">
+				<div className="flex flex-8 items-center justify-center w-full gap-2">
 				{renderOrder.map((i) => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 
@@ -109,16 +110,21 @@ export const Play = () => {
 						</Button>
 					)
 				})}
-			</ButtonGroup>
-			<ButtonGroup className="flex-1 items-start">
+			</div>
+			<div className="flex-1 items-start">
 				<div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center">
 					<Button variant='outline'>Practive</Button>
 					<Separator />
-					<Button className="text-xl px-20 py-5">Start</Button>
+					<Button
+						className="text-xl px-20 py-5"
+						onClick={() => {
+							nav('/in-game')
+						}}
+					>Start</Button>
 					<Separator />
 					<Button variant='outline'>Leave Lobby</Button>
 				</div>
-			</ButtonGroup>
+			</div>
 		</Layout>
 	)
 }

@@ -21,4 +21,9 @@ export const routes: Route[] = [
 			},
 		]
 	},
+	{
+		to: '/in-game',
+		label: 'In Game',
+		element: <></>,
+	},
 ]

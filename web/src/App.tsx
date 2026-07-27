@@ -3,7 +3,6 @@ import type { Storage } from 'types'
 import { toggleTheme } from './lib/theme'
 import { MemoryRouter, Routes, Route } from 'react-router'
 import ped from './assets/ped.png'
-import { Header } from './components/header'
 import { routes } from './routes/data'
 import type { Route as IRoute} from './types'
 
@@ -22,7 +21,6 @@ function App() {
 			<img src={ped} className="absolute h-full object-cover pointer-events-none -z-1" />
 			<MemoryRouter>
 				<div className='backdrop-blur-lg'>
-					<Header />
 					<Routes>{renderRoutes(routes)}</Routes>
 				</div>
 			</MemoryRouter>
