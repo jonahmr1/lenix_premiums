@@ -3,17 +3,11 @@ import type { Storage } from 'types'
 import { toggleTheme } from './lib/theme'
 import { MemoryRouter, Routes, Route } from 'react-router'
 import ped from './assets/ped.png'
-import { routes } from './routes/data'
-import type { Route as IRoute} from './types'
+import { Home } from './routes/lobby'
+import { InGame } from './routes/in-game'
 
 const theme = getStorage<Storage>('theme')
 if (theme) toggleTheme(theme)
-
-const renderRoutes = (routes: IRoute[]) => routes.map(route => (
-	<Route key={route.to} path={route.to} element={route.element}>
-		{route.children && renderRoutes(route.children)}
-	</Route>
-))
 
 function App() {
 	return (
@@ -21,7 +15,10 @@ function App() {
 			<img src={ped} className="absolute h-full object-cover pointer-events-none -z-1" />
 			<MemoryRouter>
 				<div className='backdrop-blur-lg bg-background/80'>
-					<Routes>{renderRoutes(routes)}</Routes>
+					<Routes>
+						<Route path={'/:tab'} element={<Home />} />
+						<Route path={'/in-game'} element={<InGame />} />
+					</Routes>
 				</div>
 			</MemoryRouter>
 		</>
