@@ -16,7 +16,7 @@ function App() {
 			<MemoryRouter>
 				<div className='backdrop-blur-lg bg-background/80'>
 					<Routes>
-						<Route path={'/:tab'} element={<Home />} />
+						<Route path={'/*'} element={<Home />} />
 						<Route path={'/in-game'} element={<InGame />} />
 					</Routes>
 				</div>

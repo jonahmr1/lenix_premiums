@@ -47,7 +47,7 @@ export const Home = () => {
 										key={page.to}
 										className={`relative border-0 h-full w-full flex tracking-widest px-7 flex-col ${page.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
 										variant={isInCurrentRoute ? 'default' : 'ghost'}
-										onClick={() => nav(`/:${page.to}`)}
+										onClick={() => nav(page.to)}
 									>
 										{page.label}
 										<IconDiamondsFilled
@@ -70,7 +70,7 @@ export const Home = () => {
 			</div>
 			<Layout>
 				{pages.map(page => (
-					<div className={pathname === page.to ? 'visible' : 'hidden'}>
+					<div key={page.to} className={pathname === page.to ? 'visible' : 'hidden'}>
 						{page.element}
 					</div>
 				))}
