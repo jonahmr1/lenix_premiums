@@ -1,5 +1,12 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+	ContextMenu,
+	ContextMenuContent,
+	ContextMenuItem,
+	ContextMenuSeparator,
+	ContextMenuTrigger,
+} from "@/components/ui/context-menu"
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { PvP_AMOUNT } from "@/constants"
@@ -19,6 +26,7 @@ import {
 	Users,
 } from "lucide-react"
 import { useNavigate } from "react-router"
+import { useState } from "react"
 
 const leaderboard = [
 	{ place: 1, name: "7MOOD", rank: "CHALLENGER", rp: "6,320", avatar: "☠️" },
@@ -37,10 +45,18 @@ const stats = [
 	{ label: "Best Streak", value: "12" },
 ]
 
+const initialTeamMembers = [
+	{ name: user.name, rank: "GOLD II", rp: "2,450", avatar: user.avatar },
+	{ name: "nour", rank: "GRANDMASTER", rp: "5,870", avatar: "◉" },
+	{ name: "M_D7M", rank: "GRANDMASTER", rp: "5,630", avatar: "◌" },
+	{ name: "iSnipe", rank: "MASTER", rp: "5,120", avatar: "◎" },
+]
+
 const rankColors: Record<string, string> = {
 	CHALLENGER: "text-red-400",
 	GRANDMASTER: "text-pink-400",
 	MASTER: "text-purple-400",
+	"GOLD II": "text-primary",
 }
 
 const modeIcons = [User, Users, Users, Users]
@@ -60,7 +76,20 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 
 export const Play = () => {
 	const pvpOptions = entries(PvP_AMOUNT)
+	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
+	const [teamMembers, setTeamMembers] = useState(initialTeamMembers)
+	const [leaderName, setLeaderName] = useState(user.name)
 	const nav = useNavigate()
+	const visibleTeamMembers = teamMembers.slice(0, Number(selectedPvp) || teamMembers.length)
+	const kickPlayer = (name: string) => {
+		setTeamMembers(currentMembers => {
+			const nextMembers = currentMembers.filter(member => member.name !== name)
+
+			if (leaderName === name) setLeaderName(nextMembers[0]?.name ?? user.name)
+
+			return nextMembers
+		})
+	}
 
 	return (
 		<div className="grid h-full w-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)_minmax(0,1.35fr)] grid-rows-[minmax(0,3fr)_minmax(0,2fr)_auto] gap-[clamp(1rem,1.5vw,1.5rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">
@@ -117,14 +146,42 @@ export const Play = () => {
 						</div>
 
 						<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
-							{leaderboard.map(player => (
-								<div key={player.place} className="grid grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
-									<span>{player.place}</span>
-									<span className="truncate font-semibold">{player.name}</span>
-									<span className={`font-bold ${rankColors[player.rank]}`}>{player.rank}</span>
-									<span className="text-right">{player.rp}</span>
-								</div>
-							))}
+							{visibleTeamMembers.map((player, index) => {
+								const isLeader = leaderName === player.name
+
+								return (
+									<ContextMenu key={player.name}>
+										<ContextMenuTrigger asChild>
+											<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
+												<span>{index + 1}</span>
+												<span className="flex min-w-0 items-center gap-2 font-semibold">
+													{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
+														<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
+													) : (
+														<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">{player.avatar}</span>
+													)}
+													<span className="truncate">{player.name}</span>
+												</span>
+												<span className={`font-bold ${rankColors[player.rank]}`}>
+													{player.rank}
+												</span>
+												<span className="flex justify-end">
+													{isLeader && <Crown className="size-4 text-primary" />}
+												</span>
+											</div>
+										</ContextMenuTrigger>
+										<ContextMenuContent>
+											<ContextMenuItem disabled={isLeader} onClick={() => setLeaderName(player.name)}>
+												Set As Leader
+											</ContextMenuItem>
+											<ContextMenuSeparator />
+											<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => kickPlayer(player.name)}>
+												Kick Player
+											</ContextMenuItem>
+										</ContextMenuContent>
+									</ContextMenu>
+								)
+							})}
 						</div>
 
 						<div>
@@ -133,6 +190,8 @@ export const Play = () => {
 							className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
 							style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
 							type="single"
+							value={selectedPvp}
+							onValueChange={value => value && setSelectedPvp(value)}
 						>
 								{pvpOptions.map(([pvpAmount], index) => {
 									const Icon = modeIcons[index] ?? Users
