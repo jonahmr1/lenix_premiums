@@ -6,8 +6,7 @@ import ped from './assets/ped.png'
 import { Home } from './routes/lobby'
 import { InGame } from './routes/in-game'
 
-const theme = getStorage<Storage>('theme')
-if (theme) toggleTheme(theme)
+toggleTheme(getStorage<Storage>('theme') ?? 'dark')
 
 function App() {
 	return (

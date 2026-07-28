@@ -1,125 +1,234 @@
-import { Layout } from "@/components/layout"
-import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router"
-import { GAME_MODES } from "@/constants"
-import { Dot, Plus } from "lucide-react"
-import { useState } from "react"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { user } from "@/lib/user"
-import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { PvP_AMOUNT } from "@/constants"
+import { user } from "@/lib/user"
+import { entries } from "@lenix/lenix"
+import {
+	ChevronRight,
+	Crown,
+	Info,
+	LineChart,
+	PackageOpen,
+	Shield,
+	Target,
+	Trophy,
+	User,
+	UserPlus,
+	Users,
+} from "lucide-react"
 
-const getRenderOrder = (count: number) => {
-	const order: number[] = []
+const leaderboard = [
+	{ place: 1, name: "7MOOD", rank: "CHALLENGER", rp: "6,320", avatar: "☠️" },
+	{ place: 2, name: "nour", rank: "GRANDMASTER", rp: "5,870", avatar: "◉" },
+	{ place: 3, name: "M_D7M", rank: "GRANDMASTER", rp: "5,630", avatar: "◌" },
+	{ place: 4, name: "iSnipe", rank: "MASTER", rp: "5,120", avatar: "◎" },
+	{ place: 5, name: "abood", rank: "MASTER", rp: "4,980", avatar: "◍" },
+]
 
-	for (let i = 0; i < count; i++) {
-		if (i === 0) order.push(i)      // first item
-		else if (i % 2 === 1) order.push(i) // add on right side first
-		else order.unshift(i)            // then add on left side
-	}
+const stats = [
+	{ label: "Matches", value: "124" },
+	{ label: "Wins", value: user.stats.wins.toLocaleString() },
+	{ label: "Win Rate", value: `${((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%` },
+	{ label: "Kills", value: user.stats.kills.toLocaleString() },
+	{ label: "K/D Ratio", value: (user.stats.kills / user.stats.deaths).toFixed(2) },
+	{ label: "Best Streak", value: "12" },
+]
 
-	return order
+const rankColors: Record<string, string> = {
+	CHALLENGER: "text-red-400",
+	GRANDMASTER: "text-pink-400",
+	MASTER: "text-purple-400",
 }
 
+const modeIcons = [User, Users, Users, Users]
+
+const Panel = ({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) => (
+	<section className={`rounded-xl border border-white/10 bg-black/35 ${className}`}>
+		{children}
+	</section>
+)
+
+const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.ReactNode }>) => (
+	<div className="flex items-center gap-[clamp(0.4rem,0.7vw,0.75rem)] text-primary">
+		{icon}
+		<h2 className="text-[clamp(0.65rem,0.75vw,0.8rem)] font-bold uppercase tracking-widest">{children}</h2>
+	</div>
+)
+
 export const Play = () => {
-	const [selectedMode, setSelectedMode] = useState<typeof GAME_MODES[number]['name']>()
-	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
-  const renderOrder = getRenderOrder(playersAmountSelected)
-	const nav = useNavigate()
+	const pvpOptions = entries(PvP_AMOUNT)
 
 	return (
-		<Layout className="gap-2 pt-5">
-			<div className="items-start border-b grid grid-flow-col auto-cols-fr gap-10">
-				{GAME_MODES.map(mode => (
-					<Button
-						key={mode.name}
-						className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
-						variant="link"
-						onClick={() => selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined)}
-					>
-						{mode.name}
-						<Dot
-							className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode.name ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
-						/>
-					</Button>
-				))}
-			</div>
-			<ToggleGroup
-				className={selectedMode ? 'opacity-100' : 'opacity-0'}
-				variant="outline"
-				type="single"
-				value={playersAmountSelected?.toString()}
-				onValueChange={value => Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)}
-			>
-				{Array.from({ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 }, (_, amountOfPlayers) => (
-					<ToggleGroupItem
-						key={amountOfPlayers}
-						value={String(amountOfPlayers + 1)}
-						className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
-					>
-						{amountOfPlayers + 1}v{amountOfPlayers + 1}
-					</ToggleGroupItem>
-				))}
-			</ToggleGroup>
-				<div className="flex flex-8 items-center justify-center w-full gap-2">
-				{renderOrder.map((i) => {
-					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
-
-					return (
-						<Button key={i} className="w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden" style={{ height: `${h}%` }}>
-							{i === 0 ? (
-								<>
-									<div className="flex flex-1 items-start">
-										<img src={user.avatar} alt="" />
-									</div>
-									<div className="flex flex-1 flex-col justify-center w-full items-center">
-										<div className="w-full text-4xl tracking-tighter font-bold">{user.name}</div>
-										<Badge variant={user.isReady ? 'outline' : 'destructive'} className="text-[0.5rem]">{user.isReady ? 'Ready' : 'Not Ready'}</Badge>
-									</div>
-									<div className="flex flex-1 flex-col w-full justify-around h-full">
-										<Separator />
-										<div className="flex flex-1 justify-around items-center">
-											<div className="flex-1">
-												<p>{user.stats.kills}</p>
-												<p className="text-[0.625rem]">Total Kills</p>
-											</div>
-											<Separator orientation='vertical' />
-											<div className="flex-1">
-												<p>{user.stats.deaths}</p>
-												<p className="text-[0.625rem]">Total Deaths</p>
-											</div>
-										</div>
-										<Separator />
-										<div className="flex flex-1 justify-around items-center">
-											<div className="flex-1">
-												<p>{user.stats.assits}</p>
-												<p className="text-[0.625rem]">Total Assists</p>
-											</div>
-											<Separator orientation='vertical' />
-											<div className="flex-1">
-												<p>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</p>
-												<p className="text-[0.625rem]">Win Ratio</p>
-											</div>
-										</div>
-									</div>
-								</>
-							) : (
-								<Plus />
-							)}
-						</Button>
-					)
-				})}
-			</div>
-			<div className="flex-1 items-start">
-				<div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center">
-					<Button
-						className="text-xl px-20 py-5"
-						onClick={() => {
-							nav('/in-game')
-						}}
-					>Start</Button>
+		<div className="grid h-full w-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)_minmax(0,1.35fr)] grid-rows-[minmax(0,3fr)_minmax(0,2fr)_auto] gap-[clamp(1rem,1.5vw,1.5rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">
+			<Panel className="col-start-1 row-start-1 flex min-h-0 flex-col p-[clamp(0.75rem,1vw,1rem)]">
+				<SectionTitle icon={<Shield className="size-5 fill-primary/20" />}>Current Rank</SectionTitle>
+				<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-[clamp(0.5rem,0.8vw,0.75rem)] text-center">
+					<div className="relative grid size-[clamp(5.5rem,8vw,7rem)] place-items-center">
+						<div className="relative grid size-[clamp(4.5rem,6.25vw,5.75rem)] place-items-center rounded-[1.1rem] border border-primary/30 bg-gradient-to-br from-primary/30 via-black to-primary/10">
+							<Crown className="size-[clamp(2.5rem,3.5vw,3.25rem)] fill-primary/30 text-primary" />
+						</div>
+					</div>
+					<div>
+						<h1 className="text-[clamp(1.3rem,1.9vw,1.75rem)] font-extrabold tracking-widest text-white">GOLD II</h1>
+						<p className="mt-0.5 text-[clamp(1rem,1.35vw,1.25rem)] font-bold text-primary">2,450 RP</p>
+					</div>
+					<div className="w-full">
+						<div className="h-2.5 overflow-hidden rounded-full bg-white/10">
+							<div className="h-full w-[56%] rounded-full bg-gradient-to-r from-primary to-yellow-200" />
+						</div>
+						<div className="mt-2 flex justify-between text-xs font-semibold text-muted-foreground">
+							<span>2,000 RP</span>
+							<span>2,800 RP</span>
+						</div>
+					</div>
+					<p className="text-xs text-muted-foreground">
+						Next Rank: <span className="font-bold text-primary">GOLD III</span>
+					</p>
 				</div>
+			</Panel>
+
+			<Panel className="col-start-1 row-start-2 grid min-h-0 p-[clamp(0.75rem,1vw,1rem)]">
+				<div className="grid h-full place-items-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] px-4 text-center">
+					<div className="flex flex-col items-center gap-2">
+						<PackageOpen className="size-[clamp(1.6rem,2.4vw,2.25rem)] text-primary/80" />
+						<div>
+							<h3 className="text-[clamp(0.75rem,0.9vw,0.9rem)] font-bold uppercase tracking-widest text-primary">Future Feature</h3>
+							<p className="mt-1 text-[clamp(0.65rem,0.75vw,0.75rem)] font-semibold text-muted-foreground">This panel is reserved for upcoming content.</p>
+						</div>
+					</div>
+				</div>
+			</Panel>
+
+			<Panel className="relative col-start-2 row-span-2 row-start-1 flex min-h-0 flex-col p-[clamp(0.9rem,1.2vw,1.25rem)]">
+				<div className="absolute inset-x-0 top-1/4 h-[clamp(8rem,16vh,13rem)] bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.22),transparent_65%)]" />
+				<div className="relative flex justify-end">
+					<Info className="size-5 text-muted-foreground" />
+				</div>
+				<div className="relative flex min-h-0 flex-1 flex-col">
+					<div className="flex min-h-0 flex-1 flex-col justify-center">
+						<div className="mb-[clamp(0.5rem,0.9vw,0.9rem)] text-center">
+							<Target className="mx-auto mb-1.5 size-[clamp(1.7rem,2.4vw,2.1rem)] text-primary" />
+							<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
+							<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
+						</div>
+
+						<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
+							{leaderboard.map(player => (
+								<div key={player.place} className="grid grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
+									<span>{player.place}</span>
+									<span className="truncate font-semibold">{player.name}</span>
+									<span className={`font-bold ${rankColors[player.rank]}`}>{player.rank}</span>
+									<span className="text-right">{player.rp}</span>
+								</div>
+							))}
+						</div>
+
+						<div>
+							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Game Mode</h3>
+						<ToggleGroup
+							className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
+							style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
+							type="single"
+						>
+								{pvpOptions.map(([pvpAmount], index) => {
+									const Icon = modeIcons[index] ?? Users
+									const size = index + 1
+
+									return (
+										<ToggleGroupItem
+											key={pvpAmount}
+											value={pvpAmount.toString()}
+											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-white/10 bg-white/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
+										>
+											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
+											<span>{size}v{size}</span>
+										</ToggleGroupItem>
+									)
+								})}
+							</ToggleGroup>
+						</div>
+					</div>
+
+					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-white/10" />
+
+					<div className="mt-auto">
+						<Button variant="ghost" className="w-full gap-2 bg-white/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary">
+							<UserPlus /> Invite Players
+						</Button>
+					</div>
+					<div className="mt-[clamp(0.75rem,1.2vw,1.25rem)]">
+						<Button className="h-[clamp(2.1rem,3vw,2.75rem)] w-full border-primary rounded-lg bg-primary/50 text-[clamp(0.95rem,1.25vw,1.15rem)] font-bold text-white hover:from-yellow-700 hover:to-primary">
+							Find Match <ChevronRight className="text-primary size-6" />
+						</Button>
+					</div>
+					<p className="mt-2 text-center text-xs font-semibold text-muted-foreground">Estimated Wait: 00:30</p>
+				</div>
+			</Panel>
+
+			<Panel className="col-start-3 row-start-1 flex min-h-0 flex-col p-[clamp(0.75rem,1vw,1rem)]">
+				<div className="mb-3 flex items-center justify-between">
+					<SectionTitle icon={<Trophy className="size-5 fill-primary/20" />}>Leaderboard</SectionTitle>
+				</div>
+				<div className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] gap-2 px-[clamp(0.45rem,0.8vw,0.75rem)] pb-1.5 text-[clamp(0.62rem,0.72vw,0.72rem)] font-bold uppercase tracking-widest text-muted-foreground">
+					<span>#</span>
+					<span>Player</span>
+					<span>Rank</span>
+					<span className="text-right">RP</span>
+				</div>
+				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)]">
+					{leaderboard.map(player => (
+						<div key={player.place} className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04]">
+							<span className="font-bold text-muted-foreground">{player.place}</span>
+							<span className="flex min-w-0 items-center gap-3 font-semibold">
+								<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">{player.avatar}</span>
+								<span className="truncate">{player.name}</span>
+							</span>
+							<span className={`font-bold ${rankColors[player.rank]}`}>{player.rank}</span>
+							<span className="text-right font-semibold">{player.rp}</span>
+						</div>
+					))}
+					<div className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md border border-primary/30 bg-primary/15 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)]">
+						<span className="font-bold text-primary">23</span>
+						<span className="flex min-w-0 items-center gap-3 font-bold text-primary">
+							<img src={user.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+							<span className="truncate">{user.name}</span>
+						</span>
+						<span className="font-bold text-primary">GOLD II</span>
+						<span className="text-right font-semibold">2,450</span>
+					</div>
+				</div>
+				<Button variant="ghost" size="sm" className="mx-auto mt-auto flex text-muted-foreground">
+					View Full Leaderboard <ChevronRight className="text-primary" />
+				</Button>
+			</Panel>
+
+			<Panel className="col-start-3 row-start-2 flex min-h-0 flex-col p-[clamp(0.55rem,0.8vw,0.75rem)]">
+				<div className="mb-1.5">
+					<SectionTitle icon={<LineChart className="size-5 text-primary" />}>Your Stats</SectionTitle>
+				</div>
+				<div className="grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-[clamp(0.55rem,0.9vw,0.9rem)]">
+					{stats.map(stat => (
+						<div key={stat.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-[clamp(0.45rem,0.75vw,0.7rem)] text-center">
+							<p className="text-[clamp(0.6rem,0.72vw,0.72rem)] font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+							<p className="mt-[clamp(0.25rem,0.45vw,0.45rem)] text-[clamp(1.05rem,1.4vw,1.3rem)] font-bold text-white">{stat.value}</p>
+						</div>
+					))}
+				</div>
+				<Button variant="ghost" size="xs" className="mx-auto mt-1.5 flex text-muted-foreground">
+					Detailed Statistics <ChevronRight className="text-primary" />
+				</Button>
+			</Panel>
+
+			<div className="col-span-3 row-start-3 flex items-center justify-between text-xs font-semibold text-muted-foreground">
+				<Badge variant="outline" className="gap-2 border-white/10 bg-black/25 px-3 py-2 text-xs normal-case">
+					<span className="size-2 rounded-full bg-green-500" /> 5,210 Players Online
+				</Badge>
+				<Badge variant="outline" className="border-white/10 bg-black/25 px-3 py-2 text-xs normal-case">
+					All Play Time: 14h 22m
+				</Badge>
 			</div>
-		</Layout>
+		</div>
 	)
 }
