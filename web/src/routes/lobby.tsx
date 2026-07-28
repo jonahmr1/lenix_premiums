@@ -42,7 +42,7 @@ export const Home = () => {
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>
 					<NavigationMenu className="h-full">
-						<div className="grid grid-flow-col auto-cols-fr h-full gap-5">
+						<div className="flex gap-15">
 							{pages.map(page => {
 								const isInCurrentRoute = pathname === page.to
 								return (

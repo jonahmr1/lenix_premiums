@@ -112,16 +112,12 @@ export const Play = () => {
 			</div>
 			<div className="flex-1 items-start">
 				<div className="grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center">
-					<Button variant='outline'>Practive</Button>
-					<Separator />
 					<Button
 						className="text-xl px-20 py-5"
 						onClick={() => {
 							nav('/in-game')
 						}}
 					>Start</Button>
-					<Separator />
-					<Button variant='outline'>Leave Lobby</Button>
 				</div>
 			</div>
 		</Layout>
