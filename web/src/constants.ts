@@ -1,6 +1,6 @@
 export const GAME_MODES = {
 	back_to_back: {
-		label: 'Back-To-Back'
+		label: 'Back-To-Back',
 	},
 	bomb_plant: {
 		label: 'Bomb Plant'

@@ -163,7 +163,6 @@ export const Play = () => {
 							Find Match <ChevronRight className="text-primary size-6" />
 						</Button>
 					</div>
-					<p className="mt-2 text-center text-xs font-semibold text-muted-foreground">Estimated Wait: 00:30</p>
 				</div>
 			</Panel>
 
