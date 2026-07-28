@@ -18,6 +18,7 @@ import {
 	UserPlus,
 	Users,
 } from "lucide-react"
+import { useNavigate } from "react-router"
 
 const leaderboard = [
 	{ place: 1, name: "7MOOD", rank: "CHALLENGER", rp: "6,320", avatar: "☠️" },
@@ -59,6 +60,7 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 
 export const Play = () => {
 	const pvpOptions = entries(PvP_AMOUNT)
+	const nav = useNavigate()
 
 	return (
 		<div className="grid h-full w-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)_minmax(0,1.35fr)] grid-rows-[minmax(0,3fr)_minmax(0,2fr)_auto] gap-[clamp(1rem,1.5vw,1.5rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">
@@ -198,7 +200,7 @@ export const Play = () => {
 						<span className="text-right font-semibold">2,450</span>
 					</div>
 				</div>
-				<Button variant="ghost" size="sm" className="mx-auto mt-auto flex text-muted-foreground">
+				<Button variant="ghost" size="sm" className="mx-auto mt-auto flex text-muted-foreground" onClick={() => nav('/leaderboard')}>
 					View Full Leaderboard <ChevronRight className="text-primary" />
 				</Button>
 			</Panel>
@@ -215,7 +217,7 @@ export const Play = () => {
 						</div>
 					))}
 				</div>
-				<Button variant="ghost" size="xs" className="mx-auto mt-1.5 flex text-muted-foreground">
+				<Button variant="ghost" size="xs" className="mx-auto mt-1.5 flex text-muted-foreground" onClick={() => nav('/stats')}>
 					Detailed Statistics <ChevronRight className="text-primary" />
 				</Button>
 			</Panel>
