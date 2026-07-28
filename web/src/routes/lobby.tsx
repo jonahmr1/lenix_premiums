@@ -10,11 +10,12 @@ import {
 import { NavigationMenu } from "@/components/ui/navigation-menu"
 import { user } from "@/lib/user";
 import { getTheme, toggleTheme } from "@/lib/theme";
-import { BarChart3, CircleOff, Crown, Moon, PlayIcon, Sun, Trophy } from "lucide-react";
+import { BarChart3, CircleOff, Gamepad, Moon, PlayIcon, Sun, Trophy, Users } from "lucide-react";
 import { Play } from "@/pages/play"
 import { Leaderboard } from "@/pages/leaderboard"
 import type { BaseRoute } from "@/types"
 import { useState } from "react"
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
 
 const pages = [
 	{
@@ -38,7 +39,7 @@ const pages = [
 	{
 		to: '/custom',
 		label: 'CUSTOM GAME',
-		icon: Trophy,
+		icon: Gamepad,
 		element: <Leaderboard />
 	},
 ] satisfies (BaseRoute & { icon: React.ElementType })[]
@@ -57,6 +58,32 @@ const userStatuses = {
 		className: 'bg-red-500',
 	},
 }
+
+const friends = [
+	{
+		name: '7MOOD',
+		status: 'online',
+	},
+	{
+		name: 'nour',
+		status: 'dnd',
+	},
+	{
+		name: 'M_D7M',
+		status: 'offline',
+	},
+	{
+		name: 'iSnipe',
+		status: 'online',
+	},
+	{
+		name: 'abood',
+		status: 'offline',
+	},
+] satisfies { name: string; status: keyof typeof userStatuses }[]
+
+const availableFriends = friends.filter(friend => friend.status !== 'offline')
+const offlineFriends = friends.filter(friend => friend.status === 'offline')
 
 const useTheme = () => getTheme()
 
@@ -125,6 +152,73 @@ export const Home = () => {
 						onClick={() => toggleTheme()}
 					>{theme === 'dark' ? <Sun /> : <Moon />}
 					</Button>
+					<Drawer direction="right">
+						<DrawerTrigger asChild>
+							<Button>
+								<Users />
+							</Button>
+						</DrawerTrigger>
+						<DrawerContent>
+							<DrawerHeader>
+								<DrawerTitle>Friends List</DrawerTitle>
+								<DrawerDescription>Invite friends or check their status.</DrawerDescription>
+							</DrawerHeader>
+							<div className="flex flex-col gap-2 px-4">
+								{availableFriends.map(friend => {
+									const friendStatus = userStatuses[friend.status]
+
+									return (
+										<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.04] p-3">
+											<div className="flex min-w-0 items-center gap-3">
+												<div className="relative grid size-9 shrink-0 place-items-center rounded-full bg-white/10 font-bold text-primary">
+													{friend.name.slice(0, 2).toUpperCase()}
+													<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${friendStatus.className}`} />
+												</div>
+												<div className="min-w-0">
+													<div className="truncate font-semibold">{friend.name}</div>
+													<div className="text-[0.65rem] text-muted-foreground">{friendStatus.label}</div>
+												</div>
+											</div>
+											<Button size="sm" variant="ghost">
+												Invite
+											</Button>
+										</div>
+									)
+								})}
+								<div className="my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground">
+									<div className="h-px flex-1 bg-border/50" />
+									Offline Friends
+									<div className="h-px flex-1 bg-border/50" />
+								</div>
+								{offlineFriends.map(friend => {
+									const friendStatus = userStatuses[friend.status]
+
+									return (
+										<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] p-3 opacity-70">
+											<div className="flex min-w-0 items-center gap-3">
+												<div className="relative grid size-9 shrink-0 place-items-center rounded-full bg-white/10 font-bold text-muted-foreground">
+													{friend.name.slice(0, 2).toUpperCase()}
+													<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${friendStatus.className}`} />
+												</div>
+												<div className="min-w-0">
+													<div className="truncate font-semibold">{friend.name}</div>
+													<div className="text-[0.65rem] text-muted-foreground">{friendStatus.label}</div>
+												</div>
+											</div>
+											<Button size="sm" variant="ghost" disabled>
+												Invite
+											</Button>
+										</div>
+									)
+								})}
+							</div>
+							<DrawerFooter>
+								<DrawerClose asChild>
+									<Button variant="outline">Close</Button>
+								</DrawerClose>
+							</DrawerFooter>
+						</DrawerContent>
+					</Drawer>
 				</div>
 			</div>
 			<Layout>
