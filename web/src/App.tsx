@@ -14,7 +14,7 @@ function App() {
 		<>
 			<img src={ped} className="absolute h-full object-cover pointer-events-none -z-1" />
 			<MemoryRouter>
-				<div className='backdrop-blur-lg bg-background/80'>
+				<div className='bg-background/99'>
 					<Routes>
 						<Route path={'/*'} element={<Home />} />
 						<Route path={'/in-game'} element={<InGame />} />

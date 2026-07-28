@@ -2,29 +2,32 @@ import { Layout } from "@/components/layout"
 import { useLocation, useNavigate } from "react-router"
 import { Button } from "@/components/ui/button"
 import { NavigationMenu } from "@/components/ui/navigation-menu"
-import { IconDiamondsFilled } from '@tabler/icons-react';
 import { user } from "@/lib/user";
 import { getTheme, toggleTheme } from "@/lib/theme";
 import { Moon, Sun } from "lucide-react";
 import { Play } from "@/pages/play"
 import { Leaderboard } from "@/pages/leaderboard"
 import type { BaseRoute } from "@/types"
-import { Lobby } from "@/pages/lobby";
 
 const pages: BaseRoute[] = [
 	{
 		to: '/',
-		label: 'Lobby',
-		element: <Lobby />
-	},
-	{
-		to: '/play',
 		label: 'PLAY',
 		element: <Play />,
 	},
 	{
+		to: '/rank',
+		label: 'RANK',
+		element: <Leaderboard />
+	},
+	{
 		to: '/leaderboard',
 		label: 'LEADERBOARD',
+		element: <Leaderboard />
+	},
+	{
+		to: '/stats',
+		label: 'STATS',
 		element: <Leaderboard />
 	},
 ]
@@ -35,24 +38,21 @@ export const Home = () => {
 
 	return (
 		<div className="flex flex-col min-h-screen">
-			<div className="flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/10">
+			<div className="flex justify-between min-h-[10vh] w-full px-20 border-b bg-background/10">
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>
 					<NavigationMenu className="h-full">
-						<div className="grid grid-flow-col auto-cols-fr h-full">
+						<div className="grid grid-flow-col auto-cols-fr h-full gap-5">
 							{pages.map(page => {
 								const isInCurrentRoute = pathname === page.to
 								return (
 									<Button
 										key={page.to}
-										className={`relative border-0 h-full w-full flex tracking-widest px-7 flex-col ${page.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
-										variant={isInCurrentRoute ? 'default' : 'ghost'}
+										className={`border-0 rounded-none h-full px-0 w-fit bg-transparent ${page.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'}`}
+										variant='link'
 										onClick={() => nav(page.to)}
 									>
 										{page.label}
-										<IconDiamondsFilled
-											className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-foreground ${isInCurrentRoute ? 'size-3' : 'size-2'}`}
-										/>
 									</Button>
 								)
 							})}
