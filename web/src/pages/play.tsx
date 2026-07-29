@@ -69,8 +69,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 	const pvpOptions = entries(PvP_AMOUNT)
 	const player = common.users[user.id]
 
-	const [selectedPvp, setSelectedPvp] = useState<string>()
-
 	const leaderboard = entries(common.users)
 		.map(([userId, { name, avatar, stats }]) => ({
 			userId,
@@ -97,12 +95,13 @@ export const Play = ({ onOpenFriendsDrawer }: {
 		}
 	]
 
+	const [partySize, setPartySize] = useState<string>(teamMembers.length.toString())
+
 	const topLeaderboard = leaderboard.slice(0, 5)
-	const topSixLeaderboard = leaderboard.slice(0, 6)
 	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
 	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
 		? [...topLeaderboard, currentPlayerLeaderboardRow]
-		: topSixLeaderboard
+		: leaderboard.slice(0, 6)
 	const playerStats = player.stats
 	const stats = [
 		{ label: "Matches", value: playerStats.wins + playerStats.losses },
@@ -213,8 +212,8 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
 								style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
 								type="single"
-								value={selectedPvp}
-								onValueChange={value => value && setSelectedPvp(value)}
+								value={partySize}
+								onValueChange={value => value && setPartySize(value)}
 							>
 								{pvpOptions.map(([pvpAmount], index) => {
 									const Icon = modeIcons[index] ?? Users
@@ -225,6 +224,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 											key={pvpAmount}
 											value={pvpAmount.toString()}
 											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-white/10 bg-white/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
+											disabled={teamMembers.length > pvpAmount}
 										>
 											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
 											<span>{size}v{size}</span>
