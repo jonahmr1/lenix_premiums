@@ -17,7 +17,6 @@ import type { BaseRoute } from "@/types"
 import { useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
 import { userStatuses } from "@/constants"
-import { entries } from "@lenix/lenix"
 
 const useTheme = () => getTheme()
 
@@ -57,13 +56,20 @@ export const Home = () => {
 	const player = common.users[user.id]
 	const playerStatus = userStatuses[session.users[user.id].status]
 
-	const availableFriends = entries(session.users)
-		.filter(([, userData]) => userData.status !== 'offline')
-		.map(([userId, { status }]) => ({ name: common.users[userId].name, status }))
+	const friends = user.friendsIds.flatMap(userId => {
+		const friend = common.users[userId]
 
-	const offlineFriends = entries(session.users)
-	.filter(([, userData]) => userData.status === 'offline')
-	.map(([userId, { status }]) => ({ name: common.users[userId].name, status }))
+		if (!friend) return []
+
+		return [{
+			id: userId,
+			...friend,
+			isReady: session.users[userId]?.isReady ?? false,
+			status: session.users[userId]?.status ?? 'offline',
+		}]
+	})
+	const availableFriends = friends.filter(friend => friend.status !== 'offline')
+	const offlineFriends = friends.filter(friend => friend.status === 'offline')
 
 	return (
 		<div className="flex flex-col h-screen">
@@ -100,7 +106,7 @@ export const Home = () => {
 									<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatus.className}`} />
 								</div>
 								<div className="cursor-default select-none text-left leading-tight">
-									<div>{user.id}</div>
+									<div>{player.name}</div>
 									<div className="text-[0.65rem] text-primary">{playerStatus.label}</div>
 								</div>
 							</Button>

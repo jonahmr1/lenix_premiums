@@ -113,7 +113,11 @@ export const session: {
 		lenix: {
 			isReady: false,
 			status: 'online'
-		}
+		},
+		nour: {
+			isReady: false,
+			status: 'online'
+		},
 	}
 }
 
