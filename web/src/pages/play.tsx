@@ -187,7 +187,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 						</div>
 
 						<div>
-							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Game Mode</h3>
+							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
 						<ToggleGroup
 							className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
 							style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
@@ -239,7 +239,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 					<span>Rank</span>
 					<span className="text-right">RP</span>
 				</div>
-				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)]">
+				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden">
 					{leaderboard.map(player => (
 						<div key={player.place} className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04]">
 							<span className="font-bold text-muted-foreground">{player.place}</span>
