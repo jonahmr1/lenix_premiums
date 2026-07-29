@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { PvP_AMOUNT } from "@/constants"
-import { user } from "@/lib/user"
+import { user } from "@/lib/data"
 import { entries } from "@lenix/lenix"
 import {
 	ChevronRight,
@@ -46,7 +46,7 @@ const stats = [
 ]
 
 const initialTeamMembers = [
-	{ name: user.name, rank: "GOLD II", rp: "2,450", avatar: user.avatar },
+	{ name: user.id, rank: "GOLD II", rp: "2,450", avatar: user.avatar },
 	{ name: "nour", rank: "GRANDMASTER", rp: "5,870", avatar: "◉" },
 	{ name: "M_D7M", rank: "GRANDMASTER", rp: "5,630", avatar: "◌" },
 	{ name: "iSnipe", rank: "MASTER", rp: "5,120", avatar: "◎" },
@@ -80,14 +80,14 @@ export const Play = ({ onOpenFriendsDrawer }: {
 	const pvpOptions = entries(PvP_AMOUNT)
 	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
 	const [teamMembers, setTeamMembers] = useState(initialTeamMembers)
-	const [leaderName, setLeaderName] = useState(user.name)
+	const [leaderName, setLeaderName] = useState(user.id)
 	const nav = useNavigate()
 	const visibleTeamMembers = teamMembers.slice(0, Number(selectedPvp) || teamMembers.length)
 	const kickPlayer = (name: string) => {
 		setTeamMembers(currentMembers => {
 			const nextMembers = currentMembers.filter(member => member.name !== name)
 
-			if (leaderName === name) setLeaderName(nextMembers[0]?.name ?? user.name)
+			if (leaderName === name) setLeaderName(nextMembers[0]?.name ?? user.id)
 
 			return nextMembers
 		})
@@ -188,13 +188,13 @@ export const Play = ({ onOpenFriendsDrawer }: {
 
 						<div>
 							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
-						<ToggleGroup
-							className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
-							style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
-							type="single"
-							value={selectedPvp}
-							onValueChange={value => value && setSelectedPvp(value)}
-						>
+							<ToggleGroup
+								className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
+								style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
+								type="single"
+								value={selectedPvp}
+								onValueChange={value => value && setSelectedPvp(value)}
+							>
 								{pvpOptions.map(([pvpAmount], index) => {
 									const Icon = modeIcons[index] ?? Users
 									const size = index + 1
@@ -255,7 +255,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 						<span className="font-bold text-primary">23</span>
 						<span className="flex min-w-0 items-center gap-3 font-bold text-primary">
 							<img src={user.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
-							<span className="truncate">{user.name}</span>
+							<span className="truncate">{user.id}</span>
 						</span>
 						<span className="font-bold text-primary">GOLD II</span>
 						<span className="text-right font-semibold">2,450</span>
