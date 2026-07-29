@@ -25,7 +25,7 @@ export const common: {
 			name: 'Lenix',
 			avatar,
 			stats: {
-				kills: 192247,
+				kills: 19247,
 				deaths: 8354,
 				assits: 17898,
 				wins: 5469,

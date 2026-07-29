@@ -106,7 +106,7 @@ export const Home = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="w-40">
-							{Object.entries(userStatuses).map(([value, option]) => (
+							{Object.entries(userStatuses).filter(([status]) => status !== 'in_game').map(([value, option]) => (
 								<DropdownMenuItem
 									key={value}
 									onClick={() => {/* TODO */}}

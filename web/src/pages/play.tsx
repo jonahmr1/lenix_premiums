@@ -65,8 +65,9 @@ export const Play = ({ onOpenFriendsDrawer }: {
 	onOpenFriendsDrawer?: () => void
 }) => {
 	const pvpOptions = entries(PvP_AMOUNT)
+	const player = common.users[user.id]
 	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
-	const [leaderName, setLeaderName] = useState(user.id)
+	const [leaderName, setLeaderName] = useState(player.name)
 	const nav = useNavigate()
 
 	const leaderboard = entries(common.users)
@@ -82,12 +83,12 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			place: index + 1,
 		}));
 	const topLeaderboard = leaderboard.slice(0, 5)
+	const topSixLeaderboard = leaderboard.slice(0, 6)
 	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
 	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
 		? [...topLeaderboard, currentPlayerLeaderboardRow]
-		: topLeaderboard
+		: topSixLeaderboard
 
-	const player = common.users[user.id]
 	const [teamMembers, setTeamMembers] = useState([
 		{
 			name: player.name,
