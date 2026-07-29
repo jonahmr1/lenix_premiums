@@ -70,7 +70,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 	const player = common.users[user.id]
 
 	const [selectedPvp, setSelectedPvp] = useState<string>()
-	const [leaderName, setLeaderName] = useState(player.name)
 
 	const leaderboard = entries(common.users)
 		.map(([userId, { name, avatar, stats }]) => ({
@@ -85,13 +84,18 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			place: index + 1,
 		}));
 
-	const [teamMembers, setTeamMembers] = useState([
+	const teamMembers = [
 		{
 			name: player.name,
 			avatar: player.avatar,
 			score: leaderboard.find(data => data.userId === user.id)?.score || -1
+		},
+		{
+			name: common.users['nour'].name,
+			avatar: common.users['nour'].avatar,
+			score: leaderboard.find(data => data.userId === 'nour')?.score,
 		}
-	])
+	]
 
 	const topLeaderboard = leaderboard.slice(0, 5)
 	const topSixLeaderboard = leaderboard.slice(0, 6)
@@ -103,22 +107,11 @@ export const Play = ({ onOpenFriendsDrawer }: {
 	const stats = [
 		{ label: "Matches", value: playerStats.wins + playerStats.losses },
 		{ label: "Wins", value: playerStats.wins },
-		{ label: "Win Rate", value: ((playerStats.wins / (playerStats.wins + playerStats.losses)) * 100).toFixed(1)},
+		{ label: "Win Rate", value: `${((playerStats.wins / (playerStats.wins + playerStats.losses)) * 100).toFixed(1)}%`},
 		{ label: "Kills", value: playerStats.kills },
+		{ label: "Deaths", value: playerStats.deaths },
 		{ label: "K/D Ratio", value: (playerStats.kills / playerStats.deaths).toFixed(2) },
 	]
-
-	const visibleTeamMembers = teamMembers.slice(0, Number(selectedPvp) || teamMembers.length)
-
-	const kickPlayer = (name: string) => {
-		setTeamMembers(currentMembers => {
-			const nextMembers = currentMembers.filter(member => member.name !== name)
-
-			if (leaderName === name) setLeaderName(nextMembers[0]?.name ?? user.id)
-
-			return nextMembers
-		})
-	}
 
 	return (
 		<div className="grid h-full w-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)_minmax(0,1.35fr)] grid-rows-[minmax(0,3fr)_minmax(0,2fr)_auto] gap-[clamp(1rem,1.5vw,1.5rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">
@@ -168,51 +161,53 @@ export const Play = ({ onOpenFriendsDrawer }: {
 				</div>
 				
 				<div className="relative flex min-h-0 flex-1 flex-col">
-					<div className="flex min-h-0 flex-1 flex-col justify-center">
-						<div className="mb-[clamp(0.5rem,0.9vw,0.9rem)] text-center">
-							<Target className="mx-auto mb-1.5 size-[clamp(1.7rem,2.4vw,2.1rem)] text-primary" />
-							<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
-							<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
-						</div>
-						<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
-							{visibleTeamMembers.map((player, index) => {
-								const isLeader = leaderName === player.name
+					<div className="flex min-h-0 flex-1 flex-col">
+						<div className="flex min-h-0 flex-1 flex-col justify-center">
+							<div className="mb-[clamp(0.5rem,0.9vw,0.9rem)] text-center">
+								<Target className="mx-auto mb-1.5 size-[clamp(1.7rem,2.4vw,2.1rem)] text-primary" />
+								<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
+								<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
+							</div>
+							<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
+								{teamMembers.map((player, index) => {
+									const isLeader = 'Lenix' === player.name
 
-								return (
-									<ContextMenu key={player.name}>
-										<ContextMenuTrigger asChild>
-											<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
-												<span>{index + 1}</span>
-												<span className="flex min-w-0 items-center gap-2 font-semibold">
-													{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
-														<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
-													) : (
-														<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
-															<img src={player.avatar} />
-														</span>
-													)}
-													<span className="truncate">{player.name}</span>
-												</span>
-												<span className="flex justify-end">
-													{isLeader && <Crown className="size-4 text-primary" />}
-												</span>
-											</div>
-										</ContextMenuTrigger>
-										<ContextMenuContent>
-											<ContextMenuItem disabled={isLeader} onClick={() => setLeaderName(player.name)}>
-												Set As Leader
-											</ContextMenuItem>
-											<ContextMenuSeparator />
-											<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => kickPlayer(player.name)}>
-												Kick Player
-											</ContextMenuItem>
-										</ContextMenuContent>
-									</ContextMenu>
-								)
-							})}
+									return (
+										<ContextMenu key={player.name}>
+											<ContextMenuTrigger asChild>
+												<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
+													<span>{index + 1}</span>
+													<span className="flex min-w-0 items-center gap-2 font-semibold">
+														{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
+															<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
+														) : (
+															<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
+																<img src={player.avatar} />
+															</span>
+														)}
+														<span className="truncate">{player.name}</span>
+													</span>
+													<span className="flex justify-end">
+														{isLeader && <Crown className="size-4 text-primary" />}
+													</span>
+												</div>
+											</ContextMenuTrigger>
+											<ContextMenuContent>
+												<ContextMenuItem disabled={isLeader} onClick={() => {/* TODO */}}>
+													Set As Leader
+												</ContextMenuItem>
+												<ContextMenuSeparator />
+												<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => {/* TODO */}}>
+													Kick Player
+												</ContextMenuItem>
+											</ContextMenuContent>
+										</ContextMenu>
+									)
+								})}
+							</div>
 						</div>
 
-						<div>
+						<div className="mt-auto">
 							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
 							<ToggleGroup
 								className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
