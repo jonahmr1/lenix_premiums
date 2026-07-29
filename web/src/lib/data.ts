@@ -1,15 +1,6 @@
-import type { userStatuses } from '@/constants';
+import type { PlayerStats, UserStatus } from '@/types';
 
 const avatar = 'https://lenix.dev/favicon-light.svg'
-
-export type UserStatus = keyof typeof userStatuses
-export interface PlayerStats {
-	kills: number;
-	deaths: number;
-	assits: number;
-	wins: number;
-	losses: number;
-}
 
 export const common: {
 	users: {

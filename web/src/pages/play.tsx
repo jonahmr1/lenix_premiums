@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { PvP_AMOUNT } from "@/constants"
-import { common, user, type PlayerStats } from "@/lib/data"
+import { common, user } from "@/lib/data"
 import { entries } from "@lenix/lenix"
 import {
 	ChevronRight,
@@ -27,6 +27,7 @@ import {
 } from "lucide-react"
 import { useNavigate } from "react-router"
 import { useState } from "react"
+import { calculatePlayerScore, getRankTier } from "@/lib"
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -42,25 +43,6 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 		<h2 className="text-[clamp(0.65rem,0.75vw,0.8rem)] font-bold uppercase tracking-widest">{children}</h2>
 	</div>
 )
-
-export const calculatePlayerScore = (stats: PlayerStats) => {
-	const weights = {
-		win: 100,
-		loss: -35,
-		kill: 4,
-		assist: 2,
-		death: -3,
-	};
-
-	return Math.max(0,
-		(stats.wins * weights.win) +
-		(stats.losses * weights.loss) +
-		(stats.kills * weights.kill) +
-		(stats.assits * weights.assist) +
-		(stats.deaths * weights.death)
-	);
-};
-
 export const Play = ({ onOpenFriendsDrawer }: {
 	onOpenFriendsDrawer?: () => void
 }) => {
@@ -276,7 +258,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 									</span>
 									<span className="truncate">{player.name}</span>
 								</span>
-								<span className={isCurrentPlayer ? 'font-bold text-primary' : ''}>{isCurrentPlayer ? 'GOLD II' : ''}</span>
+								<span className={isCurrentPlayer ? 'font-bold text-primary' : getRankTier(player.score).className}>{getRankTier(player.score).label}</span>
 								<span className="text-right font-semibold">{player.score.toLocaleString()}</span>
 							</div>
 						)

@@ -40,3 +40,19 @@ export const userStatuses = {
 		className: 'bg-red-500',
 	},
 }
+
+export const rankTiers = [
+	{ label: "Champion", minScore: 600000, className: "text-red-400" },
+	{ label: "Diamond", minScore: 520000, className: "text-pink-400" },
+	{ label: "Gold", minScore: 420000, className: "text-purple-400" },
+	{ label: "Silver", minScore: 320000, className: "text-cyan-300" },
+	{ label: "Bronze", minScore: 0, className: "text-primary" },
+]
+
+export const weights = {
+	win: 100,
+	loss: -35,
+	kill: 4,
+	assist: 2,
+	death: -3,
+};

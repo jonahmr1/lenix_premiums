@@ -27,12 +27,12 @@ export const Home = () => {
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
 
 	const pages = [
-		{
-			to: '/custom',
-			label: 'CUSTOM GAME',
-			icon: Gamepad,
-			element: <></>
-		},
+		// {
+		// 	to: '/custom',
+		// 	label: 'CUSTOM GAME',
+		// 	icon: Gamepad,
+		// 	element: <></>
+		// },
 		{
 			to: '/',
 			label: 'PLAY',
@@ -186,7 +186,7 @@ export const Home = () => {
 			</div>
 			<Layout>
 				{pages.map(page => (
-					<div key={page.to} className={`${pathname === page.to ? 'visible' : 'hidden'} h-full`}>
+					<div key={page.to} className={`${pathname === page.to ? 'visible' : 'hidden'} h-full w-full`}>
 						{page.element}
 					</div>
 				))}

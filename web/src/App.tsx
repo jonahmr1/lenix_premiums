@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route } from 'react-router'
 import ped from './assets/ped.png'
 import { Home } from './routes/lobby'
 import { InGame } from './routes/in-game'
+import { Toaster } from './components/ui/sonner'
 
 toggleTheme(getStorage<Storage>('theme') ?? 'dark')
 
@@ -18,6 +19,7 @@ function App() {
 						<Route path={'/*'} element={<Home />} />
 						<Route path={'/in-game'} element={<InGame />} />
 					</Routes>
+					<Toaster />
 				</div>
 			</MemoryRouter>
 		</>
