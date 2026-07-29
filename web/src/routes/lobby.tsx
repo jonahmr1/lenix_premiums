@@ -17,33 +17,6 @@ import type { BaseRoute } from "@/types"
 import { useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
 
-const pages = [
-	{
-		to: '/stats',
-		label: 'STATS',
-		icon: BarChart3,
-		element: <Leaderboard />
-	},
-	{
-		to: '/leaderboard',
-		label: 'LEADERBOARD',
-		icon: Trophy,
-		element: <Leaderboard />
-	},
-	{
-		to: '/',
-		label: 'PLAY',
-		icon: PlayIcon,
-		element: <Play />,
-	},
-	{
-		to: '/custom',
-		label: 'CUSTOM GAME',
-		icon: Gamepad,
-		element: <Leaderboard />
-	},
-] satisfies (BaseRoute & { icon: React.ElementType })[]
-
 const userStatuses = {
 	online: {
 		label: 'Online',
@@ -92,7 +65,34 @@ export const Home = () => {
 	const nav = useNavigate()
 	const theme = useTheme()
 	const [userStatus, setUserStatus] = useState<keyof typeof userStatuses>('online')
+	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
 	const status = userStatuses[userStatus]
+	const pages = [
+		{
+			to: '/stats',
+			label: 'STATS',
+			icon: BarChart3,
+			element: <Leaderboard />
+		},
+		{
+			to: '/leaderboard',
+			label: 'LEADERBOARD',
+			icon: Trophy,
+			element: <Leaderboard />
+		},
+		{
+			to: '/',
+			label: 'PLAY',
+			icon: PlayIcon,
+			element: <Play onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
+		},
+		{
+			to: '/custom',
+			label: 'CUSTOM GAME',
+			icon: Gamepad,
+			element: <Leaderboard />
+		},
+	] satisfies (BaseRoute & { icon: React.ElementType })[]
 
 	return (
 		<div className="flex flex-col h-screen">
@@ -152,7 +152,7 @@ export const Home = () => {
 						onClick={() => toggleTheme()}
 					>{theme === 'dark' ? <Sun /> : <Moon />}
 					</Button>
-					<Drawer direction="right">
+					<Drawer direction="right" open={isFriendsDrawerOpen} onOpenChange={setIsFriendsDrawerOpen}>
 						<DrawerTrigger asChild>
 							<Button>
 								<Users />
@@ -212,11 +212,6 @@ export const Home = () => {
 									)
 								})}
 							</div>
-							<DrawerFooter>
-								<DrawerClose asChild>
-									<Button variant="outline">Close</Button>
-								</DrawerClose>
-							</DrawerFooter>
 						</DrawerContent>
 					</Drawer>
 				</div>

@@ -74,7 +74,9 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 	</div>
 )
 
-export const Play = () => {
+export const Play = ({ onOpenFriendsDrawer }: {
+	onOpenFriendsDrawer?: () => void
+}) => {
 	const pvpOptions = entries(PvP_AMOUNT)
 	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
 	const [teamMembers, setTeamMembers] = useState(initialTeamMembers)
@@ -215,7 +217,7 @@ export const Play = () => {
 					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-white/10" />
 
 					<div className="mt-auto">
-						<Button variant="ghost" className="w-full gap-2 bg-white/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary">
+						<Button variant="ghost" className="w-full gap-2 bg-white/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary" onClick={onOpenFriendsDrawer}>
 							<UserPlus /> Invite Players
 						</Button>
 					</div>
