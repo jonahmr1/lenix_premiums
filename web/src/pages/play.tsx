@@ -81,6 +81,11 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			...player,
 			place: index + 1,
 		}));
+	const topLeaderboard = leaderboard.slice(0, 5)
+	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
+	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
+		? [...topLeaderboard, currentPlayerLeaderboardRow]
+		: topLeaderboard
 
 	const player = common.users[user.id]
 	const [teamMembers, setTeamMembers] = useState([
@@ -205,7 +210,9 @@ export const Play = ({ onOpenFriendsDrawer }: {
 													{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
 														<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
 													) : (
-														<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">{player.avatar}</span>
+														<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
+															<img src={player.avatar} />
+														</span>
 													)}
 													<span className="truncate">{player.name}</span>
 												</span>
@@ -254,27 +261,26 @@ export const Play = ({ onOpenFriendsDrawer }: {
 					<span className="text-right">RP</span>
 				</div>
 				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden">
-					{leaderboard.map(player => (
-						<div key={player.place} className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04]">
-							<span className="font-bold text-muted-foreground">{player.place}</span>
-							<span className="flex min-w-0 items-center gap-3 font-semibold">
-								<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">
-									<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+					{visibleLeaderboard.map(player => {
+						const isCurrentPlayer = player.userId === user.id
+
+						return (
+							<div
+								key={player.userId}
+								className={`grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04] ${isCurrentPlayer ? 'border border-primary/30 bg-primary/15 text-primary' : ''}`}
+							>
+								<span className={`font-bold ${isCurrentPlayer ? 'text-primary' : 'text-muted-foreground'}`}>{player.place}</span>
+								<span className={`flex min-w-0 items-center gap-3 font-semibold ${isCurrentPlayer ? 'font-bold text-primary' : ''}`}>
+									<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">
+										<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+									</span>
+									<span className="truncate">{player.name}</span>
 								</span>
-								<span className="truncate">{player.name}</span>
-							</span>
-							<span className="text-right font-semibold">{player.score}</span>
-						</div>
-					))}
-					<div className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md border border-primary/30 bg-primary/15 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)]">
-						<span className="font-bold text-primary">23</span>
-						<span className="flex min-w-0 items-center gap-3 font-bold text-primary">
-							<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
-							<span className="truncate">{user.id}</span>
-						</span>
-						<span className="font-bold text-primary">GOLD II</span>
-						<span className="text-right font-semibold">2,450</span>
-					</div>
+								<span className={isCurrentPlayer ? 'font-bold text-primary' : ''}>{isCurrentPlayer ? 'GOLD II' : ''}</span>
+								<span className="text-right font-semibold">{player.score.toLocaleString()}</span>
+							</div>
+						)
+					})}
 				</div>
 				<Button variant="ghost" size="sm" className="mx-auto mt-auto flex text-muted-foreground" onClick={() => nav('/leaderboard')}>
 					View Full Leaderboard <ChevronRight className="text-primary" />
