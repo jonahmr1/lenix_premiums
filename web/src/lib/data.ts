@@ -87,6 +87,17 @@ export const common: {
 				losses: 3220,
 			},
 		},
+		StarDev: {
+			name: 'StarDev',
+			avatar,
+			stats: {
+				kills: 18750,
+				deaths: 9840,
+				assits: 11230,
+				wins: 4620,
+				losses: 2890,
+			},
+		},
 	},
 }
 

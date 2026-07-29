@@ -129,15 +129,15 @@ export const Play = ({ onOpenFriendsDrawer }: {
 					</div>
 					<div>
 						<h1 className="text-[clamp(1.3rem,1.9vw,1.75rem)] font-extrabold tracking-widest text-white">GOLD II</h1>
-						<p className="mt-0.5 text-[clamp(1rem,1.35vw,1.25rem)] font-bold text-primary">2,450 RP</p>
+						<p className="mt-0.5 text-[clamp(1rem,1.35vw,1.25rem)] font-bold text-primary">2,450 Score</p>
 					</div>
 					<div className="w-full">
 						<div className="h-2.5 overflow-hidden rounded-full bg-white/10">
 							<div className="h-full w-[56%] rounded-full bg-gradient-to-r from-primary to-yellow-200" />
 						</div>
 						<div className="mt-2 flex justify-between text-xs font-semibold text-muted-foreground">
-							<span>2,000 RP</span>
-							<span>2,800 RP</span>
+							<span>2,000 Score</span>
+							<span>2,800 Score</span>
 						</div>
 					</div>
 					<p className="text-xs text-muted-foreground">
@@ -163,6 +163,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 				<div className="relative flex justify-end">
 					<Info className="size-5 text-muted-foreground" />
 				</div>
+				
 				<div className="relative flex min-h-0 flex-1 flex-col">
 					<div className="flex min-h-0 flex-1 flex-col justify-center">
 						<div className="mb-[clamp(0.5rem,0.9vw,0.9rem)] text-center">
@@ -259,7 +260,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 					<span>#</span>
 					<span>Player</span>
 					<span>Rank</span>
-					<span className="text-right">RP</span>
+					<span className="text-right">Score</span>
 				</div>
 				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden">
 					{visibleLeaderboard.map(player => {
