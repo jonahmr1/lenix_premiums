@@ -64,11 +64,13 @@ export const calculatePlayerScore = (stats: PlayerStats) => {
 export const Play = ({ onOpenFriendsDrawer }: {
 	onOpenFriendsDrawer?: () => void
 }) => {
+	const nav = useNavigate()
+
 	const pvpOptions = entries(PvP_AMOUNT)
 	const player = common.users[user.id]
-	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
+
+	const [selectedPvp, setSelectedPvp] = useState<string>()
 	const [leaderName, setLeaderName] = useState(player.name)
-	const nav = useNavigate()
 
 	const leaderboard = entries(common.users)
 		.map(([userId, { name, avatar, stats }]) => ({
@@ -82,12 +84,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			...player,
 			place: index + 1,
 		}));
-	const topLeaderboard = leaderboard.slice(0, 5)
-	const topSixLeaderboard = leaderboard.slice(0, 6)
-	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
-	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
-		? [...topLeaderboard, currentPlayerLeaderboardRow]
-		: topSixLeaderboard
 
 	const [teamMembers, setTeamMembers] = useState([
 		{
@@ -96,6 +92,13 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			score: leaderboard.find(data => data.userId === user.id)?.score || -1
 		}
 	])
+
+	const topLeaderboard = leaderboard.slice(0, 5)
+	const topSixLeaderboard = leaderboard.slice(0, 6)
+	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
+	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
+		? [...topLeaderboard, currentPlayerLeaderboardRow]
+		: topSixLeaderboard
 	const playerStats = player.stats
 	const stats = [
 		{ label: "Matches", value: playerStats.wins + playerStats.losses },
@@ -171,6 +174,44 @@ export const Play = ({ onOpenFriendsDrawer }: {
 							<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
 							<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
 						</div>
+						<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
+							{visibleTeamMembers.map((player, index) => {
+								const isLeader = leaderName === player.name
+
+								return (
+									<ContextMenu key={player.name}>
+										<ContextMenuTrigger asChild>
+											<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
+												<span>{index + 1}</span>
+												<span className="flex min-w-0 items-center gap-2 font-semibold">
+													{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
+														<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
+													) : (
+														<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
+															<img src={player.avatar} />
+														</span>
+													)}
+													<span className="truncate">{player.name}</span>
+												</span>
+												<span className="flex justify-end">
+													{isLeader && <Crown className="size-4 text-primary" />}
+												</span>
+											</div>
+										</ContextMenuTrigger>
+										<ContextMenuContent>
+											<ContextMenuItem disabled={isLeader} onClick={() => setLeaderName(player.name)}>
+												Set As Leader
+											</ContextMenuItem>
+											<ContextMenuSeparator />
+											<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => kickPlayer(player.name)}>
+												Kick Player
+											</ContextMenuItem>
+										</ContextMenuContent>
+									</ContextMenu>
+								)
+							})}
+						</div>
+
 						<div>
 							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
 							<ToggleGroup
@@ -197,44 +238,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								})}
 							</ToggleGroup>
 						</div>
-					</div>
-
-					<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
-						{visibleTeamMembers.map((player, index) => {
-							const isLeader = leaderName === player.name
-
-							return (
-								<ContextMenu key={player.name}>
-									<ContextMenuTrigger asChild>
-										<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
-											<span>{index + 1}</span>
-											<span className="flex min-w-0 items-center gap-2 font-semibold">
-												{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
-													<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
-												) : (
-													<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
-														<img src={player.avatar} />
-													</span>
-												)}
-												<span className="truncate">{player.name}</span>
-											</span>
-											<span className="flex justify-end">
-												{isLeader && <Crown className="size-4 text-primary" />}
-											</span>
-										</div>
-									</ContextMenuTrigger>
-									<ContextMenuContent>
-										<ContextMenuItem disabled={isLeader} onClick={() => setLeaderName(player.name)}>
-											Set As Leader
-										</ContextMenuItem>
-										<ContextMenuSeparator />
-										<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => kickPlayer(player.name)}>
-											Kick Player
-										</ContextMenuItem>
-									</ContextMenuContent>
-								</ContextMenu>
-							)
-						})}
 					</div>
 
 					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-white/10" />

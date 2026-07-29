@@ -28,6 +28,18 @@ export const Home = () => {
 
 	const pages = [
 		{
+			to: '/custom',
+			label: 'CUSTOM GAME',
+			icon: Gamepad,
+			element: <></>
+		},
+		{
+			to: '/',
+			label: 'PLAY',
+			icon: PlayIcon,
+			element: <Play onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
+		},
+		{
 			to: '/stats',
 			label: 'STATS',
 			icon: BarChart3,
@@ -38,18 +50,6 @@ export const Home = () => {
 			label: 'LEADERBOARD',
 			icon: Trophy,
 			element: <Leaderboard />
-		},
-		{
-			to: '/',
-			label: 'PLAY',
-			icon: PlayIcon,
-			element: <Play onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
-		},
-		{
-			to: '/custom',
-			label: 'CUSTOM GAME',
-			icon: Gamepad,
-			element: <></>
 		},
 	] satisfies (BaseRoute & { icon: LucideIcon })[]
 
@@ -143,8 +143,8 @@ export const Home = () => {
 								{availableFriends.map(friend => (
 									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.04] p-3">
 										<div className="flex min-w-0 items-center gap-3">
-											<div className="relative grid size-9 shrink-0 place-items-center rounded-full bg-white/10 font-bold text-primary">
-												{friend.name.slice(0, 2).toUpperCase()}
+											<div className="relative size-9 shrink-0 rounded-full bg-white/10 p-1">
+												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
 												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
 											</div>
 											<div className="min-w-0">
@@ -165,8 +165,8 @@ export const Home = () => {
 								{offlineFriends.map(friend => (
 									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] p-3 opacity-70">
 										<div className="flex min-w-0 items-center gap-3">
-											<div className="relative grid size-9 shrink-0 place-items-center rounded-full bg-white/10 font-bold text-muted-foreground">
-												{friend.name.slice(0, 2).toUpperCase()}
+											<div className="relative size-9 shrink-0 rounded-full bg-white/10 p-1">
+												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
 												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
 											</div>
 											<div className="min-w-0">
