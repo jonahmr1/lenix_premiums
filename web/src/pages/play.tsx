@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { PvP_AMOUNT } from "@/constants"
-import { user } from "@/lib/data"
+import { common, user, type PlayerStats } from "@/lib/data"
 import { entries } from "@lenix/lenix"
 import {
 	ChevronRight,
@@ -28,37 +28,6 @@ import {
 import { useNavigate } from "react-router"
 import { useState } from "react"
 
-const leaderboard = [
-	{ place: 1, name: "7MOOD", rank: "CHALLENGER", rp: "6,320", avatar: "☠️" },
-	{ place: 2, name: "nour", rank: "GRANDMASTER", rp: "5,870", avatar: "◉" },
-	{ place: 3, name: "M_D7M", rank: "GRANDMASTER", rp: "5,630", avatar: "◌" },
-	{ place: 4, name: "iSnipe", rank: "MASTER", rp: "5,120", avatar: "◎" },
-	{ place: 5, name: "abood", rank: "MASTER", rp: "4,980", avatar: "◍" },
-]
-
-const stats = [
-	{ label: "Matches", value: "124" },
-	{ label: "Wins", value: user.stats.wins.toLocaleString() },
-	{ label: "Win Rate", value: `${((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%` },
-	{ label: "Kills", value: user.stats.kills.toLocaleString() },
-	{ label: "K/D Ratio", value: (user.stats.kills / user.stats.deaths).toFixed(2) },
-	{ label: "Best Streak", value: "12" },
-]
-
-const initialTeamMembers = [
-	{ name: user.id, rank: "GOLD II", rp: "2,450", avatar: user.avatar },
-	{ name: "nour", rank: "GRANDMASTER", rp: "5,870", avatar: "◉" },
-	{ name: "M_D7M", rank: "GRANDMASTER", rp: "5,630", avatar: "◌" },
-	{ name: "iSnipe", rank: "MASTER", rp: "5,120", avatar: "◎" },
-]
-
-const rankColors: Record<string, string> = {
-	CHALLENGER: "text-red-400",
-	GRANDMASTER: "text-pink-400",
-	MASTER: "text-purple-400",
-	"GOLD II": "text-primary",
-}
-
 const modeIcons = [User, Users, Users, Users]
 
 const Panel = ({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) => (
@@ -74,15 +43,64 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 	</div>
 )
 
+export const calculatePlayerScore = (stats: PlayerStats) => {
+	const weights = {
+		win: 100,
+		loss: -35,
+		kill: 4,
+		assist: 2,
+		death: -3,
+	};
+
+	return Math.max(0,
+		(stats.wins * weights.win) +
+		(stats.losses * weights.loss) +
+		(stats.kills * weights.kill) +
+		(stats.assits * weights.assist) +
+		(stats.deaths * weights.death)
+	);
+};
+
 export const Play = ({ onOpenFriendsDrawer }: {
 	onOpenFriendsDrawer?: () => void
 }) => {
 	const pvpOptions = entries(PvP_AMOUNT)
 	const [selectedPvp, setSelectedPvp] = useState(String(pvpOptions[3]?.[0] ?? pvpOptions[0]?.[0] ?? 1))
-	const [teamMembers, setTeamMembers] = useState(initialTeamMembers)
 	const [leaderName, setLeaderName] = useState(user.id)
 	const nav = useNavigate()
+
+	const leaderboard = entries(common.users)
+		.map(([userId, { name, avatar, stats }]) => ({
+			userId,
+			name,
+			avatar,
+			score: calculatePlayerScore(stats),
+		}))
+		.sort((a, b) => b.score - a.score)
+		.map((player, index) => ({
+			...player,
+			place: index + 1,
+		}));
+
+	const player = common.users[user.id]
+	const [teamMembers, setTeamMembers] = useState([
+		{
+			name: player.name,
+			avatar: player.avatar,
+			score: leaderboard.find(data => data.userId === user.id)?.score || -1
+		}
+	])
+	const playerStats = player.stats
+	const stats = [
+		{ label: "Matches", value: playerStats.wins + playerStats.losses },
+		{ label: "Wins", value: playerStats.wins },
+		{ label: "Win Rate", value: ((playerStats.wins / (playerStats.wins + playerStats.losses)) * 100).toFixed(1)},
+		{ label: "Kills", value: playerStats.kills },
+		{ label: "K/D Ratio", value: (playerStats.kills / playerStats.deaths).toFixed(2) },
+	]
+
 	const visibleTeamMembers = teamMembers.slice(0, Number(selectedPvp) || teamMembers.length)
+
 	const kickPlayer = (name: string) => {
 		setTeamMembers(currentMembers => {
 			const nextMembers = currentMembers.filter(member => member.name !== name)
@@ -135,7 +153,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			</Panel>
 
 			<Panel className="relative col-start-2 row-span-2 row-start-1 flex min-h-0 flex-col p-[clamp(0.9rem,1.2vw,1.25rem)]">
-				<div className="absolute inset-x-0 top-1/4 h-[clamp(8rem,16vh,13rem)] bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.22),transparent_65%)]" />
+				<div className="absolute inset-x-0 -top-1/10 h-full bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.22),transparent_65%)]" />
 				<div className="relative flex justify-end">
 					<Info className="size-5 text-muted-foreground" />
 				</div>
@@ -145,6 +163,33 @@ export const Play = ({ onOpenFriendsDrawer }: {
 							<Target className="mx-auto mb-1.5 size-[clamp(1.7rem,2.4vw,2.1rem)] text-primary" />
 							<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
 							<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
+						</div>
+							<div>
+								<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
+								<ToggleGroup
+									className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
+									style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
+									type="single"
+									value={selectedPvp}
+									onValueChange={value => value && setSelectedPvp(value)}
+								>
+									{pvpOptions.map(([pvpAmount], index) => {
+										const Icon = modeIcons[index] ?? Users
+										const size = index + 1
+
+										return (
+											<ToggleGroupItem
+												key={pvpAmount}
+												value={pvpAmount.toString()}
+												className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-white/10 bg-white/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
+											>
+												<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
+												<span>{size}v{size}</span>
+											</ToggleGroupItem>
+										)
+									})}
+								</ToggleGroup>
+							</div>
 						</div>
 
 						<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
@@ -164,9 +209,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 													)}
 													<span className="truncate">{player.name}</span>
 												</span>
-												<span className={`font-bold ${rankColors[player.rank]}`}>
-													{player.rank}
-												</span>
 												<span className="flex justify-end">
 													{isLeader && <Crown className="size-4 text-primary" />}
 												</span>
@@ -185,34 +227,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								)
 							})}
 						</div>
-
-						<div>
-							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
-							<ToggleGroup
-								className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
-								style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
-								type="single"
-								value={selectedPvp}
-								onValueChange={value => value && setSelectedPvp(value)}
-							>
-								{pvpOptions.map(([pvpAmount], index) => {
-									const Icon = modeIcons[index] ?? Users
-									const size = index + 1
-
-									return (
-										<ToggleGroupItem
-											key={pvpAmount}
-											value={pvpAmount.toString()}
-											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-white/10 bg-white/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
-										>
-											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
-											<span>{size}v{size}</span>
-										</ToggleGroupItem>
-									)
-								})}
-							</ToggleGroup>
-						</div>
-					</div>
 
 					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-white/10" />
 
@@ -244,17 +258,18 @@ export const Play = ({ onOpenFriendsDrawer }: {
 						<div key={player.place} className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04]">
 							<span className="font-bold text-muted-foreground">{player.place}</span>
 							<span className="flex min-w-0 items-center gap-3 font-semibold">
-								<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">{player.avatar}</span>
+								<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">
+									<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+								</span>
 								<span className="truncate">{player.name}</span>
 							</span>
-							<span className={`font-bold ${rankColors[player.rank]}`}>{player.rank}</span>
-							<span className="text-right font-semibold">{player.rp}</span>
+							<span className="text-right font-semibold">{player.score}</span>
 						</div>
 					))}
 					<div className="grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md border border-primary/30 bg-primary/15 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)]">
 						<span className="font-bold text-primary">23</span>
 						<span className="flex min-w-0 items-center gap-3 font-bold text-primary">
-							<img src={user.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+							<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
 							<span className="truncate">{user.id}</span>
 						</span>
 						<span className="font-bold text-primary">GOLD II</span>

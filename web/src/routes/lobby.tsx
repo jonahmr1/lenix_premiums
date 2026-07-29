@@ -65,7 +65,6 @@ export const Home = () => {
 	.filter(([, userData]) => userData.status === 'offline')
 	.map(([userId, { status }]) => ({ name: common.users[userId].name, status }))
 
-
 	return (
 		<div className="flex flex-col h-screen">
 			<div className="flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10">
