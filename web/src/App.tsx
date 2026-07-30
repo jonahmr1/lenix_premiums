@@ -2,6 +2,13 @@ import { useState } from "react"
 import { Button } from "./components/ui/button"
 import { IconSpray } from '@tabler/icons-react';
 
+const apps = [
+	{
+		name: 'Spray',
+		color: 'primary'
+	}
+]
+
 function App() {
   const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait")
   const tabletBg = `/${orientation}.jpg`
@@ -25,14 +32,16 @@ function App() {
           />
 
           <div className="relative flex size-full p-4">
-            <div className="text-center">
-							<Button className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer">
-								<div className="size-full bg-primary/33 p-2 rounded-xl">
-									<IconSpray className="size-full text-sidebar-primary" stroke={2} />
-								</div>
-							</Button>
-							<p className="text-foreground text-sm">Spray</p>
-						</div>
+            {apps.map(({ name, color }) => (
+							<div className="text-center">
+								<Button className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer">
+									<div className="size-full bg-primary/33 p-2 rounded-xl">
+										<IconSpray className={`size-full text-sidebar-${color}`} stroke={2} />
+									</div>
+								</Button>
+								<p className="text-foreground text-sm">{name}</p>
+							</div>
+						))}
           </div>
 				</div>
 			</div>
