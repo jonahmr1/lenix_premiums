@@ -46,7 +46,9 @@ export const Index = ({
 				</div>
 			</div>
 			<Separator className="bg-muted-foreground" />
-			{children}
+			<div className="bg-muted size-full">
+				{children}
+			</div>
 		</div>
 	)
 }
