@@ -4,6 +4,11 @@ import { Home } from "./routes/home"
 import { apps } from "./contants"
 import { Settings } from "./routes/settings"
 import { Index } from "./routes"
+import { getStorage } from "@lenix/lenix"
+import { toggleTheme } from "./lib"
+
+const theme = getStorage<Storage>('theme')
+if (theme) toggleTheme(theme)
 
 const AppFragment = ({
 	appName,

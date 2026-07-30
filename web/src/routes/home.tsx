@@ -24,7 +24,6 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles }}: Om
 }
 
 export const Home = () => {
-	
 	return (
 		<div className="relative grid size-full grid-cols-5 content-start gap-4 p-4">
 			<App
@@ -32,7 +31,7 @@ export const Home = () => {
 				styles="bg-muted"
 				icon={{
 					element: IconSettings,
-					styles: 'text-gray-300',
+					styles: 'text-zinc-400',
 				}}
 			/>
 			{apps.map(app => <App {...app} key={app.name} />)}

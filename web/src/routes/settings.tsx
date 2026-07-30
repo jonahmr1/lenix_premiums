@@ -1,6 +1,7 @@
 import { Field, FieldContent, FieldLabel } from "@/components/ui/field"
 import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
+import { getTheme, toggleTheme } from "@/lib"
 
 export const Settings = () => {
 	return (
@@ -19,7 +20,7 @@ export const Settings = () => {
 					<FieldContent>
 						<FieldLabel>Turn on light mode</FieldLabel>
 					</FieldContent>
-					<Switch />
+					<Switch defaultChecked={getTheme() === 'dark'} onCheckedChange={value => toggleTheme(value ? 'light' : 'dark')} />
 				</Field>
 			</div>
 		</div>

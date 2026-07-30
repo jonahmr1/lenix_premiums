@@ -9,3 +9,7 @@ export interface AppIcon {
 	};
 	element: () => React.JSX.Element;
 }
+
+export interface Storage {
+	theme: 'dark' | 'light'
+}
