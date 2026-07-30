@@ -1,20 +1,32 @@
 import { useState } from "react"
 
 function App() {
-	const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait')
-  const tabletBgClass =
-    orientation === "portrait"
-      ? "bg-[url('/portrait.jpg')]"
-      : "bg-[url('/landscape.jpg')]"
+  const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait")
+  const tabletBg = `/${orientation}.jpg`
 
-	return (
-		<div className="h-screen w-full flex items-center justify-center">
-			<img src={'/ped.png'} className="absolute h-full object-cover pointer-events-none -z-1" />
-			<div className={`bg-muted ${orientation === 'portrait' ? 'h-8/10 w-5/10' : 'h-5/10 w-8/10'} ${tabletBgClass}`}>
+  return (
+    <div className="relative flex h-screen w-full items-center justify-center">
+      <img
+        src="/ped.png"
+        className="pointer-events-none absolute inset-0 -z-1 h-full w-full object-cover"
+        alt=""
+      />
 
-			</div>
-		</div>
-	)
+      <div
+        className={`
+					rounded-3xl border-black bg-black p-5
+          ${orientation === "portrait" ? "h-[80%] aspect-3/4" : "w-[80%] aspect-4/3"}
+        `}
+      >
+        <img
+          src={tabletBg}
+          className="h-full w-full object-fill"
+          alt=""
+        />
+				<p className="text-white z-50">test</p>
+      </div>
+    </div>
+  )
 }
 
 export default App
