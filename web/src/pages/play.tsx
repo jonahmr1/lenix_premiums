@@ -150,23 +150,23 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
 							</div>
 							<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
-								{teamMembers.map((player, index) => {
-									const isLeader = 'Lenix' === player.name
+								{teamMembers.map((teamPlayer, index) => {
+									const isLeader = 'Lenix' === teamPlayer.name
 
 									return (
-										<ContextMenu key={player.name}>
+										<ContextMenu key={teamPlayer.name}>
 											<ContextMenuTrigger asChild>
 												<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
 													<span>{index + 1}</span>
 													<span className="flex min-w-0 items-center gap-2 font-semibold">
-														{typeof player.avatar === 'string' && player.avatar.startsWith('/') ? (
-															<img src={player.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
+														{typeof teamPlayer.avatar === 'string' && teamPlayer.avatar.startsWith('/') ? (
+															<img src={teamPlayer.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
 														) : (
 															<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
-																<img src={player.avatar} />
+																<img src={teamPlayer.avatar} />
 															</span>
 														)}
-														<span className="truncate">{player.name}</span>
+														<span className="truncate">{teamPlayer.name}</span>
 													</span>
 													<span className="flex justify-end">
 														{isLeader && <Crown className="size-4 text-primary" />}
@@ -178,7 +178,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 													Set As Leader
 												</ContextMenuItem>
 												<ContextMenuSeparator />
-												<ContextMenuItem variant="destructive" disabled={teamMembers.length <= 1} onClick={() => {/* TODO */}}>
+												<ContextMenuItem variant="destructive" disabled={teamPlayer.name === player.name} onClick={() => {/* TODO */}}>
 													Kick Player
 												</ContextMenuItem>
 											</ContextMenuContent>
