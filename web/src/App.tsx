@@ -3,30 +3,37 @@ import { Button } from "./components/ui/button"
 import { IconSpray } from '@tabler/icons-react';
 
 function App() {
-  const [orientation, setOrientation] = useState<"portrait" | "landscape">("landscape")
+  const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait")
   const tabletBg = `/${orientation}.jpg`
 
   return (
     <div className="relative flex h-screen w-full items-center justify-center">
       <img
         src="/ped.png"
-        className="pointer-events-none absolute inset-0 -z-1 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
         alt=""
       />
 
 			<div
-				className={`rounded-3xl ring-20 ${orientation === "portrait" ? "h-[80%] aspect-3/4" : "w-[80%] aspect-4/3"}`}
+				className={`rounded-3xl ring-20 ring-background ${orientation === "portrait" ? "h-8/10 aspect-3/4" : "w-5/10 aspect-4/3"}`}
 			>
-				<div className="relative h-full w-full overflow-hidden">
-					<div className="z-20 h-full w-full flex bg-muted-foreground">
-						<Button>
-							<IconSpray stroke={2} />
-						</Button>
-					</div>
+				<div className="relative size-full overflow-hidden">
 					<img
-						src={tabletBg}
-						className="-z-10 h-full w-full"
-					/>
+            src={tabletBg}
+            className="absolute size-full"
+            alt=""
+          />
+
+          <div className="relative flex size-full p-4">
+            <div className="text-center">
+							<Button className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer">
+								<div className="size-full bg-primary/33 p-2 rounded-xl">
+									<IconSpray className="size-full text-sidebar-primary" stroke={2} />
+								</div>
+							</Button>
+							<p className="text-foreground text-sm">Spray</p>
+						</div>
+          </div>
 				</div>
 			</div>
     </div>
