@@ -4,7 +4,7 @@ import { Home } from "./routes/home"
 import { apps } from "./contants"
 
 function App() {
-  const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait")
+  const [orientation] = useState<"portrait" | "landscape">("portrait")
   const tabletBg = `/${orientation}.jpg`
 
   return (
@@ -16,7 +16,7 @@ function App() {
       />
 
 			<div
-				className={`rounded-3xl ring-20 ring-background ${orientation === "portrait" ? "h-8/10 aspect-3/4" : "w-5/10 aspect-4/3"}`}
+				className={`rounded-xl ring-20 ring-black ${orientation === "portrait" ? "h-8/10 aspect-3/4" : "w-5/10 aspect-4/3"}`}
 			>
 				<div className="relative size-full overflow-hidden">
 					<img
@@ -27,10 +27,10 @@ function App() {
 					<MemoryRouter>
 						<Routes>
 							<Route path="/" element={<Home />}/>
-							{apps.map(({ name, iconStyles }) => (
+							{apps.map(({ name, element: Element }) => (
 								<Route key={name} path={`/${name}`} element={
-									<div className="">
-										test
+									<div className="relative z-10 flex size-full bg-background rounded-xl overflow-hidden">
+										<Element appName={name} />
 									</div>
 								}/>
 							))}
