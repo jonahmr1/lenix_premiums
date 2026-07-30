@@ -10,12 +10,13 @@ import {
 import { NavigationMenu } from "@/components/ui/navigation-menu"
 import { common, session, user } from "@/lib/data";
 import { getTheme, toggleTheme } from "@/lib/theme";
-import { BarChart3, Gamepad, Moon, PlayIcon, Sun, Trophy, Users, type LucideIcon } from "lucide-react";
+import { BarChart3, Moon, PlayIcon, Sun, Trophy, Users, type LucideIcon } from "lucide-react";
 import { Play } from "@/pages/play"
 import { Leaderboard } from "@/pages/leaderboard"
-import type { BaseRoute } from "@/types"
+import { Stats } from "@/pages/stats"
+import type { Route } from "@/types"
 import { useState } from "react"
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose } from "@/components/ui/drawer"
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
 import { userStatuses } from "@/constants"
 
 const useTheme = () => getTheme()
@@ -43,7 +44,7 @@ export const Home = () => {
 			to: '/stats',
 			label: 'STATS',
 			icon: BarChart3,
-			element: <></>
+			element: <Stats />
 		},
 		{
 			to: '/leaderboard',
@@ -51,7 +52,7 @@ export const Home = () => {
 			icon: Trophy,
 			element: <Leaderboard />
 		},
-	] satisfies (BaseRoute & { icon: LucideIcon })[]
+	] satisfies (Route & { icon: LucideIcon })[]
 
 	const player = common.users[user.id]
 	const playerStatus = userStatuses[session.users[user.id].status]
@@ -115,7 +116,7 @@ export const Home = () => {
 							{Object.entries(userStatuses).filter(([status]) => status !== 'in_game').map(([value, option]) => (
 								<DropdownMenuItem
 									key={value}
-									onClick={() => {/* TODO */}}
+									onClick={() => {/* TODO */ }}
 								>
 									<span className={`size-2 rounded-full ${option.className}`} />
 									{option.label}

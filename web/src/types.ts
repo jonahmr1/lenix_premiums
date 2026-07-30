@@ -1,16 +1,8 @@
-import type { userStatuses } from "./constants";
-
-export interface BaseRoute {
+export interface Route {
 	to: `/${string}`;
 	label: string;
 	element: React.JSX.Element;
 }
-
-export interface Route extends BaseRoute {
-	children?: BaseRoute[]
-}
-
-export type UserStatus = keyof typeof userStatuses
 
 export interface PlayerStats {
 	kills: number;
