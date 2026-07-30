@@ -82,7 +82,6 @@ export const Home = () => {
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
 	const notifications: UserNotification[] = session.notifications
 		.filter(notification => notification.type === 'party_invite' && notification.invite.toUserId === user.id)
-	const unreadCount = notifications.filter(notification => !notification.isRead).length
 
 	return (
 		<div className="flex flex-col h-screen">
@@ -115,11 +114,9 @@ export const Home = () => {
 						<PopoverTrigger asChild>
 							<Button variant="ghost" size="icon" className="relative">
 								<Bell />
-								{unreadCount > 0 && (
-									<Badge className="absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]">
-										{unreadCount}
-									</Badge>
-								)}
+								<Badge className="absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]">
+									{notifications.length}
+								</Badge>
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent align="end" className="w-[21.5rem] gap-3 border border-white/10 bg-popover/95 p-3">
@@ -135,7 +132,7 @@ export const Home = () => {
 									const sender = common.users[notification.invite.fromUserId]
 
 									return (
-										<div key={notification.id} className={`rounded-lg border border-white/10 p-3 ${notification.isRead ? 'bg-white/[0.02]' : 'bg-white/[0.04]'}`}>
+										<div key={notification.id} className={`rounded-lg border border-white/10 p-3 bg-white/[0.04]`}>
 											<div className="flex min-w-0 items-center gap-3">
 												<div className="size-9 shrink-0 rounded-full bg-white/10 p-1">
 													<img src={sender?.avatar} alt="" className="size-full rounded-full object-cover" />

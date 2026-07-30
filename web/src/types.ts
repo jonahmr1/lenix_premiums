@@ -24,6 +24,5 @@ export interface UserNotification {
 	title: string;
 	description: string;
 	createdAt: string;
-	isRead: boolean;
 	invite: PartyInvite;
 }

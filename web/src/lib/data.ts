@@ -735,7 +735,6 @@ export const session: {
 			title: 'Party Invite',
 			description: 'nour invited you to join their party.',
 			createdAt: 'Just now',
-			isRead: false,
 			invite: {
 				fromUserId: 'nour',
 				toUserId: 'lenix',
@@ -748,7 +747,6 @@ export const session: {
 			title: 'Party Invite',
 			description: '7MOOD invited you to join their party.',
 			createdAt: '2m ago',
-			isRead: false,
 			invite: {
 				fromUserId: '7MOOD',
 				toUserId: 'lenix',
@@ -761,7 +759,6 @@ export const session: {
 			title: 'Party Invite',
 			description: 'M_D7M invited you to join their party.',
 			createdAt: '8m ago',
-			isRead: true,
 			invite: {
 				fromUserId: 'M_D7M',
 				toUserId: 'lenix',
