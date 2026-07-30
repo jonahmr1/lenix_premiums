@@ -738,7 +738,6 @@ export const session: {
 			invite: {
 				fromUserId: 'nour',
 				toUserId: 'lenix',
-				partySize: 2,
 			},
 		},
 		{
@@ -750,7 +749,6 @@ export const session: {
 			invite: {
 				fromUserId: '7MOOD',
 				toUserId: 'lenix',
-				partySize: 4,
 			},
 		},
 		{
@@ -762,7 +760,6 @@ export const session: {
 			invite: {
 				fromUserId: 'M_D7M',
 				toUserId: 'lenix',
-				partySize: 2,
 			},
 		},
 	]

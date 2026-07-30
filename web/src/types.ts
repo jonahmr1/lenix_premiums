@@ -15,7 +15,6 @@ export interface PlayerStats {
 export interface PartyInvite {
 	fromUserId: string;
 	toUserId: string;
-	partySize: number;
 }
 
 export interface UserNotification {

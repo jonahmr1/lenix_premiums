@@ -125,7 +125,6 @@ export const Home = () => {
 									<Inbox className="size-4 text-primary" />
 									Notifications
 								</PopoverTitle>
-								<PopoverDescription>Pending party invites.</PopoverDescription>
 							</PopoverHeader>
 							<div className="max-h-80 space-y-2 overflow-y-auto pr-1">
 								{notifications.length ? notifications.map(notification => {
