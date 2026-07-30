@@ -15,7 +15,7 @@ export const Index = ({
 
 	return (
 		<div className="size-full flex overflow-hidden flex-col">
-			<div className="bg-muted h-4/100 w-full overflow-hidden px-2 py-1 items-center justify-between flex">
+			<div className="bg-card h-4/100 w-full overflow-hidden px-2 py-1 items-center justify-between flex">
 				<div className="flex items-center">
 					<Button
 						variant='destructive'
@@ -46,7 +46,7 @@ export const Index = ({
 				</div>
 			</div>
 			<Separator className="bg-muted-foreground" />
-			<div className="bg-muted size-full">
+			<div className="bg-card size-full">
 				{children}
 			</div>
 		</div>
