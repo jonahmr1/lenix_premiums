@@ -36,8 +36,6 @@ export const Stats = () => {
 	const score = calculatePlayerScore(stats)
 	const rank = getRankTier(score)
 	const history = common.users[user.id].history ?? []
-	const recentWins = history.filter(match => match.result === "win").length
-	const recentWinRate = history.length ? `${((recentWins / history.length) * 100).toFixed(1)}%` : "0%"
 
 	const summary = [
 		{ label: "Rank", value: rank.label, icon: Shield, className: rank.className },
@@ -104,11 +102,11 @@ export const Stats = () => {
 								</div>
 								<div className="grid w-full grid-cols-2 gap-2">
 									<div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Recent Win Rate</div>
-										<div className="mt-1 text-lg font-extrabold text-green-400">{recentWinRate}</div>
+										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Win Rate</div>
+										<div className="mt-1 text-lg font-extrabold text-green-400">{getWinRate(stats)}</div>
 									</div>
 									<div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Recent Games</div>
+										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">History Items</div>
 										<div className="mt-1 text-lg font-extrabold text-white">{history.length}</div>
 									</div>
 								</div>
