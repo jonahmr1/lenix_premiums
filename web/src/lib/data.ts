@@ -1,5 +1,5 @@
 import type { userStatuses } from '@/constants';
-import type { PlayerStats } from '@/types';
+import type { PlayerStats, UserNotification } from '@/types';
 
 const avatar = 'https://lenix.dev/favicon-light.svg'
 
@@ -716,6 +716,7 @@ export const session: {
 			status: UserStatus;
 		};
 	};
+	notifications: UserNotification[];
 } = {
 	users: {
 		lenix: {
@@ -726,7 +727,43 @@ export const session: {
 			isReady: false,
 			status: 'online'
 		},
-	}
+	},
+	notifications: [
+		{
+			id: 'notification-001',
+			type: 'party_invite',
+			title: 'Party Invite',
+			description: 'nour invited you to join their party.',
+			createdAt: 'Just now',
+			isRead: false,
+			invite: {
+				fromUserId: 'nour',
+				toUserId: 'lenix',
+				partySize: 2,
+			},
+		},
+		{
+			id: 'notification-002',
+			type: 'party_invite',
+			title: 'Party Invite',
+			description: '7MOOD invited you to join their party.',
+			createdAt: '2m ago',
+			isRead: false,
+			invite: {
+				fromUserId: '7MOOD',
+				toUserId: 'lenix',
+				partySize: 4,
+			},
+		},
+		{
+			id: 'notification-003',
+			type: 'system',
+			title: 'Rank Updated',
+			description: 'Your latest score changed your rank progress.',
+			createdAt: '8m ago',
+			isRead: true,
+		},
+	]
 }
 
 export const user = {

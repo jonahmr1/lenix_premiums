@@ -11,3 +11,19 @@ export interface PlayerStats {
 	wins: number;
 	losses: number;
 }
+
+export interface PartyInvite {
+	fromUserId: string;
+	toUserId: string;
+	partySize: number;
+}
+
+export interface UserNotification {
+	id: string;
+	type: 'party_invite' | 'system';
+	title: string;
+	description: string;
+	createdAt: string;
+	isRead: boolean;
+	invite?: PartyInvite;
+}

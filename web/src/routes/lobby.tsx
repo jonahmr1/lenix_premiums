@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout"
 import { useLocation, useNavigate } from "react-router"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
 	DropdownMenu,
@@ -8,16 +9,25 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { NavigationMenu } from "@/components/ui/navigation-menu"
+import {
+	Popover,
+	PopoverContent,
+	PopoverDescription,
+	PopoverHeader,
+	PopoverTitle,
+	PopoverTrigger,
+} from "@/components/ui/popover"
 import { common, session, user } from "@/lib/data";
 import { getTheme, toggleTheme } from "@/lib/theme";
-import { BarChart3, Moon, PlayIcon, Sun, Trophy, Users, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X, type LucideIcon } from "lucide-react";
 import { Play } from "@/pages/play"
 import { Leaderboard } from "@/pages/leaderboard"
 import { Stats } from "@/pages/stats"
-import type { Route } from "@/types"
+import type { UserNotification, Route } from "@/types"
 import { useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
 import { userStatuses } from "@/constants"
+import { toast } from "sonner"
 
 const useTheme = () => getTheme()
 
@@ -26,6 +36,7 @@ export const Home = () => {
 	const nav = useNavigate()
 	const theme = useTheme()
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
+	const [notifications, setNotifications] = useState<UserNotification[]>(() => session.notifications.filter(notification => notification.invite?.toUserId === user.id || notification.type === 'system'))
 
 	const pages = [
 		// {
@@ -71,6 +82,21 @@ export const Home = () => {
 	})
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
+	const unreadCount = notifications.filter(notification => !notification.isRead).length
+	const removeNotification = (notificationId: string) => setNotifications(currentNotifications => currentNotifications.filter(notification => notification.id !== notificationId))
+	
+	const acceptInvite = (notification: UserNotification) => {
+		if (!notification.invite) return
+
+		removeNotification(notification.id)
+		toast.success(`Joined ${common.users[notification.invite.fromUserId]?.name ?? 'player'}'s party`)
+	}
+	const rejectInvite = (notification: UserNotification) => {
+		if (!notification.invite) return
+
+		removeNotification(notification.id)
+		toast.info(`Declined ${common.users[notification.invite.fromUserId]?.name ?? 'player'}'s invite`)
+	}
 
 	return (
 		<div className="flex flex-col h-screen">
@@ -99,6 +125,81 @@ export const Home = () => {
 					</NavigationMenu>
 				</div>
 				<div className="flex items-center justify-end w-1/10 gap-3">
+					<Popover>
+						<PopoverTrigger asChild>
+							<Button variant="ghost" size="icon" className="relative">
+								<Bell />
+								{unreadCount > 0 && (
+									<Badge className="absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]">
+										{unreadCount}
+									</Badge>
+								)}
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent align="end" className="w-[21.5rem] gap-3 border border-white/10 bg-popover/95 p-3">
+							<PopoverHeader>
+								<PopoverTitle className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+									<Inbox className="size-4 text-primary" />
+									Notifications
+								</PopoverTitle>
+								<PopoverDescription>Recent alerts and pending requests.</PopoverDescription>
+							</PopoverHeader>
+							<div className="max-h-80 space-y-2 overflow-y-auto pr-1">
+								{notifications.length ? notifications.map(notification => {
+									const sender = notification.invite ? common.users[notification.invite.fromUserId] : undefined
+
+									return (
+										<div key={notification.id} className={`rounded-lg border border-white/10 p-3 ${notification.isRead ? 'bg-white/[0.02]' : 'bg-white/[0.04]'}`}>
+											<div className="flex min-w-0 items-center gap-3">
+												<div className="size-9 shrink-0 rounded-full bg-white/10 p-1">
+													{sender ? (
+														<img src={sender.avatar} alt="" className="size-full rounded-full object-cover" />
+													) : (
+														<div className="grid size-full place-items-center rounded-full bg-primary/10">
+															<Bell className="size-4 text-primary" />
+														</div>
+													)}
+												</div>
+												<div className="min-w-0">
+													<div className="truncate font-semibold">{notification.title}</div>
+													<div className="line-clamp-2 text-[0.65rem] text-muted-foreground">{notification.description}</div>
+													<div className="mt-0.5 text-[0.6rem] text-muted-foreground">{notification.createdAt}</div>
+												</div>
+											</div>
+											{notification.type === 'party_invite' && notification.invite ? (
+												<div className="mt-3 grid grid-cols-2 gap-2">
+													<Button size="sm" className="gap-1" onClick={() => acceptInvite(notification)}>
+														<Check className="size-3" />
+														Accept
+													</Button>
+													<Button size="sm" variant="ghost" className="gap-1 text-muted-foreground" onClick={() => rejectInvite(notification)}>
+														<X className="size-3" />
+														Reject
+													</Button>
+												</div>
+											) : (
+												<Button size="sm" variant="ghost" className="mt-3 w-full text-muted-foreground" onClick={() => removeNotification(notification.id)}>
+													Dismiss
+												</Button>
+											)}
+										</div>
+									)
+								}) : (
+									<div className="grid min-h-32 place-items-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] p-4 text-center text-muted-foreground">
+										<div>
+											<Inbox className="mx-auto mb-2 size-5 text-primary/70" />
+											<div className="font-semibold">No notifications</div>
+										</div>
+									</div>
+								)}
+							</div>
+						</PopoverContent>
+					</Popover>
+					<Button
+						variant='ghost'
+						onClick={() => toggleTheme()}
+					>{theme === 'dark' ? <Sun /> : <Moon />}
+					</Button>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-auto gap-3 px-2 py-1 normal-case">
@@ -124,11 +225,6 @@ export const Home = () => {
 							))}
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Button
-						variant='ghost'
-						onClick={() => toggleTheme()}
-					>{theme === 'dark' ? <Sun /> : <Moon />}
-					</Button>
 					<Drawer direction="right" open={isFriendsDrawerOpen} onOpenChange={setIsFriendsDrawerOpen}>
 						<DrawerTrigger asChild>
 							<Button>
