@@ -18,7 +18,7 @@ export const Home = () => {
 							<IconSpray className={`size-full ${iconStyles}`} stroke={2} />
 						</div>
 					</Button>
-					<p className="text-white text-sm">{name}</p>
+					<p className="text-white text-xs font-bold">{name}</p>
 				</div>
 			))}
 		</div>
