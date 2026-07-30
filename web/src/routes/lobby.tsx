@@ -12,7 +12,6 @@ import { NavigationMenu } from "@/components/ui/navigation-menu"
 import {
 	Popover,
 	PopoverContent,
-	PopoverDescription,
 	PopoverHeader,
 	PopoverTitle,
 	PopoverTrigger,
@@ -119,7 +118,7 @@ export const Home = () => {
 								</Badge>
 							</Button>
 						</PopoverTrigger>
-						<PopoverContent align="end" className="w-[21.5rem] gap-3 border border-white/10 bg-popover/95 p-3">
+						<PopoverContent align="end" className="w-[21.5rem] gap-3 border border-foreground/10 bg-popover/95 p-3">
 							<PopoverHeader>
 								<PopoverTitle className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
 									<Inbox className="size-4 text-primary" />
@@ -131,9 +130,9 @@ export const Home = () => {
 									const sender = common.users[notification.invite.fromUserId]
 
 									return (
-										<div key={notification.id} className={`rounded-lg border border-white/10 p-3 bg-white/[0.04]`}>
+										<div key={notification.id} className={`rounded-lg border border-foreground/10 p-3 bg-foreground/[0.04]`}>
 											<div className="flex min-w-0 items-center gap-3">
-												<div className="size-9 shrink-0 rounded-full bg-white/10 p-1">
+												<div className="size-9 shrink-0 rounded-full bg-foreground/10 p-1">
 													<img src={sender?.avatar} alt="" className="size-full rounded-full object-cover" />
 												</div>
 												<div className="min-w-0">
@@ -155,7 +154,7 @@ export const Home = () => {
 										</div>
 									)
 								}) : (
-									<div className="grid min-h-32 place-items-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] p-4 text-center text-muted-foreground">
+									<div className="grid min-h-32 place-items-center rounded-lg border border-dashed border-foreground/10 bg-foreground/[0.02] p-4 text-center text-muted-foreground">
 										<div>
 											<Inbox className="mx-auto mb-2 size-5 text-primary/70" />
 											<div className="font-semibold">No pending invites</div>
@@ -173,7 +172,7 @@ export const Home = () => {
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-auto gap-3 px-2 py-1 normal-case">
-								<div className="relative size-9 shrink-0 rounded-full border border-primary/60 bg-white/5 p-1">
+								<div className="relative size-9 shrink-0 rounded-full border border-primary/60 bg-foreground/5 p-1">
 									<img src={player.avatar} alt="" className="size-full rounded-full object-cover" />
 									<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatus.className}`} />
 								</div>
@@ -208,9 +207,9 @@ export const Home = () => {
 							</DrawerHeader>
 							<div className="flex flex-col gap-2 px-4">
 								{availableFriends.map(friend => (
-									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.04] p-3">
+									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3">
 										<div className="flex min-w-0 items-center gap-3">
-											<div className="relative size-9 shrink-0 rounded-full bg-white/10 p-1">
+											<div className="relative size-9 shrink-0 rounded-full bg-foreground/10 p-1">
 												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
 												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
 											</div>
@@ -230,9 +229,9 @@ export const Home = () => {
 									<div className="h-px flex-1 bg-border/50" />
 								</div>
 								{offlineFriends.map(friend => (
-									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.02] p-3 opacity-70">
+									<div key={friend.name} className="flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 opacity-70">
 										<div className="flex min-w-0 items-center gap-3">
-											<div className="relative size-9 shrink-0 rounded-full bg-white/10 p-1">
+											<div className="relative size-9 shrink-0 rounded-full bg-foreground/10 p-1">
 												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
 												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
 											</div>

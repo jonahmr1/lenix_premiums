@@ -24,7 +24,7 @@ const getKdRatio = (stats: PlayerStats) => stats.deaths ? (stats.kills / stats.d
 const getAverage = (value: number, matches: number) => matches ? (value / matches).toFixed(1) : "0.0"
 
 const Panel = ({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) => (
-	<section className={`rounded-xl border border-white/10 bg-black/35 ${className}`}>
+	<section className={`rounded-xl border border-foreground/10 bg-background/35 ${className}`}>
 		{children}
 	</section>
 )
@@ -40,7 +40,7 @@ export const Stats = () => {
 	const summary = [
 		{ label: "Rank", value: rank.label, icon: Shield, className: rank.className },
 		{ label: "Score", value: score.toLocaleString(), icon: Trophy, className: "text-primary" },
-		{ label: "Matches", value: matches.toLocaleString(), icon: Activity, className: "text-white" },
+		{ label: "Matches", value: matches.toLocaleString(), icon: Activity, className: "text-foreground" },
 		{ label: "Win Rate", value: getWinRate(stats), icon: BarChart3, className: "text-green-400" },
 	]
 
@@ -74,7 +74,7 @@ export const Stats = () => {
 			</Panel>
 
 			<Tabs defaultValue="stats" className="min-h-0 flex-1">
-				<TabsList className="w-fit border border-white/10 bg-black/35">
+				<TabsList className="w-fit border border-foreground/10 bg-background/35">
 					<TabsTrigger value="stats" className="gap-2 px-3">
 						<BarChart3 className="size-4" />
 						{copy.tabs.stats}
@@ -93,7 +93,7 @@ export const Stats = () => {
 								<h2 className="text-xs font-bold uppercase tracking-widest">Current Rank</h2>
 							</div>
 							<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-3 text-center">
-								<div className="grid size-[clamp(5rem,7vw,6.5rem)] place-items-center rounded-xl border border-primary/30 bg-gradient-to-br from-primary/30 via-black to-primary/10">
+								<div className="grid size-[clamp(5rem,7vw,6.5rem)] place-items-center rounded-xl border border-primary/30 bg-gradient-to-br from-primary/30 via-background to-primary/10">
 									<Trophy className="size-[clamp(2.5rem,3.5vw,3.25rem)] fill-primary/25 text-primary" />
 								</div>
 								<div>
@@ -101,13 +101,13 @@ export const Stats = () => {
 									<div className="mt-1 text-[clamp(0.95rem,1.3vw,1.2rem)] font-bold text-primary">{score.toLocaleString()} Score</div>
 								</div>
 								<div className="grid w-full grid-cols-2 gap-2">
-									<div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
+									<div className="rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3">
 										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Win Rate</div>
 										<div className="mt-1 text-lg font-extrabold text-green-400">{getWinRate(stats)}</div>
 									</div>
-									<div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
+									<div className="rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3">
 										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">History Items</div>
-										<div className="mt-1 text-lg font-extrabold text-white">{history.length}</div>
+										<div className="mt-1 text-lg font-extrabold text-foreground">{history.length}</div>
 									</div>
 								</div>
 							</div>
@@ -133,9 +133,9 @@ export const Stats = () => {
 							<Panel className="min-h-0 p-[clamp(0.75rem,1vw,1rem)]">
 								<div className="grid h-full grid-cols-4 grid-rows-2 gap-[clamp(0.55rem,0.9vw,0.9rem)]">
 									{details.map(item => (
-										<div key={item.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-[clamp(0.75rem,1.2vw,1.25rem)] text-center">
+										<div key={item.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-foreground/10 bg-foreground/[0.04] p-[clamp(0.75rem,1.2vw,1.25rem)] text-center">
 											<div className="text-[clamp(0.78rem,1vw,1rem)] font-bold uppercase tracking-widest text-muted-foreground">{item.label}</div>
-											<div className="mt-3 max-w-full truncate text-[clamp(1.65rem,2.6vw,2.6rem)] font-extrabold leading-none text-white">{item.value}</div>
+											<div className="mt-3 max-w-full truncate text-[clamp(1.65rem,2.6vw,2.6rem)] font-extrabold leading-none text-foreground">{item.value}</div>
 										</div>
 									))}
 								</div>
@@ -158,12 +158,12 @@ export const Stats = () => {
 						</div>
 						<div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
 							{history.map(match => (
-								<div key={match.id} className="grid grid-cols-[7rem_minmax(8rem,1fr)_7rem_7rem_5rem_5rem_5rem_6rem] items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-[clamp(0.68rem,0.78vw,0.82rem)]">
+								<div key={match.id} className="grid grid-cols-[7rem_minmax(8rem,1fr)_7rem_7rem_5rem_5rem_5rem_6rem] items-center gap-3 rounded-lg border border-foreground/10 bg-foreground/[0.04] px-3 py-2 text-[clamp(0.68rem,0.78vw,0.82rem)]">
 									<Badge variant="outline" className={`w-fit px-2 py-1 uppercase ${match.result === "win" ? "border-green-400/30 bg-green-400/10 text-green-400" : "border-destructive/30 bg-destructive/10 text-destructive"}`}>
 										{match.result}
 									</Badge>
 									<span className="min-w-0">
-										<span className="block truncate font-bold text-white">{match.map}</span>
+										<span className="block truncate font-bold text-foreground">{match.map}</span>
 										<span className="flex items-center gap-1 text-[0.65rem] font-semibold text-muted-foreground">
 											<Clock className="size-3" />
 											{match.playedAt}
@@ -171,15 +171,15 @@ export const Stats = () => {
 									</span>
 									<span className="font-semibold">{match.mode}</span>
 									<span className="font-semibold text-muted-foreground">{match.duration}</span>
-									<span className="flex items-center justify-end gap-1 font-bold text-white">
+									<span className="flex items-center justify-end gap-1 font-bold text-foreground">
 										<Crosshair className="size-3 text-primary" />
 										{match.stats.kills}
 									</span>
-									<span className="flex items-center justify-end gap-1 font-bold text-white">
+									<span className="flex items-center justify-end gap-1 font-bold text-foreground">
 										<Skull className="size-3 text-muted-foreground" />
 										{match.stats.deaths}
 									</span>
-									<span className="text-right font-bold text-white">{match.stats.assits}</span>
+									<span className="text-right font-bold text-foreground">{match.stats.assits}</span>
 									<span className={`text-right font-extrabold ${match.scoreChange > 0 ? "text-green-400" : "text-destructive"}`}>
 										{match.scoreChange > 0 ? "+" : ""}{match.scoreChange}
 									</span>

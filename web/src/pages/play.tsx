@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/context-menu"
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { PvP_AMOUNT } from "@/constants"
+import { PvP_AMOUNT, rankTiers } from "@/constants"
 import { common, user } from "@/lib/data"
 import { entries } from "@lenix/lenix"
 import {
@@ -32,7 +32,7 @@ import { calculatePlayerScore, getRankTier } from "@/lib"
 const modeIcons = [User, Users, Users, Users]
 
 const Panel = ({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) => (
-	<section className={`rounded-xl border border-white/10 bg-black/35 ${className}`}>
+	<section className={`rounded-xl border border-foreground/10 ${className}`}>
 		{children}
 	</section>
 )
@@ -85,6 +85,15 @@ export const Play = ({ onOpenFriendsDrawer }: {
 		? [...topLeaderboard, currentPlayerLeaderboardRow]
 		: leaderboard.slice(0, 6)
 	const playerStats = player.stats
+	const currentPlayerScore = calculatePlayerScore(playerStats)
+	const currentRank = getRankTier(currentPlayerScore)
+	const currentRankIndex = rankTiers.findIndex(rank => rank.label === currentRank.label)
+	const nextRank = currentRankIndex > 0 ? rankTiers[currentRankIndex - 1] : undefined
+	const rankMinScore = currentRank.minScore
+	const nextRankMinScore = nextRank?.minScore ?? currentPlayerScore
+	const rankProgress = nextRank
+		? Math.min(100, Math.max(0, ((currentPlayerScore - rankMinScore) / (nextRankMinScore - rankMinScore)) * 100))
+		: 100
 	const stats = [
 		{ label: "Matches", value: playerStats.wins + playerStats.losses },
 		{ label: "Wins", value: playerStats.wins },
@@ -100,31 +109,35 @@ export const Play = ({ onOpenFriendsDrawer }: {
 				<SectionTitle icon={<Shield className="size-5 fill-primary/20" />}>Current Rank</SectionTitle>
 				<div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-[clamp(0.5rem,0.8vw,0.75rem)] text-center">
 					<div className="relative grid size-[clamp(5.5rem,8vw,7rem)] place-items-center">
-						<div className="relative grid size-[clamp(4.5rem,6.25vw,5.75rem)] place-items-center rounded-[1.1rem] border border-primary/30 bg-gradient-to-br from-primary/30 via-black to-primary/10">
+						<div className="relative grid size-[clamp(4.5rem,6.25vw,5.75rem)] place-items-center rounded-[1.1rem] border border-primary/30 bg-gradient-to-br from-primary/30 via-background to-primary/10">
 							<Crown className="size-[clamp(2.5rem,3.5vw,3.25rem)] fill-primary/30 text-primary" />
 						</div>
 					</div>
 					<div>
-						<h1 className="text-[clamp(1.3rem,1.9vw,1.75rem)] font-extrabold tracking-widest text-white">GOLD II</h1>
-						<p className="mt-0.5 text-[clamp(1rem,1.35vw,1.25rem)] font-bold text-primary">2,450 Score</p>
+						<h1 className={`text-[clamp(1.3rem,1.9vw,1.75rem)] font-extrabold uppercase tracking-widest ${currentRank.className}`}>{currentRank.label}</h1>
+						<p className="mt-0.5 text-[clamp(1rem,1.35vw,1.25rem)] font-bold text-primary">{currentPlayerScore.toLocaleString()} Score</p>
 					</div>
 					<div className="w-full">
-						<div className="h-2.5 overflow-hidden rounded-full bg-white/10">
-							<div className="h-full w-[56%] rounded-full bg-gradient-to-r from-primary to-yellow-200" />
+						<div className="h-2.5 overflow-hidden rounded-full bg-foreground/10">
+							<div className="h-full rounded-full bg-gradient-to-r from-primary to-yellow-200" style={{ width: `${rankProgress}%` }} />
 						</div>
 						<div className="mt-2 flex justify-between text-xs font-semibold text-muted-foreground">
-							<span>2,000 Score</span>
-							<span>2,800 Score</span>
+							<span>{rankMinScore.toLocaleString()} Score</span>
+							<span>{nextRankMinScore.toLocaleString()} Score</span>
 						</div>
 					</div>
 					<p className="text-xs text-muted-foreground">
-						Next Rank: <span className="font-bold text-primary">GOLD III</span>
+						{nextRank ? (
+							<>Next Rank: <span className={`font-bold ${nextRank.className}`}>{nextRank.label}</span></>
+						) : (
+							<span className="font-bold text-primary">Highest Rank</span>
+						)}
 					</p>
 				</div>
 			</Panel>
 
 			<Panel className="col-start-1 row-start-2 grid min-h-0 p-[clamp(0.75rem,1vw,1rem)]">
-				<div className="grid h-full place-items-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] px-4 text-center">
+				<div className="grid h-full place-items-center rounded-lg border border-dashed border-foreground/10 bg-foreground/[0.02] px-4 text-center">
 					<div className="flex flex-col items-center gap-2">
 						<PackageOpen className="size-[clamp(1.6rem,2.4vw,2.25rem)] text-primary/80" />
 						<div>
@@ -149,20 +162,20 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								<h1 className="text-[clamp(1.35rem,2vw,1.8rem)] font-extrabold uppercase tracking-widest text-primary">Search Match</h1>
 								<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
 							</div>
-							<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-white/10 bg-black/35">
+							<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-foreground/10 bg-background/35">
 								{teamMembers.map((teamPlayer, index) => {
 									const isLeader = 'Lenix' === teamPlayer.name
 
 									return (
 										<ContextMenu key={teamPlayer.name}>
 											<ContextMenuTrigger asChild>
-												<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-white/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
+												<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-foreground/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
 													<span>{index + 1}</span>
 													<span className="flex min-w-0 items-center gap-2 font-semibold">
 														{typeof teamPlayer.avatar === 'string' && teamPlayer.avatar.startsWith('/') ? (
-															<img src={teamPlayer.avatar} alt="" className="size-4 shrink-0 rounded-full bg-black object-cover" />
+															<img src={teamPlayer.avatar} alt="" className="size-4 shrink-0 rounded-full bg-background object-cover" />
 														) : (
-															<span className="grid size-4 shrink-0 place-items-center rounded-full bg-white/10 text-[0.6rem]">
+															<span className="grid size-4 shrink-0 place-items-center rounded-full bg-foreground/10 text-[0.6rem]">
 																<img src={teamPlayer.avatar} />
 															</span>
 														)}
@@ -205,7 +218,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 										<ToggleGroupItem
 											key={pvpAmount}
 											value={pvpAmount.toString()}
-											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-white/10 bg-white/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
+											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
 											disabled={teamMembers.length > pvpAmount}
 										>
 											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
@@ -217,15 +230,15 @@ export const Play = ({ onOpenFriendsDrawer }: {
 						</div>
 					</div>
 
-					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-white/10" />
+					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-foreground/10" />
 
 					<div className="mt-auto">
-						<Button variant="ghost" className="w-full gap-2 bg-white/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary" onClick={onOpenFriendsDrawer}>
+						<Button variant="ghost" className="w-full gap-2 bg-foreground/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary" onClick={onOpenFriendsDrawer}>
 							<UserPlus /> Invite Players
 						</Button>
 					</div>
 					<div className="mt-[clamp(0.75rem,1.2vw,1.25rem)]">
-						<Button className="h-[clamp(2.1rem,3vw,2.75rem)] w-full border-primary rounded-lg bg-primary/50 text-[clamp(0.95rem,1.25vw,1.15rem)] font-bold text-white hover:from-yellow-700 hover:to-primary">
+						<Button className="h-[clamp(2.1rem,3vw,2.75rem)] w-full border-primary rounded-lg bg-primary/50 text-[clamp(0.95rem,1.25vw,1.15rem)] font-bold text-foreground hover:from-yellow-700 hover:to-primary">
 							Find Match <ChevronRight className="text-primary size-6" />
 						</Button>
 					</div>
@@ -249,12 +262,12 @@ export const Play = ({ onOpenFriendsDrawer }: {
 						return (
 							<div
 								key={player.userId}
-								className={`grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-white/[0.04] ${isCurrentPlayer ? 'border border-primary/30 bg-primary/15 text-primary' : ''}`}
+								className={`grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-foreground/[0.04] ${isCurrentPlayer ? 'border border-primary/30 bg-primary/15 text-primary' : ''}`}
 							>
 								<span className={`font-bold ${isCurrentPlayer ? 'text-primary' : 'text-muted-foreground'}`}>{player.place}</span>
 								<span className={`flex min-w-0 items-center gap-3 font-semibold ${isCurrentPlayer ? 'font-bold text-primary' : ''}`}>
-									<span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10 text-[0.65rem]">
-										<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-black object-cover" />
+									<span className="grid size-6 shrink-0 place-items-center rounded-full bg-foreground/10 text-[0.65rem]">
+										<img src={player.avatar} alt="" className="size-6 shrink-0 rounded-full bg-background object-cover" />
 									</span>
 									<span className="truncate">{player.name}</span>
 								</span>
@@ -275,9 +288,9 @@ export const Play = ({ onOpenFriendsDrawer }: {
 				</div>
 				<div className="grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-[clamp(0.55rem,0.9vw,0.9rem)]">
 					{stats.map(stat => (
-						<div key={stat.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-[clamp(0.45rem,0.75vw,0.7rem)] text-center">
+						<div key={stat.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-foreground/10 bg-foreground/[0.04] p-[clamp(0.45rem,0.75vw,0.7rem)] text-center">
 							<p className="text-[clamp(0.6rem,0.72vw,0.72rem)] font-bold uppercase tracking-widest text-muted-foreground">{stat.label}</p>
-							<p className="mt-[clamp(0.25rem,0.45vw,0.45rem)] text-[clamp(1.05rem,1.4vw,1.3rem)] font-bold text-white">{stat.value}</p>
+							<p className="mt-[clamp(0.25rem,0.45vw,0.45rem)] text-[clamp(1.05rem,1.4vw,1.3rem)] font-bold text-foreground">{stat.value}</p>
 						</div>
 					))}
 				</div>
@@ -287,10 +300,10 @@ export const Play = ({ onOpenFriendsDrawer }: {
 			</Panel>
 
 			<div className="col-span-3 row-start-3 flex items-center justify-between text-xs font-semibold text-muted-foreground">
-				<Badge variant="outline" className="gap-2 border-white/10 bg-black/25 px-3 py-2 text-xs normal-case">
+				<Badge variant="outline" className="gap-2 border-foreground/10 bg-background/25 px-3 py-2 text-xs normal-case">
 					<span className="size-2 rounded-full bg-green-500" /> 5,210 Players Online
 				</Badge>
-				<Badge variant="outline" className="border-white/10 bg-black/25 px-3 py-2 text-xs normal-case">
+				<Badge variant="outline" className="border-foreground/10 bg-background/25 px-3 py-2 text-xs normal-case">
 					All Play Time: 14h 22m
 				</Badge>
 			</div>

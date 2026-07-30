@@ -39,7 +39,7 @@ export const Leaderboard = () => {
 
 	return (
 		<div className="flex h-full min-h-0 w-full flex-col gap-[clamp(0.75rem,1.2vw,1.25rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">
-			<section className="rounded-xl border border-white/10 bg-black/35 p-[clamp(0.8rem,1.25vw,1.25rem)]">
+			<section className="rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.8rem,1.25vw,1.25rem)]">
 				<div className="flex flex-wrap items-center justify-between gap-3">
 					<div className="flex items-center gap-3 text-primary">
 						<Trophy className="size-[clamp(1.4rem,2vw,1.9rem)] fill-primary/20" />
@@ -59,12 +59,12 @@ export const Leaderboard = () => {
 
 			<section className="grid grid-cols-3 gap-[clamp(0.75rem,1.2vw,1.25rem)]">
 				{topPlayers.map(player => (
-					<div key={player.userId} className="min-w-0 rounded-xl border border-white/10 bg-black/35 p-[clamp(0.7rem,1vw,1rem)]">
+					<div key={player.userId} className="min-w-0 rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.7rem,1vw,1rem)]">
 						<div className="flex items-center justify-between gap-3">
 							<div className="flex min-w-0 items-center gap-3">
-								<span className="block size-[clamp(2rem,2.8vw,2.75rem)] shrink-0 rounded-full bg-black bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
+								<span className="block size-[clamp(2rem,2.8vw,2.75rem)] shrink-0 rounded-full bg-background bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
 								<div className="min-w-0">
-									<div className="truncate text-[clamp(0.8rem,1vw,1rem)] font-bold text-white">{player.name}</div>
+									<div className="truncate text-[clamp(0.8rem,1vw,1rem)] font-bold text-foreground">{player.name}</div>
 									<div className={`text-[clamp(0.65rem,0.8vw,0.8rem)] font-bold uppercase ${player.rank.className}`}>{player.rank.label}</div>
 								</div>
 							</div>
@@ -77,7 +77,7 @@ export const Leaderboard = () => {
 				))}
 			</section>
 
-			<section className="flex min-h-0 flex-1 flex-col rounded-xl border border-white/10 bg-black/35 p-[clamp(0.75rem,1vw,1rem)]">
+			<section className="flex min-h-0 flex-1 flex-col rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.75rem,1vw,1rem)]">
 				<div className="overflow-x-auto">
 					<div className="min-w-[46rem]">
 						<div className="grid grid-cols-[3rem_minmax(10rem,1fr)_8rem_7rem_6rem_6rem_5rem] gap-3 px-[clamp(0.5rem,0.8vw,0.75rem)] pb-2 text-[clamp(0.6rem,0.72vw,0.75rem)] font-bold uppercase tracking-widest text-muted-foreground">
@@ -96,13 +96,13 @@ export const Leaderboard = () => {
 								return (
 									<div
 										key={player.userId}
-										className={`grid grid-cols-[3rem_minmax(10rem,1fr)_8rem_7rem_6rem_6rem_5rem] items-center gap-3 rounded-lg px-[clamp(0.5rem,0.8vw,0.75rem)] py-[clamp(0.45rem,0.7vw,0.65rem)] text-[clamp(0.68rem,0.78vw,0.82rem)] hover:bg-white/[0.04] ${isCurrentPlayer ? "border border-primary/30 bg-primary/15 text-primary" : ""}`}
+										className={`grid grid-cols-[3rem_minmax(10rem,1fr)_8rem_7rem_6rem_6rem_5rem] items-center gap-3 rounded-lg px-[clamp(0.5rem,0.8vw,0.75rem)] py-[clamp(0.45rem,0.7vw,0.65rem)] text-[clamp(0.68rem,0.78vw,0.82rem)] hover:bg-foreground/[0.04] ${isCurrentPlayer ? "border border-primary/30 bg-primary/15 text-primary" : ""}`}
 									>
 										<span className={`font-bold ${isCurrentPlayer ? "text-primary" : "text-muted-foreground"}`}>{player.place}</span>
 										<span className="flex min-w-0 items-center gap-3">
-											<span className="block size-[clamp(1.6rem,2.2vw,2rem)] shrink-0 rounded-full bg-black bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
+											<span className="block size-[clamp(1.6rem,2.2vw,2rem)] shrink-0 rounded-full bg-background bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
 											<span className="min-w-0">
-												<span className={`block truncate font-bold ${isCurrentPlayer ? "text-primary" : "text-white"}`}>{player.name}</span>
+												<span className={`block truncate font-bold ${isCurrentPlayer ? "text-primary" : "text-foreground"}`}>{player.name}</span>
 												<span className="flex items-center gap-2 text-[0.65rem] font-semibold text-muted-foreground">
 													<Users className="size-3" />
 													{player.matches.toLocaleString()} matches
@@ -123,21 +123,21 @@ export const Leaderboard = () => {
 			</section>
 
 			<section className="grid grid-cols-3 gap-[clamp(0.75rem,1.2vw,1.25rem)]">
-				<div className="rounded-xl border border-white/10 bg-black/35 p-[clamp(0.75rem,1vw,1rem)]">
+				<div className="rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.75rem,1vw,1rem)]">
 					<div className="flex items-center gap-2 text-primary">
 						<Shield className="size-4" />
 						<span className="text-xs font-bold uppercase tracking-widest">Players</span>
 					</div>
 					<div className="mt-2 text-xl font-extrabold">{leaderboard.length}</div>
 				</div>
-				<div className="rounded-xl border border-white/10 bg-black/35 p-[clamp(0.75rem,1vw,1rem)]">
+				<div className="rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.75rem,1vw,1rem)]">
 					<div className="flex items-center gap-2 text-primary">
 						<Target className="size-4" />
 						<span className="text-xs font-bold uppercase tracking-widest">Best Score</span>
 					</div>
 					<div className="mt-2 text-xl font-extrabold">{leaderboard[0]?.score.toLocaleString() ?? 0}</div>
 				</div>
-				<div className="rounded-xl border border-white/10 bg-black/35 p-[clamp(0.75rem,1vw,1rem)]">
+				<div className="rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.75rem,1vw,1rem)]">
 					<div className="flex items-center gap-2 text-primary">
 						<Skull className="size-4" />
 						<span className="text-xs font-bold uppercase tracking-widest">Top K/D</span>
