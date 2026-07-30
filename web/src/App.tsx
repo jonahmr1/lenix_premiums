@@ -1,13 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Routes, Route, MemoryRouter } from 'react-router'
 import { Home } from "./routes/home"
 import { apps } from "./contants"
 import { Settings } from "./routes/settings"
 import { Index } from "./routes"
-import { getStorage } from "@lenix/lenix"
+import { getStorage, setStorage } from "@lenix/lenix"
 import { toggleTheme } from "./lib"
+import type { Orientation, Storage } from "./types"
 
-const theme = getStorage<Storage>('theme')
+const theme = getStorage<Storage, 'theme'>('theme')
 if (theme) toggleTheme(theme)
 
 const AppFragment = ({
@@ -25,14 +26,18 @@ const AppFragment = ({
 )
 
 function App() {
-  const [orientation] = useState<"portrait" | "landscape">("portrait")
+  const [orientation, setOrientation] = useState<Orientation>(getStorage<Storage, 'orientation'>('orientation') || "portrait")
   const tabletBg = `/${orientation}.jpg`
+
+	useEffect(() => {
+		setStorage<Storage>('orientation', orientation)
+	}, [orientation])
 
   return (
     <div className="relative flex h-screen w-full items-center justify-center">
       <img
         src="/ped.png"
-        className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
+        className="pointer-events-none blur-lg absolute inset-0 -z-1 size-full object-cover"
         alt=""
       />
 
@@ -50,7 +55,7 @@ function App() {
 							<Route path="/" element={<Home />}/>
 							<Route path="/settings" element={
 								<AppFragment appName={'Settings'}>
-									<Settings />
+									<Settings {...{ orientation, setOrientation }} />
 								</AppFragment>
 							}/>
 							{apps.map(({ name, element: Element }) => (

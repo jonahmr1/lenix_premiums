@@ -12,4 +12,7 @@ export interface AppIcon {
 
 export interface Storage {
 	theme: 'dark' | 'light'
+	orientation: Orientation
 }
+
+export type Orientation = "portrait" | "landscape"

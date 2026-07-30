@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/oxanium": "^5.3.0",
-    "@lenix/lenix": "npm:@jsr/lenix__lenix",
+    "@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.13",
     "@tabler/icons-react": "^3.45.0",
     "@tailwindcss/vite": "^4.3.3",
     "class-variance-authority": "^0.7.1",

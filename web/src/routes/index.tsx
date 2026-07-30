@@ -15,7 +15,7 @@ export const Index = ({
 
 	return (
 		<div className="size-full flex overflow-hidden flex-col">
-			<div className="bg-card h-4/100 w-full overflow-hidden px-2 py-1 items-center justify-between flex">
+			<div className="bg-card h-4/100 landscape:h-6/100 w-full overflow-hidden px-2 py-1 items-center justify-between flex">
 				<div className="flex items-center">
 					<Button
 						variant='destructive'
