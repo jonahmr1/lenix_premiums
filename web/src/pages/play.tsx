@@ -28,7 +28,6 @@ import {
 import { useNavigate } from "react-router"
 import { useState } from "react"
 import { calculatePlayerScore, getRankTier } from "@/lib"
-import { toast } from "sonner"
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -94,25 +93,6 @@ export const Play = ({ onOpenFriendsDrawer }: {
 		{ label: "Deaths", value: playerStats.deaths },
 		{ label: "K/D Ratio", value: (playerStats.kills / playerStats.deaths).toFixed(2) },
 	]
-
-	const invite = () => {
-		toast("Party Invite", {
-			description: `${player.name} invited you to join their party.`,
-			action: {
-				label: "Accept",
-				onClick: () => {
-					// TODO: join party
-				},
-			},
-			cancel: {
-				label: "Decline",
-				onClick: () => {
-					// TODO: reject invite
-				},
-			},
-			duration: 15000,
-		})
-	}
 
 	return (
 		<div className="grid h-full w-full grid-cols-[minmax(0,0.95fr)_minmax(0,1.35fr)_minmax(0,1.35fr)] grid-rows-[minmax(0,3fr)_minmax(0,2fr)_auto] gap-[clamp(1rem,1.5vw,1.5rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground">

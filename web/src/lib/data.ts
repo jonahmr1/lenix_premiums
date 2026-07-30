@@ -757,11 +757,16 @@ export const session: {
 		},
 		{
 			id: 'notification-003',
-			type: 'system',
-			title: 'Rank Updated',
-			description: 'Your latest score changed your rank progress.',
+			type: 'party_invite',
+			title: 'Party Invite',
+			description: 'M_D7M invited you to join their party.',
 			createdAt: '8m ago',
 			isRead: true,
+			invite: {
+				fromUserId: 'M_D7M',
+				toUserId: 'lenix',
+				partySize: 2,
+			},
 		},
 	]
 }

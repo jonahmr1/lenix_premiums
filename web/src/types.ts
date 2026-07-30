@@ -20,10 +20,10 @@ export interface PartyInvite {
 
 export interface UserNotification {
 	id: string;
-	type: 'party_invite' | 'system';
+	type: 'party_invite';
 	title: string;
 	description: string;
 	createdAt: string;
 	isRead: boolean;
-	invite?: PartyInvite;
+	invite: PartyInvite;
 }
