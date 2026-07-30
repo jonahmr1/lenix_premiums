@@ -1,13 +1,7 @@
 import { useState } from "react"
-import { Button } from "./components/ui/button"
-import { IconSpray } from '@tabler/icons-react';
-
-const apps = [
-	{
-		name: 'Spray',
-		color: 'primary'
-	}
-]
+import { Routes, Route, MemoryRouter } from 'react-router'
+import { Home } from "./routes/home"
+import { apps } from "./contants"
 
 function App() {
   const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait")
@@ -30,19 +24,18 @@ function App() {
             className="absolute size-full"
             alt=""
           />
-
-          <div className="relative flex size-full p-4">
-            {apps.map(({ name, color }) => (
-							<div className="text-center">
-								<Button className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer">
-									<div className="size-full bg-primary/33 p-2 rounded-xl">
-										<IconSpray className={`size-full text-sidebar-${color}`} stroke={2} />
+					<MemoryRouter>
+						<Routes>
+							<Route path="/" element={<Home />}/>
+							{apps.map(({ name, iconStyles }) => (
+								<Route key={name} path={`/${name}`} element={
+									<div className="">
+										test
 									</div>
-								</Button>
-								<p className="text-foreground text-sm">{name}</p>
-							</div>
-						))}
-          </div>
+								}/>
+							))}
+						</Routes>
+					</MemoryRouter>
 				</div>
 			</div>
     </div>
