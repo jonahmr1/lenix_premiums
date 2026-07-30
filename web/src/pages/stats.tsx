@@ -135,9 +135,9 @@ export const Stats = () => {
 							<Panel className="min-h-0 p-[clamp(0.75rem,1vw,1rem)]">
 								<div className="grid h-full grid-cols-4 grid-rows-2 gap-[clamp(0.55rem,0.9vw,0.9rem)]">
 									{details.map(item => (
-										<div key={item.label} className="flex min-h-0 flex-col justify-center rounded-lg border border-white/10 bg-white/[0.04] p-[clamp(0.55rem,0.8vw,0.75rem)]">
-											<div className="text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground">{item.label}</div>
-											<div className="mt-1 truncate text-[clamp(1rem,1.35vw,1.25rem)] font-extrabold text-white">{item.value}</div>
+										<div key={item.label} className="flex min-h-0 flex-col items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-[clamp(0.75rem,1.2vw,1.25rem)] text-center">
+											<div className="text-[clamp(0.78rem,1vw,1rem)] font-bold uppercase tracking-widest text-muted-foreground">{item.label}</div>
+											<div className="mt-3 max-w-full truncate text-[clamp(1.65rem,2.6vw,2.6rem)] font-extrabold leading-none text-white">{item.value}</div>
 										</div>
 									))}
 								</div>
