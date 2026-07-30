@@ -1,26 +1,41 @@
 import { Button } from "@/components/ui/button"
 import { apps } from "@/contants";
-import { IconSpray } from '@tabler/icons-react';
+import type { AppIcon } from "@/types";
+import { IconSettings } from '@tabler/icons-react';
 import { useNavigate } from "react-router";
+import { twMerge } from "tailwind-merge";
 
-export const Home = () => {
+const App = ({ name, styles, icon: { element: Element, styles: iconStyles }}: Omit<AppIcon, 'element'>) => {
 	const nav = useNavigate()
 	
 	return (
-		<div className="relative flex size-full p-4">
-			{apps.map(({ name, iconStyles }) => (
-				<div className="text-center" key={name}>
-					<Button 
-						className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer"
-						onClick={() => nav(`/${name}`)}
-					>
-						<div className="size-full bg-primary/33 p-2 rounded-xl">
-							<IconSpray className={`size-full ${iconStyles}`} stroke={2} />
-						</div>
-					</Button>
-					<p className="text-white text-xs font-bold">{name}</p>
+		<div className="text-center" >
+			<Button 
+				className="size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer"
+				onClick={() => nav(`/${name}`)}
+			>
+				<div className={twMerge('size-full p-2 rounded-xl', styles)}>
+					<Element className={twMerge('size-full', iconStyles)} stroke={2} />
 				</div>
-			))}
+			</Button>
+			<p className="text-white text-xs font-bold drop-shadow-lg drop-shadow-black">{name}</p>
+		</div>
+	)
+}
+
+export const Home = () => {
+	
+	return (
+		<div className="relative grid size-full grid-cols-5 content-start gap-4 p-4">
+			<App
+				name="Settings"
+				styles="bg-muted"
+				icon={{
+					element: IconSettings,
+					styles: 'text-gray-300',
+				}}
+			/>
+			{apps.map(app => <App {...app} key={app.name} />)}
 		</div>
 	)
 }

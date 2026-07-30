@@ -2,6 +2,22 @@ import { useState } from "react"
 import { Routes, Route, MemoryRouter } from 'react-router'
 import { Home } from "./routes/home"
 import { apps } from "./contants"
+import { Settings } from "./routes/settings"
+import { Index } from "./routes"
+
+const AppFragment = ({
+	appName,
+	children
+}: {
+	appName: string
+	children: React.ReactNode
+}) => (
+	<div className="relative z-10 flex size-full bg-background rounded-xl overflow-hidden">
+		<Index appName={appName}>
+			{children}
+		</Index>
+	</div>
+)
 
 function App() {
   const [orientation] = useState<"portrait" | "landscape">("portrait")
@@ -27,11 +43,16 @@ function App() {
 					<MemoryRouter>
 						<Routes>
 							<Route path="/" element={<Home />}/>
+							<Route path="/settings" element={
+								<AppFragment appName={'Settings'}>
+									<Settings />
+								</AppFragment>
+							}/>
 							{apps.map(({ name, element: Element }) => (
 								<Route key={name} path={`/${name}`} element={
-									<div className="relative z-10 flex size-full bg-background rounded-xl overflow-hidden">
-										<Element appName={name} />
-									</div>
+									<AppFragment appName={name}>
+										<Element />
+									</AppFragment>
 								}/>
 							))}
 						</Routes>

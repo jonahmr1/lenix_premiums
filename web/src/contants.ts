@@ -1,9 +1,15 @@
+import { IconSpray } from "@tabler/icons-react";
 import { Spray } from "./routes/spray";
+import type { AppIcon } from "./types";
 
-export const apps = [
+export const apps: AppIcon[] = [
 	{
 		name: 'Sprays War',
-		iconStyles: 'text-sidebar-primary',
+		styles: 'bg-primary/33',
+		icon: {
+			element: IconSpray,
+			styles: 'text-sidebar-primary'
+		},
 		element: Spray
 	}
 ]
