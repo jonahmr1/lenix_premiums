@@ -162,12 +162,17 @@ export const Stats = () => {
 									<Badge variant="outline" className={`w-fit px-2 py-1 uppercase ${match.result === "win" ? "border-green-400/30 bg-green-400/10 text-green-400" : "border-destructive/30 bg-destructive/10 text-destructive"}`}>
 										{match.result}
 									</Badge>
-									<span className="min-w-0">
-										<span className="block truncate font-bold text-foreground">{match.map}</span>
-										<span className="flex items-center gap-1 text-[0.65rem] font-semibold text-muted-foreground">
-											<Clock className="size-3" />
-											{match.playedAt}
-										</span>
+									<span className="grid min-w-0 grid-cols-[minmax(0,1fr)_6rem] items-center gap-3">
+										<div>
+											<span className="block truncate font-bold text-foreground">{match.map}</span>
+											<span className="flex items-center gap-1 text-[0.65rem] font-semibold text-muted-foreground">
+												<Clock className="size-3" />
+												{match.playedAt}
+											</span>
+										</div>
+										<div className="relative mx-auto h-9 w-24 shrink-0 overflow-visible shadow-[-16px_0_24px_-18px_rgba(0,0,0,0.9),16px_0_24px_-18px_rgba(0,0,0,0.9)]">
+											<img className="h-full w-full object-cover [mask-image:linear-gradient(90deg,transparent_0%,black_28%,black_72%,transparent_100%)]" src="/rungun.png" alt="" />
+										</div>
 									</span>
 									<span className="font-semibold">{match.mode}</span>
 									<span className="font-semibold text-muted-foreground">{match.duration}</span>
