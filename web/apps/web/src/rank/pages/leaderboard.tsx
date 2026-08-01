@@ -4,6 +4,7 @@ import { common, user } from "../data"
 import type { PlayerStats } from "../types"
 import { entries } from "@lenix/lenix"
 import { Crown, Shield, Skull, Target, Trophy, Users } from "lucide-react"
+
 const getWinRate = (stats: PlayerStats) => {
 	const matches = stats.wins + stats.losses
 	return matches ? `${((stats.wins / matches) * 100).toFixed(1)}%` : "0%"
