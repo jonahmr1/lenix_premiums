@@ -41,6 +41,6 @@
 	},
 	"include": [
 		"src",
-		"../../packages/ui/src/lib/theme.ts"
+		"../../packages/ui/src/hooks/theme.ts"
 	]
 }

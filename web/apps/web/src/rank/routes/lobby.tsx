@@ -24,14 +24,12 @@ import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, Drawer
 import { userStatuses } from '../constants'
 import { Button } from "@workspace/elite/components/button"
 import { Badge } from "@workspace/elite/components/badge";
-import { getTheme, toggleTheme } from "@workspace/ui/lib/theme";
-
-const useTheme = () => getTheme()
+import { useTheme } from "@workspace/ui/hooks/theme";
 
 export const Home = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
-	const theme = useTheme()
+	const { theme, toggle } = useTheme()
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
 
 	const pages = [
@@ -165,7 +163,7 @@ export const Home = () => {
 					</Popover>
 					<Button
 						variant='ghost'
-						onClick={() => toggleTheme()}
+						onClick={toggle}
 					>{theme === 'dark' ? <Sun /> : <Moon />}
 					</Button>
 					<DropdownMenu>

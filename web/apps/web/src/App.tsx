@@ -1,4 +1,4 @@
-import { toggleTheme } from "@workspace/ui/lib/theme"
+import { toggleTheme } from "@workspace/ui/hooks/theme"
 import { Rank } from "./rank/app"
 import { getStorage } from "@lenix/lenix"
 
