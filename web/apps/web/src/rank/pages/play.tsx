@@ -186,7 +186,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 													</span>
 												</div>
 											</ContextMenuTrigger>
-											<ContextMenuContent>
+											<ContextMenuContent className="bg-popover/70">
 												<ContextMenuItem disabled={isLeader} onClick={() => {/* TODO */ }}>
 													Set As Leader
 												</ContextMenuItem>

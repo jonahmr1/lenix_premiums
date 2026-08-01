@@ -90,7 +90,7 @@ export const Leaderboard = () => {
 							<span className="text-right">Win Rate</span>
 							<span className="text-right">K/D</span>
 						</div>
-						<div className="max-h-[min(48vh,28rem)] space-y-[clamp(0.25rem,0.45vw,0.45rem)] overflow-y-auto pr-1">
+						<div className="max-h-[min(38vh,28rem)] space-y-[clamp(0.25rem,0.45vw,0.45rem)] overflow-y-auto pr-1">
 							{leaderboard.map(player => {
 								const isCurrentPlayer = player.userId === user.id
 
