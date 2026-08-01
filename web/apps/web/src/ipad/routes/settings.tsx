@@ -3,7 +3,7 @@ import type { Orientation } from "@/ipad/types"
 import type { S } from "@lenix/lenix"
 import { Separator } from "@workspace/ui/components/separator"
 import { Switch } from "@workspace/ui/components/switch"
-import { getTheme, toggleTheme } from "../lib"
+import { getTheme, toggleTheme } from "@workspace/ui/lib/theme"
 
 export const Settings = ({
 	orientation,

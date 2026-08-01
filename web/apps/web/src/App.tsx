@@ -1,4 +1,8 @@
+import { toggleTheme } from "@workspace/ui/lib/theme"
 import { Rank } from "./rank/app"
+import { getStorage } from "@lenix/lenix"
+
+toggleTheme(getStorage<Storage, 'theme'>('theme') ?? 'dark')
 
 export function App() {
   return (
