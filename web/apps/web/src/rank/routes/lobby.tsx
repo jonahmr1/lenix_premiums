@@ -15,7 +15,7 @@ import {
 } from "@workspace/elite/components/popover"
 import { common, session, user } from "../data";
 import { getTheme, toggleTheme } from "../lib";
-import { Badge, BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X, type LucideIcon } from "lucide-react";
 import { Play } from "../pages/play"
 import { Leaderboard } from "../pages/leaderboard"
 import { Stats } from "../pages/stats"
@@ -24,6 +24,7 @@ import { useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@workspace/elite/components/drawer"
 import { userStatuses } from '../constants'
 import { Button } from "@workspace/elite/components/button"
+import { Badge } from "@workspace/elite/components/badge";
 
 const useTheme = () => getTheme()
 
