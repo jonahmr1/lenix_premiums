@@ -3,7 +3,7 @@ import type { Orientation } from "@/ipad/types"
 import type { S } from "@lenix/lenix"
 import { Separator } from "@workspace/ui/components/separator"
 import { Switch } from "@workspace/ui/components/switch"
-import { getTheme, toggleTheme } from "@workspace/ui/lib/theme"
+import { useTheme } from "@workspace/ui/hooks/theme"
 
 export const Settings = ({
 	orientation,
@@ -12,6 +12,7 @@ export const Settings = ({
 	orientation: Orientation
 	setOrientation: S<Orientation>
 }) => {
+	const { theme, toggle } = useTheme()
 	return (
 		<div className="p-10 gap-3 flex flex-col">
 			<h1>Appearance</h1>
@@ -28,7 +29,7 @@ export const Settings = ({
 					<FieldContent>
 						<FieldLabel>Turn on light mode</FieldLabel>
 					</FieldContent>
-					<Switch defaultChecked={getTheme() === 'dark'} onCheckedChange={value => toggleTheme(value ? 'light' : 'dark')} />
+					<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
 				</Field>
 			</div>
 		</div>
