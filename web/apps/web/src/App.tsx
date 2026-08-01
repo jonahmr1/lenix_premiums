@@ -1,4 +1,5 @@
 import { Ipad } from "./ipad/app"
+import { Rank } from "./rank/app"
 
 export function App() {
   return (
@@ -8,6 +9,7 @@ export function App() {
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
 			/>
 			<Ipad />
+			<Rank />
 		</>
   )
 }

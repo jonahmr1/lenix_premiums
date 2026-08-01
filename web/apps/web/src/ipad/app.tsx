@@ -7,9 +7,10 @@ import { getStorage, setStorage } from "@lenix/lenix"
 import type { Orientation, Storage } from "@/ipad/types"
 import { apps } from "./constants"
 import { toggleTheme } from "./lib"
+import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
+import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
 
-const theme = getStorage<Storage, 'theme'>('theme')
-if (theme) toggleTheme(theme)
+toggleTheme(getStorage<Storage, 'theme'>('theme') ?? 'dark')
 
 const AppFragment = ({
 	appName,
@@ -27,7 +28,7 @@ const AppFragment = ({
 
 export const Ipad = () => {
 	const [orientation, setOrientation] = useState<Orientation>(getStorage<Storage, 'orientation'>('orientation') || "portrait")
-	const tabletBg = `/${orientation}.jpg`
+	const tabletBg = orientation === 'portrait' ? veritcalBg : horizontalBg
 
 	useEffect(() => {
 		setStorage<Storage>('orientation', orientation)
