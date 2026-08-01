@@ -1,4 +1,3 @@
-import { Ipad } from "./ipad/app"
 import { Rank } from "./rank/app"
 
 export function App() {
