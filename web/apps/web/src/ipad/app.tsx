@@ -35,11 +35,6 @@ export const Ipad = () => {
 
 	return (
 		<div className="relative flex h-screen w-full items-center justify-center">
-			<img
-				src="/ped.png"
-				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
-			/>
-
 			<div
 				className={`rounded-xl ring-20 ring-black ${orientation === "portrait" ? "h-8/10 aspect-3/4" : "w-5/10 aspect-4/3"}`}
 			>
