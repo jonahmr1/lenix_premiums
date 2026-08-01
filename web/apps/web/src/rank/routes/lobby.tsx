@@ -85,7 +85,7 @@ export const Home = () => {
 			<div className="flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10">
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>
-					<div className="h-full items-stretch">
+					<div className="h-full flex items-center">
 						<div className="flex gap-10">
 							{pages.map(page => {
 								const isInCurrentRoute = pathname === page.to
@@ -123,7 +123,7 @@ export const Home = () => {
 									Notifications
 								</PopoverTitle>
 							</PopoverHeader>
-							<div className="max-h-80 space-y-2 overflow-y-auto pr-1">
+							<div className="max-h-80 space-y-2 overflow-y-auto">
 								{notifications.length ? notifications.map(notification => {
 									const sender = common.users[notification.invite.fromUserId]
 
