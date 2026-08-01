@@ -73,13 +73,13 @@ export const Stats = () => {
 				</div>
 			</Panel>
 
-			<Tabs defaultValue="stats" className="min-h-0 flex-1">
-				<TabsList className="w-fit border border-foreground/10 bg-background/35">
-					<TabsTrigger value="stats" className="gap-2 px-3">
+			<Tabs defaultValue="stats" className="min-h-0 flex-1 flex-col gap-3">
+				<TabsList className="h-9 w-fit shrink-0 border border-foreground/10 bg-background/35">
+					<TabsTrigger value="stats" className="h-full flex-none gap-2 px-3">
 						<BarChart3 className="size-4" />
 						{copy.tabs.stats}
 					</TabsTrigger>
-					<TabsTrigger value="history" className="gap-2 px-3">
+					<TabsTrigger value="history" className="h-full flex-none gap-2 px-3">
 						<History className="size-4" />
 						{copy.tabs.history}
 					</TabsTrigger>
