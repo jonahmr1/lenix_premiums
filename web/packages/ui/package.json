@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@fontsource-variable/oxanium": "^5.3.0",
+    "@lenix/lenix": "npm:@jsr/lenix__lenix",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.28.0",
@@ -41,6 +42,6 @@
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
-		"./assets/*": "./src/assets/*"
+    "./assets/*": "./src/assets/*"
   }
 }
