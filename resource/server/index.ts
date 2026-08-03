@@ -4,7 +4,7 @@ import { palette } from 'lenix'
 import { ResourceName } from "common/resource"
 
 const LICENSE = GetConvar('lenix:license_key', '')
-asserts(LICENSE.length, "Could not load license key, make sure you add the following into your server config: `set lenix:license_key 'YOUR_LENIX_LICENSE_KEY'`")
+asserts(LICENSE.length, palette('red', 'Could not load license key, make sure you add the following into your server config: `set lenix:license_key YOUR_LENIX_LICENSE_KEY`'))
 
 const ORGANIZATION = '6e2643d5-12e4-4b8a-80e7-a5107fe65408'
 const ENVIRONMENT: Environment = "production"
