@@ -33,9 +33,10 @@
     "obf": "bun obf.c && bun obf.s && bun obf.n"
   },
   "dependencies": {
+    "@lenix/lenix": "npm:@jsr/lenix__lenix",
     "@overextended/core": "^0.3.1",
     "@overextended/ox_lib": "^3.35.0",
-    "lenix": "^1.7.11"
+    "lenix": "^1.7.13"
   },
   "devDependencies": {
     "@citizenfx/client": "latest",
