@@ -7,7 +7,7 @@ export const Rank = () => {
 	return (
 		<>
 			<MemoryRouter>
-				<div className='bg-background elite'>
+				<div className='elite'>
 					<Routes>
 						<Route path={'/*'} element={<Home />} />
 						<Route path={'/in-game'} element={<InGame />} />

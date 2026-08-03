@@ -83,7 +83,10 @@ export const Home = () => {
 		.filter(notification => notification.type === 'party_invite' && notification.invite.toUserId === user.id)
 
 	useEffect(() => {
-		const off = onEvent<Events['rankDisplay']>('rank:display', setDisplay)
+		const off = onEvent<Events['rankDisplay']>('rank:display', state => {
+			setDisplay(state)
+			focus()
+		})
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
 			setDisplay(false)
@@ -99,7 +102,7 @@ export const Home = () => {
 	}, [])
 
 	return (
-		<div className={`flex flex-col h-screen ${display ? 'opacity-100' : 'opacity-0'}`}>
+		<div className={`flex flex-col h-screen bg-background ${display ? 'opacity-100' : 'opacity-0'}`}>
 			<div className="flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10">
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>
@@ -266,7 +269,7 @@ export const Home = () => {
 					</Drawer>
 				</div>
 			</div>
-			<Layout>
+			<Layout className="h-full">
 				{pages.map(page => (
 					<div key={page.to} className={`${pathname === page.to ? 'visible' : 'hidden'} h-full w-full`}>
 						{page.element}
