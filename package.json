@@ -36,7 +36,8 @@
     "@lenix/lenix": "npm:@jsr/lenix__lenix",
     "@overextended/core": "^0.3.1",
     "@overextended/ox_lib": "^3.35.0",
-    "lenix": "^1.7.15"
+    "@polar-sh/sdk": "^1.0.0-alpha.16",
+    "lenix": "^1.7.16"
   },
   "devDependencies": {
     "@citizenfx/client": "latest",
