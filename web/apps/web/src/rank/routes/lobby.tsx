@@ -19,18 +19,21 @@ import { Play } from "../pages/play"
 import { Leaderboard } from "../pages/leaderboard"
 import { Stats } from "../pages/stats"
 import type { Route, UserNotification } from "../types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@workspace/elite/components/drawer"
 import { userStatuses } from '../constants'
 import { Button } from "@workspace/elite/components/button"
 import { Badge } from "@workspace/elite/components/badge";
 import { useTheme } from "@workspace/ui/hooks/theme";
+import { focus, onEvent } from "lenix/nui";
+import type { Events } from 'types'
 
 export const Home = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
+	const [display, setDisplay] = useState<boolean>(true)
 
 	const pages = [
 		// {
@@ -79,8 +82,24 @@ export const Home = () => {
 	const notifications: UserNotification[] = session.notifications
 		.filter(notification => notification.type === 'party_invite' && notification.invite.toUserId === user.id)
 
+	useEffect(() => {
+		const off = onEvent<Events['rankDisplay']>('rank:display', setDisplay)
+		const handler = (e: KeyboardEvent) => {
+			if (e.key !== 'Escape') return
+			setDisplay(false)
+			focus(false, false)
+		}
+
+		window.addEventListener('keydown', handler)
+
+		return () => {
+			off()
+			window.removeEventListener('keydown', handler)
+		}
+	}, [])
+
 	return (
-		<div className="flex flex-col h-screen">
+		<div className={`flex flex-col h-screen ${display ? 'opacity-100' : 'opacity-0'}`}>
 			<div className="flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10">
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>

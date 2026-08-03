@@ -34,7 +34,8 @@
   },
   "dependencies": {
     "@overextended/core": "^0.3.1",
-    "@overextended/ox_lib": "^3.35.0"
+    "@overextended/ox_lib": "^3.35.0",
+    "lenix": "^1.7.11"
   },
   "devDependencies": {
     "@citizenfx/client": "latest",
