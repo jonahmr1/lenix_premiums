@@ -44,7 +44,7 @@
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./hooks/*": "./src/hooks/*.ts",
-		"./assets/*": "./src/assets/*",
-		"./elements/*": "./src/elements/*"
+    "./assets/*": "./src/assets/*",
+    "./elements/*": "./src/elements/*"
   }
 }

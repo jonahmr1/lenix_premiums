@@ -12,10 +12,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@lenix/lenix": "npm:@jsr/lenix__lenix",
-    "@workspace/ui": "workspace:*",
     "@workspace/elite": "workspace:*",
-    "lenix": "^1.7.11",
+    "@workspace/ui": "workspace:*",
     "lucide-react": "^1.28.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

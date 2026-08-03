@@ -26,6 +26,10 @@
     "web": {
       "name": "web",
       "version": "0.0.1",
+      "dependencies": {
+        "@lenix/lenix": "npm:@jsr/lenix__lenix",
+        "lenix": "^1.7.11",
+      },
       "devDependencies": {
         "prettier": "^3.8.3",
         "prettier-plugin-tailwindcss": "^0.8.0",
@@ -78,6 +82,8 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
+
+    "@lenix/lenix": ["@jsr/lenix__lenix@1.8.14", "https://npm.jsr.io/~/11/@jsr/lenix__lenix/1.8.14.tgz", {}, "sha512-M1+3u+zmuHSWS9BymDLAjfN7NpqbCyE91m7ksxOcfDmjvoNKdLmY9YY/Q1yKEI31CGfwwQngQtt6Vk5g4nHU2Q=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.4", "", { "dependencies": { "@tybys/wasm-util": "^0.10.1" }, "peerDependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1" } }, "sha512-3NQNNgA1YSlJb/kMH1ildASP9HW7/7kYnRI2szWJaofaS1hWmbGI4H+d3+22aGzXXN9IJ+n+GiFVcGipJP18ow=="],
 
