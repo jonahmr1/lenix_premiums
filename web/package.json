@@ -25,6 +25,6 @@
   ],
   "dependencies": {
     "@lenix/lenix": "npm:@jsr/lenix__lenix",
-    "lenix": "^1.7.11"
+    "lenix": "^1.7.16"
   }
 }
