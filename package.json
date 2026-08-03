@@ -36,7 +36,7 @@
     "@lenix/lenix": "npm:@jsr/lenix__lenix",
     "@overextended/core": "^0.3.1",
     "@overextended/ox_lib": "^3.35.0",
-    "lenix": "^1.7.13"
+    "lenix": "^1.7.15"
   },
   "devDependencies": {
     "@citizenfx/client": "latest",
