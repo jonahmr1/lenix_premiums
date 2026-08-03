@@ -33,7 +33,7 @@ export const Home = () => {
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
-	const [display, setDisplay] = useState<boolean>(true)
+	const [display, setDisplay] = useState<boolean>()
 
 	const pages = [
 		// {
