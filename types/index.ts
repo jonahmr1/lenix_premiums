@@ -23,10 +23,10 @@ export namespace Rank {
 
 	export interface Player {
 		Profile: {
-			profile_id: number
+			profile_id: string
 			name: string
 			avatar: string | null
-			status: keyof typeof playerStatuses
+			status: keyof Omit<(typeof playerStatuses), 'in_game'>
 		}
 		Friend: Player['Profile']['profile_id']
 		Stats: {
@@ -48,9 +48,9 @@ export namespace Rank {
 			duration: number
 			scoreChange: number
 			stats: {
-				kills: number
-				deaths: number
-				assits: number
+				kills: Player['Stats']['kills']
+				deaths: Player['Stats']['deaths']
+				assits: Player['Stats']['assists']
 			}
 		},
 		Notification: {
@@ -60,8 +60,16 @@ export namespace Rank {
 			description: string
 			createdAt: number
 			author: {
-				avatar: string
+				avatar: Player['Profile']['avatar']
 			}
+		}
+		Performance: {
+			match_id: number
+			profile_id: string
+			result: 'win' | 'loss'
+			kills: number
+			deaths: number
+			assists: number
 		}
 	}
 
@@ -76,9 +84,9 @@ export namespace Rank {
 
 	export type Leaderboard = {
 		place: number
-		userId: number
-		name: string
-		avatar: string
 		score: number
+		profile_id: Player['Profile']['profile_id']
+		name: Player['Profile']['name']
+		avatar: Player['Profile']['avatar']
 	}[]
 }

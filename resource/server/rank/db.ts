@@ -16,26 +16,19 @@ const create = (
 	cb: Parameters<ReturnType<typeof db.schema.withSchema>['createTableIfNotExists']>[1]
 ) => db.schema.withSchema(database).createTableIfNotExists(`${tablePrefix}${table}`, cb)
 
+/* FORIEGN */
 const tables = [
 	create('profiles', table => {
-		table.integer('profile_id').unsigned().primary()
+		table.string('profile_id', 64).primary()
 		table.string('name', 32).notNullable()
 		table.enum('status', ['online', 'offline', 'dnd']).notNullable().defaultTo('online')
 	}),
 	create('friends', table => {
-		table.integer('sender_id').unsigned().notNullable()
-		table.integer('receiver_id').unsigned().notNullable()
+		table.string('sender_id', 64).notNullable()
+		table.string('receiver_id', 64).notNullable()
 		table.enum('status', ['pending', 'accepted']).notNullable()
 
 		table.primary(['sender_id', 'receiver_id'])
-	}),
-	create('stats', table => {
-		table.integer('profile_id').unsigned().primary()
-		table.integer('kills').unsigned().notNullable().defaultTo(0)
-		table.integer('deaths').unsigned().notNullable().defaultTo(0)
-		table.integer('assists').unsigned().notNullable().defaultTo(0)
-		table.integer('wins').unsigned().notNullable().defaultTo(0)
-		table.integer('losses').unsigned().notNullable().defaultTo(0)
 	}),
 	create('matches', table => {
 		table.increments('match_id').primary()
@@ -45,9 +38,8 @@ const tables = [
 	}),
 	create('performances', table => {
 		table.integer('match_id').unsigned().notNullable()
-		table.integer('profile_id').unsigned().notNullable()
+		table.string('profile_id', 64).notNullable()
 		table.enum('result', ['win', 'loss']).notNullable()
-		table.integer('score_change').notNullable()
 		table.integer('kills').unsigned().notNullable().defaultTo(0)
 		table.integer('deaths').unsigned().notNullable().defaultTo(0)
 		table.integer('assists').unsigned().notNullable().defaultTo(0)

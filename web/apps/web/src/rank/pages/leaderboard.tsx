@@ -13,7 +13,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 	if (!leaderboard || !stats) return <Loading />
 
 	const topPlayers = leaderboard.slice(0, 3)
-	const currentPlayer = leaderboard.find(self => self.userId === profile.profile_id)
+	const currentPlayer = leaderboard.find(self => self.profile_id === profile.profile_id)
 	const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
 	return (
@@ -46,7 +46,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 
 					return (
 						<div
-							key={player.userId}
+							key={player.profile_id}
 							className='min-w-0 rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.7rem,1vw,1rem)]'
 						>
 							<div className='flex items-center justify-between gap-3'>
@@ -90,11 +90,11 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 						</div>
 						<div className='max-h-[min(38vh,28rem)] space-y-[clamp(0.25rem,0.45vw,0.45rem)] overflow-y-auto pr-1'>
 							{leaderboard.map(player => {
-								const isCurrentPlayer = player.userId === profile.profile_id
+								const isCurrentPlayer = player.profile_id === profile.profile_id
 								const rank = getRankTier(player.score)
 								return (
 									<div
-										key={player.userId}
+										key={player.profile_id}
 										className={`grid grid-cols-[3rem_minmax(10rem,1fr)_8rem_7rem_6rem_6rem_5rem] items-center gap-3 rounded-lg px-[clamp(0.5rem,0.8vw,0.75rem)] py-[clamp(0.45rem,0.7vw,0.65rem)] text-[clamp(0.68rem,0.78vw,0.82rem)] hover:bg-foreground/[0.04] ${isCurrentPlayer ? 'border border-primary/30 bg-primary/15 text-primary' : ''}`}
 									>
 										<span className={`font-bold ${isCurrentPlayer ? 'text-primary' : 'text-muted-foreground'}`}>

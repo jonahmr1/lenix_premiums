@@ -20,10 +20,19 @@ onNui<Rank.Requests['getProfile']>('rank:getProfile', async () => {
 })
 
 onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
-	const leaderboard = await triggerServerCallback<Rank.Leaderboard>('lenix:server:rank:getLeaderboard', defaultDelay)
-	if (!leaderboard) throw 'Failed to get leaderboard'
+	const stats = await triggerServerCallback<Rank.Player['Performance'][]>('lenix:server:rank:getStats', defaultDelay)
+	if (!stats) throw 'Failed to get stats'
 
-	return leaderboard
+	const profiles = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
+	if (!profiles) throw 'Failed to get profiles'
+
+	return profiles.map(profile => ({
+		place
+    score:
+    profile_id: 
+    name:
+    avatar:
+	}))
 })
 
 onNui<Rank.Requests['party']['get']>('rank:party:get', async () => {

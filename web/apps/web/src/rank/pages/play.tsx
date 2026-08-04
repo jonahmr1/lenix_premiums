@@ -69,9 +69,9 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	if (!leaderboard || !party || !stats) return <Loading />
 
 	const topLeaderboard = leaderboard.slice(0, 5)
-	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.profile_id)
+	const currentPlayerLeaderboardRow = leaderboard.find(self => self.profile_id === profile.profile_id)
 	const visibleLeaderboard =
-		currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === profile.profile_id)
+		currentPlayerLeaderboardRow && !topLeaderboard.some(self => self.profile_id === profile.profile_id)
 			? [...topLeaderboard, currentPlayerLeaderboardRow]
 			: leaderboard.slice(0, 6)
 	const currentPlayerScore = calculatePlayerScore(stats)
@@ -293,11 +293,11 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 				</div>
 				<div className='min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden'>
 					{visibleLeaderboard.map(player => {
-						const isCurrentPlayer = player.userId === profile.profile_id
+						const isCurrentPlayer = player.profile_id === profile.profile_id
 
 						return (
 							<div
-								key={player.userId}
+								key={player.profile_id}
 								className={`grid grid-cols-[1.8rem_minmax(0,1fr)_minmax(6.5rem,auto)_3.8rem] items-center gap-2 rounded-md px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.2rem,0.35vw,0.35rem)] text-[clamp(0.62rem,0.72vw,0.72rem)] hover:bg-foreground/[0.04] ${isCurrentPlayer ? 'border border-primary/30 bg-primary/15 text-primary' : ''}`}
 							>
 								<span className={`font-bold ${isCurrentPlayer ? 'text-primary' : 'text-muted-foreground'}`}>
