@@ -27,14 +27,15 @@ import { focus, onEvent, triggerNui } from "lenix/nui";
 import type { Rank } from 'types'
 import { playerStatuses } from 'config'
 import { Loading } from "@workspace/elite/elements/loading.js";
+import { useFriendsDrawer } from "../hooks/use-friendsDrawer";
 
 export const Home = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
-	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
 	const [display, setDisplay] = useState<boolean>()
 	const [profile, setProfile] = useState<Rank.Player['Profile']>()
+	const { drawer, setDrawer } = useFriendsDrawer()
 	const [friends, setFriends] = useState<Rank.Player['Profile'][]>()
 	const [notifications, setNotifications] = useState<Rank.Player['Notification'][]>()
 
@@ -77,7 +78,7 @@ export const Home = () => {
 			to: '/',
 			label: 'PLAY',
 			icon: PlayIcon,
-			element: <Play profile={profile} onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
+			element: <Play profile={profile} />,
 		},
 		{
 			to: '/stats',
@@ -89,7 +90,7 @@ export const Home = () => {
 			to: '/leaderboard',
 			label: 'LEADERBOARD',
 			icon: Trophy,
-			element: <Leaderboard />
+			element: <Leaderboard profile={profile} />
 		},
 	]
 	return (
@@ -202,7 +203,7 @@ export const Home = () => {
 							))}
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Drawer direction="right" open={isFriendsDrawerOpen} onOpenChange={setIsFriendsDrawerOpen}>
+					<Drawer direction="right" open={drawer} onOpenChange={setDrawer}>
 						<DrawerTrigger asChild>
 							<Button>
 								<Users />

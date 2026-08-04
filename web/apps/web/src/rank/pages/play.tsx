@@ -30,6 +30,7 @@ import type { Rank } from "types"
 import { Loading } from "@workspace/elite/elements/loading.js"
 import { triggerNui } from "lenix/nui"
 import { useLeaderboard } from "../hooks/use-leaderboard"
+import { useFriendsDrawer } from "../hooks/use-friendsDrawer"
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -45,11 +46,11 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 		<h2 className="text-[clamp(0.65rem,0.75vw,0.8rem)] font-bold uppercase tracking-widest">{children}</h2>
 	</div>
 )
-export const Play = ({ profile, onOpenFriendsDrawer }: {
-	profile: Rank.Player['Profile']
-	onOpenFriendsDrawer?: () => void
-}) => {
+
+export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
+	const nav = useNavigate()
 	const { leaderboard, setLeaderboard } = useLeaderboard()
+	const { setDrawer } = useFriendsDrawer()
 	const [party, setParty] = useState<Rank.Party>()
 
 	useEffect(() => {
@@ -66,7 +67,6 @@ export const Play = ({ profile, onOpenFriendsDrawer }: {
 
 	if (!leaderboard || !party) return <Loading />
 
-	const nav = useNavigate()
 
 	const topLeaderboard = leaderboard.slice(0, 5)
 	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.id)
@@ -228,7 +228,7 @@ export const Play = ({ profile, onOpenFriendsDrawer }: {
 					<Separator className="my-[clamp(0.65rem,1vw,1rem)] bg-foreground/10" />
 
 					<div className="mt-auto">
-						<Button variant="ghost" className="w-full gap-2 bg-foreground/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary" onClick={onOpenFriendsDrawer}>
+						<Button variant="ghost" className="w-full gap-2 bg-foreground/[0.06] px-[clamp(0.75rem,1.1vw,1rem)] text-primary" onClick={() => setDrawer(true)}>
 							<UserPlus /> Invite Players
 						</Button>
 					</div>
