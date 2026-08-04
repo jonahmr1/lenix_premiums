@@ -9,9 +9,6 @@ import {
 } from "@workspace/elite/components/context-menu"
 import { Separator } from "@workspace/elite/components/separator"
 import { ToggleGroup, ToggleGroupItem } from "@workspace/elite/components/toggle-group"
-import { PvP_AMOUNT, rankTiers } from "../constants"
-import { common, user } from "../data"
-import { entries } from "@lenix/lenix"
 import {
 	ChevronRight,
 	Crown,
@@ -26,8 +23,12 @@ import {
 	Users,
 } from "lucide-react"
 import { useNavigate } from "react-router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { calculatePlayerScore, getRankTier } from "../lib"
+import { rankTiers } from "config"
+import type { Rank } from "types"
+import { Loading } from "./loading"
+import { triggerNui } from "lenix/nui"
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -43,48 +44,33 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 		<h2 className="text-[clamp(0.65rem,0.75vw,0.8rem)] font-bold uppercase tracking-widest">{children}</h2>
 	</div>
 )
-export const Play = ({ onOpenFriendsDrawer }: {
+export const Play = ({ profile, onOpenFriendsDrawer }: {
+	profile: Rank.Player['Profile']
 	onOpenFriendsDrawer?: () => void
 }) => {
+	const [leaderboard, setLeaderboard] = useState<Rank.Leaderboard>()
+	const [party, setParty] = useState<Rank.Party>()
+
+	useEffect(() => {
+		triggerNui<Rank.Requests['leaderboard']>(
+			'rank:leaderboard', {}
+		).then(setLeaderboard)
+
+		triggerNui<Rank.Requests['party']['get']>(
+			'rank:party:get', {}
+		).then(setParty)
+	}, [])
+
+	if (!leaderboard || !party) return <Loading />
+
 	const nav = useNavigate()
 
-	const pvpOptions = entries(PvP_AMOUNT)
-	const player = common.users[user.id]
-
-	const leaderboard = entries(common.users)
-		.map(([userId, { name, avatar, stats }]) => ({
-			userId,
-			name,
-			avatar,
-			score: calculatePlayerScore(stats),
-		}))
-		.sort((a, b) => b.score - a.score)
-		.map((player, index) => ({
-			...player,
-			place: index + 1,
-		}));
-
-	const teamMembers = [
-		{
-			name: player.name,
-			avatar: player.avatar,
-			score: leaderboard.find(data => data.userId === user.id)?.score || -1
-		},
-		{
-			name: common.users['nour'].name,
-			avatar: common.users['nour'].avatar,
-			score: leaderboard.find(data => data.userId === 'nour')?.score,
-		}
-	]
-
-	const [partySize, setPartySize] = useState<string>(teamMembers.length.toString())
-
 	const topLeaderboard = leaderboard.slice(0, 5)
-	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === user.id)
-	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === user.id)
+	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.id)
+	const visibleLeaderboard = currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === profile.id)
 		? [...topLeaderboard, currentPlayerLeaderboardRow]
 		: leaderboard.slice(0, 6)
-	const playerStats = player.stats
+	const playerStats = profile.stats
 	const currentPlayerScore = calculatePlayerScore(playerStats)
 	const currentRank = getRankTier(currentPlayerScore)
 	const currentRankIndex = rankTiers.findIndex(rank => rank.label === currentRank.label)
@@ -163,23 +149,23 @@ export const Play = ({ onOpenFriendsDrawer }: {
 								<p className="mt-0.5 text-[clamp(0.75rem,0.95vw,0.9rem)] font-semibold text-muted-foreground">Compete and climb the ranks</p>
 							</div>
 							<div className="mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-foreground/10 bg-background/35">
-								{teamMembers.map((teamPlayer, index) => {
-									const isLeader = 'Lenix' === teamPlayer.name
+								{party.profiles.map((profile, index) => {
+									const isLeader = 'Lenix' === profile.name
 
 									return (
-										<ContextMenu key={teamPlayer.name}>
+										<ContextMenu key={profile.name}>
 											<ContextMenuTrigger asChild>
 												<div className="grid cursor-context-menu grid-cols-[1.4rem_minmax(0,1fr)_minmax(5.75rem,auto)_3rem] items-center gap-2 border-b border-foreground/5 px-[clamp(0.45rem,0.8vw,0.75rem)] py-[clamp(0.3rem,0.45vw,0.42rem)] text-[clamp(0.62rem,0.72vw,0.7rem)] last:border-b-0">
 													<span>{index + 1}</span>
 													<span className="flex min-w-0 items-center gap-2 font-semibold">
-														{typeof teamPlayer.avatar === 'string' && teamPlayer.avatar.startsWith('/') ? (
-															<img src={teamPlayer.avatar} alt="" className="size-4 shrink-0 rounded-full bg-background object-cover" />
+														{typeof profile.avatar === 'string' && profile.avatar.startsWith('/') ? (
+															<img src={profile.avatar} alt="" className="size-4 shrink-0 rounded-full bg-background object-cover" />
 														) : (
 															<span className="grid size-4 shrink-0 place-items-center rounded-full bg-foreground/10 text-[0.6rem]">
-																<img src={teamPlayer.avatar} />
+																<img src={profile.avatar} />
 															</span>
 														)}
-														<span className="truncate">{teamPlayer.name}</span>
+														<span className="truncate">{profile.name}</span>
 													</span>
 													<span className="flex justify-end">
 														{isLeader && <Crown className="size-4 text-primary" />}
@@ -191,7 +177,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 													Set As Leader
 												</ContextMenuItem>
 												<ContextMenuSeparator />
-												<ContextMenuItem variant="destructive" disabled={teamPlayer.name === player.name} onClick={() => {/* TODO */ }}>
+												<ContextMenuItem variant="destructive" disabled={profile.name === profile.name} onClick={() => {/* TODO */ }}>
 													Kick Player
 												</ContextMenuItem>
 											</ContextMenuContent>
@@ -205,21 +191,27 @@ export const Play = ({ onOpenFriendsDrawer }: {
 							<h3 className="mb-2 text-[clamp(0.65rem,0.75vw,0.75rem)] font-bold uppercase tracking-widest text-primary">Party Size</h3>
 							<ToggleGroup
 								className="grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]"
-								style={{ gridTemplateColumns: `repeat(${pvpOptions.length}, minmax(0, 1fr))` }}
+								style={{ gridTemplateColumns: `repeat(${party.profiles.length}, minmax(0, 1fr))` }}
 								type="single"
-								value={partySize}
-								onValueChange={value => value && setPartySize(value)}
+								value={party.profiles.length.toString()}
+								onValueChange={async value => {
+									if (!value) return
+									setParty(await triggerNui<Rank.Requests['party']['setSize']>(
+										'rank:party:setSize',
+										{ size: Number(value) }
+									))
+								}}
 							>
-								{pvpOptions.map(([pvpAmount], index) => {
+								{party.profiles.map((profile, index) => {
 									const Icon = modeIcons[index] ?? Users
 									const size = index + 1
 
 									return (
 										<ToggleGroupItem
-											key={pvpAmount}
-											value={pvpAmount.toString()}
+											key={index}
+											value={index.toString()}
 											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
-											disabled={teamMembers.length > pvpAmount}
+											disabled={party.profiles.length > index}
 										>
 											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
 											<span>{size}v{size}</span>
@@ -257,7 +249,7 @@ export const Play = ({ onOpenFriendsDrawer }: {
 				</div>
 				<div className="min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden">
 					{visibleLeaderboard.map(player => {
-						const isCurrentPlayer = player.userId === user.id
+						const isCurrentPlayer = player.userId === profile.id
 
 						return (
 							<div

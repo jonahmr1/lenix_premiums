@@ -36,11 +36,13 @@
 			],
 			"types": [
 				"../../../types/index"
+			],
+			"config": [
+				"../../../resource/common/config"
 			]
 		}
 	},
 	"include": [
-		"src",
-		"../../packages/ui/src/hooks/theme.ts"
+		"src"
 	]
 }

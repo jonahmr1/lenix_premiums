@@ -13,20 +13,20 @@ import {
 	PopoverTitle,
 	PopoverTrigger,
 } from "@workspace/elite/components/popover"
-import { common, session, user } from "../data";
-import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X, type LucideIcon } from "lucide-react";
+import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X } from "lucide-react";
 import { Play } from "../pages/play"
 import { Leaderboard } from "../pages/leaderboard"
 import { Stats } from "../pages/stats"
-import type { Route, UserNotification } from "../types"
+import type { Route } from "../types"
 import { useEffect, useState } from "react"
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@workspace/elite/components/drawer"
-import { userStatuses } from '../constants'
 import { Button } from "@workspace/elite/components/button"
 import { Badge } from "@workspace/elite/components/badge";
 import { useTheme } from "@workspace/ui/hooks/theme";
-import { focus, onEvent } from "lenix/nui";
-import type { Events } from 'types'
+import { focus, onEvent, triggerNui } from "lenix/nui";
+import type { Rank } from 'types'
+import { playerStatuses } from 'config'
+import { Loading } from "../pages/loading";
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -34,58 +34,15 @@ export const Home = () => {
 	const { theme, toggle } = useTheme()
 	const [isFriendsDrawerOpen, setIsFriendsDrawerOpen] = useState(false)
 	const [display, setDisplay] = useState<boolean>()
-
-	const pages = [
-		// {
-		// 	to: '/custom',
-		// 	label: 'CUSTOM GAME',
-		// 	icon: Gamepad,
-		// 	element: <></>
-		// },
-		{
-			to: '/',
-			label: 'PLAY',
-			icon: PlayIcon,
-			element: <Play onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
-		},
-		{
-			to: '/stats',
-			label: 'STATS',
-			icon: BarChart3,
-			element: <Stats />
-		},
-		{
-			to: '/leaderboard',
-			label: 'LEADERBOARD',
-			icon: Trophy,
-			element: <Leaderboard />
-		},
-	] satisfies (Route & { icon: LucideIcon })[]
-
-	const player = common.users[user.id]
-	const playerStatus = userStatuses[session.users[user.id].status]
-
-	const friends = user.friendsIds.flatMap(userId => {
-		const friend = common.users[userId]
-
-		if (!friend) return []
-
-		return [{
-			id: userId,
-			...friend,
-			isReady: session.users[userId]?.isReady ?? false,
-			status: session.users[userId]?.status ?? 'offline',
-		}]
-	})
-	const availableFriends = friends.filter(friend => friend.status !== 'offline')
-	const offlineFriends = friends.filter(friend => friend.status === 'offline')
-	const notifications: UserNotification[] = session.notifications
-		.filter(notification => notification.type === 'party_invite' && notification.invite.toUserId === user.id)
+	const [profile, setProfile] = useState<Rank.Player['Profile']>()
+	const [friends, setFriends] = useState<Rank.Player['Profile'][]>()
+	const [notifications, setNotifications] = useState<Rank.Player['Notification'][]>()
 
 	useEffect(() => {
-		const off = onEvent<Events['rankDisplay']>('rank:display', state => {
-			setDisplay(state)
+		const off = onEvent<Rank.Events['open']>('rank:open', async () => {
+			setDisplay(true)
 			focus()
+			setProfile(await triggerNui<Rank.Requests['profile']>('rank:profile', {}))
 		})
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
@@ -101,8 +58,42 @@ export const Home = () => {
 		}
 	}, [])
 
+	if (!display) return
+	if (!profile || !friends || !notifications) return <Loading />
+
+	const playerStatus = playerStatuses[profile?.status]
+
+	const availableFriends = friends.filter(friend => friend.status !== 'offline')
+	const offlineFriends = friends.filter(friend => friend.status === 'offline')
+	
+	const pages: readonly Route[] = [
+		// {
+		// 	to: '/custom',
+		// 	label: 'CUSTOM GAME',
+		// 	icon: Gamepad,
+		// 	element: <></>
+		// },
+		{
+			to: '/',
+			label: 'PLAY',
+			icon: PlayIcon,
+			element: <Play profile={profile} onOpenFriendsDrawer={() => setIsFriendsDrawerOpen(true)} />,
+		},
+		{
+			to: '/stats',
+			label: 'STATS',
+			icon: BarChart3,
+			element: <Stats profile={profile} />
+		},
+		{
+			to: '/leaderboard',
+			label: 'LEADERBOARD',
+			icon: Trophy,
+			element: <Leaderboard />
+		},
+	]
 	return (
-		<div className={`flex flex-col h-screen bg-background ${display ? 'opacity-100' : 'opacity-0'}`}>
+		<div className='flex flex-col h-screen bg-background'>
 			<div className="flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10">
 				<div className="flex items-center cursor-default select-none w-1/10 font-extrabold">RANKZONE</div>
 				<div>
@@ -146,13 +137,11 @@ export const Home = () => {
 							</PopoverHeader>
 							<div className="max-h-80 space-y-2 overflow-y-auto">
 								{notifications.length ? notifications.map(notification => {
-									const sender = common.users[notification.invite.fromUserId]
-
 									return (
 										<div key={notification.id} className={`rounded-lg border border-foreground/10 p-3 bg-foreground/[0.04]`}>
 											<div className="flex min-w-0 items-center gap-3">
 												<div className="size-9 shrink-0 rounded-full bg-foreground/10 p-1">
-													<img src={sender?.avatar} alt="" className="size-full rounded-full object-cover" />
+													<img src={notification.author.avatar} alt="" className="size-full rounded-full object-cover" />
 												</div>
 												<div className="min-w-0">
 													<div className="truncate font-semibold">{notification.title}</div>
@@ -176,7 +165,7 @@ export const Home = () => {
 									<div className="grid min-h-32 place-items-center rounded-lg border border-dashed border-foreground/10 bg-foreground/[0.02] p-4 text-center text-muted-foreground">
 										<div>
 											<Inbox className="mx-auto mb-2 size-5 text-primary/70" />
-											<div className="font-semibold">No pending invites</div>
+											<div className="font-semibold">Notifications from the system and party invites will show up here</div>
 										</div>
 									</div>
 								)}
@@ -192,17 +181,17 @@ export const Home = () => {
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-auto gap-3 px-2 py-1 normal-case">
 								<div className="relative size-9 shrink-0 rounded-full border border-primary/60 bg-foreground/5 p-1">
-									<img src={player.avatar} alt="" className="size-full rounded-full object-cover" />
+									<img src={profile.avatar} alt="" className="size-full rounded-full object-cover" />
 									<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatus.className}`} />
 								</div>
 								<div className="cursor-default select-none text-left leading-tight">
-									<div>{player.name}</div>
+									<div>{profile.name}</div>
 									<div className="text-[0.65rem] text-primary">{playerStatus.label}</div>
 								</div>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="w-40">
-							{Object.entries(userStatuses).filter(([status]) => status !== 'in_game').map(([value, option]) => (
+							{Object.entries(playerStatuses).filter(([status]) => status !== 'in_game').map(([value, option]) => (
 								<DropdownMenuItem
 									key={value}
 									onClick={() => {/* TODO */ }}
@@ -230,11 +219,11 @@ export const Home = () => {
 										<div className="flex min-w-0 items-center gap-3">
 											<div className="relative size-9 shrink-0 rounded-full bg-foreground/10 p-1">
 												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
-												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
+												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`} />
 											</div>
 											<div className="min-w-0">
 												<div className="truncate font-semibold">{friend.name}</div>
-												<div className="text-[0.65rem] text-muted-foreground">{userStatuses[friend.status].label}</div>
+												<div className="text-[0.65rem] text-muted-foreground">{playerStatuses[friend.status].label}</div>
 											</div>
 										</div>
 										<Button size="sm" variant="ghost">
@@ -252,11 +241,11 @@ export const Home = () => {
 										<div className="flex min-w-0 items-center gap-3">
 											<div className="relative size-9 shrink-0 rounded-full bg-foreground/10 p-1">
 												<img src={friend.avatar} alt="" className="size-full rounded-full object-cover" />
-												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${userStatuses[friend.status].className}`} />
+												<span className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`} />
 											</div>
 											<div className="min-w-0">
 												<div className="truncate font-semibold">{friend.name}</div>
-												<div className="text-[0.65rem] text-muted-foreground">{userStatuses[friend.status].label}</div>
+												<div className="text-[0.65rem] text-muted-foreground">{playerStatuses[friend.status].label}</div>
 											</div>
 										</div>
 										<Button size="sm" variant="ghost" disabled>

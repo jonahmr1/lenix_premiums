@@ -1,6 +1,5 @@
 import { Badge } from "@workspace/elite/components/badge"
 import { calculatePlayerScore, getRankTier } from "../lib"
-import { common, user } from "../data"
 import type { PlayerStats } from "../types"
 import { entries } from "@lenix/lenix"
 import { Crown, Shield, Skull, Target, Trophy, Users } from "lucide-react"

@@ -1,9 +1,11 @@
 import { Badge } from "@workspace/elite/components/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@workspace/elite/components/tabs"
 import { calculatePlayerScore, getRankTier } from "../lib"
-import { common, user } from "../data"
-import type { PlayerStats } from "../types"
 import { Activity, BarChart3, Clock, Crosshair, History, Shield, Skull, Sparkles, Trophy } from "lucide-react"
+import type { Rank } from "types"
+import { useEffect, useState } from "react"
+import { Loading } from "./loading"
+import { triggerNui } from "lenix/nui"
 
 const copy = {
 	title: "Statistics",
@@ -14,29 +16,30 @@ const copy = {
 	},
 }
 
-const getTotalMatches = (stats: PlayerStats) => stats.wins + stats.losses
-const getWinRate = (stats: PlayerStats) => {
-	const matches = getTotalMatches(stats)
-
-	return matches ? `${((stats.wins / matches) * 100).toFixed(1)}%` : "0%"
-}
-const getKdRatio = (stats: PlayerStats) => stats.deaths ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2)
-const getAverage = (value: number, matches: number) => matches ? (value / matches).toFixed(1) : "0.0"
-
 const Panel = ({ children, className = "" }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 bg-background/35 ${className}`}>
 		{children}
 	</section>
 )
 
-export const Stats = () => {
-	const player = common.users[user.id]
-	const stats = player.stats
-	const matches = getTotalMatches(stats)
+export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
+	const stats = profile.stats
 	const score = calculatePlayerScore(stats)
 	const rank = getRankTier(score)
-	const history = common.users[user.id].history ?? []
+	const [matches, setMatches] = useState<Rank.Player['Matches']>()
 
+	useEffect(() => {
+		triggerNui<Rank.Requests['matches']>(
+			'rank:matches', {}
+		).then(setMatches)
+	}, [])
+
+	if (!matches) return <Loading />
+	
+	const getWinRate = (stats: Rank.Player['Stats']) => `${((stats.wins / matches.length) * 100).toFixed(1)}%`
+	const getKdRatio = (stats: Rank.Player['Stats']) => stats.deaths ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2)
+	const getAverage = (value: number, matches: number) => matches ? (value / matches).toFixed(1) : "0.0"
+	
 	const summary = [
 		{ label: "Rank", value: rank.label, icon: Shield, className: rank.className },
 		{ label: "Score", value: score.toLocaleString(), icon: Trophy, className: "text-primary" },
@@ -51,8 +54,8 @@ export const Stats = () => {
 		{ label: "Deaths", value: stats.deaths.toLocaleString() },
 		{ label: "Assists", value: stats.assits.toLocaleString() },
 		{ label: "K/D Ratio", value: getKdRatio(stats) },
-		{ label: "Kills / Match", value: getAverage(stats.kills, matches) },
-		{ label: "Assists / Match", value: getAverage(stats.assits, matches) },
+		{ label: "Kills / Match", value: getAverage(stats.kills, matches.length) },
+		{ label: "Assists / Match", value: getAverage(stats.assits, matches.length) },
 	]
 
 	return (
@@ -68,7 +71,7 @@ export const Stats = () => {
 					</div>
 					<Badge variant="outline" className="gap-2 border-primary/30 bg-primary/10 px-3 py-2 text-primary">
 						<Sparkles className="size-4" />
-						{player.name}
+						{profile.name}
 					</Badge>
 				</div>
 			</Panel>
@@ -107,7 +110,7 @@ export const Stats = () => {
 									</div>
 									<div className="rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3">
 										<div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">History Items</div>
-										<div className="mt-1 text-lg font-extrabold text-foreground">{history.length}</div>
+										<div className="mt-1 text-lg font-extrabold text-foreground">{matches.length}</div>
 									</div>
 								</div>
 							</div>
@@ -157,7 +160,7 @@ export const Stats = () => {
 							<span className="text-right">Score</span>
 						</div>
 						<div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
-							{history.map(match => (
+							{matches.map(match => (
 								<div key={match.id} className="grid grid-cols-[7rem_minmax(8rem,1fr)_7rem_7rem_5rem_5rem_5rem_6rem] items-center gap-3 rounded-lg border border-foreground/10 bg-foreground/[0.04] px-3 py-2 text-[clamp(0.68rem,0.78vw,0.82rem)]">
 									<Badge variant="outline" className={`w-fit px-2 py-1 uppercase ${match.result === "win" ? "border-green-400/30 bg-green-400/10 text-green-400" : "border-destructive/30 bg-destructive/10 text-destructive"}`}>
 										{match.result}

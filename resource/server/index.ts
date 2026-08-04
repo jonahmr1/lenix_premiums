@@ -57,7 +57,7 @@ const VALIDATION_INTERVAL = 15
 			await validateLicense()
 		} catch (error) {
 			console.error(error)
-			StopResource(ResourceName)
+			StopResource(ResourceName) /* TODO */
 		}
 	}, 60_000 * VALIDATION_INTERVAL)
 
@@ -75,4 +75,5 @@ const VALIDATION_INTERVAL = 15
 	console.log(palette('green', 'License validated successfully'))
 	
 	import("common")
+	import('./rank')
 })()
