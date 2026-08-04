@@ -81,12 +81,12 @@ export const Play = ({ profile, onOpenFriendsDrawer }: {
 		? Math.min(100, Math.max(0, ((currentPlayerScore - rankMinScore) / (nextRankMinScore - rankMinScore)) * 100))
 		: 100
 	const stats = [
-		{ label: "Matches", value: playerStats.wins + playerStats.losses },
+		{ label: "Matches", value: playerStats.matches },
 		{ label: "Wins", value: playerStats.wins },
-		{ label: "Win Rate", value: `${((playerStats.wins / (playerStats.wins + playerStats.losses)) * 100).toFixed(1)}%` },
+		{ label: "Win Rate", value: playerStats.winRate },
 		{ label: "Kills", value: playerStats.kills },
 		{ label: "Deaths", value: playerStats.deaths },
-		{ label: "K/D Ratio", value: (playerStats.kills / playerStats.deaths).toFixed(2) },
+		{ label: "K/D Ratio", value: playerStats.killsDeathsRatio },
 	]
 
 	return (
@@ -202,16 +202,16 @@ export const Play = ({ profile, onOpenFriendsDrawer }: {
 									))
 								}}
 							>
-								{party.profiles.map((profile, index) => {
+								{party.profiles.map((_, index) => {
 									const Icon = modeIcons[index] ?? Users
 									const size = index + 1
 
 									return (
 										<ToggleGroupItem
-											key={index}
-											value={index.toString()}
+											key={size}
+											value={size.toString()}
 											className="h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary"
-											disabled={party.profiles.length > index}
+											disabled={party.profiles.length > size}
 										>
 											<Icon className="size-[clamp(1.25rem,1.8vw,1.5rem)]" />
 											<span>{size}v{size}</span>

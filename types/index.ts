@@ -32,6 +32,10 @@ export namespace Rank {
 				assits: number,
 				wins: number,
 				losses: number,
+				winRate: number,
+				killsDeathsRatio: number
+				matches: number
+
 			}
 			friends: Player['Profile']['id'][]
 		}

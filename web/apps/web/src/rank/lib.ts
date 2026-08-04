@@ -1,7 +1,7 @@
-import { rankTiers, weights } from "./constants";
-import type { PlayerStats } from "./types";
+import { rankTiers, weights } from "config";
+import type { Rank } from "types";
 
-export const calculatePlayerScore = (stats: PlayerStats) => {
+export const calculatePlayerScore = (stats: Rank.Player['Stats']) => {
 
 	return Math.max(0,
 		(stats.wins * weights.win) +
