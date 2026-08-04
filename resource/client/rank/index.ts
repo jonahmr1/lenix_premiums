@@ -46,3 +46,10 @@ onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
 
 	return matches
 })
+
+onNui<Rank.Requests['getStats']>('rank:getStats', async () => {
+	const stats = await triggerServerCallback<Rank.Player['Stats']>('lenix:server:rank:getStats', defaultDelay)
+	if (!stats) throw 'Failed to get stats'
+
+	return stats
+})
