@@ -32,6 +32,7 @@ import { triggerNui } from 'lenix/nui'
 import { useLeaderboard } from '../hooks/use-leaderboard'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import { useStats } from '../hooks/use-stats'
+import avatar from '@workspace/elite/assets/avatar.png'
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -68,9 +69,9 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	if (!leaderboard || !party || !stats) return <Loading />
 
 	const topLeaderboard = leaderboard.slice(0, 5)
-	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.id)
+	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.profile_id)
 	const visibleLeaderboard =
-		currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === profile.id)
+		currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === profile.profile_id)
 			? [...topLeaderboard, currentPlayerLeaderboardRow]
 			: leaderboard.slice(0, 6)
 	const currentPlayerScore = calculatePlayerScore(stats)
@@ -187,7 +188,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 															/>
 														) : (
 															<span className='grid size-4 shrink-0 place-items-center rounded-full bg-foreground/10 text-[0.6rem]'>
-																<img src={profile.avatar} />
+																<img src={profile.avatar ?? avatar} />
 															</span>
 														)}
 														<span className='truncate'>{profile.name}</span>
@@ -292,7 +293,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 				</div>
 				<div className='min-h-0 flex-1 space-y-[clamp(0.2rem,0.35vw,0.35rem)] overflow-hidden'>
 					{visibleLeaderboard.map(player => {
-						const isCurrentPlayer = player.userId === profile.id
+						const isCurrentPlayer = player.userId === profile.profile_id
 
 						return (
 							<div

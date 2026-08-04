@@ -9,16 +9,18 @@ if (!mySqlConnectionString.length) throw 'Could not get database name'
 const database = new URL(mySqlConnectionString).pathname.slice(1)
 if (!database.length) throw 'Could not get database name'
 
+export const tablePrefix = 'lenix_competitive:'
+
 const create = (
 	table: string,
-	cb: Parameters<ReturnType<typeof db.schema.withSchema>['createTableIfNotExists']>['1']
-) => db.schema.withSchema(database).createTableIfNotExists(`lenix_competitive:${table}`, cb)
+	cb: Parameters<ReturnType<typeof db.schema.withSchema>['createTableIfNotExists']>[1]
+) => db.schema.withSchema(database).createTableIfNotExists(`${tablePrefix}${table}`, cb)
 
 const tables = [
 	create('profiles', table => {
 		table.integer('profile_id').unsigned().primary()
 		table.string('name', 32).notNullable()
-		table.string('status', 32).notNullable()
+		table.enum('status', ['online', 'offline', 'dnd']).notNullable().defaultTo('online')
 	}),
 	create('friends', table => {
 		table.integer('sender_id').unsigned().notNullable()

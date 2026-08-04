@@ -13,7 +13,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 	if (!leaderboard || !stats) return <Loading />
 
 	const topPlayers = leaderboard.slice(0, 3)
-	const currentPlayer = leaderboard.find(self => self.userId === profile.id)
+	const currentPlayer = leaderboard.find(self => self.userId === profile.profile_id)
 	const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
 	return (
@@ -90,7 +90,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 						</div>
 						<div className='max-h-[min(38vh,28rem)] space-y-[clamp(0.25rem,0.45vw,0.45rem)] overflow-y-auto pr-1'>
 							{leaderboard.map(player => {
-								const isCurrentPlayer = player.userId === profile.id
+								const isCurrentPlayer = player.userId === profile.profile_id
 								const rank = getRankTier(player.score)
 								return (
 									<div

@@ -35,6 +35,7 @@ import type { Rank } from 'types'
 import { playerStatuses } from 'config'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
+import avatar from '@workspace/elite/assets/avatar.png'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -200,7 +201,7 @@ export const Home = () => {
 						<DropdownMenuTrigger asChild>
 							<Button variant='ghost' className='h-auto gap-3 px-2 py-1 normal-case'>
 								<div className='relative size-9 shrink-0 rounded-full border border-primary/60 bg-foreground/5 p-1'>
-									<img src={profile.avatar} alt='' className='size-full rounded-full object-cover' />
+									<img src={profile.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 									<span
 										className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatus.className}`}
 									/>
@@ -246,7 +247,7 @@ export const Home = () => {
 									>
 										<div className='flex min-w-0 items-center gap-3'>
 											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
-												<img src={friend.avatar} alt='' className='size-full rounded-full object-cover' />
+												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 												<span
 													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`}
 												/>
@@ -275,7 +276,7 @@ export const Home = () => {
 									>
 										<div className='flex min-w-0 items-center gap-3'>
 											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
-												<img src={friend.avatar} alt='' className='size-full rounded-full object-cover' />
+												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 												<span
 													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`}
 												/>

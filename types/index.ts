@@ -25,7 +25,7 @@ export namespace Rank {
 		Profile: {
 			profile_id: number
 			name: string
-			avatar: string
+			avatar: string | null
 			status: keyof typeof playerStatuses
 		}
 		Friend: Player['Profile']['profile_id']
