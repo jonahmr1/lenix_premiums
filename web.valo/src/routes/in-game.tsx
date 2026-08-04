@@ -1,1 +1,1 @@
-export const InGame = () => <></>
+export const InGame = () => <></>;

@@ -17,6 +17,9 @@
     "type": "git",
     "url": "https://github.com/jonahmr1/lenix_rank"
   },
+  "workspaces": [
+    "./web"
+  ],
   "type": "module",
   "scripts": {
     "init": "bun run scripts/init.ts",
@@ -54,8 +57,5 @@
   },
   "engines": {
     "node": ">=22.22.0"
-  },
-  "workspaces": [
-    "./web"
-  ]
+  }
 }

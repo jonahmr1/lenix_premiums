@@ -10,7 +10,7 @@
     "noEmit": true,
     "paths": {
       "@workspace/ui/*": ["./src/*"],
-			"types": ["../../../types/index"]
+      "types": ["../../../types/index"]
     }
   },
   "include": ["."],

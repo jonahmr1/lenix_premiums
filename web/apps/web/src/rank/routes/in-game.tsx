@@ -1,7 +1,5 @@
-import { Voting } from "../pages/voting"
+import { Voting } from "../pages/voting";
 
 export const InGame = () => {
-	return (
-		<Voting />
-	)
-}
+  return <Voting />;
+};

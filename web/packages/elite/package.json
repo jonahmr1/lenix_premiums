@@ -1,8 +1,16 @@
 {
   "name": "@workspace/elite",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "exports": {
+    "./globals.css": "./src/styles/globals.css",
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./assets/*": "./src/assets/*",
+    "./elements/*": "./src/elements/*"
+  },
   "scripts": {
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
@@ -38,13 +46,5 @@
     "tailwindcss": "^4",
     "typescript": "~6",
     "typescript-eslint": "^8"
-  },
-  "exports": {
-    "./globals.css": "./src/styles/globals.css",
-    "./lib/*": "./src/lib/*.ts",
-    "./components/*": "./src/components/*.tsx",
-    "./hooks/*": "./src/hooks/*.ts",
-    "./assets/*": "./src/assets/*",
-    "./elements/*": "./src/elements/*"
   }
 }

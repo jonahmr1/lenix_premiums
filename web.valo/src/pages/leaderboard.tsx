@@ -1,9 +1,9 @@
-import { Layout } from "@/components/layout"
+import { Layout } from "@/components/layout";
 
 export const Leaderboard = () => {
-	return (
-		<Layout>
-			<></>
-		</Layout>
-	)
-}
+  return (
+    <Layout>
+      <></>
+    </Layout>
+  );
+};

@@ -40,7 +40,7 @@ async function generateDirectoryGlobs(root: string, useRoot = false) {
     exts.add(ext);
   }
 
-  const path = useRoot ? root : "dist"
+  const path = useRoot ? root : "dist";
 
   return [...groups.entries()].flatMap(([dir, exts]) => {
     const prefix = dir === "." ? `${path}/` : `${path}/${dir}/`;

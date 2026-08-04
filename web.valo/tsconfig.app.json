@@ -9,10 +9,8 @@
     "skipLibCheck": true,
 
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-			"types": ["../types/index"]
+      "@/*": ["./src/*"],
+      "types": ["../types/index"]
     },
 
     /* Bundler mode */

@@ -1,1 +1,1 @@
-export const Lobby = () => <></>
+export const Lobby = () => <></>;
