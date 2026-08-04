@@ -32,7 +32,6 @@ const tables = [
 	}),
 	create('matches', table => {
 		table.increments('match_id').primary()
-		table.string('mode', 16).notNullable()
 		table.string('map', 64).notNullable()
 		table.integer('played_at').unsigned().notNullable()
 	}),

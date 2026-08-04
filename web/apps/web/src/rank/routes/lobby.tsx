@@ -155,7 +155,7 @@ export const Home = () => {
 												<div className='flex min-w-0 items-center gap-3'>
 													<div className='size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
 														<img
-															src={notification.author.avatar}
+															src={notification.author.avatar ?? avatar}
 															alt=''
 															className='size-full rounded-full object-cover'
 														/>

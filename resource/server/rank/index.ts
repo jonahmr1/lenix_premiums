@@ -4,8 +4,10 @@ import './db'
 import { oxmysql } from "@overextended/oxmysql"
 import { tablePrefix } from "./db"
 
+const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
+
 onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Player['Profile']> => {
-	const profileId = GetPlayerIdentifierByType(client.toString(), 'fivem')
+	const profileId = getProfileId(client)
 	
 	const selectedCols = ['profile_id', 'name', 'status'] as const
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles WHERE profile_id = ? LIMIT 1`
@@ -51,16 +53,57 @@ onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Pla
 
 onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Rank.Player['Profile'][]> => {
 	const selectedCols = ['profile_id', 'name', 'status'] as const
-	const profiles = await oxmysql.query<{
+	const profiles: Record<(typeof selectedCols)[number], any>[] = await oxmysql.query<{
 		profile_id: string;
     name: string;
     status: "offline" | "online" | "dnd"
-	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles`) satisfies Record<(typeof selectedCols)[number], any>[]
+	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles`)
 
 	return profiles.map(profile => ({
 		...profile,
 		avatar: null
 	}))
+})
+
+onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Player['Match'][]> => {
+	const profileId = getProfileId(client)
+
+	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
+	const selectedMatchsCols = ['match_id', 'mode', 'map', 'played_at'] as const
+
+	const matchesPerformance: {
+		match_id: number
+		result: 'win' | 'loss'
+		kills: number
+		deaths: number
+		assists: number
+	}[] = await oxmysql.query(
+		`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}performance WHERE = ?`,
+		[profileId]
+	)
+
+	const matches: {
+		match_id: number
+		map: string
+		played_at: number
+	}[] = await oxmysql.query(
+		`SELECT ${selectedMatchsCols.join(', ')} FROM ${tablePrefix}matches`
+	)
+	
+	return matches.map(match => {
+		const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
+		if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
+
+		return {
+			...match,
+			result: matchPerformance.result,
+			stats: {
+				kills: matchPerformance.kills,
+				deaths: matchPerformance.deaths,
+				assits: matchPerformance.assists
+			}
+		}
+	})
 })
 
 const printSnapshot = (data: object) => {

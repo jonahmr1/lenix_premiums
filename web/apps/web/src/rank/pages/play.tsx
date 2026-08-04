@@ -52,7 +52,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const { leaderboard, setLeaderboard } = useLeaderboard()
 	const { setDrawer } = useFriendsDrawer()
 	const { stats, setStats } = useStats()
-	const [party, setParty] = useState<Rank.Party>()
+	const [party, setParty] = useState<Rank.Player['Profile'][]>()
 
 	useEffect(() => {
 		triggerNui<Rank.Requests['party']['get']>('rank:party:get', {}).then(setParty)
@@ -171,7 +171,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 								</p>
 							</div>
 							<div className='mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-foreground/10 bg-background/35'>
-								{party.profiles.map((profile, index) => {
+								{party.map((profile, index) => {
 									const isLeader = 'Lenix' === profile.name
 
 									return (
@@ -230,9 +230,9 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 							</h3>
 							<ToggleGroup
 								className='grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]'
-								style={{ gridTemplateColumns: `repeat(${party.profiles.length}, minmax(0, 1fr))` }}
+								style={{ gridTemplateColumns: `repeat(${party.length}, minmax(0, 1fr))` }}
 								type='single'
-								value={party.profiles.length.toString()}
+								value={party.length.toString()}
 								onValueChange={async value => {
 									if (!value) return
 									setParty(
@@ -240,7 +240,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 									)
 								}}
 							>
-								{party.profiles.map((_, index) => {
+								{party.map((_, index) => {
 									const Icon = modeIcons[index] ?? Users
 									const size = index + 1
 
@@ -249,7 +249,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 											key={size}
 											value={size.toString()}
 											className='h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary'
-											disabled={party.profiles.length > size}
+											disabled={party.length > size}
 										>
 											<Icon className='size-[clamp(1.25rem,1.8vw,1.5rem)]' />
 											<span>
@@ -308,7 +308,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 								>
 									<span className='grid size-6 shrink-0 place-items-center rounded-full bg-foreground/10 text-[0.65rem]'>
 										<img
-											src={player.avatar}
+											src={player.avatar ?? avatar}
 											alt=''
 											className='size-6 shrink-0 rounded-full bg-background object-cover'
 										/>

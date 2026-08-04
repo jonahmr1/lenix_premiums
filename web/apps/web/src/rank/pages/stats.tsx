@@ -30,10 +30,10 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	}, [])
 
 	if (!matches || !stats) return <Loading />
-	
+
 	const score = calculatePlayerScore(stats)
 	const rank = getRankTier(score)
-	
+
 	const summary = [
 		{ label: 'Rank', value: rank.label, icon: Shield, className: rank.className },
 		{ label: 'Score', value: score.toLocaleString(), icon: Trophy, className: 'text-primary' },
@@ -175,7 +175,7 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 						<div className='min-h-0 flex-1 space-y-2 overflow-y-auto pr-1'>
 							{matches.map(match => (
 								<div
-									key={match.id}
+									key={match.match_id}
 									className='grid grid-cols-[7rem_minmax(8rem,1fr)_7rem_7rem_5rem_5rem_5rem_6rem] items-center gap-3 rounded-lg border border-foreground/10 bg-foreground/[0.04] px-3 py-2 text-[clamp(0.68rem,0.78vw,0.82rem)]'
 								>
 									<Badge
@@ -188,7 +188,7 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 										<span className='block truncate font-bold text-foreground'>{match.map}</span>
 										<span className='flex items-center gap-1 text-[0.65rem] font-semibold text-muted-foreground'>
 											<Clock className='size-3' />
-											{match.playedAt}
+											{match.played_at}
 										</span>
 									</span>
 									<span className='font-semibold'>{match.mode}</span>

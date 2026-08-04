@@ -5,6 +5,9 @@ import { useLeaderboard } from '../hooks/use-leaderboard'
 import { Loading } from '@workspace/elite/elements/loading'
 import { getRankTier } from '../lib'
 import { useStats } from '../hooks/use-stats'
+import avatar from '@workspace/elite/assets/avatar.png'
+
+const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
 export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const { leaderboard } = useLeaderboard()
@@ -14,7 +17,6 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 
 	const topPlayers = leaderboard.slice(0, 3)
 	const currentPlayer = leaderboard.find(self => self.profile_id === profile.profile_id)
-	const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
 	return (
 		<div className='flex h-full min-h-0 w-full flex-col gap-[clamp(0.75rem,1.2vw,1.25rem)] overflow-hidden px-[clamp(0.5rem,0.9vw,1rem)] py-[clamp(0.6rem,0.9vw,1rem)] text-foreground'>
@@ -53,7 +55,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 								<div className='flex min-w-0 items-center gap-3'>
 									<span
 										className='block size-[clamp(2rem,2.8vw,2.75rem)] shrink-0 rounded-full bg-background bg-cover bg-center'
-										style={getAvatarStyle(player.avatar)}
+										style={getAvatarStyle(player.avatar ?? avatar)}
 									/>
 									<div className='min-w-0'>
 										<div className='truncate text-[clamp(0.8rem,1vw,1rem)] font-bold text-foreground'>
@@ -103,7 +105,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 										<span className='flex min-w-0 items-center gap-3'>
 											<span
 												className='block size-[clamp(1.6rem,2.2vw,2rem)] shrink-0 rounded-full bg-background bg-cover bg-center'
-												style={getAvatarStyle(player.avatar)}
+												style={getAvatarStyle(player.avatar ?? avatar)}
 											/>
 											<span className='min-w-0'>
 												<span

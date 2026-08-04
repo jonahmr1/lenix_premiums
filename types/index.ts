@@ -14,8 +14,8 @@ export namespace Rank {
 		getProfile: Request<Player['Profile'], 'rank:getProfile'>
 		getLeaderboard: Request<Leaderboard, 'rank:getLeaderboard'>
 		party: {
-			get: Request<Party, 'rank:party:get'>
-			setSize: Request<Party, 'rank:party:setSize', { size: number }>
+			get: Request<Player['Profile'][], 'rank:party:get'>
+			setSize: Request<Player['Profile'][], 'rank:party:setSize', { size: number }>
 		}
 		getMatches: Request<Player['Match'][], 'rank:getMatches'>
 		getStats: Request<Player['Stats'], 'rank:getStats'>
@@ -40,13 +40,10 @@ export namespace Rank {
 			matches: number
 		}
 		Match: {
-			id: `match-${number}`
-			mode: `${number}v${number}`
-			map: Match['Map']
-			playedAt: number
-			result: Match['Result']
-			duration: number
-			scoreChange: number
+			match_id: number
+			map: string
+			played_at: number
+			result: Player['Performance']['result']
 			stats: {
 				kills: Player['Stats']['kills']
 				deaths: Player['Stats']['deaths']
@@ -71,15 +68,6 @@ export namespace Rank {
 			deaths: number
 			assists: number
 		}
-	}
-
-	export interface Match {
-		Map: 'Downtown'
-		Result: 'win'
-	}
-
-	export interface Party {
-		profiles: Player['Profile'][]
 	}
 
 	export type Leaderboard = {
