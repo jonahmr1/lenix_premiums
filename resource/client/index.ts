@@ -1,2 +1,2 @@
-import "common";
-import "./rank";
+import 'common'
+import './rank'

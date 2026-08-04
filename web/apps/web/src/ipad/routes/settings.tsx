@@ -1,40 +1,40 @@
-import { Field, FieldContent, FieldLabel } from "@workspace/ui/components/field";
-import type { Orientation } from "@/ipad/types";
-import type { S } from "@lenix/lenix";
-import { Separator } from "@workspace/ui/components/separator";
-import { Switch } from "@workspace/ui/components/switch";
-import { useTheme } from "@workspace/ui/hooks/theme";
+import { Field, FieldContent, FieldLabel } from '@workspace/ui/components/field'
+import type { Orientation } from '@/ipad/types'
+import type { S } from '@lenix/lenix'
+import { Separator } from '@workspace/ui/components/separator'
+import { Switch } from '@workspace/ui/components/switch'
+import { useTheme } from '@workspace/ui/hooks/theme'
 
 export const Settings = ({
-  orientation,
-  setOrientation,
+	orientation,
+	setOrientation,
 }: {
-  orientation: Orientation;
-  setOrientation: S<Orientation>;
+	orientation: Orientation
+	setOrientation: S<Orientation>
 }) => {
-  const { theme, toggle } = useTheme();
-  return (
-    <div className="p-10 gap-3 flex flex-col">
-      <h1>Appearance</h1>
-      <Separator />
-      <div className="bg-muted p-2 rounded-xl gap-3 flex flex-col">
-        <Field className="flex-row">
-          <FieldContent>
-            <FieldLabel>Enable landscape orientation</FieldLabel>
-          </FieldContent>
-          <Switch
-            defaultChecked={orientation === "landscape"}
-            onCheckedChange={(value) => setOrientation(value ? "landscape" : "portrait")}
-          />
-        </Field>
-        <Separator />
-        <Field className="flex-row">
-          <FieldContent>
-            <FieldLabel>Turn on light mode</FieldLabel>
-          </FieldContent>
-          <Switch defaultChecked={theme === "light"} onCheckedChange={toggle} />
-        </Field>
-      </div>
-    </div>
-  );
-};
+	const { theme, toggle } = useTheme()
+	return (
+		<div className='p-10 gap-3 flex flex-col'>
+			<h1>Appearance</h1>
+			<Separator />
+			<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
+				<Field className='flex-row'>
+					<FieldContent>
+						<FieldLabel>Enable landscape orientation</FieldLabel>
+					</FieldContent>
+					<Switch
+						defaultChecked={orientation === 'landscape'}
+						onCheckedChange={value => setOrientation(value ? 'landscape' : 'portrait')}
+					/>
+				</Field>
+				<Separator />
+				<Field className='flex-row'>
+					<FieldContent>
+						<FieldLabel>Turn on light mode</FieldLabel>
+					</FieldContent>
+					<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
+				</Field>
+			</div>
+		</div>
+	)
+}

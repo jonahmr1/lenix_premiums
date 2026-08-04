@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 export const useFriendsDrawer = () => {
-  const [drawer, setDrawer] = useState(false);
+	const [drawer, setDrawer] = useState(false)
 
-  return { drawer, setDrawer };
-};
+	return { drawer, setDrawer }
+}

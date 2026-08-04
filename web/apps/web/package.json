@@ -1,38 +1,38 @@
 {
-  "name": "app",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@workspace/elite": "workspace:*",
-    "@workspace/ui": "workspace:*",
-    "lucide-react": "^1.28.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-router": "^8.3.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^10",
-    "@tailwindcss/vite": "^4",
-    "@types/node": "^24",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@vitejs/plugin-react": "^6",
-    "eslint": "^10",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17",
-    "postcss-color-converter": "^1.2.1",
-    "typescript": "~6",
-    "typescript-eslint": "^8",
-    "vite": "^8"
-  }
+	"name": "app",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"lint": "eslint",
+		"format": "prettier --write \"**/*.{ts,tsx}\"",
+		"typecheck": "tsc --noEmit",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@workspace/elite": "workspace:*",
+		"@workspace/ui": "workspace:*",
+		"lucide-react": "^1.28.0",
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6",
+		"react-router": "^8.3.0"
+	},
+	"devDependencies": {
+		"@eslint/js": "^10",
+		"@tailwindcss/vite": "^4",
+		"@types/node": "^24",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"@vitejs/plugin-react": "^6",
+		"eslint": "^10",
+		"eslint-plugin-react-hooks": "^7.1.1",
+		"eslint-plugin-react-refresh": "^0.5.2",
+		"globals": "^17",
+		"postcss-color-converter": "^1.2.1",
+		"typescript": "~6",
+		"typescript-eslint": "^8",
+		"vite": "^8"
+	}
 }
