@@ -8,7 +8,7 @@ const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toStri
 
 onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Player['Profile']> => {
 	const profileId = getProfileId(client)
-	
+
 	const selectedCols = ['profile_id', 'name', 'status'] as const
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles WHERE profile_id = ? LIMIT 1`
 
@@ -47,17 +47,17 @@ onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Pla
 		deaths: number
 		assists: number
 	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}performances`) satisfies Record<(typeof selectedCols)[number], any>[]
-	
+
 	return stats
 })
 
 onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Rank.Player['Profile'][]> => {
 	const selectedCols = ['profile_id', 'name', 'status'] as const
-	const profiles: Record<(typeof selectedCols)[number], any>[] = await oxmysql.query<{
+	const profiles: {
 		profile_id: string;
-    name: string;
-    status: "offline" | "online" | "dnd"
-	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles`)
+		name: string;
+		status: "offline" | "online" | "dnd"
+	}[] = await oxmysql.query(`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles`) satisfies Record<(typeof selectedCols)[number], any>[]
 
 	return profiles.map(profile => ({
 		...profile,
@@ -78,18 +78,19 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 		deaths: number
 		assists: number
 	}[] = await oxmysql.query(
-		`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}performance WHERE = ?`,
+		`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}performances WHERE profile_id = ?`,
 		[profileId]
-	)
+	) satisfies Record<(typeof selectedCols)[number], any>[]
 
 	const matches: {
 		match_id: number
 		map: string
 		played_at: number
 	}[] = await oxmysql.query(
-		`SELECT ${selectedMatchsCols.join(', ')} FROM ${tablePrefix}matches`
-	)
-	
+		`SELECT ${selectedMatchsCols.join(', ')} FROM ${tablePrefix}matches WHERE profile_id = ?`,
+		[profileId]
+	) satisfies Record<(typeof selectedMatchsCols)[number], any>[]
+
 	return matches.map(match => {
 		const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
 		if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
@@ -104,6 +105,46 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 			}
 		}
 	})
+})
+
+onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.Player['Stats']> => {
+	const profile_id = getProfileId(client)
+
+	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
+	const stats: {
+		result: 'win' | 'loss'
+		kills: number
+		deaths: number
+		assists: number
+	}[] = await oxmysql.query(
+		`SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}performances WHERE profile_id = ?`,
+		[profile_id]
+	) satisfies Record<(typeof selectedCols)[number], any>[]
+
+	const totals = stats.reduce(
+		(acc, stat) => {
+			acc.kills += stat.kills
+			acc.deaths += stat.deaths
+			acc.assists += stat.assists
+			acc.wins += stat.result === 'win' ? 1 : 0
+			acc.losses += stat.result === 'loss' ? 1 : 0
+			return acc
+		},
+		{
+			kills: 0,
+			deaths: 0,
+			assists: 0,
+			wins: 0,
+			losses: 0,
+		},
+	)
+
+	return {
+		...totals,
+		winRate: totals.wins + totals.losses ? totals.wins / (totals.wins + totals.losses) : 0,
+		killsDeathsRatio: totals.deaths ? totals.kills / totals.deaths : totals.kills,
+		matches: totals.wins + totals.losses,
+	}
 })
 
 const printSnapshot = (data: object) => {
