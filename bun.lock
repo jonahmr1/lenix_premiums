@@ -9,7 +9,7 @@
         "@overextended/core": "^0.3.1",
         "@overextended/ox_lib": "^3.35.0",
         "@polar-sh/sdk": "^1.0.0-alpha.16",
-        "lenix": "^1.7.16",
+        "lenix": "^1.7.18",
       },
       "devDependencies": {
         "@citizenfx/client": "latest",
@@ -439,7 +439,7 @@
 
     "jsesc": ["jsesc@3.1.0", "", { "bin": { "jsesc": "bin/jsesc" } }, "sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA=="],
 
-    "lenix": ["lenix@1.7.16", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix" }, "peerDependencies": { "typescript": "^5" } }, "sha512-znznxJdjY71wh1DPIGQXMOsxjIcJoLb4FohEZpspCcqJ8cq9jynamT0otiGWAPpmHIn0bsg0ixvHJv1+YH7LyA=="],
+    "lenix": ["lenix@1.7.18", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix" }, "peerDependencies": { "typescript": "^5" } }, "sha512-xNQFZE1AiSr8CZVosaY3QZ7cE4LU/pGuaNRPSXN5o4NNPqQnbV6wSrZPYn0lQ/k4eQ9ygUaYNkC5UK1OYf1ptA=="],
 
     "levn": ["levn@0.3.0", "", { "dependencies": { "prelude-ls": "~1.1.2", "type-check": "~0.3.2" } }, "sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA=="],
 

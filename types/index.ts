@@ -11,13 +11,13 @@ export namespace Rank {
 	}
 
 	export interface Requests {
-		profile: Request<Player['Profile'], 'rank:profile'>
-		leaderboard: Request<Leaderboard, 'rank:leaderboard'>
+		getProfile: Request<Player['Profile'], 'rank:getProfile'>
+		getLeaderboard: Request<Leaderboard, 'rank:getLeaderboard'>
 		party: {
 			get: Request<Party, 'rank:party:get'>
 			setSize: Request<Party, 'rank:party:setSize', { size: number }>
 		}
-		matches: Request<Player['Matches'], 'rank:matches'>
+		getMatches: Request<Player['Matches'], 'rank:getMatches'>
 	}
 
 	export interface Player {

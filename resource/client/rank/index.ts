@@ -1,8 +1,9 @@
-import { addKeybind } from '@overextended/ox_lib/client'
-import type { playerStatuses } from 'common/config'
+import { addKeybind, triggerServerCallback } from '@overextended/ox_lib/client'
 import { ResourceName } from 'common/resource'
-import { emitEvent } from 'lenix/client'
+import { emitEvent, onNui } from 'lenix/client'
 import type { Rank } from 'types/index'
+
+const defaultDelay = 5000
 
 addKeybind({
 	name: `${ResourceName}:rank:open`,
@@ -11,131 +12,37 @@ addKeybind({
 	onPressed: () => emitEvent<Rank.Events['open']>('rank:open'),
 })
 
-const avatar = 'https://lenix.dev/favicon-light.svg'
+onNui<Rank.Requests['getProfile']>('rank:getProfile', async () => {
+	const profile = await triggerServerCallback<Rank.Player['Profile']>('lenix:server:rank:getProfile', defaultDelay)
+	if (!profile) throw 'Failed to get profile'
 
-const leaderboard = entries(common.users)
-	.map(([userId, { name, avatar, stats }]) => ({
-		userId,
-		name,
-		avatar,
-		score: calculatePlayerScore(stats),
-	}))
-	.sort((a, b) => b.score - a.score)
-	.map((player, index) => ({
-		...player,
-		place: index + 1,
-	}))
+	return profile
+})
 
-const leaderboard = entries(common.users)
-	.map(([userId, player]) => {
-		const score = calculatePlayerScore(player.stats)
-		const rank = getRankTier(score)
+onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
+	const leaderboard = await triggerServerCallback<Rank.Leaderboard>('lenix:server:rank:getLeaderboard', defaultDelay)
+	if (!leaderboard) throw 'Failed to get leaderboard'
 
-		return {
-			userId,
-			...player,
-			score,
-			rank,
-			matches: player.stats.wins + player.stats.losses,
-			winRate: getWinRate(player.stats),
-			kdRatio: getKdRatio(player.stats),
-		}
-	})
-	.sort((firstPlayer, secondPlayer) => secondPlayer.score - firstPlayer.score)
-	.map((player, index) => ({
-		...player,
-		place: index + 1,
-	}))
-export const common: {
-	users: Record<string, Rank.Player>
-} = {
-	users: {
-		lenix: {
-			name: 'Lenix',
-			avatar,
-			stats: {
-				kills: 19247,
-				deaths: 8354,
-				assits: 17898,
-				wins: 5469,
-				losses: 8498,
-			},
-			history: [
-				{
-					id: 'match-001',
-					mode: '2v2',
-					map: 'Downtown',
-					playedAt: 'Today 21:18',
-					result: 'win',
-					duration: '14m 32s',
-					scoreChange: 34,
-					stats: {
-						kills: 24,
-						deaths: 9,
-						assits: 17,
-					},
-				},
-			],
-		},
-	},
-}
+	return leaderboard
+})
 
-export const session: {
-	users: {
-		[key: string]: {
-			isReady: boolean
-		}
-	}
-	notifications: UserNotification[]
-} = {
-	users: {
-		lenix: {
-			isReady: false,
-			status: 'online',
-		},
-		nour: {
-			isReady: false,
-			status: 'online',
-		},
-	},
-	notifications: [
-		{
-			id: 'notification-001',
-			type: 'party_invite',
-			title: 'Party Invite',
-			description: 'nour invited you to join their party.',
-			createdAt: 'Just now',
-			invite: {
-				fromUserId: 'nour',
-				toUserId: 'lenix',
-			},
-		},
-		{
-			id: 'notification-002',
-			type: 'party_invite',
-			title: 'Party Invite',
-			description: '7MOOD invited you to join their party.',
-			createdAt: '2m ago',
-			invite: {
-				fromUserId: '7MOOD',
-				toUserId: 'lenix',
-			},
-		},
-		{
-			id: 'notification-003',
-			type: 'party_invite',
-			title: 'Party Invite',
-			description: 'M_D7M invited you to join their party.',
-			createdAt: '8m ago',
-			invite: {
-				fromUserId: 'M_D7M',
-				toUserId: 'lenix',
-			},
-		},
-	],
-}
+onNui<Rank.Requests['party']['get']>('rank:party:get', async () => {
+	const party = await triggerServerCallback<Rank.Party>('lenix:server:rank:getParty', defaultDelay)
+	if (!party) throw 'Failed to get party'
 
-export const user = {
-	id: 'lenix',
-	friendsIds: ['7MOOD', 'nour', 'M_D7M', 'iSnipe', 'abood'],
-}
+	return party
+})
+
+onNui<Rank.Requests['party']['setSize']>('rank:party:setSize', async size => {
+	const party = await triggerServerCallback<Rank.Party>('lenix:server:rank:setSize', defaultDelay, size)
+	if (!party) throw 'Failed to set party size'
+
+	return party
+})
+
+onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
+	const matches = await triggerServerCallback<Rank.Player['Matches']>('lenix:server:rank:getMatches', defaultDelay)
+	if (!matches) throw 'Failed to get matches'
+
+	return matches
+})

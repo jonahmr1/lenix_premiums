@@ -27,7 +27,7 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const [matches, setMatches] = useState<Rank.Player['Matches']>()
 
 	useEffect(() => {
-		triggerNui<Rank.Requests['matches']>('rank:matches', {}).then(setMatches)
+		triggerNui<Rank.Requests['getMatches']>('rank:getMatches', {}).then(setMatches)
 	}, [])
 
 	if (!matches) return <Loading />

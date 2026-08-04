@@ -56,7 +56,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 
 		if (leaderboard) return
 
-		triggerNui<Rank.Requests['leaderboard']>('rank:leaderboard', {}).then(setLeaderboard)
+		triggerNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
 	}, [])
 
 	if (!leaderboard || !party) return <Loading />

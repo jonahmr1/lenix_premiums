@@ -50,7 +50,7 @@ export const Home = () => {
 		const off = onEvent<Rank.Events['open']>('rank:open', async () => {
 			setDisplay(true)
 			focus()
-			setProfile(await triggerNui<Rank.Requests['profile']>('rank:profile', {}))
+			setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
 		})
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
