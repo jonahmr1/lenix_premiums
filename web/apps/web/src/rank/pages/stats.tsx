@@ -4,7 +4,7 @@ import { calculatePlayerScore, getRankTier } from "../lib"
 import { Activity, BarChart3, Clock, Crosshair, History, Shield, Skull, Sparkles, Trophy } from "lucide-react"
 import type { Rank } from "types"
 import { useEffect, useState } from "react"
-import { Loading } from "./loading"
+import { Loading } from "@workspace/elite/elements/loading.js"
 import { triggerNui } from "lenix/nui"
 
 const copy = {
@@ -35,11 +35,11 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	}, [])
 
 	if (!matches) return <Loading />
-	
+
 	const getWinRate = (stats: Rank.Player['Stats']) => `${((stats.wins / matches.length) * 100).toFixed(1)}%`
 	const getKdRatio = (stats: Rank.Player['Stats']) => stats.deaths ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2)
 	const getAverage = (value: number, matches: number) => matches ? (value / matches).toFixed(1) : "0.0"
-	
+
 	const summary = [
 		{ label: "Rank", value: rank.label, icon: Shield, className: rank.className },
 		{ label: "Score", value: score.toLocaleString(), icon: Trophy, className: "text-primary" },

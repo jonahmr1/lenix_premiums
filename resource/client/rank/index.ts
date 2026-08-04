@@ -25,6 +25,29 @@ const avatar = 'https://lenix.dev/favicon-light.svg'
 			...player,
 			place: index + 1,
 		}));
+
+
+		
+		const leaderboard = entries(common.users)
+			.map(([userId, player]) => {
+				const score = calculatePlayerScore(player.stats)
+				const rank = getRankTier(score)
+	
+				return {
+					userId,
+					...player,
+					score,
+					rank,
+					matches: player.stats.wins + player.stats.losses,
+					winRate: getWinRate(player.stats),
+					kdRatio: getKdRatio(player.stats),
+				}
+			})
+			.sort((firstPlayer, secondPlayer) => secondPlayer.score - firstPlayer.score)
+			.map((player, index) => ({
+				...player,
+				place: index + 1,
+			}))
 export const common: {
 	users: Record<string, Rank.Player>;
 } = {

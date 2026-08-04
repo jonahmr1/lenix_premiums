@@ -27,8 +27,9 @@ import { useEffect, useState } from "react"
 import { calculatePlayerScore, getRankTier } from "../lib"
 import { rankTiers } from "config"
 import type { Rank } from "types"
-import { Loading } from "./loading"
+import { Loading } from "@workspace/elite/elements/loading.js"
 import { triggerNui } from "lenix/nui"
+import { useLeaderboard } from "../hooks/use-leaderboard"
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -48,17 +49,19 @@ export const Play = ({ profile, onOpenFriendsDrawer }: {
 	profile: Rank.Player['Profile']
 	onOpenFriendsDrawer?: () => void
 }) => {
-	const [leaderboard, setLeaderboard] = useState<Rank.Leaderboard>()
+	const { leaderboard, setLeaderboard } = useLeaderboard()
 	const [party, setParty] = useState<Rank.Party>()
 
 	useEffect(() => {
-		triggerNui<Rank.Requests['leaderboard']>(
-			'rank:leaderboard', {}
-		).then(setLeaderboard)
-
 		triggerNui<Rank.Requests['party']['get']>(
 			'rank:party:get', {}
 		).then(setParty)
+
+		if (leaderboard) return
+
+		triggerNui<Rank.Requests['leaderboard']>(
+			'rank:leaderboard', {}
+		).then(setLeaderboard)
 	}, [])
 
 	if (!leaderboard || !party) return <Loading />

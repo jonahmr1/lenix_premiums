@@ -1,40 +1,17 @@
 import { Badge } from "@workspace/elite/components/badge"
-import { calculatePlayerScore, getRankTier } from "../lib"
-import type { PlayerStats } from "../types"
-import { entries } from "@lenix/lenix"
 import { Crown, Shield, Skull, Target, Trophy, Users } from "lucide-react"
+import type { Rank } from "types"
+import { useLeaderboard } from "../hooks/use-leaderboard"
+import { Loading } from "@workspace/elite/elements/loading"
+import { getRankTier } from "../lib"
 
-const getWinRate = (stats: PlayerStats) => {
-	const matches = stats.wins + stats.losses
-	return matches ? `${((stats.wins / matches) * 100).toFixed(1)}%` : "0%"
-}
+export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) => {
+	const { leaderboard } = useLeaderboard()
 
-const getKdRatio = (stats: PlayerStats) => stats.deaths ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2)
-
-export const Leaderboard = () => {
-	const leaderboard = entries(common.users)
-		.map(([userId, player]) => {
-			const score = calculatePlayerScore(player.stats)
-			const rank = getRankTier(score)
-
-			return {
-				userId,
-				...player,
-				score,
-				rank,
-				matches: player.stats.wins + player.stats.losses,
-				winRate: getWinRate(player.stats),
-				kdRatio: getKdRatio(player.stats),
-			}
-		})
-		.sort((firstPlayer, secondPlayer) => secondPlayer.score - firstPlayer.score)
-		.map((player, index) => ({
-			...player,
-			place: index + 1,
-		}))
-
+	if (!leaderboard) return <Loading />
+	
 	const topPlayers = leaderboard.slice(0, 3)
-	const currentPlayer = leaderboard.find(player => player.userId === user.id)
+	const currentPlayer = leaderboard.find(self => self.userId === profile.id)
 	const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
 	return (
@@ -58,23 +35,27 @@ export const Leaderboard = () => {
 			</section>
 
 			<section className="grid grid-cols-3 gap-[clamp(0.75rem,1.2vw,1.25rem)]">
-				{topPlayers.map(player => (
-					<div key={player.userId} className="min-w-0 rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.7rem,1vw,1rem)]">
-						<div className="flex items-center justify-between gap-3">
-							<div className="flex min-w-0 items-center gap-3">
-								<span className="block size-[clamp(2rem,2.8vw,2.75rem)] shrink-0 rounded-full bg-background bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
-								<div className="min-w-0">
-									<div className="truncate text-[clamp(0.8rem,1vw,1rem)] font-bold text-foreground">{player.name}</div>
-									<div className={`text-[clamp(0.65rem,0.8vw,0.8rem)] font-bold uppercase ${player.rank.className}`}>{player.rank.label}</div>
+				{topPlayers.map(player => {
+					const rank = getRankTier(player.score)
+
+					return (
+						<div key={player.userId} className="min-w-0 rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.7rem,1vw,1rem)]">
+							<div className="flex items-center justify-between gap-3">
+								<div className="flex min-w-0 items-center gap-3">
+									<span className="block size-[clamp(2rem,2.8vw,2.75rem)] shrink-0 rounded-full bg-background bg-cover bg-center" style={getAvatarStyle(player.avatar)} />
+									<div className="min-w-0">
+										<div className="truncate text-[clamp(0.8rem,1vw,1rem)] font-bold text-foreground">{player.name}</div>
+										<div className={`text-[clamp(0.65rem,0.8vw,0.8rem)] font-bold uppercase ${rank.className}`}>{rank.label}</div>
+									</div>
+								</div>
+								<div className="shrink-0 text-right">
+									<div className="text-[clamp(1rem,1.4vw,1.35rem)] font-extrabold text-primary">#{player.place}</div>
+									<div className="text-[clamp(0.65rem,0.8vw,0.8rem)] font-semibold text-muted-foreground">{player.score.toLocaleString()}</div>
 								</div>
 							</div>
-							<div className="shrink-0 text-right">
-								<div className="text-[clamp(1rem,1.4vw,1.35rem)] font-extrabold text-primary">#{player.place}</div>
-								<div className="text-[clamp(0.65rem,0.8vw,0.8rem)] font-semibold text-muted-foreground">{player.score.toLocaleString()}</div>
-							</div>
 						</div>
-					</div>
-				))}
+					)
+				})}
 			</section>
 
 			<section className="flex min-h-0 flex-1 flex-col rounded-xl border border-foreground/10 bg-background/35 p-[clamp(0.75rem,1vw,1rem)]">
@@ -91,8 +72,8 @@ export const Leaderboard = () => {
 						</div>
 						<div className="max-h-[min(38vh,28rem)] space-y-[clamp(0.25rem,0.45vw,0.45rem)] overflow-y-auto pr-1">
 							{leaderboard.map(player => {
-								const isCurrentPlayer = player.userId === user.id
-
+								const isCurrentPlayer = player.userId === profile.id
+								const rank = getRankTier(player.score)
 								return (
 									<div
 										key={player.userId}
@@ -105,15 +86,15 @@ export const Leaderboard = () => {
 												<span className={`block truncate font-bold ${isCurrentPlayer ? "text-primary" : "text-foreground"}`}>{player.name}</span>
 												<span className="flex items-center gap-2 text-[0.65rem] font-semibold text-muted-foreground">
 													<Users className="size-3" />
-													{player.matches.toLocaleString()} matches
+													{profile.stats.matches.toLocaleString()} matches
 												</span>
 											</span>
 										</span>
-										<span className={`font-bold uppercase ${player.rank.className}`}>{player.rank.label}</span>
+										<span className={`font-bold uppercase ${rank.className}`}>{rank.label}</span>
 										<span className="text-right font-bold">{player.score.toLocaleString()}</span>
-										<span className="text-right font-semibold">{player.stats.wins.toLocaleString()}</span>
-										<span className="text-right font-semibold">{player.winRate}</span>
-										<span className="text-right font-semibold">{player.kdRatio}</span>
+										<span className="text-right font-semibold">{profile.stats.wins.toLocaleString()}</span>
+										<span className="text-right font-semibold">{profile.stats.winRate}</span>
+										<span className="text-right font-semibold">{profile.stats.killsDeathsRatio}</span>
 									</div>
 								)
 							})}
@@ -143,7 +124,7 @@ export const Leaderboard = () => {
 						<span className="text-xs font-bold uppercase tracking-widest">Top K/D</span>
 					</div>
 					<div className="mt-2 text-xl font-extrabold">
-						{leaderboard.reduce((bestKd, player) => Math.max(bestKd, Number(player.kdRatio)), 0).toFixed(2)}
+						{leaderboard.reduce((bestKd) => Math.max(bestKd, Number(profile.stats.killsDeathsRatio)), 0).toFixed(2)}
 					</div>
 				</div>
 			</section>

@@ -26,7 +26,7 @@ import { useTheme } from "@workspace/ui/hooks/theme";
 import { focus, onEvent, triggerNui } from "lenix/nui";
 import type { Rank } from 'types'
 import { playerStatuses } from 'config'
-import { Loading } from "../pages/loading";
+import { Loading } from "@workspace/elite/elements/loading.js";
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -65,7 +65,7 @@ export const Home = () => {
 
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
-	
+
 	const pages: readonly Route[] = [
 		// {
 		// 	to: '/custom',
