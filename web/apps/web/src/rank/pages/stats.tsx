@@ -6,6 +6,7 @@ import type { Rank } from 'types'
 import { useEffect, useState } from 'react'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
+import { useStats } from '../hooks/use-stats'
 
 const copy = {
 	title: 'Statistics',
@@ -21,27 +22,23 @@ const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className
 )
 
 export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
-	const stats = profile.stats
-	const score = calculatePlayerScore(stats)
-	const rank = getRankTier(score)
-	const [matches, setMatches] = useState<Rank.Player['Matches']>()
+	const { stats } = useStats()
+	const [matches, setMatches] = useState<Rank.Player['Match'][]>()
 
 	useEffect(() => {
 		triggerNui<Rank.Requests['getMatches']>('rank:getMatches', {}).then(setMatches)
 	}, [])
 
-	if (!matches) return <Loading />
-
-	const getWinRate = (stats: Rank.Player['Stats']) => `${((stats.wins / matches.length) * 100).toFixed(1)}%`
-	const getKdRatio = (stats: Rank.Player['Stats']) =>
-		stats.deaths ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2)
-	const getAverage = (value: number, matches: number) => (matches ? (value / matches).toFixed(1) : '0.0')
-
+	if (!matches || !stats) return <Loading />
+	
+	const score = calculatePlayerScore(stats)
+	const rank = getRankTier(score)
+	
 	const summary = [
 		{ label: 'Rank', value: rank.label, icon: Shield, className: rank.className },
 		{ label: 'Score', value: score.toLocaleString(), icon: Trophy, className: 'text-primary' },
 		{ label: 'Matches', value: matches.toLocaleString(), icon: Activity, className: 'text-foreground' },
-		{ label: 'Win Rate', value: getWinRate(stats), icon: BarChart3, className: 'text-green-400' },
+		{ label: 'Win Rate', value: stats.winRate, icon: BarChart3, className: 'text-green-400' },
 	]
 
 	const details = [
@@ -49,10 +46,8 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 		{ label: 'Losses', value: stats.losses.toLocaleString() },
 		{ label: 'Kills', value: stats.kills.toLocaleString() },
 		{ label: 'Deaths', value: stats.deaths.toLocaleString() },
-		{ label: 'Assists', value: stats.assits.toLocaleString() },
-		{ label: 'K/D Ratio', value: getKdRatio(stats) },
-		{ label: 'Kills / Match', value: getAverage(stats.kills, matches.length) },
-		{ label: 'Assists / Match', value: getAverage(stats.assits, matches.length) },
+		{ label: 'Assists', value: stats.assists.toLocaleString() },
+		{ label: 'K/D Ratio', value: stats.killsDeathsRatio },
 	]
 
 	return (
@@ -111,7 +106,7 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 								<div className='grid w-full grid-cols-2 gap-2'>
 									<div className='rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3'>
 										<div className='text-xs font-bold uppercase tracking-widest text-muted-foreground'>Win Rate</div>
-										<div className='mt-1 text-lg font-extrabold text-green-400'>{getWinRate(stats)}</div>
+										<div className='mt-1 text-lg font-extrabold text-green-400'>{stats.winRate}</div>
 									</div>
 									<div className='rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3'>
 										<div className='text-xs font-bold uppercase tracking-widest text-muted-foreground'>

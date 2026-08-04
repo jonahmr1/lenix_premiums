@@ -4,11 +4,13 @@ import type { Rank } from 'types'
 import { useLeaderboard } from '../hooks/use-leaderboard'
 import { Loading } from '@workspace/elite/elements/loading'
 import { getRankTier } from '../lib'
+import { useStats } from '../hooks/use-stats'
 
 export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const { leaderboard } = useLeaderboard()
+	const { stats } = useStats()
 
-	if (!leaderboard) return <Loading />
+	if (!leaderboard || !stats) return <Loading />
 
 	const topPlayers = leaderboard.slice(0, 3)
 	const currentPlayer = leaderboard.find(self => self.userId === profile.id)
@@ -111,15 +113,15 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 												</span>
 												<span className='flex items-center gap-2 text-[0.65rem] font-semibold text-muted-foreground'>
 													<Users className='size-3' />
-													{profile.stats.matches.toLocaleString()} matches
+													{stats.matches.toLocaleString()} matches
 												</span>
 											</span>
 										</span>
 										<span className={`font-bold uppercase ${rank.className}`}>{rank.label}</span>
 										<span className='text-right font-bold'>{player.score.toLocaleString()}</span>
-										<span className='text-right font-semibold'>{profile.stats.wins.toLocaleString()}</span>
-										<span className='text-right font-semibold'>{profile.stats.winRate}</span>
-										<span className='text-right font-semibold'>{profile.stats.killsDeathsRatio}</span>
+										<span className='text-right font-semibold'>{stats.wins.toLocaleString()}</span>
+										<span className='text-right font-semibold'>{stats.winRate}</span>
+										<span className='text-right font-semibold'>{stats.killsDeathsRatio}</span>
 									</div>
 								)
 							})}
@@ -149,7 +151,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 						<span className='text-xs font-bold uppercase tracking-widest'>Top K/D</span>
 					</div>
 					<div className='mt-2 text-xl font-extrabold'>
-						{leaderboard.reduce(bestKd => Math.max(bestKd, Number(profile.stats.killsDeathsRatio)), 0).toFixed(2)}
+						{leaderboard.reduce(bestKd => Math.max(bestKd, Number(stats.killsDeathsRatio)), 0).toFixed(2)}
 					</div>
 				</div>
 			</section>

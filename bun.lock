@@ -8,6 +8,7 @@
         "@lenix/lenix": "npm:@jsr/lenix__lenix",
         "@overextended/core": "^0.3.1",
         "@overextended/ox_lib": "^3.35.0",
+        "@overextended/oxmysql": "^2.14.1",
         "@polar-sh/sdk": "^1.0.0-alpha.16",
         "lenix": "^1.7.18",
       },
@@ -98,6 +99,8 @@
     "@overextended/core": ["@overextended/core@0.3.1", "", { "peerDependencies": { "typescript": "^5.8.3" } }, "sha512-ehDIPZHZR+A73/USIigQysIqQ63txKcQj2t7flaJbLh33r+IYi/RcP7Z+vifdUugqkqWp8fq1tjbdypmt1H3GQ=="],
 
     "@overextended/ox_lib": ["@overextended/ox_lib@3.35.0", "", { "dependencies": { "@overextended/core": "^0.2.5", "csstype": "^3.2.3", "fast-printf": "^1.6.10", "typescript": "^6.0.3" } }, "sha512-O9LWjPN9nhUvyJnsUGCpfxFpxt5kXy+4vQ6xbkAVR0Yx+ybnrQGoRaVFKTwOLlSRMhor8EJvnrmNe4u/jV5zgw=="],
+
+    "@overextended/oxmysql": ["@overextended/oxmysql@2.14.1", "", {}, "sha512-XO5rSNvq7A8sd8+c8AcI1882Qi5nJB0pC2Jn3MEidCBtW8zmp25MQk1KBeF+Hq7KUvWStKqx3DLmQv5SWcui1Q=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.132.0", "", {}, "sha512-FESMOxil5Se014ui/Eq8fT5uHJo6nIRwH0PfJrZJXs6Gek3ZVFOrpUv3YIZT20m+extU98Hg1Ym72U58rlsxUQ=="],
 

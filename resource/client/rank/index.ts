@@ -41,7 +41,7 @@ onNui<Rank.Requests['party']['setSize']>('rank:party:setSize', async size => {
 })
 
 onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
-	const matches = await triggerServerCallback<Rank.Player['Matches']>('lenix:server:rank:getMatches', defaultDelay)
+	const matches = await triggerServerCallback<Rank.Player['Match'][]>('lenix:server:rank:getMatches', defaultDelay)
 	if (!matches) throw 'Failed to get matches'
 
 	return matches

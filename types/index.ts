@@ -17,7 +17,8 @@ export namespace Rank {
 			get: Request<Party, 'rank:party:get'>
 			setSize: Request<Party, 'rank:party:setSize', { size: number }>
 		}
-		getMatches: Request<Player['Matches'], 'rank:getMatches'>
+		getMatches: Request<Player['Match'][], 'rank:getMatches'>
+		getStats: Request<Player['Stats'], 'rank:getStats'>
 	}
 
 	export interface Player {
@@ -26,41 +27,32 @@ export namespace Rank {
 			name: string
 			avatar: string
 			status: keyof typeof playerStatuses
+		}
+		Friends: Player['Profile']['id'][]
+		Stats: {
+			kills: number
+			deaths: number
+			assists: number
+			wins: number
+			losses: number
+			winRate: number
+			killsDeathsRatio: number
+			matches: number
+		}
+		Match: {
+			id: `match-${number}`
+			mode: `${number}v${number}`
+			map: Match['Map']
+			playedAt: number
+			result: Match['Result']
+			duration: number
+			scoreChange: number
 			stats: {
 				kills: number
 				deaths: number
 				assits: number
-				wins: number
-				losses: number
-				winRate: number
-				killsDeathsRatio: number
-				matches: number
 			}
-			friends: Player['Profile']['id'][]
-		}
-		Matches: [
-			{
-				id: `match-${number}`
-				mode: `${number}v${number}`
-				map: Match['Map']
-				playedAt: number
-				result: Match['Result']
-				duration: number
-				scoreChange: number
-				stats: {
-					kills: number
-					deaths: number
-					assits: number
-				}
-			},
-		]
-		Stats: {
-			kills: number
-			deaths: number
-			assits: number
-			wins: number
-			losses: number
-		}
+		},
 		Notification: {
 			id: string
 			type: 'party_invite'
@@ -84,9 +76,9 @@ export namespace Rank {
 
 	export type Leaderboard = {
 		place: number
-		userId: any
-		name: any
-		avatar: any
+		userId: number
+		name: string
+		avatar: string
 		score: number
 	}[]
 }

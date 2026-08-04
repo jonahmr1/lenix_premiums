@@ -31,6 +31,7 @@ import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
 import { useLeaderboard } from '../hooks/use-leaderboard'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
+import { useStats } from '../hooks/use-stats'
 
 const modeIcons = [User, Users, Users, Users]
 
@@ -49,17 +50,22 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const nav = useNavigate()
 	const { leaderboard, setLeaderboard } = useLeaderboard()
 	const { setDrawer } = useFriendsDrawer()
+	const { stats, setStats } = useStats()
 	const [party, setParty] = useState<Rank.Party>()
 
 	useEffect(() => {
 		triggerNui<Rank.Requests['party']['get']>('rank:party:get', {}).then(setParty)
+		
+		if (!stats) {
+			triggerNui<Rank.Requests['getStats']>('rank:getStats', {}).then(setStats)
+		}
 
-		if (leaderboard) return
-
-		triggerNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
+		if (!leaderboard) {
+			triggerNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
+		}
 	}, [])
 
-	if (!leaderboard || !party) return <Loading />
+	if (!leaderboard || !party || !stats) return <Loading />
 
 	const topLeaderboard = leaderboard.slice(0, 5)
 	const currentPlayerLeaderboardRow = leaderboard.find(data => data.userId === profile.id)
@@ -67,8 +73,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 		currentPlayerLeaderboardRow && !topLeaderboard.some(data => data.userId === profile.id)
 			? [...topLeaderboard, currentPlayerLeaderboardRow]
 			: leaderboard.slice(0, 6)
-	const playerStats = profile.stats
-	const currentPlayerScore = calculatePlayerScore(playerStats)
+	const currentPlayerScore = calculatePlayerScore(stats)
 	const currentRank = getRankTier(currentPlayerScore)
 	const currentRankIndex = rankTiers.findIndex(rank => rank.label === currentRank.label)
 	const nextRank = currentRankIndex > 0 ? rankTiers[currentRankIndex - 1] : undefined
@@ -77,13 +82,13 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const rankProgress = nextRank
 		? Math.min(100, Math.max(0, ((currentPlayerScore - rankMinScore) / (nextRankMinScore - rankMinScore)) * 100))
 		: 100
-	const stats = [
-		{ label: 'Matches', value: playerStats.matches },
-		{ label: 'Wins', value: playerStats.wins },
-		{ label: 'Win Rate', value: playerStats.winRate },
-		{ label: 'Kills', value: playerStats.kills },
-		{ label: 'Deaths', value: playerStats.deaths },
-		{ label: 'K/D Ratio', value: playerStats.killsDeathsRatio },
+	const visualStats = [
+		{ label: 'Matches', value: stats.matches },
+		{ label: 'Wins', value: stats.wins },
+		{ label: 'Win Rate', value: stats.winRate },
+		{ label: 'Kills', value: stats.kills },
+		{ label: 'Deaths', value: stats.deaths },
+		{ label: 'K/D Ratio', value: stats.killsDeathsRatio },
 	]
 
 	return (
@@ -332,7 +337,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 					<SectionTitle icon={<LineChart className='size-5 text-primary' />}>Your Stats</SectionTitle>
 				</div>
 				<div className='grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-[clamp(0.55rem,0.9vw,0.9rem)]'>
-					{stats.map(stat => (
+					{visualStats.map(stat => (
 						<div
 							key={stat.label}
 							className='flex min-h-0 flex-col items-center justify-center rounded-lg border border-foreground/10 bg-foreground/[0.04] p-[clamp(0.45rem,0.75vw,0.7rem)] text-center'
