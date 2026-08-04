@@ -23,12 +23,12 @@ export namespace Rank {
 
 	export interface Player {
 		Profile: {
-			id: number
+			profile_id: number
 			name: string
 			avatar: string
 			status: keyof typeof playerStatuses
 		}
-		Friends: Player['Profile']['id'][]
+		Friend: Player['Profile']['profile_id']
 		Stats: {
 			kills: number
 			deaths: number
