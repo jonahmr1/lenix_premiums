@@ -44,14 +44,15 @@ export const Home = () => {
 	const [display, setDisplay] = useState<boolean>()
 	const [profile, setProfile] = useState<Rank.Player['Profile']>()
 	const { drawer, setDrawer } = useFriendsDrawer()
-	const [friends, _setFriends] = useState<Rank.Player['Profile'][]>()
-	const [notifications, _setNotifications] = useState<Rank.Player['Notification'][]>()
+	const [friends, setFriends] = useState<Rank.Player['Profile'][]>()
+	const [notifications, setNotifications] = useState<Rank.Player['Notification'][]>()
 
 	useEffect(() => {
 		const off = onEvent<Rank.Events['open']>('rank:open', async () => {
 			setDisplay(true)
 			focus()
 			setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
+			setFriends(await triggerNui<Rank.Requests['getFriends']>('rank:getFriends', {}))			
 		})
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
