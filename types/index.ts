@@ -14,8 +14,8 @@ export namespace Rank {
 		getProfile: Request<Player['Profile'], 'rank:getProfile'>
 		getLeaderboard: Request<Leaderboard, 'rank:getLeaderboard'>
 		party: {
-			get: Request<Player['Profile'][], 'rank:party:get'>
-			setSize: Request<Player['Profile'][], 'rank:party:setSize', { size: number }>
+			get: Request<Player['Party'], 'rank:party:create'>
+			setSize: Request<Player['Party'], 'rank:party:setSize', { size: number }>
 		}
 		getMatches: Request<Player['Match'][], 'rank:getMatches'>
 		getStats: Request<Player['Stats'], 'rank:getStats'>
@@ -72,6 +72,11 @@ export namespace Rank {
 			kills: number
 			deaths: number
 			assists: number
+		}
+		Party: {
+			profiles: Rank.Player['Profile'][]
+			size: number
+			leader: Rank.Player['Profile']['profile_id']
 		}
 	}
 

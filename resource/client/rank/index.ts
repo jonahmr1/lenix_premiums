@@ -112,15 +112,15 @@ onNui<Rank.Requests['getStats']>('rank:getStats', async () => {
 	}
 })
 
-onNui<Rank.Requests['party']['get']>('rank:party:get', async () => {
-	const party = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getParty', defaultDelay)
-	if (!party) throw 'Failed to get party'
+onNui<Rank.Requests['party']['get']>('rank:party:create', async () => {
+	const party = await triggerServerCallback<Rank.Player['Party']>('lenix:server:rank:createParty', defaultDelay)
+	if (!party) throw 'Failed to create party'
 
 	return party
 })
 
 onNui<Rank.Requests['party']['setSize']>('rank:party:setSize', async size => {
-	const party = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:setSize', defaultDelay, size)
+	const party = await triggerServerCallback<Rank.Player['Party']>('lenix:server:rank:setSize', defaultDelay, size)
 	if (!party) throw 'Failed to set party size'
 
 	return party

@@ -34,8 +34,6 @@ import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import { useStats } from '../hooks/use-stats'
 import avatar from '@workspace/elite/assets/avatar.png'
 
-const modeIcons = [User, Users, Users, Users]
-
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
 )
@@ -52,10 +50,10 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 	const { leaderboard, setLeaderboard } = useLeaderboard()
 	const { setDrawer } = useFriendsDrawer()
 	const { stats, setStats } = useStats()
-	const [party, setParty] = useState<Rank.Player['Profile'][]>()
+	const [party, setParty] = useState<Rank.Player['Party']>()
 
 	useEffect(() => {
-		triggerNui<Rank.Requests['party']['get']>('rank:party:get', {}).then(setParty)
+		triggerNui<Rank.Requests['party']['get']>('rank:party:create', {}).then(setParty)
 		
 		if (!stats) {
 			triggerNui<Rank.Requests['getStats']>('rank:getStats', {}).then(setStats)
@@ -171,8 +169,8 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 								</p>
 							</div>
 							<div className='mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-foreground/10 bg-background/35'>
-								{party.map((profile, index) => {
-									const isLeader = 'Lenix' === profile.name
+								{party.profiles.map((profile, index) => {
+									const isLeader = party.leader === profile.name
 
 									return (
 										<ContextMenu key={profile.name}>
@@ -230,9 +228,9 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 							</h3>
 							<ToggleGroup
 								className='grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]'
-								style={{ gridTemplateColumns: `repeat(${party.length}, minmax(0, 1fr))` }}
+								style={{ gridTemplateColumns: `repeat(${party.size}, minmax(0, 1fr))` }}
 								type='single'
-								value={party.length.toString()}
+								value={party.size.toString()}
 								onValueChange={async value => {
 									if (!value) return
 									setParty(
@@ -240,18 +238,16 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 									)
 								}}
 							>
-								{party.map((_, index) => {
-									const Icon = modeIcons[index] ?? Users
+								{Array.from({ length: party.size }).map((_, index) => {
 									const size = index + 1
-
 									return (
 										<ToggleGroupItem
 											key={size}
 											value={size.toString()}
 											className='h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary'
-											disabled={party.length > size}
+											disabled={party.size > size}
 										>
-											<Icon className='size-[clamp(1.25rem,1.8vw,1.5rem)]' />
+											<Users className='size-[clamp(1.25rem,1.8vw,1.5rem)]' />
 											<span>
 												{size}v{size}
 											</span>

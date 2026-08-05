@@ -4,39 +4,40 @@ import './db'
 import { oxmysql } from "@overextended/oxmysql"
 import { tablePrefix } from "./db"
 import { weights } from "common/config"
+import { parties, Party } from "./party"
 
 const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
 
-onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Player['Profile']> => {
+const getProfile = async (client: number) => {
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['profile_id', 'name', 'status'] as const
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${tablePrefix}profiles WHERE profile_id = ? LIMIT 1`
 
-	let profile = await oxmysql.single<Pick<Rank.Player['Profile'], typeof selectedCols[number]>>(
+	const profile = await oxmysql.single<Pick<Rank.Player['Profile'], typeof selectedCols[number]>>(
 		selectProfile,
 		[profileId]
 	)
 
-	if (!profile) {
-		const name = GetPlayerName(client.toString())
-		const re = await oxmysql.insert(
-			`INSERT INTO ${tablePrefix}profiles (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
-			[profileId, name, 'offline']
-		)
-		if (!re) throw 'Failed to create a new profile'
-
-		profile = await oxmysql.single<Rank.Player['Profile']>(
-			selectProfile,
-			[profileId]
-		)
-	}
-
-	return {
+	if (profile) return {
 		...profile,
 		avatar: null
 	}
-})
+
+	const name = GetPlayerName(client.toString())
+	const re = await oxmysql.insert(
+		`INSERT INTO ${tablePrefix}profiles (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
+		[profileId, name, 'offline']
+	)
+	if (!re) throw 'Failed to create a new profile'
+
+	return await oxmysql.single<Rank.Player['Profile']>(
+		selectProfile,
+		[profileId]
+	)
+}
+
+onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Player['Profile']> => await getProfile(client))
 
 onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Player['Performance'][]> => {
 	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
@@ -98,12 +99,12 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 
 		return {
 			...match,
-			delta: (
+			delta: 
 				matchPerformance.assists * weights.assist +
 				matchPerformance.deaths * weights.death +
 				matchPerformance.kills * weights.kill +
 				matchPerformance.result === 'win' ? weights.win : weights.loss
-			),
+			,
 			result: matchPerformance.result,
 			stats: {
 				kills: matchPerformance.kills,
@@ -129,6 +130,23 @@ onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs
 	) satisfies Record<(typeof selectedCols)[number], any>[]
 
 	return stats
+})
+
+onClientCallback('lenix:server:rank:createParty', async (client): Promise<Rank.Player['Party']> => {
+	const profile = await getProfile(client)
+	const party = new Party(profile)
+
+	parties.set(client, party)
+	return party
+})
+
+onClientCallback('lenix:server:rank:setSize', async (client, size: number): Promise<Rank.Player['Party']> => {
+	const party = parties.get(client)
+	if (!party) throw `Could not find party for client<${client}>`
+
+	party.size = size
+
+	return party
 })
 
 const printSnapshot = (data: object) => {
