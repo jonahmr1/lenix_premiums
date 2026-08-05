@@ -181,6 +181,8 @@ onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Pl
 		) satisfies Record<(typeof profileCols)[number], any>[]
 
 		return profiles
+	} catch(e) {
+		console.log(palette('red', String(e)))
 	}
 })
 
