@@ -191,8 +191,6 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 											{match.played_at}
 										</span>
 									</span>
-									<span className='font-semibold'>{match.mode}</span>
-									<span className='font-semibold text-muted-foreground'>{match.duration}</span>
 									<span className='flex items-center justify-end gap-1 font-bold text-foreground'>
 										<Crosshair className='size-3 text-primary' />
 										{match.stats.kills}
@@ -203,10 +201,10 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 									</span>
 									<span className='text-right font-bold text-foreground'>{match.stats.assits}</span>
 									<span
-										className={`text-right font-extrabold ${match.scoreChange > 0 ? 'text-green-400' : 'text-destructive'}`}
+										className={`text-right font-extrabold ${match.delta > 0 ? 'text-green-400' : 'text-destructive'}`}
 									>
-										{match.scoreChange > 0 ? '+' : ''}
-										{match.scoreChange}
+										{match.delta > 0 ? '+' : ''}
+										{match.delta}
 									</span>
 								</div>
 							))}

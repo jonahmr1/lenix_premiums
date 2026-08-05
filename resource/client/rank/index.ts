@@ -60,10 +60,10 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 				return Math.max(
 					0,
 					stats.wins * weights.win +
-						stats.losses * weights.loss +
-						stats.kills * weights.kill +
-						stats.assists * weights.assist +
-						stats.deaths * weights.death,
+					stats.kills * weights.kill +
+					stats.losses * weights.loss +
+					stats.deaths * weights.death +
+					stats.assists * weights.assist
 				)
 			})(),
 			profile_id: profile.profile_id,

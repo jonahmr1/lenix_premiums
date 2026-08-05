@@ -44,6 +44,7 @@ export namespace Rank {
 			map: string
 			played_at: number
 			result: Player['Performance']['result']
+			delta: number
 			stats: {
 				kills: Player['Stats']['kills']
 				deaths: Player['Stats']['deaths']
