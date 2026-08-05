@@ -161,23 +161,26 @@ onClientCallback('lenix:server:rank:setSize', async (client, size: number): Prom
 	return party
 })
 
-onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Player['Profile'][]> => {
+onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Player['Profile'][] | undefined> => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
 	try {
-		const re = await oxmysql.query<{
+		const friends = await oxmysql.query<{
 			status: 'accepted' | 'pending'
 			sender_id: string
 			receiver_id: string
 		}[]>(
-			`SELECT ${selectedCols.join(', ')} FROM ${fullName('friends')} WHERE sender_id = ? OR receiver_id = ? AND status = ?`,
+			`SELECT ${selectedCols.join(', ')} FROM ${fullName('friends')} WHERE (sender_id = ? OR receiver_id = ?) AND status = ?`,
 			[profile_id, profile_id, 'accepted']
 		) satisfies Record<(typeof selectedCols)[number], any>[]
-		if (!re) throw `Failed to get player<${client}> friends`
+
+		const friendIds = friends.map(friend =>
+			friend.sender_id === profile_id ? friend.receiver_id : friend.sender_id
+		)
 
 		const profiles = await oxmysql.query<Rank.Player['Profile'][]>(
-			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? OR profile_id = ?`,
-			[]
+			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id IN (?)`,
+			[friendIds]
 		) satisfies Record<(typeof profileCols)[number], any>[]
 
 		return profiles

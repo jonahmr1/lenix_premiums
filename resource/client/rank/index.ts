@@ -127,7 +127,7 @@ onNui<Rank.Requests['party']['setSize']>('rank:party:setSize', async size => {
 })
 
 onNui<Rank.Requests['getFriends']>('rank:getFriends', async () => {
-	const friends = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getFriends', defaultDelay)
+	const friends = await triggerServerCallback<Rank.Player['Profile'][] | undefined>('lenix:server:rank:getFriends', defaultDelay)
 	if (!friends) throw 'Failed to get friends'
 
 	return friends
