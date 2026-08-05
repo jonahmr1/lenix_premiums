@@ -1,6 +1,5 @@
 import { onClientCallback } from "@overextended/ox_lib/server"
 import type { Rank } from 'types/index'
-import './db'
 import { oxmysql } from "@overextended/oxmysql"
 import { tablePrefix } from "./db"
 import { parties, Party } from "./party"

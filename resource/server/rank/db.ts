@@ -1,6 +1,8 @@
 import { oxmysql } from '@overextended/oxmysql'
 import knex from 'knex'
 
+export const tablePrefix = 'lenix_competitive:'
+
 const db = knex({ client: 'mysql' })
 
 const mySqlConnectionString = GetConvar('mysql_connection_string', '')
@@ -8,8 +10,6 @@ if (!mySqlConnectionString.length) throw 'Could not get database name'
 
 const database = new URL(mySqlConnectionString).pathname.slice(1)
 if (!database.length) throw 'Could not get database name'
-
-export const tablePrefix = 'lenix_competitive:'
 
 const create = (
 	table: string,
@@ -52,4 +52,4 @@ const tables = [
 		const result = await oxmysql.query(table.toQuery())
 		if (!result) throw `Failed to create a table`
 	}
-})
+})()
