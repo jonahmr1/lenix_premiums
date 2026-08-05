@@ -3,8 +3,8 @@ import type { Rank } from 'types/index'
 import './db'
 import { oxmysql } from "@overextended/oxmysql"
 import { tablePrefix } from "./db"
-import { weights } from "common/config"
 import { parties, Party } from "./party"
+import Config from "common/config"
 
 const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
 
@@ -100,10 +100,10 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 		return {
 			...match,
 			delta: 
-				matchPerformance.assists * weights.assist +
-				matchPerformance.deaths * weights.death +
-				matchPerformance.kills * weights.kill +
-				matchPerformance.result === 'win' ? weights.win : weights.loss
+				matchPerformance.assists * Config.weights.assist +
+				matchPerformance.deaths * Config.weights.death +
+				matchPerformance.kills * Config.weights.kill +
+				matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
 			,
 			result: matchPerformance.result,
 			stats: {

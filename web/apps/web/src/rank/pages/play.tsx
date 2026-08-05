@@ -18,7 +18,6 @@ import {
 	Shield,
 	Target,
 	Trophy,
-	User,
 	UserPlus,
 	Users,
 } from 'lucide-react'

@@ -1,9 +1,11 @@
 import type { Event, Request } from 'lenix'
-import type { playerStatuses } from '../resource/common/config'
+import type { Public } from './public'
 
 export interface Storage {
 	theme: 'dark' | 'light'
 }
+
+type Config = Public['public/config.json']
 
 export namespace Rank {
 	export interface Events {
@@ -30,7 +32,7 @@ export namespace Rank {
 			profile_id: string
 			name: string
 			avatar: string | null
-			status: keyof Omit<(typeof playerStatuses), 'in_game'>
+			status: keyof Omit<Config['playerStatuses'], 'in_game'>
 		}
 		Friend: Player['Profile']['profile_id']
 		Stats: {

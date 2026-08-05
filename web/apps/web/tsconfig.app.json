@@ -24,6 +24,7 @@
 			"@workspace/ui/*": ["../../packages/ui/src/*"],
 			"@workspace/elite/*": ["../../packages/elite/src/*"],
 			"types": ["../../../types/index"],
+			"config": ["../../../public/config.json"]
 		}
 	},
 	"include": ["src", "../../packages/elite/src/elements/loading.tsx"]

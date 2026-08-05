@@ -1,7 +1,7 @@
 import { addKeybind, triggerServerCallback } from '@overextended/ox_lib/client'
-import { weights } from 'common/config'
 import { ResourceName } from 'common/resource'
 import { emitEvent, onNui } from 'lenix/client'
+import Config from 'common/config'
 import type { Rank } from 'types/index'
 
 const defaultDelay = 5000
@@ -57,11 +57,11 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 
 			return Math.max(
 				0,
-				stats.wins * weights.win +
-				stats.kills * weights.kill +
-				stats.losses * weights.loss +
-				stats.deaths * weights.death +
-				stats.assists * weights.assist
+				stats.wins * Config.weights.win +
+				stats.kills * Config.weights.kill +
+				stats.losses * Config.weights.loss +
+				stats.deaths * Config.weights.death +
+				stats.assists * Config.weights.assist
 			)
 		})(),
 		profile_id: profile.profile_id,

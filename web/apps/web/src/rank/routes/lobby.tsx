@@ -32,10 +32,10 @@ import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
 import { focus, onEvent, triggerNui } from 'lenix/nui'
 import type { Rank } from 'types'
-import { playerStatuses } from 'config'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import avatar from '@workspace/elite/assets/avatar.png'
+import { config } from '../lib'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -70,7 +70,7 @@ export const Home = () => {
 	if (!display) return
 	if (!profile || !friends || !notifications) return <Loading />
 
-	const playerStatus = playerStatuses[profile?.status]
+	const playerStatus = config.playerStatuses[profile?.status]
 
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
@@ -213,7 +213,7 @@ export const Home = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end' className='w-40'>
-							{Object.entries(playerStatuses)
+							{Object.entries(config.playerStatuses)
 								.filter(([status]) => status !== 'in_game')
 								.map(([value, option]) => (
 									<DropdownMenuItem
@@ -249,13 +249,13 @@ export const Home = () => {
 											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
 												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 												<span
-													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`}
+													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
 												/>
 											</div>
 											<div className='min-w-0'>
 												<div className='truncate font-semibold'>{friend.name}</div>
 												<div className='text-[0.65rem] text-muted-foreground'>
-													{playerStatuses[friend.status].label}
+													{config.playerStatuses[friend.status].label}
 												</div>
 											</div>
 										</div>
@@ -278,13 +278,13 @@ export const Home = () => {
 											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
 												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 												<span
-													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${playerStatuses[friend.status].className}`}
+													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
 												/>
 											</div>
 											<div className='min-w-0'>
 												<div className='truncate font-semibold'>{friend.name}</div>
 												<div className='text-[0.65rem] text-muted-foreground'>
-													{playerStatuses[friend.status].label}
+													{config.playerStatuses[friend.status].label}
 												</div>
 											</div>
 										</div>
