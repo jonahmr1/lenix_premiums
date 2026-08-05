@@ -3,6 +3,7 @@ import type { Rank } from 'types/index'
 import './db'
 import { oxmysql } from "@overextended/oxmysql"
 import { tablePrefix } from "./db"
+import { weights } from "common/config"
 
 const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
 
@@ -97,6 +98,12 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 
 		return {
 			...match,
+			delta: (
+				matchPerformance.assists * weights.assist +
+				matchPerformance.deaths * weights.death +
+				matchPerformance.kills * weights.kill +
+				matchPerformance.result === 'win' ? weights.win : weights.loss
+			),
 			result: matchPerformance.result,
 			stats: {
 				kills: matchPerformance.kills,
@@ -107,7 +114,7 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 	})
 })
 
-onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.Player['Stats']> => {
+onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs['getStats']> => {
 	const profile_id = getProfileId(client)
 
 	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
@@ -121,30 +128,7 @@ onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.Play
 		[profile_id]
 	) satisfies Record<(typeof selectedCols)[number], any>[]
 
-	const totals = stats.reduce(
-		(acc, stat) => {
-			acc.kills += stat.kills
-			acc.deaths += stat.deaths
-			acc.assists += stat.assists
-			acc.wins += stat.result === 'win' ? 1 : 0
-			acc.losses += stat.result === 'loss' ? 1 : 0
-			return acc
-		},
-		{
-			kills: 0,
-			deaths: 0,
-			assists: 0,
-			wins: 0,
-			losses: 0,
-		},
-	)
-
-	return {
-		...totals,
-		winRate: totals.wins + totals.losses ? totals.wins / (totals.wins + totals.losses) : 0,
-		killsDeathsRatio: totals.deaths ? totals.kills / totals.deaths : totals.kills,
-		matches: totals.wins + totals.losses,
-	}
+	return stats
 })
 
 const printSnapshot = (data: object) => {

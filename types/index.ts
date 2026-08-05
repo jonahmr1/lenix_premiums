@@ -21,6 +21,10 @@ export namespace Rank {
 		getStats: Request<Player['Stats'], 'rank:getStats'>
 	}
 
+	export interface APIs {
+		getStats: (Pick<Rank.Player['Stats'], 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
+	}
+
 	export interface Player {
 		Profile: {
 			profile_id: string

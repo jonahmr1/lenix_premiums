@@ -50,31 +50,29 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 		statsByProfile.set(performance.profile_id, current)
 	}
 
-	return profiles
-		.map(profile => ({
-			place: 0,
-			score: (() => {
-				const stats = statsByProfile.get(profile.profile_id)
-				if (!stats) throw `Failed to get stats for profile_id<${profile.profile_id}>`
+	return profiles.map(profile => ({
+		score: (() => {
+			const stats = statsByProfile.get(profile.profile_id)
+			if (!stats) throw `Failed to get stats for profile_id<${profile.profile_id}>`
 
-				return Math.max(
-					0,
-					stats.wins * weights.win +
-					stats.kills * weights.kill +
-					stats.losses * weights.loss +
-					stats.deaths * weights.death +
-					stats.assists * weights.assist
-				)
-			})(),
-			profile_id: profile.profile_id,
-			name: profile.name,
-			avatar: profile.avatar,
-		}))
-		.sort((a, b) => b.score - a.score)
-		.map((profile, index) => ({
-			...profile,
-			place: index + 1,
-		}))
+			return Math.max(
+				0,
+				stats.wins * weights.win +
+				stats.kills * weights.kill +
+				stats.losses * weights.loss +
+				stats.deaths * weights.death +
+				stats.assists * weights.assist
+			)
+		})(),
+		profile_id: profile.profile_id,
+		name: profile.name,
+		avatar: profile.avatar,
+	}))
+	.sort((a, b) => b.score - a.score)
+	.map((profile, index) => ({
+		...profile,
+		place: index + 1,
+	}))
 })
 
 onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
@@ -85,10 +83,33 @@ onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
 })
 
 onNui<Rank.Requests['getStats']>('rank:getStats', async () => {
-	const stats = await triggerServerCallback<Rank.Player['Stats']>('lenix:server:rank:getStats', defaultDelay)
+	const stats = await triggerServerCallback<Rank.APIs['getStats']>('lenix:server:rank:getStats', defaultDelay)
 	if (!stats) throw 'Failed to get stats'
+	
+	const totals = stats.reduce(
+		(acc, stat) => {
+			acc.kills += stat.kills
+			acc.deaths += stat.deaths
+			acc.assists += stat.assists
+			acc.wins += stat.result === 'win' ? 1 : 0
+			acc.losses += stat.result === 'loss' ? 1 : 0
+			return acc
+		},
+		{
+			kills: 0,
+			deaths: 0,
+			assists: 0,
+			wins: 0,
+			losses: 0,
+		},
+	)
 
-	return stats
+	return {
+		...totals,
+		winRate: totals.wins + totals.losses ? totals.wins / (totals.wins + totals.losses) : 0,
+		killsDeathsRatio: totals.deaths ? totals.kills / totals.deaths : totals.kills,
+		matches: totals.wins + totals.losses,
+	}
 })
 
 onNui<Rank.Requests['party']['get']>('rank:party:get', async () => {
