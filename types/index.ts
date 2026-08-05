@@ -21,6 +21,7 @@ export namespace Rank {
 		}
 		getMatches: Request<Player['Match'][], 'rank:getMatches'>
 		getStats: Request<Player['Stats'], 'rank:getStats'>
+		getFriends: Request<Player['Profile'][], 'rank:getFriends'>
 	}
 
 	export interface APIs {

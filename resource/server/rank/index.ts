@@ -6,6 +6,8 @@ import { parties, Party } from "./party"
 import Config from "common/config"
 import { palette } from "lenix"
 
+const profileCols = ['profile_id', 'name', 'status'] as const
+
 const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
 
 const getProfile = async (client: number) => {
@@ -20,7 +22,6 @@ const getProfile = async (client: number) => {
 			[profileId]
 		)
 	
-		console.debug(profile)
 		if (profile) return {
 			...profile,
 			avatar: null
@@ -29,7 +30,7 @@ const getProfile = async (client: number) => {
 		const name = GetPlayerName(client.toString())
 		const re = await oxmysql.insert(
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
-			[profileId, name, 'offline']
+			[profileId, name, 'online']
 		)
 		if (!re) throw 'Failed to create a new profile'
 	
@@ -38,7 +39,6 @@ const getProfile = async (client: number) => {
 			[profileId]
 		)
 	} catch(e) {
-		console.log(selectProfile)
 		console.log(palette('red', String(e)))
 	}
 }
@@ -64,12 +64,13 @@ onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Pla
 })
 
 onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Rank.Player['Profile'][]> => {
-	const selectedCols = ['profile_id', 'name', 'status'] as const
-	const profiles: {
+	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
 		status: "offline" | "online" | "dnd"
-	}[] = await oxmysql.query(`SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')}`) satisfies Record<(typeof selectedCols)[number], any>[]
+	}[]>(
+		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
+	) satisfies Record<(typeof profileCols)[number], any>[]
 
 	return profiles.map(profile => ({
 		...profile,
@@ -83,13 +84,13 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
 	const selectedMatchsCols = ['match_id', 'mode', 'map', 'played_at'] as const
 
-	const matchesPerformance: {
+	const matchesPerformance = await oxmysql.query<{
 		match_id: number
 		result: 'win' | 'loss'
 		kills: number
 		deaths: number
 		assists: number
-	}[] = await oxmysql.query(
+	}[]>(
 		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
 		[profileId]
 	) satisfies Record<(typeof selectedCols)[number], any>[]
@@ -129,12 +130,12 @@ onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs
 	const profile_id = getProfileId(client)
 
 	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
-	const stats: {
+	const stats = await oxmysql.query<{
 		result: 'win' | 'loss'
 		kills: number
 		deaths: number
 		assists: number
-	}[] = await oxmysql.query(
+	}[]>(
 		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
 		[profile_id]
 	) satisfies Record<(typeof selectedCols)[number], any>[]
@@ -158,6 +159,29 @@ onClientCallback('lenix:server:rank:setSize', async (client, size: number): Prom
 	party.size = size
 
 	return party
+})
+
+onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Player['Profile'][]> => {
+	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
+	const profile_id = getProfileId(client)
+	try {
+		const re = await oxmysql.query<{
+			status: 'accepted' | 'pending'
+			sender_id: string
+			receiver_id: string
+		}[]>(
+			`SELECT ${selectedCols.join(', ')} FROM ${fullName('friends')} WHERE sender_id = ? OR receiver_id = ? AND status = ?`,
+			[profile_id, profile_id, 'accepted']
+		) satisfies Record<(typeof selectedCols)[number], any>[]
+		if (!re) throw `Failed to get player<${client}> friends`
+
+		const profiles = await oxmysql.query<Rank.Player['Profile'][]>(
+			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? OR profile_id = ?`,
+			[]
+		) satisfies Record<(typeof profileCols)[number], any>[]
+
+		return profiles
+	}
 })
 
 const printSnapshot = (data: object) => {
