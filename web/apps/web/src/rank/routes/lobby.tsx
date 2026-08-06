@@ -36,6 +36,7 @@ import { Loading } from '@workspace/elite/elements/loading.js'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { config } from '../lib'
+import { useNotifications } from '../hooks/use-notifications'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -45,15 +46,17 @@ export const Home = () => {
 	const [profile, setProfile] = useState<Rank.Player['Profile']>()
 	const { drawer, setDrawer } = useFriendsDrawer()
 	const [friends, setFriends] = useState<Rank.Player['Profile'][]>()
-	const [notifications, setNotifications] = useState<Rank.Player['Notification'][]>()
+	const { notifications } = useNotifications()
 
 	useEffect(() => {
-		const off = onEvent<Rank.Events['open']>('rank:open', async () => {
-			setDisplay(true)
-			focus()
-			setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
-			setFriends(await triggerNui<Rank.Requests['getFriends']>('rank:getFriends', {}))			
-		})
+		const disposes = [
+			onEvent<Rank.Events['open']>('rank:open', async () => {
+				setDisplay(true)
+				focus()
+				setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
+				setFriends(await triggerNui<Rank.Requests['getFriends']>('rank:getFriends', {}))			
+			}),
+		]
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
 			setDisplay(false)
@@ -63,7 +66,7 @@ export const Home = () => {
 		window.addEventListener('keydown', handler)
 
 		return () => {
-			off()
+			for (const dispose of disposes) dispose()
 			window.removeEventListener('keydown', handler)
 		}
 	}, [])
@@ -133,9 +136,9 @@ export const Home = () => {
 						<PopoverTrigger asChild>
 							<Button variant='ghost' size='icon' className='relative'>
 								<Bell />
-								<Badge className='absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]'>
+								{notifications.length && <Badge className='absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]'>
 									{notifications.length}
-								</Badge>
+								</Badge>}
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent align='end' className='w-[21.5rem] gap-3 border border-foreground/10 bg-popover/95 p-3'>
