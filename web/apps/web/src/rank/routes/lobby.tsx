@@ -51,6 +51,7 @@ export const Home = () => {
 	useEffect(() => {
 		const disposes = [
 			onEvent<Rank.Events['open']>('rank:open', async () => {
+				console.debug(true)
 				setDisplay(true)
 				focus()
 				setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
