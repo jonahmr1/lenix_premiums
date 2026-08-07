@@ -95,7 +95,8 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 			`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
 			[profileId]
 		) satisfies Record<(typeof selectedCols)[number], any>[]
-	
+		if (!matchesPerformance.length) return []
+
 		const matches: {
 			match_id: number
 			map: string
