@@ -84,46 +84,50 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
 	const selectedMatchsCols = ['match_id', 'mode', 'map', 'played_at'] as const
 
-	const matchesPerformance = await oxmysql.query<{
-		match_id: number
-		result: 'win' | 'loss'
-		kills: number
-		deaths: number
-		assists: number
-	}[]>(
-		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
-		[profileId]
-	) satisfies Record<(typeof selectedCols)[number], any>[]
-
-	const matches: {
-		match_id: number
-		map: string
-		played_at: number
-	}[] = await oxmysql.query(
-		`SELECT ${selectedMatchsCols.join(', ')} FROM ${fullName('matches')} WHERE profile_id = ?`,
-		[profileId]
-	) satisfies Record<(typeof selectedMatchsCols)[number], any>[]
-
-	return matches.map(match => {
-		const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
-		if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
-
-		return {
-			...match,
-			delta: 
-				matchPerformance.assists * Config.weights.assist +
-				matchPerformance.deaths * Config.weights.death +
-				matchPerformance.kills * Config.weights.kill +
-				matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
-			,
-			result: matchPerformance.result,
-			stats: {
-				kills: matchPerformance.kills,
-				deaths: matchPerformance.deaths,
-				assits: matchPerformance.assists
+	try {
+		const matchesPerformance = await oxmysql.query<{
+			match_id: number
+			result: 'win' | 'loss'
+			kills: number
+			deaths: number
+			assists: number
+		}[]>(
+			`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
+			[profileId]
+		) satisfies Record<(typeof selectedCols)[number], any>[]
+	
+		const matches: {
+			match_id: number
+			map: string
+			played_at: number
+		}[] = await oxmysql.query(
+			`SELECT ${selectedMatchsCols.join(', ')} FROM ${fullName('matches')} WHERE profile_id = ?`,
+			[profileId]
+		) satisfies Record<(typeof selectedMatchsCols)[number], any>[]
+		
+		return matches.map(match => {
+			const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
+			if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
+	
+			return {
+				...match,
+				delta: 
+					matchPerformance.assists * Config.weights.assist +
+					matchPerformance.deaths * Config.weights.death +
+					matchPerformance.kills * Config.weights.kill +
+					matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
+				,
+				result: matchPerformance.result,
+				stats: {
+					kills: matchPerformance.kills,
+					deaths: matchPerformance.deaths,
+					assits: matchPerformance.assists
+				}
 			}
-		}
-	})
+		})
+	} catch(e) {
+		throw e
+	}
 })
 
 onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs['getStats']> => {
