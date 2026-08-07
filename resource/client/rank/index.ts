@@ -21,8 +21,8 @@ onNui<Rank.Requests['getProfile']>('rank:getProfile', async () => {
 })
 
 onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
-	const stats = await triggerServerCallback<Rank.Player['Performance'][]>('lenix:server:rank:getStats', defaultDelay)
-	if (!stats) throw 'Failed to get stats'
+	const performances = await triggerServerCallback<Rank.Player['Performance'][]>('lenix:server:rank:getPerformances', defaultDelay)
+	if (!performances) throw 'Failed to get performances'
 
 	const profiles = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
 	if (!profiles) throw 'Failed to get profiles'
@@ -32,7 +32,7 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 		Pick<Rank.Player['Stats'], 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
 	>()
 
-	for (const performance of stats) {
+	for (const performance of performances) {
 		const current = statsByProfile.get(performance.profile_id) ?? {
 			kills: 0,
 			deaths: 0,

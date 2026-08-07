@@ -49,9 +49,9 @@ onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Pl
 	return profile
 })
 
-onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Player['Performance'][]> => {
+onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<Rank.Player['Performance'][]> => {
 	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
-	const stats: Rank.Player['Performance'][] = await oxmysql.query<{
+	const performances: Rank.Player['Performance'][] = await oxmysql.query<{
 		match_id: number
 		profile_id: string
 		result: 'win' | 'loss'
@@ -59,6 +59,25 @@ onClientCallback('lenix:server:rank:getStats', async (_client): Promise<Rank.Pla
 		deaths: number
 		assists: number
 	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')}`) satisfies Record<(typeof selectedCols)[number], any>[]
+
+	if (!performances.length) return []
+
+	return performances
+})
+
+onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs['getStats']> => {
+	const profile_id = getProfileId(client)
+
+	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
+	const stats = await oxmysql.query<{
+		result: 'win' | 'loss'
+		kills: number
+		deaths: number
+		assists: number
+	}[]>(
+		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
+		[profile_id]
+	) satisfies Record<(typeof selectedCols)[number], any>[]
 
 	return stats
 })
@@ -129,23 +148,6 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 	} catch(e) {
 		throw e
 	}
-})
-
-onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs['getStats']> => {
-	const profile_id = getProfileId(client)
-
-	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
-	const stats = await oxmysql.query<{
-		result: 'win' | 'loss'
-		kills: number
-		deaths: number
-		assists: number
-	}[]>(
-		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
-		[profile_id]
-	) satisfies Record<(typeof selectedCols)[number], any>[]
-
-	return stats
 })
 
 onClientCallback('lenix:server:rank:createParty', async (client): Promise<Rank.Player['Party']> => {
