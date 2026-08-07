@@ -177,6 +177,7 @@ onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Pl
 		const friendIds = friends.map(friend =>
 			friend.sender_id === profile_id ? friend.receiver_id : friend.sender_id
 		)
+		if (!friendIds.length) return []
 
 		const profiles = await oxmysql.query<Rank.Player['Profile'][]>(
 			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id IN (?)`,
