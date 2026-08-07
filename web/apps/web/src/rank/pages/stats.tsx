@@ -29,7 +29,7 @@ export const Stats = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 		triggerNui<Rank.Requests['getMatches']>('rank:getMatches', {}).then(setMatches)
 	}, [])
 
-	if (!matches || !stats) return <Loading className='h-ful' />
+	if (!matches || !stats) return <Loading className='h-full' />
 
 	const score = calculatePlayerScore(stats)
 	const rank = getRankTier(score)

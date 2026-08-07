@@ -136,7 +136,7 @@ export const Home = () => {
 						<PopoverTrigger asChild>
 							<Button variant='ghost' size='icon' className='relative'>
 								<Bell />
-								{notifications.length && <Badge className='absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]'>
+								{notifications.length > 0 && <Badge className='absolute -right-1 -top-1 h-4 min-w-4 px-1 text-[0.55rem]'>
 									{notifications.length}
 								</Badge>}
 							</Button>

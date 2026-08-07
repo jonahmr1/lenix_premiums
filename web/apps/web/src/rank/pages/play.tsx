@@ -63,7 +63,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 		}
 	}, [])
 
-	if (!leaderboard || !party || !stats) return <Loading className='h-ful' />
+	if (!leaderboard || !party || !stats) return <Loading className='h-full' />
 
 	const topLeaderboard = leaderboard.slice(0, 5)
 	const currentPlayerLeaderboardRow = leaderboard.find(self => self.profile_id === profile.profile_id)

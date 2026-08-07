@@ -13,7 +13,7 @@ export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) =>
 	const { leaderboard } = useLeaderboard()
 	const { stats } = useStats()
 
-	if (!leaderboard || !stats) return <Loading className='h-ful' />
+	if (!leaderboard || !stats) return <Loading className='h-full' />
 
 	const topPlayers = leaderboard.slice(0, 3)
 	const currentPlayer = leaderboard.find(self => self.profile_id === profile.profile_id)
