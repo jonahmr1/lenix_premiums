@@ -53,9 +53,7 @@ export const Home = () => {
 			onEvent<Rank.Events['open']>('rank:open', async () => {
 				setDisplay(true)
 				focus()
-				const profile = await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {})
-				console.log(JSON.stringify(profile), 't')
-				setProfile(profile)
+				setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
 				setFriends(await triggerNui<Rank.Requests['getFriends']>('rank:getFriends', {}))			
 			}),
 		]
@@ -74,7 +72,6 @@ export const Home = () => {
 	}, [])
 
 	if (!display) return
-	// console.debug(JSON.stringify(profile), JSON.stringify(friends), notifications)
 	if (!profile || !friends) return <Loading />
 
 	const playerStatus = config.playerStatuses[profile?.status]
