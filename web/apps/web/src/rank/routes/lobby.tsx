@@ -72,7 +72,7 @@ export const Home = () => {
 	}, [])
 
 	if (!display) return
-	if (!profile || !friends) return <Loading />
+	if (!profile || !friends) return <Loading className='h-screen' />
 
 	const playerStatus = config.playerStatuses[profile?.status]
 
