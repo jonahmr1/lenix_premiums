@@ -26,6 +26,7 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 
 	const profiles = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
 	if (!profiles) throw 'Failed to get profiles'
+	console.log(profiles)
 
 	const statsByProfile = new Map<
 		Rank.Player['Profile']['profile_id'],
