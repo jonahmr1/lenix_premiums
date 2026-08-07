@@ -7,13 +7,10 @@ import type { Rank } from 'types/index'
 const defaultDelay = 5000
 
 addKeybind({
-	name: `${ResourceName}:rank:open1`,
+	name: `${ResourceName}:rank:open`,
 	description: 'Open Rank',
-	defaultKey: 'H',
-	onPressed: () => {
-		emitEvent<Rank.Events['open']>('rank:open')
-		console.debug('Noobs')
-	},
+	defaultKey: 'G',
+	onPressed: () => emitEvent<Rank.Events['open']>('rank:open'),
 })
 
 onNui<Rank.Requests['getProfile']>('rank:getProfile', async () => {
