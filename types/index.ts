@@ -17,7 +17,7 @@ export namespace Competitive {
 		getLeaderboard: Request<Leaderboard, 'rank:getLeaderboard'>
 		party: {
 			get: Request<Player['Party'], 'rank:party:create'>
-			setSize: Request<Player['Party'], 'rank:party:setSize', { size: number }>
+			setSize: Request<Player['Party'] | null, 'rank:party:setSize', { size: number }>
 		}
 		getMatches: Request<Player['Match'][], 'rank:getMatches'>
 		getStats: Request<Player['Stats'], 'rank:getStats'>

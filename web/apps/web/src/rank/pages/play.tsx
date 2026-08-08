@@ -236,7 +236,7 @@ export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) =>
 									if (!value) return
 									const party = await triggerNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) })
 									if (!party) {
-										toast.error('Try again later')
+										toast('Try again later')
 										return
 									}
 									setParty(party)

@@ -105,6 +105,7 @@ export const Home = () => {
 			element: <Leaderboard profile={profile} />,
 		},
 	]
+
 	return (
 		<div className='flex flex-col h-screen bg-background'>
 			<div className='flex justify-between h-1/10 w-full px-[clamp(1.5rem,4vw,5rem)] border-b bg-background/10'>
