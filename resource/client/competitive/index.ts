@@ -10,8 +10,12 @@ addKeybind({
 	name: `${ResourceName}:rank:open`,
 	description: 'Open Rank',
 	defaultKey: 'G',
-	onPressed: () => emitEvent<Competitive.Events['open']>('rank:open'),
+	onPressed: () => {},
 })
+
+setTimeout(() => {
+	emitEvent<Competitive.Events['open']>('rank:open')
+}, 2000)
 
 onNui<Competitive.Requests['getProfile']>('rank:getProfile', async () => {
 	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:rank:getProfile', defaultDelay)
@@ -26,7 +30,6 @@ onNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', async () =>
 
 	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
 	if (!profiles) throw 'Failed to get profiles'
-	console.log(profiles)
 
 	const statsByProfile = new Map<
 		Competitive.Player['Profile']['profile_id'],
@@ -53,6 +56,7 @@ onNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', async () =>
 
 	return profiles.map(profile => ({
 		score: (() => {
+			console.log(statsByProfile)
 			const stats = statsByProfile.get(profile.profile_id)
 			if (!stats) throw `Failed to get stats for profile_id<${profile.profile_id}>`
 
