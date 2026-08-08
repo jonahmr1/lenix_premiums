@@ -1,7 +1,6 @@
-import { addKeybind, triggerServerCallback } from '@overextended/ox_lib/client'
+import { triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
-import { ResourceName } from 'common/resource'
-import { emitEvent, onNui } from 'lenix/client'
+import { control, emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
@@ -13,11 +12,10 @@ const defaultStats = {
 	losses: 0,
 }
 
-addKeybind({
-	name: `${ResourceName}:rank:open`,
-	description: 'Open Rank',
-	defaultKey: 'G',
-	onPressed: () => emitEvent<Competitive.Events['open']>('rank:open'),
+control.on({
+	event: 'press',
+	key: 'G',
+	cb: () => emitEvent<Competitive.Events['open']>('rank:open'),
 })
 
 onNui<Competitive.Requests['getProfile']>('rank:getProfile', async () => {
