@@ -20,6 +20,7 @@ export namespace Competitive {
 		getStats: Request<Player['Stats'], 'rank:getStats'>
 		getFriends: Request<Player['Profile'][], 'rank:getFriends'>
 		setStatus: Request<Player['Profile']['status'] | null, 'rank:setStatus', { status: Player['Profile']['status']}>
+		getProfiles: Request<Player['Profile'][], 'rank:getProfiles'>
 	}
 
 	export interface APIs {

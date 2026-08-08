@@ -140,3 +140,10 @@ onNui<Competitive.Requests['setStatus']>('rank:setStatus', async ({ status }) =>
 
 	return status
 })
+
+onNui<Competitive.Requests['getProfiles']>('rank:getProfiles', async () => {
+	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
+	if (!profiles) throw 'Failed to get profiles'
+
+	return profiles
+})

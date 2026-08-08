@@ -13,7 +13,7 @@ import {
 	PopoverTitle,
 	PopoverTrigger,
 } from '@workspace/elite/components/popover'
-import { Command, CommandDialog, CommandInput, CommandList } from '@workspace/ui/components/command'
+import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@workspace/ui/components/command'
 import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Plus, Sun, Trophy, Users, X } from 'lucide-react'
 import { Play } from '../pages/play'
 import { Leaderboard } from '../pages/leaderboard'
@@ -39,6 +39,7 @@ import avatar from '@workspace/elite/assets/avatar.png'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 import { PLAYER_STATUSES } from '../constants'
+import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar'
 
 const Notifications = ({ notifications }: {
 	notifications: Competitive.Player['Notification'][]
@@ -164,6 +165,7 @@ const Friends = ({ drawer, setDrawer, friends }: {
 	friends: Competitive.Player['Profile'][]
 }) => {
 	const [open, setOpen] = useState(false)
+	const [profiles, setProfiles] = useState<Competitive.Player['Profile'][]>()
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
 
@@ -181,7 +183,11 @@ const Friends = ({ drawer, setDrawer, friends }: {
 							<DrawerTitle>Friends List</DrawerTitle>
 							<DrawerDescription>Invite friends or check their status.</DrawerDescription>
 						</div>
-						<Button onClick={() => setOpen(true)} size='sm' className='gap-2'>
+						<Button onClick={async () => {
+							setOpen(true)
+							const profiles = await triggerNui<Competitive.Requests['getProfiles']>('rank:getProfiles', {})
+							setProfiles(profiles)
+						}} size='sm' className='gap-2'>
 							<Plus className='size-4' />
 							Add Friend
 						</Button>
@@ -191,12 +197,25 @@ const Friends = ({ drawer, setDrawer, friends }: {
 							className='max-w-2/10'
 						>
 							<Command>
-								<CommandInput placeholder='Type a name or search...' />
+								<CommandInput placeholder='Type a name...' />
 								<CommandList>
-									<div className='flex min-h-28 items-center justify-center gap-2 px-4 text-sm text-muted-foreground'>
-										<Spinner className='size-4' />
-										Loading players...
-									</div>
+									<CommandEmpty>No results found.</CommandEmpty>
+									<CommandGroup heading="Players">
+										{profiles ? profiles.map(profile => (
+											<CommandItem>
+												<Avatar>
+													<AvatarImage src={profile.avatar ?? avatar} />
+													<AvatarBadge className={PLAYER_STATUSES[profile.status].className} />
+												</Avatar>
+												<span>{profile.name}</span>
+											</CommandItem>
+										)) : (
+											<div className='flex min-h-28 items-center justify-center gap-2 px-4 text-sm text-muted-foreground'>
+												<Spinner className='size-4' />
+												Loading players...
+											</div>
+										)}
+									</CommandGroup>
 								</CommandList>
 							</Command>
 						</CommandDialog>
