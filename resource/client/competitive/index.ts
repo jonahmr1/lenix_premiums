@@ -5,6 +5,13 @@ import { emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
+const defaultStats = {
+	kills: 0,
+	deaths: 0,
+	assists: 0,
+	wins: 0,
+	losses: 0,
+}
 
 addKeybind({
 	name: `${ResourceName}:rank:open`,
@@ -37,13 +44,7 @@ onNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', async () =>
 	>()
 
 	for (const performance of performances) {
-		const current = statsByProfile.get(performance.profile_id) ?? {
-			kills: 0,
-			deaths: 0,
-			assists: 0,
-			wins: 0,
-			losses: 0,
-		}
+		const current = statsByProfile.get(performance.profile_id) ?? defaultStats
 
 		current.kills += performance.kills
 		current.deaths += performance.deaths
@@ -56,9 +57,8 @@ onNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', async () =>
 
 	return profiles.map(profile => ({
 		score: (() => {
-			console.log(statsByProfile)
-			const stats = statsByProfile.get(profile.profile_id)
-			if (!stats) throw `Failed to get stats for profile_id<${profile.profile_id}>`
+			const stats = statsByProfile.get(profile.profile_id) ?? defaultStats
+			// if (!stats) throw `Failed to get stats for profile_id<${profile.profile_id}>`
 
 			return Math.max(
 				0,
