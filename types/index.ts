@@ -5,7 +5,7 @@ export interface Storage {
 	theme: 'dark' | 'light'
 }
 
-type Config = Public['public/config.json']
+type Config = Public['public/config.competitive.json']
 
 export namespace Competitive {
 	export interface Events {
