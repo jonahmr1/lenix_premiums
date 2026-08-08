@@ -1,5 +1,5 @@
 import { MemoryRouter, Routes, Route } from 'react-router'
-import { Toaster } from '@workspace/elite/components/sonner'
+import { Toaster } from '@workspace/ui/components/sonner'
 import { Home } from './routes/lobby'
 import { InGame } from './routes/in-game'
 

@@ -33,6 +33,7 @@ import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import { useStats } from '../hooks/use-stats'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { entries } from '@lenix/lenix'
+import { toast } from '@workspace/ui/lib/utils'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
@@ -233,9 +234,12 @@ export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) =>
 								value={party.size.toString()}
 								onValueChange={async value => {
 									if (!value) return
-									setParty(
-										await triggerNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) }),
-									)
+									const party = await triggerNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) })
+									if (!party) {
+										toast.error('Try again later')
+										return
+									}
+									setParty(party)
 								}}
 							>
 								{Array.from({ length: entries(PvP_AMOUNT).length }).map((_, index) => {
@@ -245,7 +249,7 @@ export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) =>
 											key={size}
 											value={size.toString()}
 											className='h-[clamp(3.8rem,6vw,4.75rem)] flex-col gap-1 rounded-lg border border-foreground/10 bg-foreground/[0.04] text-[clamp(0.78rem,0.95vw,0.9rem)] data-[state=on]:border-primary data-[state=on]:bg-primary/15 data-[state=on]:text-primary'
-											disabled={party.size > size}
+											disabled={party.profiles.length > size}
 										>
 											<Users className='size-[clamp(1.25rem,1.8vw,1.5rem)]' />
 											<span>
