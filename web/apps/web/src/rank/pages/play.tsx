@@ -228,7 +228,7 @@ export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) =>
 							</h3>
 							<ToggleGroup
 								className='grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]'
-								style={{ gridTemplateColumns: `repeat(${party.size}, minmax(0, 1fr))` }}
+								style={{ gridTemplateColumns: `repeat(${entries(PvP_AMOUNT).length}, minmax(0, 1fr))` }}
 								type='single'
 								value={party.size.toString()}
 								onValueChange={async value => {
