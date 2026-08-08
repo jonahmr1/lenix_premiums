@@ -3,7 +3,7 @@ import { createPolar, type Environment } from '@polar-sh/sdk/2026-04'
 import { palette } from 'lenix'
 import { ResourceName } from 'common/resource'
 import('common')
-import('./rank')
+import('./competitive')
 
 throw 'license check bypassed'
 
@@ -84,7 +84,7 @@ const VALIDATION_INTERVAL = 15
 		console.log(palette('green', 'License validated successfully'))
 
 		import('common')
-		import('./rank')
+		import('./competitive')
 	} catch(e) {
 		console.log(palette('wine', String(e)))
 		ExecuteCommand('stop lenix_premiums')
