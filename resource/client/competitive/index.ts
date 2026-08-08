@@ -17,12 +17,8 @@ addKeybind({
 	name: `${ResourceName}:rank:open`,
 	description: 'Open Rank',
 	defaultKey: 'G',
-	onPressed: () => {},
+	onPressed: () => emitEvent<Competitive.Events['open']>('rank:open'),
 })
-
-setTimeout(() => {
-	emitEvent<Competitive.Events['open']>('rank:open')
-}, 2000)
 
 onNui<Competitive.Requests['getProfile']>('rank:getProfile', async () => {
 	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:rank:getProfile', defaultDelay)

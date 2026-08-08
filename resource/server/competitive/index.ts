@@ -27,6 +27,7 @@ const getProfile = async (client: number) => {
 			avatar: null
 		}
 
+		// create new player
 		const name = GetPlayerName(client.toString())
 		const re = await oxmysql.insert(
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
