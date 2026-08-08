@@ -132,3 +132,11 @@ onNui<Competitive.Requests['getFriends']>('rank:getFriends', async () => {
 
 	return friends
 })
+
+onNui<Competitive.Requests['setStatus']>('rank:setStatus', async ({ status }) => {
+	const newStatus = await triggerServerCallback<boolean>('lenix:server:rank:setStatus', defaultDelay, status)
+	if (newStatus === undefined) return null
+	if (!newStatus) throw 'Failed to set status'
+
+	return status
+})

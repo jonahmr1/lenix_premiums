@@ -197,6 +197,22 @@ onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Competi
 	}
 })
 
+onClientCallback('lenix:server:rank:setStatus', async (client, newStatus: Competitive.Player['Profile']['status']): Promise<boolean> => {
+	const profileId = getProfileId(client)
+
+	try {
+		const re = await oxmysql.query(
+			`UPDATE ${fullName('profiles')} SET status = ? WHERE profile_id = ?`,
+			[newStatus, profileId]
+		)
+		if (!re) throw `Failed to update status for player<${client}>`
+		return true
+	} catch (error) {
+		console.log(palette('red', String(error)))
+		return false
+	}
+})
+
 const printSnapshot = (data: object) => {
 	const size = Buffer.byteLength(JSON.stringify(data), 'utf8')
 	console.error(`snapshot: ${(size / 1024).toFixed(2)} KB | ${size} Bytes`)

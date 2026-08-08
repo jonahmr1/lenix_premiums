@@ -36,6 +36,7 @@ import { Loading } from '@workspace/elite/elements/loading'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { config } from '../lib'
 import { entries } from '@lenix/lenix'
+import { toast } from '@workspace/ui/lib/utils'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -239,8 +240,14 @@ export const Home = () => {
 								.map(([value, option]) => (
 									<DropdownMenuItem
 										key={value}
-										onClick={() => {
-											/* TODO */
+										onClick={async () => {
+											if (value === 'in_game') throw `unexpected profile status<${value}>`
+											const status = await triggerNui<Competitive.Requests['setStatus']>('rank:setStatus', { status: value })
+											if (!status) {
+												toast('Try again later')
+												return
+											}
+											setProfile(prev => (prev ? { ...prev, status } : prev))
 										}}
 									>
 										<span className={`size-2 rounded-full ${option.className}`} />
