@@ -13,7 +13,8 @@ import {
 	PopoverTitle,
 	PopoverTrigger,
 } from '@workspace/elite/components/popover'
-import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Sun, Trophy, Users, X } from 'lucide-react'
+import { Command, CommandDialog, CommandInput, CommandList } from '@workspace/ui/components/command'
+import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Plus, Sun, Trophy, Users, X } from 'lucide-react'
 import { Play } from '../pages/play'
 import { Leaderboard } from '../pages/leaderboard'
 import { Stats } from '../pages/stats'
@@ -33,10 +34,113 @@ import { useTheme } from '@workspace/ui/hooks/theme'
 import { focus, onEvent, triggerNui } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
+import { Spinner } from '@workspace/ui/components/spinner'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 import { PLAYER_STATUSES } from '../constants'
+
+const FriendsDrawer = ({ drawer, setDrawer, friends }: {
+	drawer: boolean
+	setDrawer: React.Dispatch<React.SetStateAction<boolean>>
+	friends: Competitive.Player['Profile'][]
+}) => {
+	const [open, setOpen] = useState(false)
+	const availableFriends = friends.filter(friend => friend.status !== 'offline')
+	const offlineFriends = friends.filter(friend => friend.status === 'offline')
+
+	return (
+		<Drawer direction='right' open={drawer} onOpenChange={setDrawer}>
+			<DrawerTrigger asChild>
+				<Button>
+					<Users />
+				</Button>
+			</DrawerTrigger>
+			<DrawerContent className='max-w-2/10'>
+				<DrawerHeader>
+					<div className='flex items-start justify-between gap-3'>
+						<div>
+							<DrawerTitle>Friends List</DrawerTitle>
+							<DrawerDescription>Invite friends or check their status.</DrawerDescription>
+						</div>
+						<Button onClick={() => setOpen(true)} size='sm' className='gap-2'>
+							<Plus className='size-4' />
+							Add Friend
+						</Button>
+						<CommandDialog open={open} onOpenChange={setOpen}>
+							<Command>
+								<CommandInput placeholder='Type a name or search...' />
+								<CommandList>
+									<div className='flex min-h-28 items-center justify-center gap-2 px-4 text-sm text-muted-foreground'>
+										<Spinner className='size-4' />
+										Loading players...
+									</div>
+								</CommandList>
+							</Command>
+						</CommandDialog>
+					</div>
+				</DrawerHeader>
+				<div className='flex flex-col gap-2 px-4'>
+					{availableFriends.map(friend => (
+						<div
+							key={friend.name}
+							className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3'
+						>
+							<div className='flex min-w-0 items-center gap-3'>
+								<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
+									<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
+									<span
+										className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
+									/>
+								</div>
+								<div className='min-w-0'>
+									<div className='truncate font-semibold'>{friend.name}</div>
+									<div className='text-[0.65rem] text-muted-foreground'>
+										{PLAYER_STATUSES[friend.status].label}
+									</div>
+								</div>
+							</div>
+							<Button size='sm' variant='ghost'>
+								Invite
+							</Button>
+						</div>
+					))}
+					{offlineFriends.length ? <>
+						<div className='my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground'>
+							<div className='h-px flex-1 bg-border/50' />
+							Offline Friends
+							<div className='h-px flex-1 bg-border/50' />
+						</div>
+						{offlineFriends.map(friend => (
+							<div
+								key={friend.name}
+								className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 opacity-70'
+							>
+								<div className='flex min-w-0 items-center gap-3'>
+									<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
+										<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
+										<span
+											className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
+										/>
+									</div>
+									<div className='min-w-0'>
+										<div className='truncate font-semibold'>{friend.name}</div>
+										<div className='text-[0.65rem] text-muted-foreground'>
+											{PLAYER_STATUSES[friend.status].label}
+										</div>
+									</div>
+								</div>
+								<Button size='sm' variant='ghost' disabled>
+									Invite
+								</Button>
+							</div>
+						))}
+					</> : <></>}
+				</div>
+			</DrawerContent>
+		</Drawer>
+	)
+}
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -76,10 +180,7 @@ export const Home = () => {
 	if (!display) return
 	if (!profile || !friends) return <Loading className='h-screen' />
 
-	const playerStatus = PLAYER_STATUSES[profile?.status]
-
-	const availableFriends = friends.filter(friend => friend.status !== 'offline')
-	const offlineFriends = friends.filter(friend => friend.status === 'offline')
+	const playerStatus = PLAYER_STATUSES[profile.status]
 
 	const pages: readonly Route[] = [
 		// {
@@ -256,76 +357,7 @@ export const Home = () => {
 								))}
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Drawer direction='right' open={drawer} onOpenChange={setDrawer}>
-						<DrawerTrigger asChild>
-							<Button>
-								<Users />
-							</Button>
-						</DrawerTrigger>
-						<DrawerContent className='max-w-2/10'>
-							<DrawerHeader>
-								<DrawerTitle>Friends List</DrawerTitle>
-								<DrawerDescription>Invite friends or check their status.</DrawerDescription>
-							</DrawerHeader>
-							<div className='flex flex-col gap-2 px-4'>
-								{availableFriends.map(friend => (
-									<div
-										key={friend.name}
-										className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.04] p-3'
-									>
-										<div className='flex min-w-0 items-center gap-3'>
-											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
-												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
-												<span
-													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
-												/>
-											</div>
-											<div className='min-w-0'>
-												<div className='truncate font-semibold'>{friend.name}</div>
-												<div className='text-[0.65rem] text-muted-foreground'>
-													{PLAYER_STATUSES[friend.status].label}
-												</div>
-											</div>
-										</div>
-										<Button size='sm' variant='ghost'>
-											Invite
-										</Button>
-									</div>
-								))}
-								{offlineFriends.length ? <>
-									<div className='my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground'>
-										<div className='h-px flex-1 bg-border/50' />
-										Offline Friends
-										<div className='h-px flex-1 bg-border/50' />
-									</div>
-									{offlineFriends.map(friend => (
-										<div
-											key={friend.name}
-											className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 opacity-70'
-										>
-											<div className='flex min-w-0 items-center gap-3'>
-												<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
-													<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
-													<span
-														className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
-													/>
-												</div>
-												<div className='min-w-0'>
-													<div className='truncate font-semibold'>{friend.name}</div>
-													<div className='text-[0.65rem] text-muted-foreground'>
-														{PLAYER_STATUSES[friend.status].label}
-													</div>
-												</div>
-											</div>
-											<Button size='sm' variant='ghost' disabled>
-												Invite
-											</Button>
-										</div>
-									))}
-								</> : <></>}
-							</div>
-						</DrawerContent>
-					</Drawer>
+					<FriendsDrawer {...{ drawer, setDrawer, friends }} />
 				</div>
 			</div>
 			<Layout className='h-full'>
