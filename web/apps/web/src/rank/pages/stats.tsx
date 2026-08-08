@@ -6,7 +6,6 @@ import type { Competitive } from 'types'
 import { useEffect, useState } from 'react'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
-import { useStats } from '../hooks/use-stats'
 
 const copy = {
 	title: 'Statistics',
@@ -21,8 +20,12 @@ const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className
 	<section className={`rounded-xl border border-foreground/10 bg-background/35 ${className}`}>{children}</section>
 )
 
-export const Stats = ({ profile }: { profile: Competitive.Player['Profile'] }) => {
-	const { stats } = useStats()
+export const Stats = ({
+	profile, stats
+}: {
+	profile: Competitive.Player['Profile']
+	stats: Competitive.Player['Stats'] | undefined
+}) => {
 	const [matches, setMatches] = useState<Competitive.Player['Match'][]>()
 
 	useEffect(() => {

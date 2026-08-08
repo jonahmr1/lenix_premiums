@@ -28,11 +28,8 @@ import { rankTiers, PvP_AMOUNT } from 'config'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
-import { useLeaderboard } from '../hooks/use-leaderboard'
-import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
-import { useStats } from '../hooks/use-stats'
 import avatar from '@workspace/elite/assets/avatar.png'
-import { entries } from '@lenix/lenix'
+import { entries, type S } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
@@ -46,11 +43,17 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 	</div>
 )
 
-export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) => {
+export const Play = ({
+	profile, stats, leaderboard, setStats, setLeaderboard, setDrawer
+}: {
+	profile: Competitive.Player['Profile']
+	stats: Competitive.Player['Stats'] | undefined
+	leaderboard: Competitive.Leaderboard | undefined
+	setStats: S<Competitive.Player['Stats'] | undefined>
+	setLeaderboard: S<Competitive.Leaderboard | undefined>
+	setDrawer: S<boolean>
+}) => {
 	const nav = useNavigate()
-	const { leaderboard, setLeaderboard } = useLeaderboard()
-	const { setDrawer } = useFriendsDrawer()
-	const { stats, setStats } = useStats()
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 
 	useEffect(() => {

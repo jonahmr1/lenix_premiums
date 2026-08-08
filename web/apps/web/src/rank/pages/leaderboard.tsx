@@ -1,17 +1,19 @@
 import { Badge } from '@workspace/elite/components/badge'
 import { Crown, Shield, Skull, Target, Trophy, Users } from 'lucide-react'
 import type { Competitive } from 'types'
-import { useLeaderboard } from '../hooks/use-leaderboard'
 import { Loading } from '@workspace/elite/elements/loading'
 import { getRankTier } from '../lib'
-import { useStats } from '../hooks/use-stats'
 import avatar from '@workspace/elite/assets/avatar.png'
 
 const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
-export const Leaderboard = ({ profile }: { profile: Competitive.Player['Profile'] }) => {
-	const { leaderboard } = useLeaderboard()
-	const { stats } = useStats()
+export const Leaderboard = ({
+	profile, leaderboard, stats
+}: {
+	profile: Competitive.Player['Profile']
+	leaderboard: Competitive.Leaderboard | undefined
+	stats: Competitive.Player['Stats'] | undefined
+}) => {
 
 	if (!leaderboard || !stats) return <Loading className='h-full' />
 

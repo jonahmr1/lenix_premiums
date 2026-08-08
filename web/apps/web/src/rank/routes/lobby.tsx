@@ -33,10 +33,8 @@ import { useTheme } from '@workspace/ui/hooks/theme'
 import { focus, onEvent, triggerNui } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
-import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { config } from '../lib'
-import { useNotifications } from '../hooks/use-notifications'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -44,9 +42,11 @@ export const Home = () => {
 	const { theme, toggle } = useTheme()
 	const [display, setDisplay] = useState<boolean>()
 	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
-	const { drawer, setDrawer } = useFriendsDrawer()
 	const [friends, setFriends] = useState<Competitive.Player['Profile'][]>()
-	const { notifications } = useNotifications()
+	const [drawer, setDrawer] = useState(false)
+	const [leaderboard, setLeaderboard] = useState<Competitive.Leaderboard>()
+	const [notifications, setNotifications] = useState<Competitive.Player['Notification'][]>([])
+	const [stats, setStats] = useState<Competitive.Player['Stats']>()
 
 	useEffect(() => {
 		const disposes = [
@@ -90,19 +90,34 @@ export const Home = () => {
 			to: '/',
 			label: 'PLAY',
 			icon: PlayIcon,
-			element: <Play profile={profile} />,
+			element: <Play
+				{...{ profile, stats, leaderboard, setDrawer,
+					setStats: state => {
+						if (state === undefined) throw `undefined is forbidden`
+						setStats(state)
+					},
+					setLeaderboard: state => {
+						if (state === undefined) throw `undefined is forbidden`
+						setLeaderboard(state)
+					}
+				}}
+			/>,
 		},
 		{
 			to: '/stats',
 			label: 'STATS',
 			icon: BarChart3,
-			element: <Stats profile={profile} />,
+			element: <Stats
+				{...{ profile, stats }} 
+			/>,
 		},
 		{
 			to: '/leaderboard',
 			label: 'LEADERBOARD',
 			icon: Trophy,
-			element: <Leaderboard profile={profile} />,
+			element: <Leaderboard
+				{...{ profile, stats, leaderboard }}
+			/>,
 		},
 	]
 
