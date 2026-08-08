@@ -1,5 +1,4 @@
 import type { Event, Request } from 'lenix'
-import type { Public } from './public'
 
 export interface Storage {
 	theme: 'dark' | 'light'

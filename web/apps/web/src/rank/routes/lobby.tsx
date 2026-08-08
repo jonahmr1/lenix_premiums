@@ -34,7 +34,6 @@ import { focus, onEvent, triggerNui } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import avatar from '@workspace/elite/assets/avatar.png'
-import { config } from '../lib'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 import { PLAYER_STATUSES } from '../constants'
@@ -48,7 +47,7 @@ export const Home = () => {
 	const [friends, setFriends] = useState<Competitive.Player['Profile'][]>()
 	const [drawer, setDrawer] = useState(false)
 	const [leaderboard, setLeaderboard] = useState<Competitive.Leaderboard>()
-	const [notifications, setNotifications] = useState<Competitive.Player['Notification'][]>([])
+	const [notifications, _setNotifications] = useState<Competitive.Player['Notification'][]>([])
 	const [stats, setStats] = useState<Competitive.Player['Stats']>()
 
 	useEffect(() => {

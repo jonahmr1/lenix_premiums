@@ -12,7 +12,6 @@ import { ToggleGroup, ToggleGroupItem } from '@workspace/elite/components/toggle
 import {
 	ChevronRight,
 	Crown,
-	Info,
 	LineChart,
 	PackageOpen,
 	Shield,

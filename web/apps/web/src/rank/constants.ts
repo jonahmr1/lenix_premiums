@@ -15,4 +15,4 @@ export const PLAYER_STATUSES = {
 		label: "Do Not Disturb",
 		className: "bg-red-500"
 	}
-},
+}
