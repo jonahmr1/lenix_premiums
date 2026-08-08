@@ -120,7 +120,7 @@ onNui<Competitive.Requests['party']['get']>('rank:party:create', async () => {
 	return party
 })
 
-onNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', async size => {
+onNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', async ({ size }) => {
 	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:rank:setSize', defaultDelay, size)
 	if (!party) throw 'Failed to set party size'
 

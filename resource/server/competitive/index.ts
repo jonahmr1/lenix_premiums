@@ -163,7 +163,6 @@ onClientCallback('lenix:server:rank:createParty', async (client): Promise<Compet
 onClientCallback('lenix:server:rank:setSize', async (client, size: number): Promise<Competitive.Player['Party']> => {
 	const party = parties.get(client)
 	if (!party) throw `Could not find party for client<${client}>`
-
 	party.size = size
 
 	return party
