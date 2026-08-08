@@ -37,6 +37,7 @@ import avatar from '@workspace/elite/assets/avatar.png'
 import { config } from '../lib'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
+import { PLAYER_STATUSES } from '../constants'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -76,7 +77,7 @@ export const Home = () => {
 	if (!display) return
 	if (!profile || !friends) return <Loading className='h-screen' />
 
-	const playerStatus = config.playerStatuses[profile?.status]
+	const playerStatus = PLAYER_STATUSES[profile?.status]
 
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
@@ -235,7 +236,7 @@ export const Home = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end' className='w-40'>
-							{entries(config.playerStatuses)
+							{entries(PLAYER_STATUSES)
 								.filter(([status]) => status !== 'in_game')
 								.map(([value, option]) => (
 									<DropdownMenuItem
@@ -277,13 +278,13 @@ export const Home = () => {
 											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
 												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 												<span
-													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
+													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
 												/>
 											</div>
 											<div className='min-w-0'>
 												<div className='truncate font-semibold'>{friend.name}</div>
 												<div className='text-[0.65rem] text-muted-foreground'>
-													{config.playerStatuses[friend.status].label}
+													{PLAYER_STATUSES[friend.status].label}
 												</div>
 											</div>
 										</div>
@@ -292,7 +293,7 @@ export const Home = () => {
 										</Button>
 									</div>
 								))}
-								{offlineFriends.length && <>
+								{offlineFriends.length ? <>
 									<div className='my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground'>
 										<div className='h-px flex-1 bg-border/50' />
 										Offline Friends
@@ -307,13 +308,13 @@ export const Home = () => {
 												<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
 													<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
 													<span
-														className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
+														className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${PLAYER_STATUSES[friend.status].className}`}
 													/>
 												</div>
 												<div className='min-w-0'>
 													<div className='truncate font-semibold'>{friend.name}</div>
 													<div className='text-[0.65rem] text-muted-foreground'>
-														{config.playerStatuses[friend.status].label}
+														{PLAYER_STATUSES[friend.status].label}
 													</div>
 												</div>
 											</div>
@@ -322,7 +323,7 @@ export const Home = () => {
 											</Button>
 										</div>
 									))}
-								</>}
+								</> : <></>}
 							</div>
 						</DrawerContent>
 					</Drawer>

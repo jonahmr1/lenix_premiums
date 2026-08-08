@@ -5,8 +5,6 @@ export interface Storage {
 	theme: 'dark' | 'light'
 }
 
-type Config = Public['public/config.competitive.json']
-
 export namespace Competitive {
 	export interface Events {
 		open: Event<'rank:open', []>
@@ -34,7 +32,7 @@ export namespace Competitive {
 			profile_id: string
 			name: string
 			avatar: string | null
-			status: keyof Omit<Config['playerStatuses'], 'in_game'>
+			status: 'online' | 'offline' | 'dnd'
 		}
 		Friend: Player['Profile']['profile_id']
 		Stats: {
