@@ -35,6 +35,7 @@ import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { config } from '../lib'
+import { entries } from '@lenix/lenix'
 
 export const Home = () => {
 	const { pathname } = useLocation()
@@ -233,7 +234,7 @@ export const Home = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end' className='w-40'>
-							{Object.entries(config.playerStatuses)
+							{entries(config.playerStatuses)
 								.filter(([status]) => status !== 'in_game')
 								.map(([value, option]) => (
 									<DropdownMenuItem
