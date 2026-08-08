@@ -262,7 +262,7 @@ export const Home = () => {
 								<Users />
 							</Button>
 						</DrawerTrigger>
-						<DrawerContent>
+						<DrawerContent className='max-w-2/10'>
 							<DrawerHeader>
 								<DrawerTitle>Friends List</DrawerTitle>
 								<DrawerDescription>Invite friends or check their status.</DrawerDescription>
