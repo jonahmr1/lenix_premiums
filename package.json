@@ -1,5 +1,5 @@
 {
-	"name": "lenix_rank",
+	"name": "lenix_premiums",
 	"version": "0.0.0",
 	"private": true,
 	"description": "",
@@ -7,7 +7,7 @@
 		"fivem",
 		"lenix"
 	],
-	"bugs": "https://github.com/jonahmr1/lenix_rank/issues",
+	"bugs": "https://github.com/jonahmr1/lenix_premiums/issues",
 	"license": "",
 	"author": {
 		"name": "Lenix",
@@ -15,7 +15,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/jonahmr1/lenix_rank"
+		"url": "https://github.com/jonahmr1/lenix_premiums"
 	},
 	"workspaces": [
 		"./web"

@@ -1,4 +1,4 @@
-# lenix_rank
+# lenix_premiums
 
 ## TODO
 
