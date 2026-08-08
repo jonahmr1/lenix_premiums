@@ -174,7 +174,7 @@ const Friends = ({ drawer, setDrawer, friends }: {
 					<Users />
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent>
+			<DrawerContent className='max-w-2/10'>
 				<DrawerHeader>
 					<div className='flex items-start justify-between gap-3'>
 						<div>
@@ -185,7 +185,11 @@ const Friends = ({ drawer, setDrawer, friends }: {
 							<Plus className='size-4' />
 							Add Friend
 						</Button>
-						<CommandDialog open={open} onOpenChange={setOpen}>
+						<CommandDialog
+							open={open}
+							onOpenChange={setOpen}
+							className='max-w-2/10'
+						>
 							<Command>
 								<CommandInput placeholder='Type a name or search...' />
 								<CommandList>
