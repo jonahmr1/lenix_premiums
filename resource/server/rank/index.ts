@@ -1,5 +1,5 @@
 import { onClientCallback } from "@overextended/ox_lib/server"
-import type { Rank } from 'types/index'
+import type { Competitive } from 'types/index'
 import { oxmysql } from "@overextended/oxmysql"
 import { fullName } from "./db"
 import { parties, Party } from "./party"
@@ -17,41 +17,41 @@ const getProfile = async (client: number) => {
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? LIMIT 1`
 
 	try {
-		const profile = await oxmysql.single<Pick<Rank.Player['Profile'], typeof selectedCols[number]>>(
+		const profile = await oxmysql.single<Pick<Competitive.Player['Profile'], typeof selectedCols[number]>>(
 			selectProfile,
 			[profileId]
 		)
-	
+
 		if (profile) return {
 			...profile,
 			avatar: null
 		}
-	
+
 		const name = GetPlayerName(client.toString())
 		const re = await oxmysql.insert(
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
 			[profileId, name, 'online']
 		)
 		if (!re) throw 'Failed to create a new profile'
-	
-		return await oxmysql.single<Rank.Player['Profile']>(
+
+		return await oxmysql.single<Competitive.Player['Profile']>(
 			selectProfile,
 			[profileId]
 		)
-	} catch(e) {
+	} catch (e) {
 		console.log(palette('red', String(e)))
 	}
 }
 
-onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Rank.Player['Profile']> => {
+onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Competitive.Player['Profile']> => {
 	const profile = await getProfile(client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
 	return profile
 })
 
-onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<Rank.Player['Performance'][]> => {
+onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
 	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
-	const performances: Rank.Player['Performance'][] = await oxmysql.query<{
+	const performances: Competitive.Player['Performance'][] = await oxmysql.query<{
 		match_id: number
 		profile_id: string
 		result: 'win' | 'loss'
@@ -65,7 +65,7 @@ onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<R
 	return performances
 })
 
-onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs['getStats']> => {
+onClientCallback('lenix:server:rank:getStats', async (client): Promise<Competitive.APIs['getStats']> => {
 	const profile_id = getProfileId(client)
 
 	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
@@ -82,7 +82,7 @@ onClientCallback('lenix:server:rank:getStats', async (client): Promise<Rank.APIs
 	return stats
 })
 
-onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Rank.Player['Profile'][]> => {
+onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
@@ -97,7 +97,7 @@ onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Rank.
 	}))
 })
 
-onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Player['Match'][]> => {
+onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
@@ -124,18 +124,18 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 			`SELECT ${selectedMatchsCols.join(', ')} FROM ${fullName('matches')} WHERE profile_id = ?`,
 			[profileId]
 		) satisfies Record<(typeof selectedMatchsCols)[number], any>[]
-		
+
 		return matches.map(match => {
 			const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
 			if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
-	
+
 			return {
 				...match,
-				delta: 
+				delta:
 					matchPerformance.assists * Config.weights.assist +
-					matchPerformance.deaths * Config.weights.death +
-					matchPerformance.kills * Config.weights.kill +
-					matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
+						matchPerformance.deaths * Config.weights.death +
+						matchPerformance.kills * Config.weights.kill +
+						matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
 				,
 				result: matchPerformance.result,
 				stats: {
@@ -145,12 +145,12 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Rank.Pl
 				}
 			}
 		})
-	} catch(e) {
+	} catch (e) {
 		throw e
 	}
 })
 
-onClientCallback('lenix:server:rank:createParty', async (client): Promise<Rank.Player['Party']> => {
+onClientCallback('lenix:server:rank:createParty', async (client): Promise<Competitive.Player['Party']> => {
 	const profile = await getProfile(client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
 	const party = new Party(profile)
@@ -159,7 +159,7 @@ onClientCallback('lenix:server:rank:createParty', async (client): Promise<Rank.P
 	return party
 })
 
-onClientCallback('lenix:server:rank:setSize', async (client, size: number): Promise<Rank.Player['Party']> => {
+onClientCallback('lenix:server:rank:setSize', async (client, size: number): Promise<Competitive.Player['Party']> => {
 	const party = parties.get(client)
 	if (!party) throw `Could not find party for client<${client}>`
 
@@ -168,7 +168,7 @@ onClientCallback('lenix:server:rank:setSize', async (client, size: number): Prom
 	return party
 })
 
-onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Player['Profile'][] | undefined> => {
+onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
 	try {
@@ -186,13 +186,13 @@ onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Rank.Pl
 		)
 		if (!friendIds.length) return []
 
-		const profiles = await oxmysql.query<Rank.Player['Profile'][]>(
+		const profiles = await oxmysql.query<Competitive.Player['Profile'][]>(
 			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id IN (?)`,
 			[friendIds]
 		) satisfies Record<(typeof profileCols)[number], any>[]
 
 		return profiles
-	} catch(e) {
+	} catch (e) {
 		console.log(palette('red', String(e)))
 	}
 })

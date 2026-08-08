@@ -7,7 +7,7 @@ export interface Storage {
 
 type Config = Public['public/config.json']
 
-export namespace Rank {
+export namespace Competitive {
 	export interface Events {
 		open: Event<'rank:open', []>
 	}
@@ -25,7 +25,7 @@ export namespace Rank {
 	}
 
 	export interface APIs {
-		getStats: (Pick<Rank.Player['Stats'], 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
+		getStats: (Pick<Competitive.Player['Stats'], 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
 	}
 
 	export interface Player {
@@ -77,9 +77,9 @@ export namespace Rank {
 			assists: number
 		}
 		Party: {
-			profiles: Rank.Player['Profile'][]
+			profiles: Competitive.Player['Profile'][]
 			size: number
-			leader: Rank.Player['Profile']['profile_id']
+			leader: Competitive.Player['Profile']['profile_id']
 		}
 	}
 

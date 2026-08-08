@@ -1,7 +1,7 @@
 import { useState } from "react"
-import type { Rank } from "types"
+import type { Competitive } from "types"
 
 export const useNotifications = () => {
-	const [notifications, setNotifications] = useState<Rank.Player['Notification'][]>([])
+	const [notifications, setNotifications] = useState<Competitive.Player['Notification'][]>([])
 	return { notifications, setNotifications }
 }

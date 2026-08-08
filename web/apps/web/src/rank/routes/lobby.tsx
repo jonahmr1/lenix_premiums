@@ -31,7 +31,7 @@ import { Button } from '@workspace/elite/components/button'
 import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
 import { focus, onEvent, triggerNui } from 'lenix/nui'
-import type { Rank } from 'types'
+import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import avatar from '@workspace/elite/assets/avatar.png'
@@ -43,18 +43,18 @@ export const Home = () => {
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [display, setDisplay] = useState<boolean>()
-	const [profile, setProfile] = useState<Rank.Player['Profile']>()
+	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
 	const { drawer, setDrawer } = useFriendsDrawer()
-	const [friends, setFriends] = useState<Rank.Player['Profile'][]>()
+	const [friends, setFriends] = useState<Competitive.Player['Profile'][]>()
 	const { notifications } = useNotifications()
 
 	useEffect(() => {
 		const disposes = [
-			onEvent<Rank.Events['open']>('rank:open', async () => {
+			onEvent<Competitive.Events['open']>('rank:open', async () => {
 				setDisplay(true)
 				focus()
-				setProfile(await triggerNui<Rank.Requests['getProfile']>('rank:getProfile', {}))
-				setFriends(await triggerNui<Rank.Requests['getFriends']>('rank:getFriends', {}))			
+				setProfile(await triggerNui<Competitive.Requests['getProfile']>('rank:getProfile', {}))
+				setFriends(await triggerNui<Competitive.Requests['getFriends']>('rank:getFriends', {}))			
 			}),
 		]
 		const handler = (e: KeyboardEvent) => {

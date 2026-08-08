@@ -1,6 +1,6 @@
 import { Badge } from '@workspace/elite/components/badge'
 import { Crown, Shield, Skull, Target, Trophy, Users } from 'lucide-react'
-import type { Rank } from 'types'
+import type { Competitive } from 'types'
 import { useLeaderboard } from '../hooks/use-leaderboard'
 import { Loading } from '@workspace/elite/elements/loading'
 import { getRankTier } from '../lib'
@@ -9,7 +9,7 @@ import avatar from '@workspace/elite/assets/avatar.png'
 
 const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
 
-export const Leaderboard = ({ profile }: { profile: Rank.Player['Profile'] }) => {
+export const Leaderboard = ({ profile }: { profile: Competitive.Player['Profile'] }) => {
 	const { leaderboard } = useLeaderboard()
 	const { stats } = useStats()
 

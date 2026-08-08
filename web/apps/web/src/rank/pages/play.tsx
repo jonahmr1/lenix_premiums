@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import { calculatePlayerScore, getRankTier } from '../lib'
 import { rankTiers } from 'config'
-import type { Rank } from 'types'
+import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
 import { useLeaderboard } from '../hooks/use-leaderboard'
@@ -44,22 +44,22 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 	</div>
 )
 
-export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
+export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) => {
 	const nav = useNavigate()
 	const { leaderboard, setLeaderboard } = useLeaderboard()
 	const { setDrawer } = useFriendsDrawer()
 	const { stats, setStats } = useStats()
-	const [party, setParty] = useState<Rank.Player['Party']>()
+	const [party, setParty] = useState<Competitive.Player['Party']>()
 
 	useEffect(() => {
-		triggerNui<Rank.Requests['party']['get']>('rank:party:create', {}).then(setParty)
+		triggerNui<Competitive.Requests['party']['get']>('rank:party:create', {}).then(setParty)
 		
 		if (!stats) {
-			triggerNui<Rank.Requests['getStats']>('rank:getStats', {}).then(setStats)
+			triggerNui<Competitive.Requests['getStats']>('rank:getStats', {}).then(setStats)
 		}
 
 		if (!leaderboard) {
-			triggerNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
+			triggerNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
 		}
 	}, [])
 
@@ -233,7 +233,7 @@ export const Play = ({ profile }: { profile: Rank.Player['Profile'] }) => {
 								onValueChange={async value => {
 									if (!value) return
 									setParty(
-										await triggerNui<Rank.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) }),
+										await triggerNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) }),
 									)
 								}}
 							>

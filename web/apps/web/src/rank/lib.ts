@@ -1,7 +1,7 @@
-import type { Rank } from 'types'
+import type { Competitive } from 'types'
 import rankConfig, { weights, rankTiers } from 'config' with { type: 'json' }
 
-export const calculatePlayerScore = (stats: Rank.Player['Stats']) => {
+export const calculatePlayerScore = (stats: Competitive.Player['Stats']) => {
 	return Math.max(
 		0,
 		stats.wins * weights.win +

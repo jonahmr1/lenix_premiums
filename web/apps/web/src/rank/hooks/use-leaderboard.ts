@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import type { Rank } from 'types'
+import type { Competitive } from 'types'
 
 export const useLeaderboard = () => {
-	const [leaderboard, setLeaderboard] = useState<Rank.Leaderboard>()
+	const [leaderboard, setLeaderboard] = useState<Competitive.Leaderboard>()
 	return { leaderboard, setLeaderboard }
 }

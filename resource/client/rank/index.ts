@@ -2,7 +2,7 @@ import { addKeybind, triggerServerCallback } from '@overextended/ox_lib/client'
 import { ResourceName } from 'common/resource'
 import { emitEvent, onNui } from 'lenix/client'
 import Config from 'common/config'
-import type { Rank } from 'types/index'
+import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
 
@@ -10,27 +10,27 @@ addKeybind({
 	name: `${ResourceName}:rank:open`,
 	description: 'Open Rank',
 	defaultKey: 'G',
-	onPressed: () => emitEvent<Rank.Events['open']>('rank:open'),
+	onPressed: () => emitEvent<Competitive.Events['open']>('rank:open'),
 })
 
-onNui<Rank.Requests['getProfile']>('rank:getProfile', async () => {
-	const profile = await triggerServerCallback<Rank.Player['Profile']>('lenix:server:rank:getProfile', defaultDelay)
+onNui<Competitive.Requests['getProfile']>('rank:getProfile', async () => {
+	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:rank:getProfile', defaultDelay)
 	if (!profile) throw 'Failed to get profile'
 
 	return profile
 })
 
-onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
-	const performances = await triggerServerCallback<Rank.Player['Performance'][]>('lenix:server:rank:getPerformances', defaultDelay)
+onNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
+	const performances = await triggerServerCallback<Competitive.Player['Performance'][]>('lenix:server:rank:getPerformances', defaultDelay)
 	if (!performances) throw 'Failed to get performances'
 
-	const profiles = await triggerServerCallback<Rank.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
+	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:rank:getProfiles', defaultDelay)
 	if (!profiles) throw 'Failed to get profiles'
 	console.log(profiles)
 
 	const statsByProfile = new Map<
-		Rank.Player['Profile']['profile_id'],
-		Pick<Rank.Player['Stats'], 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
+		Competitive.Player['Profile']['profile_id'],
+		Pick<Competitive.Player['Stats'], 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
 	>()
 
 	for (const performance of performances) {
@@ -69,24 +69,24 @@ onNui<Rank.Requests['getLeaderboard']>('rank:getLeaderboard', async () => {
 		name: profile.name,
 		avatar: profile.avatar,
 	}))
-	.sort((a, b) => b.score - a.score)
-	.map((profile, index) => ({
-		...profile,
-		place: index + 1,
-	}))
+		.sort((a, b) => b.score - a.score)
+		.map((profile, index) => ({
+			...profile,
+			place: index + 1,
+		}))
 })
 
-onNui<Rank.Requests['getMatches']>('rank:getMatches', async () => {
-	const matches = await triggerServerCallback<Rank.Player['Match'][]>('lenix:server:rank:getMatches', defaultDelay)
+onNui<Competitive.Requests['getMatches']>('rank:getMatches', async () => {
+	const matches = await triggerServerCallback<Competitive.Player['Match'][]>('lenix:server:rank:getMatches', defaultDelay)
 	if (!matches) throw 'Failed to get matches'
 
 	return matches
 })
 
-onNui<Rank.Requests['getStats']>('rank:getStats', async () => {
-	const stats = await triggerServerCallback<Rank.APIs['getStats']>('lenix:server:rank:getStats', defaultDelay)
+onNui<Competitive.Requests['getStats']>('rank:getStats', async () => {
+	const stats = await triggerServerCallback<Competitive.APIs['getStats']>('lenix:server:rank:getStats', defaultDelay)
 	if (!stats) throw 'Failed to get stats'
-	
+
 	const totals = stats.reduce(
 		(acc, stat) => {
 			acc.kills += stat.kills
@@ -113,22 +113,22 @@ onNui<Rank.Requests['getStats']>('rank:getStats', async () => {
 	}
 })
 
-onNui<Rank.Requests['party']['get']>('rank:party:create', async () => {
-	const party = await triggerServerCallback<Rank.Player['Party']>('lenix:server:rank:createParty', defaultDelay)
+onNui<Competitive.Requests['party']['get']>('rank:party:create', async () => {
+	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:rank:createParty', defaultDelay)
 	if (!party) throw 'Failed to create party'
 
 	return party
 })
 
-onNui<Rank.Requests['party']['setSize']>('rank:party:setSize', async size => {
-	const party = await triggerServerCallback<Rank.Player['Party']>('lenix:server:rank:setSize', defaultDelay, size)
+onNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', async size => {
+	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:rank:setSize', defaultDelay, size)
 	if (!party) throw 'Failed to set party size'
 
 	return party
 })
 
-onNui<Rank.Requests['getFriends']>('rank:getFriends', async () => {
-	const friends = await triggerServerCallback<Rank.Player['Profile'][] | undefined>('lenix:server:rank:getFriends', defaultDelay)
+onNui<Competitive.Requests['getFriends']>('rank:getFriends', async () => {
+	const friends = await triggerServerCallback<Competitive.Player['Profile'][] | undefined>('lenix:server:rank:getFriends', defaultDelay)
 	if (!friends) throw 'Failed to get friends'
 
 	return friends
