@@ -156,9 +156,6 @@ export const Play = ({
 
 			<Panel className='relative col-start-2 row-span-2 row-start-1 flex min-h-0 flex-col p-[clamp(0.9rem,1.2vw,1.25rem)]'>
 				<div className='absolute inset-x-0 -top-1/10 h-full bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.22),transparent_65%)]' />
-				<div className='relative flex justify-end'>
-					<Info className='size-5 text-muted-foreground' />
-				</div>
 
 				<div className='relative flex min-h-0 flex-1 flex-col'>
 					<div className='flex min-h-0 flex-1 flex-col'>
