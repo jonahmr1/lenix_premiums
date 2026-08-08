@@ -202,7 +202,13 @@ const Friends = ({ drawer, setDrawer, friends }: {
 									<CommandEmpty>No results found.</CommandEmpty>
 									<CommandGroup heading="Players">
 										{profiles ? profiles.map(profile => (
-											<CommandItem>
+											<CommandItem
+												key={profile.profile_id}
+												value={profile.profile_id}
+												onSelect={profile_id => {
+													console.log('clicked player id:', profile_id)
+												}}
+											>
 												<Avatar>
 													<AvatarImage src={profile.avatar ?? avatar} />
 													<AvatarBadge className={PLAYER_STATUSES[profile.status].className} />
