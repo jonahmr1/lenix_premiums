@@ -4,7 +4,8 @@ import { palette } from 'lenix'
 import { ResourceName } from 'common/resource'
 import('common')
 import('./rank')
-return
+
+throw 'license check bypassed'
 
 const LICENSE = GetConvar('lenix:license_key', '')
 asserts(
