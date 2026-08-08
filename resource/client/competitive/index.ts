@@ -1,7 +1,7 @@
 import { addKeybind, triggerServerCallback } from '@overextended/ox_lib/client'
+import { Config } from 'common/config/competitive'
 import { ResourceName } from 'common/resource'
 import { emitEvent, onNui } from 'lenix/client'
-import Config from 'common/config'
 import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
