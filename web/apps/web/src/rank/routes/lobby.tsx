@@ -284,35 +284,37 @@ export const Home = () => {
 										</Button>
 									</div>
 								))}
-								<div className='my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground'>
-									<div className='h-px flex-1 bg-border/50' />
-									Offline Friends
-									<div className='h-px flex-1 bg-border/50' />
-								</div>
-								{offlineFriends.map(friend => (
-									<div
-										key={friend.name}
-										className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 opacity-70'
-									>
-										<div className='flex min-w-0 items-center gap-3'>
-											<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
-												<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
-												<span
-													className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
-												/>
-											</div>
-											<div className='min-w-0'>
-												<div className='truncate font-semibold'>{friend.name}</div>
-												<div className='text-[0.65rem] text-muted-foreground'>
-													{config.playerStatuses[friend.status].label}
+								{offlineFriends.length && <>
+									<div className='my-2 flex items-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground'>
+										<div className='h-px flex-1 bg-border/50' />
+										Offline Friends
+										<div className='h-px flex-1 bg-border/50' />
+									</div>
+									{offlineFriends.map(friend => (
+										<div
+											key={friend.name}
+											className='flex items-center justify-between rounded-lg border border-foreground/10 bg-foreground/[0.02] p-3 opacity-70'
+										>
+											<div className='flex min-w-0 items-center gap-3'>
+												<div className='relative size-9 shrink-0 rounded-full bg-foreground/10 p-1'>
+													<img src={friend.avatar ?? avatar} alt='' className='size-full rounded-full object-cover' />
+													<span
+														className={`absolute bottom-0 right-0 size-2.5 rounded-full border border-background ${config.playerStatuses[friend.status].className}`}
+													/>
+												</div>
+												<div className='min-w-0'>
+													<div className='truncate font-semibold'>{friend.name}</div>
+													<div className='text-[0.65rem] text-muted-foreground'>
+														{config.playerStatuses[friend.status].label}
+													</div>
 												</div>
 											</div>
+											<Button size='sm' variant='ghost' disabled>
+												Invite
+											</Button>
 										</div>
-										<Button size='sm' variant='ghost' disabled>
-											Invite
-										</Button>
-									</div>
-								))}
+									))}
+								</>}
 							</div>
 						</DrawerContent>
 					</Drawer>
