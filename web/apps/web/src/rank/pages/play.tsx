@@ -24,7 +24,7 @@ import {
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import { calculatePlayerScore, getRankTier } from '../lib'
-import { rankTiers } from 'config'
+import { rankTiers, PvP_AMOUNT } from 'config'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
@@ -32,6 +32,7 @@ import { useLeaderboard } from '../hooks/use-leaderboard'
 import { useFriendsDrawer } from '../hooks/use-friendsDrawer'
 import { useStats } from '../hooks/use-stats'
 import avatar from '@workspace/elite/assets/avatar.png'
+import { entries } from '@lenix/lenix'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
@@ -237,7 +238,7 @@ export const Play = ({ profile }: { profile: Competitive.Player['Profile'] }) =>
 									)
 								}}
 							>
-								{Array.from({ length: party.size }).map((_, index) => {
+								{Array.from({ length: entries(PvP_AMOUNT).length }).map((_, index) => {
 									const size = index + 1
 									return (
 										<ToggleGroupItem
