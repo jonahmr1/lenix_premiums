@@ -23,6 +23,7 @@
 			"@/*": ["./src/*"],
 			"@workspace/ui/*": ["../../packages/ui/src/*"],
 			"@workspace/elite/*": ["../../packages/elite/src/*"],
+			"@workspace/valo/*": ["../../packages/valo/src/*"],
 			"types": ["../../../types/index"],
 			"config": ["../../../public/config.competitive.json"]
 		}

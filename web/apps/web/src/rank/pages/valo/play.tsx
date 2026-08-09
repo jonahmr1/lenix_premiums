@@ -1,13 +1,12 @@
-import { Layout } from '@/components/layout'
-import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router'
-import { GAME_MODES } from '@/constants'
 import { Dot, Plus } from 'lucide-react'
 import { useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { user } from '@/lib/user'
-import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
+import { GAME_MODES, user } from '@/rank/constants.valo'
+import { Layout } from '@workspace/ui/elements/layout'
+import { Button } from '@workspace/valo/components/button'
+import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
+import { Badge } from '@workspace/valo/components/badge'
+import { Separator } from '@workspace/ui/components/separator'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []

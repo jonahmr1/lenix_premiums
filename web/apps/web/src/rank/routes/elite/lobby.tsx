@@ -1,4 +1,4 @@
-import { Layout } from '@workspace/elite/elements/layout'
+import { Layout } from '@workspace/ui/elements/layout'
 import { useLocation, useNavigate } from 'react-router'
 import {
 	DropdownMenu,
