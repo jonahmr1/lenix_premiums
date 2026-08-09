@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"@lenix/lenix": "npm:@jsr/lenix__lenix",
-		"lenix": "^1.7.16"
+		"lenix": "^1.7.20"
 	},
 	"devDependencies": {
 		"prettier": "^3.8.3",

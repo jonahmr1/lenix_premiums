@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router'
 import { Crosshair, Dot, LogOut, Plus } from 'lucide-react'
 import { useState } from 'react'
-import { GAME_MODES, user } from '@/rank/constants.valo'
+import { GAME_MODES } from '@/rank/constants.valo'
 import { Layout } from '@workspace/ui/elements/layout'
 import { Button } from '@workspace/valo/components/button'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
 import { Badge } from '@workspace/valo/components/badge'
 import { Separator } from '@workspace/ui/components/separator'
+import type { Competitive } from 'types'
+import avatar from '@workspace/valo/assets/avatar.png'
+import { Skeleton } from '@workspace/ui/components/skeleton'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -22,7 +25,11 @@ const getRenderOrder = (count: number) => {
 	return order
 }
 
-export const Play = () => {
+export const Play = ({
+	profile
+}: {
+	profile: Competitive.Player['Profile'] | undefined
+}) => {
 	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
 	const renderOrder = getRenderOrder(playersAmountSelected)
@@ -83,43 +90,47 @@ export const Play = () => {
 							style={{ height: `${h}%` }}
 						>
 							{i === 0 ? (
-								<>
-									<div className='flex flex-1 items-start'>
-										<img src={user.avatar} alt='' />
-									</div>
-									<div className='flex flex-1 flex-col justify-center w-full items-center'>
-										<div className='w-full text-4xl tracking-tighter font-bold'>{user.name}</div>
-										<Badge variant={user.isReady ? 'outline' : 'destructive'} className='text-[0.5rem]'>
-											{user.isReady ? 'Ready' : 'Not Ready'}
-										</Badge>
-									</div>
-									<div className='flex flex-1 flex-col w-full justify-around h-full'>
-										<Separator />
-										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1'>
-												<p>{user.stats.kills}</p>
-												<p className='text-[0.625rem]'>Total Kills</p>
+								profile ? (
+									<>
+										<div className='flex flex-1 items-start'>
+											<img src={profile.avatar ?? avatar} alt='' />
+										</div>
+										<div className='flex flex-1 flex-col justify-center w-full items-center'>
+											<div className='w-full text-4xl tracking-tighter font-bold'>{profile.name}</div>
+											<Badge variant={profile.isReady ? 'outline' : 'destructive'} className='text-[0.5rem]'>
+												{profile.isReady ? 'Ready' : 'Not Ready'}
+											</Badge>
+										</div>
+										<div className='flex flex-1 flex-col w-full justify-around h-full'>
+											<Separator />
+											<div className='flex flex-1 justify-around items-center'>
+												<div className='flex-1'>
+													<p>{profile.stats.kills}</p>
+													<p className='text-[0.625rem]'>Total Kills</p>
+												</div>
+												<Separator orientation='vertical' />
+												<div className='flex-1'>
+													<p>{profile.stats.deaths}</p>
+													<p className='text-[0.625rem]'>Total Deaths</p>
+												</div>
 											</div>
-											<Separator orientation='vertical' />
-											<div className='flex-1'>
-												<p>{user.stats.deaths}</p>
-												<p className='text-[0.625rem]'>Total Deaths</p>
+											<Separator />
+											<div className='flex flex-1 justify-around items-center'>
+												<div className='flex-1'>
+													<p>{profile.stats.assits}</p>
+													<p className='text-[0.625rem]'>Total Assists</p>
+												</div>
+												<Separator orientation='vertical' />
+												<div className='flex-1'>
+													<p>{((profile.stats.wins / (profile.stats.wins + profile.stats.losses)) * 100).toFixed(1)}%</p>
+													<p className='text-[0.625rem]'>Win Ratio</p>
+												</div>
 											</div>
 										</div>
-										<Separator />
-										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1'>
-												<p>{user.stats.assits}</p>
-												<p className='text-[0.625rem]'>Total Assists</p>
-											</div>
-											<Separator orientation='vertical' />
-											<div className='flex-1'>
-												<p>{((user.stats.wins / (user.stats.wins + user.stats.losses)) * 100).toFixed(1)}%</p>
-												<p className='text-[0.625rem]'>Win Ratio</p>
-											</div>
-										</div>
-									</div>
-								</>
+									</>
+								) : (
+									<Skeleton />
+								)
 							) : (
 								<Plus />
 							)}

@@ -4,28 +4,39 @@ import { Play } from '@/rank/pages/valo/play'
 import { Leaderboard } from '@/rank/pages/valo/leaderboard'
 import type { Route } from '@/rank/types'
 import { Button } from '@workspace/valo/components/button'
-import { user } from '@/rank/constants.valo'
 import { Layout } from '@workspace/ui/elements/layout'
 import { useTheme } from '@workspace/ui/hooks/theme'
 import { DiamondIcon } from '@phosphor-icons/react'
-
-const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
-	{
-		to: '/',
-		label: 'PLAY',
-		element: <Play />,
-	},
-	// {
-	// 	to: '/leaderboard',
-	// 	label: 'LEADERBOARD',
-	// 	element: <Leaderboard />,
-	// },
-]
+import { useEffect, useState } from 'react'
+import type { Competitive } from 'types'
+import { Skeleton } from '@workspace/ui/components/skeleton'
+import { triggerNui } from 'lenix/nui'
 
 export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
+	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
+
+	useEffect(() => {
+		(async () => {
+			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
+			setProfile(profile)
+		})()
+	}, [])
+
+	const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
+		{
+			to: '/',
+			label: 'PLAY',
+			element: <Play {...{ profile }} />,
+		},
+		// {
+		// 	to: '/leaderboard',
+		// 	label: 'LEADERBOARD',
+		// 	element: <Leaderboard />,
+		// },
+	]
 
 	return (
 		<Layout className='h-screen'>
@@ -56,7 +67,11 @@ export const Lobby = () => {
 						</div>
 					</div>
 					<div className='flex items-center w-1/10 gap-3'>
-						<div className=' cursor-default select-none'>{user.name}</div>
+						{profile ? (
+							<div className=' cursor-default select-none'>{profile.name}</div>
+						): (
+							<Skeleton />
+						)}
 						<Button variant='ghost' onClick={toggle}>
 							{theme === 'dark' ? <Sun /> : <Moon />}
 						</Button>
