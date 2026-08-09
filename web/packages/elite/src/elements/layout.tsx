@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge'
+import { cn } from "@workspace/ui/lib/utils"
 
 export const Layout = ({
 	children,
@@ -8,7 +8,7 @@ export const Layout = ({
 	children: React.ReactNode
 	className?: React.ComponentProps<'div'>['className']
 } & React.ComponentProps<'div'>) => (
-	<div className={twMerge('flex h-9/10 flex-col items-center justify-center', className)} {...prop}>
+	<div className={cn('flex h-9/10 flex-col items-center justify-center', className)} {...prop}>
 		{children}
 	</div>
 )

@@ -7,8 +7,11 @@
 		"jsx": "react-jsx",
 		"skipLibCheck": true,
 		"strict": true,
-		"outDir": "dist"
+		"noEmit": true,
+		"paths": {
+			"@workspace/ui/*": ["./src/*"]
+		}
 	},
-	"include": ["src", "turbo"],
+	"include": ["."],
 	"exclude": ["node_modules", "dist"]
 }
