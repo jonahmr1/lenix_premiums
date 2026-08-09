@@ -67,7 +67,7 @@ export const Play = () => {
 					),
 				)}
 			</ToggleGroup>
-			<div className='flex flex-8 items-center justify-center w-full gap-2'>
+			<div className='flex flex-8 items-center justify-center w-full gap-2 h-full'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 

@@ -27,7 +27,7 @@ export const Lobby = () => {
 	const { theme, toggle } = useTheme()
 
 	return (
-		<Layout className='min-h-screen'>
+		<Layout className='h-screen'>
 			<Layout className='bg-muted w-8/10 rounded-md overflow-hidden'>
 				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/30'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
@@ -60,7 +60,7 @@ export const Lobby = () => {
 						</Button>
 					</div>
 				</div>
-				<Layout>
+				<Layout className='h-full'>
 					{pages.map(page => (
 						<div key={page.to} className={pathname === page.to ? 'visible' : 'hidden'}>
 							{page.element}
