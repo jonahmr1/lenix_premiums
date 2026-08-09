@@ -12,6 +12,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@phosphor-icons/react": "^2.1.10",
 		"@workspace/elite": "workspace:*",
 		"@workspace/ui": "workspace:*",
 		"@workspace/valo": "workspace:*",

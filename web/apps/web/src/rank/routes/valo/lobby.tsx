@@ -7,6 +7,7 @@ import { Button } from '@workspace/valo/components/button'
 import { user } from '@/rank/constants.valo'
 import { Layout } from '@workspace/ui/elements/layout'
 import { useTheme } from '@workspace/ui/hooks/theme'
+import { DiamondIcon } from '@phosphor-icons/react'
 
 const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
 	{
@@ -28,8 +29,8 @@ export const Lobby = () => {
 
 	return (
 		<Layout className='h-screen'>
-			<Layout className='bg-muted w-8/10 rounded-md overflow-hidden justify-between'>
-				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/30'>
+			<Layout className='bg-background w-8/10 rounded-(--radius-md) overflow-hidden justify-between'>
+				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
 						<div className='h-full'>
@@ -44,7 +45,8 @@ export const Lobby = () => {
 											onClick={() => nav(page.to)}
 										>
 											{page.label}
-											<Diamond
+											<DiamondIcon
+												weight='fill'
 												className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-foreground ${isInCurrentRoute ? 'size-3' : 'size-2'}`}
 											/>
 										</Button>

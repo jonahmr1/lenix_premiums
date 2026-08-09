@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import { Dot, Plus } from 'lucide-react'
+import { Crosshair, Dot, LogOut, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { GAME_MODES, user } from '@/rank/constants.valo'
 import { Layout } from '@workspace/ui/elements/layout'
@@ -129,7 +129,10 @@ export const Play = () => {
 			</div>
 			<div className='flex-1 items-start'>
 				<div className='grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center'>
-					<Button variant='outline'>Practive</Button>
+					<Button variant='outline' className='justify-evenly'>
+						<Crosshair />
+						Practive
+					</Button>
 					<Separator />
 					<Button
 						className='text-xl px-20 py-5'
@@ -140,7 +143,10 @@ export const Play = () => {
 						Start
 					</Button>
 					<Separator />
-					<Button variant='outline'>Leave Lobby</Button>
+					<Button variant='outline' className='justify-evenly'>
+						<LogOut />
+						Leave Lobby
+					</Button>
 				</div>
 			</div>
 		</Layout>
