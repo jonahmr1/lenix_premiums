@@ -70,7 +70,7 @@ export const Lobby = () => {
 						{profile ? (
 							<div className=' cursor-default select-none'>{profile.name}</div>
 						): (
-							<Skeleton />
+							<Skeleton className='w-full h-1/2 rounded' />
 						)}
 						<Button variant='ghost' onClick={toggle}>
 							{theme === 'dark' ? <Sun /> : <Moon />}
