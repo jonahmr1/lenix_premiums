@@ -117,16 +117,18 @@ export const Play = ({
 					return (
 						<Button
 							key={i}
-							className='flex-1 max-w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col overflow-hidden'
+							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden'
 							style={{ height: `${h}%` }}
 						>
 							{i === 0 ? (
 								<>
-									<div className='flex flex-1 items-start w-full'>
-										{partyProfile ? <img src={partyProfile.avatar ?? avatar} alt='' /> : <Skeleton className='size-full rounded' />}
+									<div className='flex flex-4 items-center w-full'>
+										{partyProfile ? <img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' /> : <Skeleton className='size-full rounded' />}
 									</div>
-									<div className='flex flex-1 flex-col justify-center w-full items-center gap-2'>
-										{partyProfile ? <div className='w-full text-4xl tracking-tighter font-bold'>{partyProfile.name}</div> : <Skeleton className='w-1/2 h-1/5 rounded' />}
+									<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
+										{partyProfile ? (
+											<div className='w-full text-3xl tracking-tighter font-bold'>{partyProfile.name}</div>
+										 ) : <Skeleton className='w-1/2 h-1/5 rounded' />}
 										{partyProfile ? (
 											<Badge variant={partyProfile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
 												{partyProfile.ready ? 'Ready' : 'Not Ready'}
@@ -139,25 +141,13 @@ export const Play = ({
 										<Separator />
 										<div className='flex flex-1 justify-around items-center'>
 											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats.kills}</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.625rem]'>Total Kills</p>
+												{stats ? <p>{stats.killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
+												<p className='text-[0.475rem]'>K/D Ratio</p>
 											</div>
 											<Separator orientation='vertical' />
 											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats.deaths}</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.625rem]'>Total Deaths</p>
-											</div>
-										</div>
-										<Separator />
-										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats.assists}</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.625rem]'>Total Assists</p>
-											</div>
-											<Separator orientation='vertical' />
-											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1)}%</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.625rem]'>Win Ratio</p>
+												{stats ? <p>{stats.winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
+												<p className='text-[0.475rem]'>Win Ratio</p>
 											</div>
 										</div>
 									</div>
