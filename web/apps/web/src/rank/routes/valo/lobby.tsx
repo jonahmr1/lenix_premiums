@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router'
-import { Diamond, Moon, Sun } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 import { Play } from '@/rank/pages/valo/play'
 import { Leaderboard } from '@/rank/pages/valo/leaderboard'
 import type { Route } from '@/rank/types'

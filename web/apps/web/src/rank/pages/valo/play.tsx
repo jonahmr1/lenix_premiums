@@ -23,7 +23,7 @@ const getRenderOrder = (count: number) => {
 }
 
 export const Play = () => {
-	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Bomb Plant')
+	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
 	const renderOrder = getRenderOrder(playersAmountSelected)
 	const nav = useNavigate()
