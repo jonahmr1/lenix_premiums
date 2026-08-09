@@ -77,7 +77,7 @@ export default async function () {
 		)
 	} catch {}
 	
-	await sleep(1000)
+	await sleep(2000)
 
 	if (web) files.push(...web)
 
