@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+// import { useNavigate } from 'react-router'
 import { Crosshair, Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { GAME_MODES } from '@/rank/constants.valo'
@@ -33,31 +33,37 @@ export const Play = ({
 	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
 	const renderOrder = getRenderOrder(playersAmountSelected)
-	const nav = useNavigate()
+	// const nav = useNavigate()
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Competitive.Player['Stats']>()
 
+	const partyProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
+	const isPartyLeader = party?.leader === profile?.profile_id
+
 	useEffect(() => {
-		setParty({
-			profiles: [{
+		(async () => {
+			DEV: setParty({
+				profiles: [{
 					profile_id: '1',
 					name: 'Lenix',
 					avatar: null,
-					status: "online"
-			}],
-			size: 2,
-			leader: '1',
-		})
-		setStats({
-			kills: 1,
-			deaths: 1,
-			assists: 1,
-			wins: 1,
-			losses: 1,
-			winRate: 1,
-			killsDeathsRatio: 1,
-			matches: 1,
-		})
+					status: "online",
+					ready: true
+				}],
+				size: 2,
+				leader: '1',
+			})
+			DEV: setStats({
+				kills: 1,
+				deaths: 1,
+				assists: 1,
+				wins: 1,
+				losses: 1,
+				winRate: 1,
+				killsDeathsRatio: 1,
+				matches: 1,
+			})
+		})()
 	}, [])
 
 	return (
@@ -117,13 +123,13 @@ export const Play = ({
 							{i === 0 ? (
 								<>
 									<div className='flex flex-1 items-start w-full'>
-										{profile ? <img src={profile.avatar ?? avatar} alt='' /> : <Skeleton className='size-full rounded' />}
+										{partyProfile ? <img src={partyProfile.avatar ?? avatar} alt='' /> : <Skeleton className='size-full rounded' />}
 									</div>
 									<div className='flex flex-1 flex-col justify-center w-full items-center gap-2'>
-										{profile ? <div className='w-full text-4xl tracking-tighter font-bold'>{profile.name}</div> : <Skeleton className='w-1/2 h-1/5 rounded' />}
-										{party ? (
-											<Badge variant={party.isReady ? 'outline' : 'destructive'} className='text-[0.5rem]'>
-												{party.isReady ? 'Ready' : 'Not Ready'}
+										{partyProfile ? <div className='w-full text-4xl tracking-tighter font-bold'>{partyProfile.name}</div> : <Skeleton className='w-1/2 h-1/5 rounded' />}
+										{partyProfile ? (
+											<Badge variant={partyProfile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
+												{partyProfile.ready ? 'Ready' : 'Not Ready'}
 											</Badge>
 										) : (
 											<Skeleton className='w-1/2 h-8 rounded' />
@@ -132,24 +138,24 @@ export const Play = ({
 									<div className='flex flex-1 flex-col w-full justify-around h-full'>
 										<Separator />
 										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1 flex items-center flex-col gap-1'>
+											<div className='flex-1 flex items-center flex-col'>
 												{stats ? <p>{stats.kills}</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.625rem]'>Total Kills</p>
 											</div>
 											<Separator orientation='vertical' />
-											<div className='flex-1 flex items-center flex-col gap-1'>
+											<div className='flex-1 flex items-center flex-col'>
 												{stats ? <p>{stats.deaths}</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.625rem]'>Total Deaths</p>
 											</div>
 										</div>
 										<Separator />
 										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1 flex items-center flex-col gap-1'>
+											<div className='flex-1 flex items-center flex-col'>
 												{stats ? <p>{stats.assists}</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.625rem]'>Total Assists</p>
 											</div>
 											<Separator orientation='vertical' />
-											<div className='flex-1 flex items-center flex-col gap-1'>
+											<div className='flex-1 flex items-center flex-col'>
 												{stats ? <p>{((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1)}%</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.625rem]'>Win Ratio</p>
 											</div>
@@ -171,12 +177,10 @@ export const Play = ({
 					</Button>
 					<Separator />
 					<Button
-						className='text-xl px-20 py-5'
-						onClick={() => {
-							nav('/in-game')
-						}}
+						className={`text-xl px-20 py-5`}
+						onClick={() => {/* TODO */}}
 					>
-						Start
+						{partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'}
 					</Button>
 					<Separator />
 					<Button variant='outline' className='justify-evenly'>

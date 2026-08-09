@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router'
 import { Moon, Sun } from 'lucide-react'
 import { Play } from '@/rank/pages/valo/play'
-import { Leaderboard } from '@/rank/pages/valo/leaderboard'
+// import { Leaderboard } from '@/rank/pages/valo/leaderboard'
 import type { Route } from '@/rank/types'
 import { Button } from '@workspace/valo/components/button'
 import { Layout } from '@workspace/ui/elements/layout'
@@ -23,6 +23,12 @@ export const Lobby = () => {
 			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)
 		})()
+		DEV: setProfile({
+			name: 'Lenix',
+			profile_id: '1',
+			status: 'online',
+			avatar: null
+		})
 	}, [])
 
 	const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
