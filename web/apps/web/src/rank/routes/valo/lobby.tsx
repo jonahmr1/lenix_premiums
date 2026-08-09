@@ -15,11 +15,11 @@ const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
 		label: 'PLAY',
 		element: <Play />,
 	},
-	{
-		to: '/leaderboard',
-		label: 'LEADERBOARD',
-		element: <Leaderboard />,
-	},
+	// {
+	// 	to: '/leaderboard',
+	// 	label: 'LEADERBOARD',
+	// 	element: <Leaderboard />,
+	// },
 ]
 
 export const Lobby = () => {
@@ -40,7 +40,7 @@ export const Lobby = () => {
 									return (
 										<Button
 											key={page.to}
-											className={`relative border-0 h-full w-full text-foreground flex tracking-widest px-7 flex-col ${page.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground' : ''}`}
+											className={`relative border-0 h-full w-full text-foreground flex tracking-widest px-15 flex-col ${page.to === '/play' ? 'text-2xl' : 'text-sm'} ${isInCurrentRoute && 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground'}`}
 											variant={isInCurrentRoute ? 'default' : 'ghost'}
 											onClick={() => nav(page.to)}
 										>
