@@ -11,7 +11,8 @@
 		"dev": "turbo dev",
 		"lint": "turbo lint",
 		"format": "turbo format",
-		"typecheck": "turbo typecheck"
+		"typecheck": "turbo typecheck",
+		"i": "cd packages/ui && bun i && cd ../elite && bun i && cd ../../apps/web && bun i"
 	},
 	"dependencies": {
 		"@lenix/lenix": "npm:@jsr/lenix__lenix",
