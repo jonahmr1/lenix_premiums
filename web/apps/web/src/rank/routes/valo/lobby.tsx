@@ -28,7 +28,7 @@ export const Lobby = () => {
 
 	return (
 		<Layout className='h-screen'>
-			<Layout className='bg-muted w-8/10 rounded-md overflow-hidden'>
+			<Layout className='bg-muted w-8/10 rounded-md overflow-hidden justify-between'>
 				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b bg-background/30'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
@@ -60,13 +60,14 @@ export const Lobby = () => {
 						</Button>
 					</div>
 				</div>
-				<Layout className='h-full'>
-					{pages.map(page => (
-						<div key={page.to} className={pathname === page.to ? 'visible' : 'hidden'}>
-							{page.element}
-						</div>
-					))}
-				</Layout>
+				{pages.map(page => (
+					<div
+						key={page.to}
+						className={`${pathname === page.to ? 'visible' : 'hidden'} h-full`}
+					>
+						{page.element}
+					</div>
+				))}
 			</Layout>
 		</Layout>
 	)

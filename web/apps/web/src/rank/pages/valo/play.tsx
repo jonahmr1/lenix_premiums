@@ -29,44 +29,46 @@ export const Play = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout className='gap-10 pt-5 h-full w-full'>
-			<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
-				{GAME_MODES.map(mode => (
-					<Button
-						key={mode.name}
-						className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
-						variant='link'
-						onClick={() => (selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined))}
-					>
-						{mode.name}
-						<Dot
-							className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode.name ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
-						/>
-					</Button>
-				))}
-			</div>
-			<ToggleGroup
-				className={selectedMode ? 'opacity-100' : 'opacity-0'}
-				variant='outline'
-				type='single'
-				value={playersAmountSelected?.toString()}
-				onValueChange={value =>
-					Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)
-				}
-			>
-				{Array.from(
-					{ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 },
-					(_, amountOfPlayers) => (
-						<ToggleGroupItem
-							key={amountOfPlayers}
-							value={String(amountOfPlayers + 1)}
-							className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+		<Layout className='gap-10 h-full w-full justify-between pt-4'>
+			<div>
+				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
+					{GAME_MODES.map(mode => (
+						<Button
+							key={mode.name}
+							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
+							variant='link'
+							onClick={() => (selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined))}
 						>
-							{amountOfPlayers + 1}v{amountOfPlayers + 1}
-						</ToggleGroupItem>
-					),
-				)}
-			</ToggleGroup>
+							{mode.name}
+							<Dot
+								className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode.name ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
+							/>
+						</Button>
+					))}
+				</div>
+				<ToggleGroup
+					className={selectedMode ? 'opacity-100' : 'opacity-0'}
+					variant='outline'
+					type='single'
+					value={playersAmountSelected?.toString()}
+					onValueChange={value =>
+						Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)
+					}
+				>
+					{Array.from(
+						{ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 },
+						(_, amountOfPlayers) => (
+							<ToggleGroupItem
+								key={amountOfPlayers}
+								value={String(amountOfPlayers + 1)}
+								className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+							>
+								{amountOfPlayers + 1}v{amountOfPlayers + 1}
+							</ToggleGroupItem>
+						),
+					)}
+				</ToggleGroup>
+			</div>
 			<div className='flex flex-8 items-center justify-center w-full gap-2 h-full'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
