@@ -29,8 +29,8 @@ export const Play = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout className='gap-10 h-full w-full justify-between pt-4'>
-			<div>
+		<Layout className='h-full w-full justify-between pt-4'>
+			<div className='flex flex-col items-center gap-3'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
 					{GAME_MODES.map(mode => (
 						<Button
