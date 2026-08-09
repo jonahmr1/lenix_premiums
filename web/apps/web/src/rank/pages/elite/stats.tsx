@@ -1,6 +1,6 @@
 import { Badge } from '@workspace/elite/components/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@workspace/elite/components/tabs'
-import { calculatePlayerScore, getRankTier } from '../lib'
+import { calculatePlayerScore, getRankTier } from '@/rank/lib'
 import { Activity, BarChart3, Clock, Crosshair, History, Shield, Skull, Sparkles, Trophy } from 'lucide-react'
 import type { Competitive } from 'types'
 import { useEffect, useState } from 'react'

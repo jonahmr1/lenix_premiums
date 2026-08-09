@@ -15,10 +15,6 @@ import {
 } from '@workspace/elite/components/popover'
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@workspace/ui/components/command'
 import { BarChart3, Bell, Check, Inbox, Moon, PlayIcon, Plus, Sun, Trophy, Users, X } from 'lucide-react'
-import { Play } from '../pages/play'
-import { Leaderboard } from '../pages/leaderboard'
-import { Stats } from '../pages/stats'
-import type { Route } from '../types'
 import { useEffect, useState } from 'react'
 import {
 	Drawer,
@@ -38,8 +34,12 @@ import { Spinner } from '@workspace/ui/components/spinner'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
-import { PLAYER_STATUSES } from '../constants'
 import { Avatar, AvatarBadge, AvatarImage } from '@workspace/ui/components/avatar'
+import { PLAYER_STATUSES } from '@/rank/constants'
+import type { Route } from '@/rank/types'
+import { Play } from '@/rank/pages/elite/play'
+import { Stats } from '@/rank/pages/elite/stats'
+import { Leaderboard } from '@/rank/pages/elite/leaderboard'
 
 const Notifications = ({ notifications }: {
 	notifications: Competitive.Player['Notification'][]
@@ -289,7 +289,7 @@ const Friends = ({ drawer, setDrawer, friends }: {
 	)
 }
 
-export const Home = () => {
+export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()

@@ -5,7 +5,7 @@ import { Settings } from '@/ipad/routes/settings'
 import { Index } from '@/ipad/routes'
 import { getStorage, setStorage } from '@lenix/lenix'
 import type { Orientation, Storage } from '@/ipad/types'
-import { apps } from './constants'
+import { apps } from './ipad/constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
 

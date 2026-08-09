@@ -22,14 +22,14 @@ import {
 } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
-import { calculatePlayerScore, getRankTier } from '../lib'
-import { rankTiers, PvP_AMOUNT } from 'config'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { triggerNui } from 'lenix/nui'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { entries, type S } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
+import { calculatePlayerScore, getRankTier } from '@/rank/lib'
+import { rankTiers, PvP_AMOUNT } from 'config'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
