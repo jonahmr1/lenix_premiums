@@ -39,7 +39,7 @@ import avatar from '@workspace/elite/assets/avatar.png'
 import { entries } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 import { PLAYER_STATUSES } from '../constants'
-import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar'
+import { Avatar, AvatarBadge, AvatarImage } from '@workspace/ui/components/avatar'
 
 const Notifications = ({ notifications }: {
 	notifications: Competitive.Player['Notification'][]
