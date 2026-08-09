@@ -2,13 +2,15 @@ import type { Competitive } from "types/index"
 
 export const parties = new Map<number, Party>()
 
-export class Party {
-	profiles: (Competitive.Player['Profile'] & { ready: boolean })[] = []
-	leader: Competitive.Player['Profile']['profile_id']
-	size: number = 1
+type IParty = Competitive.Player['Party']
 
-	constructor(leader: Competitive.Player['Profile']) {
-		this.profiles = [{ ...leader, ready: false }]
+export class Party implements IParty {
+	profiles: IParty['profiles'] = []
+	leader: IParty['leader']
+	size: IParty['size'] = 1
+
+	constructor(leader: typeof this.profiles[number]) {
+		this.profiles = [leader]
 		this.leader = leader.profile_id
 	}
 }

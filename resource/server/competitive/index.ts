@@ -154,7 +154,7 @@ onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<
 onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => {
 	const profile = await getProfile(client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
-	const party = new Party(profile)
+	const party = new Party({ ...profile, ready: false })
 
 	parties.set(client, party)
 	return party
