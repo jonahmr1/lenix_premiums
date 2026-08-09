@@ -5,6 +5,10 @@ import { Lobby as EliteLobby } from './rank/routes/elite/lobby'
 import { InGame as ValoInGame } from './rank/routes/valo/in-game'
 import { Lobby as ValoLobby } from './rank/routes/valo/lobby'
 
+import '@workspace/ui/globals.css'
+import '@workspace/elite/globals.css'
+import '@workspace/valo/globals.css'
+
 const VARIANT: keyof typeof VARIANTS = 'valo'
 const VARIANTS = {
 	elite: {

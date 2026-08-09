@@ -29,7 +29,7 @@ export const Play = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout className='gap-2 pt-5'>
+		<Layout className='gap-10 pt-5 h-full w-full'>
 			<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
 				{GAME_MODES.map(mode => (
 					<Button
@@ -74,7 +74,7 @@ export const Play = () => {
 					return (
 						<Button
 							key={i}
-							className='w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col h-full overflow-hidden'
+							className='w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col overflow-hidden'
 							style={{ height: `${h}%` }}
 						>
 							{i === 0 ? (
