@@ -44,13 +44,13 @@ const getProfile = async (client: number) => {
 	}
 }
 
-onClientCallback('lenix:server:rank:getProfile', async (client): Promise<Competitive.Player['Profile']> => {
+onClientCallback('lenix:server:competitive:getProfile', async (client): Promise<Competitive.Player['Profile']> => {
 	const profile = await getProfile(client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
 	return profile
 })
 
-onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
+onClientCallback('lenix:server:competitive:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
 	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
 	const performances: Competitive.Player['Performance'][] = await oxmysql.query<{
 		match_id: number
@@ -66,7 +66,7 @@ onClientCallback('lenix:server:rank:getPerformances', async (_client): Promise<C
 	return performances
 })
 
-onClientCallback('lenix:server:rank:getStats', async (client): Promise<Competitive.APIs['getStats']> => {
+onClientCallback('lenix:server:competitive:getStats', async (client): Promise<Competitive.APIs['getStats']> => {
 	const profile_id = getProfileId(client)
 
 	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
@@ -83,7 +83,7 @@ onClientCallback('lenix:server:rank:getStats', async (client): Promise<Competiti
 	return stats
 })
 
-onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
+onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
@@ -98,7 +98,7 @@ onClientCallback('lenix:server:rank:getProfiles', async (_client): Promise<Compe
 	}))
 })
 
-onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
+onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
@@ -151,7 +151,7 @@ onClientCallback('lenix:server:rank:getMatches', async (client): Promise<Competi
 	}
 })
 
-onClientCallback('lenix:server:rank:createParty', async (client): Promise<Competitive.Player['Party']> => {
+onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => {
 	const profile = await getProfile(client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
 	const party = new Party(profile)
@@ -160,7 +160,7 @@ onClientCallback('lenix:server:rank:createParty', async (client): Promise<Compet
 	return party
 })
 
-onClientCallback('lenix:server:rank:setSize', async (client, size: number): Promise<Competitive.Player['Party']> => {
+onClientCallback('lenix:server:competitive:setSize', async (client, size: number): Promise<Competitive.Player['Party']> => {
 	const party = parties.get(client)
 	if (!party) throw `Could not find party for client<${client}>`
 	party.size = size
@@ -168,7 +168,7 @@ onClientCallback('lenix:server:rank:setSize', async (client, size: number): Prom
 	return party
 })
 
-onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
+onClientCallback('lenix:server:competitive:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
 	try {
@@ -197,7 +197,7 @@ onClientCallback('lenix:server:rank:getFriends', async (client): Promise<Competi
 	}
 })
 
-onClientCallback('lenix:server:rank:setStatus', async (client, newStatus: Competitive.Player['Profile']['status']): Promise<boolean> => {
+onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus: Competitive.Player['Profile']['status']): Promise<boolean> => {
 	const profileId = getProfileId(client)
 
 	try {

@@ -142,7 +142,7 @@ const Status = ({ profile, setProfile }: {
 							key={value}
 							onClick={async () => {
 								if (value === 'in_game') throw `unexpected profile status<${value}>`
-								const status = await triggerNui<Competitive.Requests['setStatus']>('rank:setStatus', { status: value })
+								const status = await triggerNui<Competitive.Requests['setStatus']>('competitive:setStatus', { status: value })
 								if (!status) {
 									toast('Try again later')
 									return
@@ -185,7 +185,7 @@ const Friends = ({ drawer, setDrawer, friends }: {
 						</div>
 						<Button onClick={async () => {
 							setOpen(true)
-							const profiles = await triggerNui<Competitive.Requests['getProfiles']>('rank:getProfiles', {})
+							const profiles = await triggerNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', {})
 							setProfiles(profiles)
 						}} size='sm' className='gap-2'>
 							<Plus className='size-4' />
@@ -303,11 +303,11 @@ export const Home = () => {
 
 	useEffect(() => {
 		const disposes = [
-			onEvent<Competitive.Events['open']>('rank:open', async () => {
+			onEvent<Competitive.Events['open']>('competitive:open', async () => {
 				setDisplay(true)
 				focus()
-				setProfile(await triggerNui<Competitive.Requests['getProfile']>('rank:getProfile', {}))
-				setFriends(await triggerNui<Competitive.Requests['getFriends']>('rank:getFriends', {}))
+				setProfile(await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {}))
+				setFriends(await triggerNui<Competitive.Requests['getFriends']>('competitive:getFriends', {}))
 			}),
 		]
 		const handler = (e: KeyboardEvent) => {
@@ -333,7 +333,8 @@ export const Home = () => {
 			label: 'PLAY',
 			icon: PlayIcon,
 			element: <Play
-				{...{ profile, stats, leaderboard, setDrawer,
+				{...{
+					profile, stats, leaderboard, setDrawer,
 					setStats: state => {
 						if (state === undefined) throw `undefined is forbidden`
 						setStats(state)

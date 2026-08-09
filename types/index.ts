@@ -1,26 +1,22 @@
 import type { Event, Request } from 'lenix'
 
-export interface Storage {
-	theme: 'dark' | 'light'
-}
-
 export namespace Competitive {
 	export interface Events {
-		open: Event<'rank:open', []>
+		open: Event<'competitive:open', []>
 	}
 
 	export interface Requests {
-		getProfile: Request<Player['Profile'], 'rank:getProfile'>
-		getLeaderboard: Request<Leaderboard, 'rank:getLeaderboard'>
+		getProfile: Request<Player['Profile'], 'competitive:getProfile'>
+		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
 		party: {
-			get: Request<Player['Party'], 'rank:party:create'>
-			setSize: Request<Player['Party'] | null, 'rank:party:setSize', { size: number }>
+			get: Request<Player['Party'], 'competitive:party:create'>
+			setSize: Request<Player['Party'] | null, 'competitive:party:setSize', { size: number }>
 		}
-		getMatches: Request<Player['Match'][], 'rank:getMatches'>
-		getStats: Request<Player['Stats'], 'rank:getStats'>
-		getFriends: Request<Player['Profile'][], 'rank:getFriends'>
-		setStatus: Request<Player['Profile']['status'] | null, 'rank:setStatus', { status: Player['Profile']['status']}>
-		getProfiles: Request<Player['Profile'][], 'rank:getProfiles'>
+		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
+		getStats: Request<Player['Stats'], 'competitive:getStats'>
+		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
+		setStatus: Request<Player['Profile']['status'] | null, 'competitive:setStatus', { status: Player['Profile']['status'] }>
+		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 	}
 
 	export interface APIs {

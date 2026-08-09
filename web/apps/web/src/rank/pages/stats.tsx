@@ -29,7 +29,7 @@ export const Stats = ({
 	const [matches, setMatches] = useState<Competitive.Player['Match'][]>()
 
 	useEffect(() => {
-		triggerNui<Competitive.Requests['getMatches']>('rank:getMatches', {}).then(setMatches)
+		triggerNui<Competitive.Requests['getMatches']>('competitive:getMatches', {}).then(setMatches)
 	}, [])
 
 	if (!matches || !stats) return <Loading className='h-full' />

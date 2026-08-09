@@ -56,14 +56,14 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 
 	useEffect(() => {
-		triggerNui<Competitive.Requests['party']['get']>('rank:party:create', {}).then(setParty)
-		
+		triggerNui<Competitive.Requests['party']['get']>('competitive:party:create', {}).then(setParty)
+
 		if (!stats) {
-			triggerNui<Competitive.Requests['getStats']>('rank:getStats', {}).then(setStats)
+			triggerNui<Competitive.Requests['getStats']>('competitive:getStats', {}).then(setStats)
 		}
 
 		if (!leaderboard) {
-			triggerNui<Competitive.Requests['getLeaderboard']>('rank:getLeaderboard', {}).then(setLeaderboard)
+			triggerNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', {}).then(setLeaderboard)
 		}
 	}, [])
 
@@ -233,7 +233,7 @@ export const Play = ({
 								value={party.size.toString()}
 								onValueChange={async value => {
 									if (!value) return
-									const party = await triggerNui<Competitive.Requests['party']['setSize']>('rank:party:setSize', { size: Number(value) })
+									const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size: Number(value) })
 									if (!party) {
 										// TODO: add how much secs left
 										toast('Try again later')
