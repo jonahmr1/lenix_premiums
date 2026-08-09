@@ -29,8 +29,8 @@ export const Play = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout className='h-full w-full justify-between pt-4'>
-			<div className='flex flex-col items-center gap-3'>
+		<Layout className='h-full w-full justify-between pt-2'>
+			<div className='flex flex-col items-center gap-2'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
 					{GAME_MODES.map(mode => (
 						<Button
@@ -76,7 +76,7 @@ export const Play = () => {
 					return (
 						<Button
 							key={i}
-							className='w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col overflow-hidden'
+							className='flex-1 max-w-[25%] px-0 bg-foreground/15 border-foreground/33 hover:bg-foreground/20 flex-col overflow-hidden'
 							style={{ height: `${h}%` }}
 						>
 							{i === 0 ? (
