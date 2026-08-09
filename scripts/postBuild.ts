@@ -3,7 +3,7 @@ import fg from 'fast-glob'
 import { dirname, extname } from 'node:path'
 import type Package from '../package.json'
 import { generateInterface } from './typegen.ts'
-import { waitFor } from '@overextended/core/utils'
+import { sleep, waitFor } from '@overextended/core/utils'
 
 function reduceArray(name: string, files?: string[]): string {
 	return files?.[0]
@@ -76,6 +76,8 @@ export default async function () {
 			{ interval: 500, timeout: 1200000 },
 		)
 	} catch {}
+	
+	await sleep(1000)
 
 	if (web) files.push(...web)
 
