@@ -23,21 +23,21 @@ const getRenderOrder = (count: number) => {
 }
 
 export const Play = () => {
-	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>()
+	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Bomb Plant')
 	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
 	const renderOrder = getRenderOrder(playersAmountSelected)
 	const nav = useNavigate()
 
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
-			<div className='flex flex-col items-center gap-2'>
+			<div className='flex flex-col items-center justify-center'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
 					{GAME_MODES.map(mode => (
 						<Button
 							key={mode.name}
 							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
 							variant='link'
-							onClick={() => (selectedMode !== mode.name ? setSelectedMode(mode.name) : setSelectedMode(undefined))}
+							onClick={() => (selectedMode !== mode.name && setSelectedMode(mode.name))}
 						>
 							{mode.name}
 							<Dot
@@ -45,6 +45,9 @@ export const Play = () => {
 							/>
 						</Button>
 					))}
+				</div>
+				<div>
+					<Separator orientation='vertical' className='h-5' />
 				</div>
 				<ToggleGroup
 					className={selectedMode ? 'opacity-100' : 'opacity-0'}
