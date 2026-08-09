@@ -9,8 +9,7 @@
 		"strict": true,
 		"noEmit": true,
 		"paths": {
-			"@workspace/ui/*": ["./src/*"],
-			"types": ["../../../types/index"]
+			"@workspace/ui/*": ["./src/*"]
 		}
 	},
 	"include": ["."],

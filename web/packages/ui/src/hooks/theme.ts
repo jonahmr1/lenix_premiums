@@ -1,6 +1,9 @@
 import { asserts, setStorage } from '@lenix/lenix'
 import { useState } from 'react'
-import type { Storage } from 'types'
+
+interface Storage {
+	theme: 'dark' | 'light'
+}
 
 const getTheme = () => (document.documentElement.classList.contains('dark') ? 'dark' : 'light')
 

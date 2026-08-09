@@ -23,8 +23,7 @@
 			"@/*": ["./src/*"],
 			"@workspace/ui/*": ["../../packages/ui/src/*"],
 			"@workspace/elite/*": ["../../packages/elite/src/*"],
-			"types": ["../../../types/index"],
-			"config": ["../../../public/config.competitive.json"]
+			"types": ["../../../types/index"]
 		}
 	},
 	"include": ["src", "../../packages/elite/src/elements/loading.tsx"]
