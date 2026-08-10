@@ -4,6 +4,7 @@ export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
 		playerInvited: Event<'competitive:playerInvited', [string, number]>
+		updateParty: Event<'competitive:updateParty', [Player['Party']]>
 	}
 
 	export interface Requests {

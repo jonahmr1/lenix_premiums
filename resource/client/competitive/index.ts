@@ -1,5 +1,5 @@
 import { asserts } from '@lenix/lenix'
-import { triggerServerCallback } from '@overextended/ox_lib/client'
+import { onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
 import { control, emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
@@ -172,3 +172,6 @@ onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)
 })
 
+onServerCallback('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
+	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
+})

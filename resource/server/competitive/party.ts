@@ -3,6 +3,7 @@ import type { Competitive } from "types/index"
 import { getProfile } from "./modules"
 import { getProfileId } from "./utils"
 import { Config } from "common/config/competitive"
+import { triggerClientCallback } from "@overextended/ox_lib/server"
 
 type Party = Competitive.Player['Party']
 
@@ -63,17 +64,26 @@ export abstract class Parties {
 		party.profiles = profilesLeft
 
 		const newPartyLeader = party.profiles[0]?.profile_id
+
+		const getSourceByProfileId = (profile_id: string) => Number(getPlayers().find(player => getProfileId(Number(player)) === profile_id))
+
 		if (newPartyLeader) {
 			party.leader = newPartyLeader
-			const newPartyLeaderSource = getPlayers().find(player => getProfileId(Number(player)) === newPartyLeader)
+			const newPartyLeaderSource = getSourceByProfileId(newPartyLeader)
 			asserts(newPartyLeaderSource, `Failed to get the new leader<${newPartyLeader}>'s source`)
-			
-			this.parties.set(Number(newPartyLeaderSource), party)
+
+			this.parties.set(newPartyLeaderSource, party)
 		}
 		this.parties.delete(client)
 
 		inviterParty.profiles.push({ ...profile, ready: false })
 
+		inviterParty.profiles.forEach(profile => {
+			const src = getSourceByProfileId(profile.profile_id)
+			asserts(src, `Failed to get profile_id<${profile.profile_id}>'s source`)
+			triggerClientCallback('lenix:server:competitive:updateParty', src, inviterParty)
+		})
+		
 		return inviterParty
 	}
 
