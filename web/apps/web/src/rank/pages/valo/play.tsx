@@ -62,9 +62,14 @@ export const Play = ({
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
 
-	toast("Task created", {
+	toast('New party invite from Lenix', {
+		description: `Lenix invited you to their party.`,
     action: {
       label: "Accept",
+      onClick: () => {},
+    },
+    cancel: {
+      label: "Decline",
       onClick: () => {},
     },
   })
@@ -196,7 +201,7 @@ export const Play = ({
 				})}
 			</div>
 			<div className='flex-1 items-start'>
-				<div className='grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center'>
+				<div className='grid grid-cols-[1fr_2fr_1fr] grid-rows-1 items-center'>
 					<Button
 						className={`text-xl px-20 py-5`}
 						onClick={() => {/* TODO */}}
