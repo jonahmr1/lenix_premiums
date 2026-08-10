@@ -10,6 +10,8 @@ import { Separator } from '@workspace/ui/components/separator'
 import type { Competitive } from 'types'
 import avatar from '@workspace/valo/assets/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
+import { triggerNui } from 'lenix/nui'
+import { toast } from '@workspace/ui/lib/utils'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -95,8 +97,14 @@ export const Play = ({
 					variant='outline'
 					type='single'
 					value={party?.size?.toString()}
-					onValueChange={value => {
-						const v = Number(value)
+					onValueChange={async value => {
+						const size = Number(value)
+						const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
+						if (!party) {
+							toast('Try again later')
+							return
+						}
+						setParty(party)
 					}}
 				>
 					{Array.from(
