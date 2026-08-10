@@ -62,6 +62,13 @@ export const Play = ({
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
 
+	toast("Task created", {
+    action: {
+      label: "Accept",
+      onClick: () => {},
+    },
+  })
+	
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
 			<div className='flex flex-col items-center justify-center'>
@@ -112,14 +119,14 @@ export const Play = ({
 					)}
 				</ToggleGroup>
 			</div>
-			<div className='flex flex-8 items-center justify-center w-full gap-2 h-full'>
+			<div className='flex flex-8 items-center justify-center w-full gap-2 h-3/5'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 					const partyProfile = party.profiles[i]
 					return partyProfile ? (
 						<Button
 							key={i}
-							className='flex-1 max-w-[15%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
+							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 							style={{ height: `${h}%` }}
 							onClick={() => {/* TODO */}}
 						>
@@ -152,12 +159,12 @@ export const Play = ({
 					) : (
 						<Dialog>
 							<DialogTrigger
-								className='flex-1 max-w-[25%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-1 max-w-[15%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
 							</DialogTrigger>
-							<DialogContent>
+							<DialogContent className='w-1/5'>
 								<DialogHeader>
 									<DialogTitle>Invite a player</DialogTitle>
 									<DialogDescription>
@@ -190,22 +197,19 @@ export const Play = ({
 			</div>
 			<div className='flex-1 items-start'>
 				<div className='grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center'>
-					<Button variant='outline' className='justify-evenly'>
-						<Crosshair />
-						Practive
-					</Button>
-					<Separator />
 					<Button
 						className={`text-xl px-20 py-5`}
 						onClick={() => {/* TODO */}}
 					>
 						{partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'}
 					</Button>
-					<Separator />
-					<Button variant='outline' className='justify-evenly'>
-						<LogOut />
-						Leave Lobby
-					</Button>
+					{!isPartyLeader && <>
+						<Separator />
+						<Button variant='outline' className='justify-evenly'>
+							<LogOut />
+							Leave Lobby
+						</Button>
+					</>}
 				</div>
 			</div>
 		</Layout>

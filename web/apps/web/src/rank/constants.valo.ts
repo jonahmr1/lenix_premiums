@@ -4,6 +4,10 @@ export const GAME_MODES = [
 		playersPerTeam: 3,
 	},
 	// {
+	// 	name: 'Practice',
+	// 	playersPerTeam: 6,
+	// },
+	// {
 	// 	name: 'Bomb Plant',
 	// 	playersPerTeam: 4,
 	// },
