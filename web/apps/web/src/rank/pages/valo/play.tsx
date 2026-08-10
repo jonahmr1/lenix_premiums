@@ -9,7 +9,7 @@ import { Separator } from '@workspace/ui/components/separator'
 import type { Competitive } from 'types'
 import avatar from '@workspace/valo/assets/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { triggerNui } from 'lenix/nui'
+import { onEvent, triggerNui } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
@@ -44,6 +44,23 @@ export const Play = ({
 			const createdParty = await triggerNui<Competitive.Requests['party']['get']>('competitive:party:create', {})
 			setParty(createdParty)
 		})()
+
+		const dispose = onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', name => {
+			toast('New party invite', {
+				description: `${name} invited you to their party.`,
+				action: {
+					label: "Accept",
+					onClick: () => {},
+				},
+				cancel: {
+					label: "Decline",
+					onClick: () => {},
+				},
+				duration: 15_000
+			})
+		})
+
+		return dispose
 	}, [])
 
 	useEffect(() => {
@@ -61,19 +78,6 @@ export const Play = ({
 	
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
-
-	toast('New party invite', {
-		description: `Lenix invited you to their party.`,
-    action: {
-      label: "Accept",
-      onClick: () => {},
-    },
-    cancel: {
-      label: "Decline",
-      onClick: () => {},
-    },
-		duration: 15_000
-  })
 	
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
@@ -134,7 +138,6 @@ export const Play = ({
 							key={i}
 							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 							style={{ height: `${h}%` }}
-							onClick={() => {/* TODO */}}
 						>
 							<>
 								<div className='flex flex-4 items-center w-full'>

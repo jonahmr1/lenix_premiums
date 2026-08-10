@@ -18,19 +18,27 @@ control.on({
 	cb: () => emitEvent<Competitive.Events['open']>('competitive:open'),
 })
 
-onNui<Competitive.Requests['getProfile']>('competitive:getProfile', async () => {
-	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:competitive:getProfile', defaultDelay)
+const getProfiles = async () => {
+	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:competitive:getProfiles', defaultDelay)
+	if (!profiles) throw 'Failed to get profiles'
+
+	return profiles
+}
+
+const getProfile = async (inviter?: number) => {
+	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:competitive:getProfile', defaultDelay, inviter)
 	if (!profile) throw 'Failed to get profile'
 
 	return profile
-})
+}
+
+onNui<Competitive.Requests['getProfile']>('competitive:getProfile', async () => await getProfile())
 
 onNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', async () => {
 	const performances = await triggerServerCallback<Competitive.Player['Performance'][]>('lenix:server:competitive:getPerformances', defaultDelay)
 	if (!performances) throw 'Failed to get performances'
 
-	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:competitive:getProfiles', defaultDelay)
-	if (!profiles) throw 'Failed to get profiles'
+	const profiles = await getProfiles()
 
 	const statsByProfile = new Map<
 		Competitive.Player['Profile']['profile_id'],
@@ -141,17 +149,14 @@ onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ statu
 	return status
 })
 
-onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {
-	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:competitive:getProfiles', defaultDelay)
-	if (!profiles) throw 'Failed to get profiles'
-
-	return profiles
-})
+onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => await getProfiles())
 
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
 })
 
-onNet('lenix:server:competitive:getInvited', (inviter: number) => {
-	
+onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
+	const profile = await getProfile(inviter)
+	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name)
 })
+

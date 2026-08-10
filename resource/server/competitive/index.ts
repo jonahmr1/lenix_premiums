@@ -44,8 +44,8 @@ const getProfile = async (client: number) => {
 	}
 }
 
-onClientCallback('lenix:server:competitive:getProfile', async (client): Promise<Competitive.Player['Profile']> => {
-	const profile = await getProfile(client)
+onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
+	const profile = await getProfile(player ?? client)
 	if (!profile) throw `Failed to get profile for player<${client}>`
 	return profile
 })

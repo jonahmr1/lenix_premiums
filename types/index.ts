@@ -3,6 +3,7 @@ import type { Event, Request } from 'lenix'
 export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
+		playerInvited: Event<'competitive:playerInvited', [string]>
 	}
 
 	export interface Requests {
