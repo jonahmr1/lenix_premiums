@@ -62,7 +62,7 @@ export const Play = ({
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
 
-	toast('New party invite from Lenix', {
+	toast('New party invite', {
 		description: `Lenix invited you to their party.`,
     action: {
       label: "Accept",
@@ -72,6 +72,7 @@ export const Play = ({
       label: "Decline",
       onClick: () => {},
     },
+		duration: 15_000
   })
 	
 	return (
@@ -164,7 +165,7 @@ export const Play = ({
 					) : (
 						<Dialog>
 							<DialogTrigger
-								className='flex-1 max-w-[15%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-1 max-w-[25%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
@@ -201,20 +202,20 @@ export const Play = ({
 				})}
 			</div>
 			<div className='flex-1 items-start'>
-				<div className='grid grid-cols-[1fr_2fr_1fr] grid-rows-1 items-center'>
+				<div className='grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center'>
+					<div />
+					<div />
 					<Button
 						className={`text-xl px-20 py-5`}
 						onClick={() => {/* TODO */}}
 					>
 						{partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'}
 					</Button>
-					{!isPartyLeader && <>
-						<Separator />
-						<Button variant='outline' className='justify-evenly'>
-							<LogOut />
-							Leave Lobby
-						</Button>
-					</>}
+					<Separator hidden={isPartyLeader} />
+					<Button hidden={isPartyLeader} variant='outline' className='justify-evenly'>
+						<LogOut />
+						Leave Lobby
+					</Button>
 				</div>
 			</div>
 		</Layout>
