@@ -150,7 +150,7 @@ onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ statu
 	return status
 })
 
-onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => await getProfiles())
+onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', getProfiles)
 
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
