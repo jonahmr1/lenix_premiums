@@ -35,13 +35,14 @@ export const Play = ({
 	const renderOrder = getRenderOrder(playersAmountSelected)
 	// const nav = useNavigate()
 	const [party, setParty] = useState<Competitive.Player['Party']>()
-	const [stats, setStats] = useState<Competitive.Player['Stats']>()
+	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 
 	const partyProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party?.leader === profile?.profile_id
 
 	useEffect(() => {
 		(async () => {
+			
 			DEV: setParty({
 				profiles: [{
 					profile_id: '1',
@@ -54,14 +55,16 @@ export const Play = ({
 				leader: '1',
 			})
 			DEV: setStats({
-				kills: 1,
-				deaths: 1,
-				assists: 1,
-				wins: 1,
-				losses: 1,
-				winRate: 1,
-				killsDeathsRatio: 1,
-				matches: 1,
+				'1': {
+					kills: 1,
+					deaths: 1,
+					assists: 1,
+					wins: 1,
+					losses: 1,
+					winRate: 1,
+					killsDeathsRatio: 1,
+					matches: 1,
+				}
 			})
 		})()
 	}, [])
@@ -120,39 +123,33 @@ export const Play = ({
 							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden'
 							style={{ height: `${h}%` }}
 						>
-							{i === 0 ? (
+							{i === 0 ? party?.profiles.map(profile => (
 								<>
 									<div className='flex flex-4 items-center w-full'>
-										{partyProfile ? <img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' /> : <Skeleton className='size-full rounded' />}
+										<img src={profile.avatar ?? avatar} alt='' className='h-full object-cover' />
 									</div>
 									<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
-										{partyProfile ? (
-											<div className='w-full text-3xl tracking-tighter font-bold'>{partyProfile.name}</div>
-										 ) : <Skeleton className='w-1/2 h-1/5 rounded' />}
-										{partyProfile ? (
-											<Badge variant={partyProfile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
-												{partyProfile.ready ? 'Ready' : 'Not Ready'}
-											</Badge>
-										) : (
-											<Skeleton className='w-1/2 h-8 rounded' />
-										)}
+										<div className={`w-full flex justify-center items-center pt-0.5 text-3xl tracking-tighter font-bold`}>{profile.name}</div>
+										<Badge variant={profile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
+											{profile.ready ? 'Ready' : 'Not Ready'}
+										</Badge>
 									</div>
 									<div className='flex flex-1 flex-col w-full justify-around h-full'>
 										<Separator />
 										<div className='flex flex-1 justify-around items-center'>
 											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats.killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
+												{stats ? <p>{stats[profile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.475rem]'>K/D Ratio</p>
 											</div>
 											<Separator orientation='vertical' />
 											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats.winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
+												{stats ? <p>{stats[profile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
 												<p className='text-[0.475rem]'>Win Ratio</p>
 											</div>
 										</div>
 									</div>
 								</>
-							) : (
+							)) : (
 								<Plus />
 							)}
 						</Button>
