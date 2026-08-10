@@ -3,11 +3,11 @@ import type { Competitive } from 'types/index'
 import { oxmysql } from "@overextended/oxmysql"
 import { fullName } from "./db"
 import { Parties } from "./party"
-import Config from "common/config"
 import { palette } from "lenix"
 import { getProfileId } from "./utils"
 import { getProfile } from "./modules"
 import { asserts } from "@lenix/lenix"
+import { Config } from "common/config/competitive"
 
 const profileCols = ['profile_id', 'name', 'status'] as const
 
@@ -16,6 +16,21 @@ onClientCallback('lenix:server:competitive:getProfile', async (client, player?: 
 	asserts(profile, `Failed to get profile for player<${client}>`)
 
 	return profile
+})
+
+onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
+	const profiles = await oxmysql.query<{
+		profile_id: string;
+		name: string;
+		status: "offline" | "online" | "dnd"
+	}[]>(
+		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
+	) satisfies Record<(typeof profileCols)[number], any>[]
+
+	return profiles.map(profile => ({
+		...profile,
+		avatar: null
+	}))
 })
 
 onClientCallback('lenix:server:competitive:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
@@ -49,21 +64,6 @@ onClientCallback('lenix:server:competitive:getStats', async (client): Promise<Co
 	) satisfies Record<(typeof selectedCols)[number], any>[]
 
 	return stats
-})
-
-onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
-	const profiles = await oxmysql.query<{
-		profile_id: string;
-		name: string;
-		status: "offline" | "online" | "dnd"
-	}[]>(
-		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
-	) satisfies Record<(typeof profileCols)[number], any>[]
-
-	return profiles.map(profile => ({
-		...profile,
-		avatar: null
-	}))
 })
 
 onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
@@ -120,15 +120,6 @@ onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<
 	}
 })
 
-onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => {
-	const profile = await getProfile(client)
-	asserts(profile, `Failed to get profile for player<${client}>`)
-	
-	return Parties.new(profile, client)
-})
-
-onClientCallback('lenix:server:competitive:setSize', (client, size: number): Competitive.Player['Party'] => Parties.setSize(client, size))
-
 onClientCallback('lenix:server:competitive:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
@@ -174,9 +165,14 @@ onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus:
 	}
 })
 
-onClientCallback('lenix:server:competitive:invitePlayer', async (client, id: number) => {
-	emitNet('lenix:server:competitive:getInvited', id, client)
-})
+
+onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => await Parties.new(client))
+
+onClientCallback('lenix:server:competitive:setSize', (client, size: number): Competitive.Player['Party'] => Parties.setSize(client, size))
+
+onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: number) => Parties.invite(client, invited))
+
+onClientCallback('lenix:server:competitive:ignoreInvites', (client, inviter: number) => Parties.ignoreInvites(client, inviter))
 
 onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number): Promise<Competitive.Player['Party']> => Parties.acceptInvite(client, inviter))
 

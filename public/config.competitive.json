@@ -79,5 +79,6 @@
 		"kill": 4,
 		"assist": 2,
 		"death": -3
-	}
+	},
+	"ignoreInvitesPeriod": 15
 }

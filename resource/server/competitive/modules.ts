@@ -3,8 +3,9 @@ import { fullName } from "./db"
 import { getProfileId } from "./utils"
 import type { Competitive } from "types/index"
 import { palette } from "lenix"
+import { asserts } from "@lenix/lenix"
 
-export const getProfile = async (client: number) => {
+export const getProfile = async (client: number): Promise<Competitive.Player['Profile'] | undefined> => {
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['profile_id', 'name', 'status'] as const
@@ -27,12 +28,9 @@ export const getProfile = async (client: number) => {
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
 			[profileId, name, 'online']
 		)
-		if (!re) throw 'Failed to create a new profile'
+		asserts(re, 'Failed to create a new profile')
 
-		return await oxmysql.single<Competitive.Player['Profile']>(
-			selectProfile,
-			[profileId]
-		)
+		return await getProfile(client)
 	} catch (e) {
 		console.log(palette('red', String(e)))
 	}

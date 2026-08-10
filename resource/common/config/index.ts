@@ -1,5 +1,5 @@
 import { LoadFile } from '../utils'
 
-const Config = LoadFile('public/config.competitive.json')
+const Config = LoadFile('public/config.json')
 
 export default Config

@@ -20,6 +20,7 @@ export namespace Competitive {
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<void, 'competitive:invitePlayer', { id: number }>
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
+		ignoreInvites: Request<void, 'competitive:ignoreInvites', { inviter: number }>
 	}
 
 	export interface APIs {

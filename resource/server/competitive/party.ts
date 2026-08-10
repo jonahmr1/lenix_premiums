@@ -2,23 +2,27 @@ import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { getProfile } from "./modules"
 import { getProfileId } from "./utils"
+import { Config } from "common/config/competitive"
 
 type Party = Competitive.Player['Party']
 
 export abstract class Parties {
-	private static parties = new Map<number, {
+	private static readonly parties = new Map<number, {
 		profiles: Party['profiles']
 		leader: Party['leader']
 		size: Party['size']
 	}>()
+	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 
-	static new(
-		leader: Omit<Party['profiles'][number], 'ready'>,
-		source: number
-	): Party {
+	static async new(
+		client: number
+	): Promise<Party> {
+		const profile = await getProfile(client)
+		asserts(profile, `Failed to get profile for player<${client}>`)
+	
 		 this.parties.set(source, {
-			profiles: [{ ...leader, ready: true }],
-			leader: leader.profile_id,
+			profiles: [{ ...profile, ready: true }],
+			leader: profile.profile_id,
 			size: 1
 		})
 
@@ -37,6 +41,12 @@ export abstract class Parties {
 		return party
 	}
 
+	static invite(client: number, invited: number) {
+		if (this.playersIgnoringInvites.get(invited)?.has(client)) return
+	
+		emitNet('lenix:server:competitive:getInvited', invited, client)
+	}
+
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
 		const inviterParty = this.parties.get(inviter)
 		asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
@@ -46,6 +56,8 @@ export abstract class Parties {
 
 		const party = this.parties.get(client)
 		asserts(party, `Failed to get client<${client}> party`)
+
+		asserts(party !== inviterParty, 'Client is already in this party')
 
 		const profilesLeft = party.profiles.filter(self => self.profile_id !== profile.profile_id)
 		party.profiles = profilesLeft
@@ -63,5 +75,24 @@ export abstract class Parties {
 		inviterParty.profiles.push({ ...profile, ready: false })
 
 		return inviterParty
+	}
+
+	static ignoreInvites(client: number, inviter: number) {
+		const player = this.playersIgnoringInvites.get(client)
+		if (!player) {
+			const newSet = new Set<number>()
+			this.playersIgnoringInvites.set(client, newSet)
+		}
+		const newInstance = this.playersIgnoringInvites.get(client)
+		asserts(newInstance)
+
+		newInstance.add(inviter)
+
+		setTimeout(() => {
+			newInstance.delete(inviter)
+			if (newInstance.size > 0) return
+
+			this.playersIgnoringInvites.delete(client)
+		}, Config.ignoreInvitesPeriod * 60_000)
 	}
 }

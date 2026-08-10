@@ -16,7 +16,7 @@ const defaultStats = {
 control.on({
 	event: 'press',
 	key: 'G',
-	cb: () => emitEvent<Competitive.Events['open']>('competitive:open'),
+	onEvent: () => emitEvent<Competitive.Events['open']>('competitive:open'),
 })
 
 const getProfiles = async () => {
@@ -161,6 +161,10 @@ onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({
 	asserts(party, 'Failed to accept invite')
 
 	return party
+})
+
+onNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', ({ inviter }) => {
+	triggerServerCallback('lenix:server:competitive:ignoreInvites', defaultDelay, inviter)
 })
 
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {

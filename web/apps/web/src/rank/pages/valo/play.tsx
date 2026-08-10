@@ -1,4 +1,4 @@
-import { Crosshair, Dot, LogOut, Plus } from 'lucide-react'
+import { Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { GAME_MODES } from '@/rank/constants.valo'
 import { Layout } from '@workspace/ui/elements/layout'
@@ -14,6 +14,7 @@ import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
 import { Loading } from '@workspace/elite/elements/loading'
+import { config } from '@/rank/lib'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -56,8 +57,10 @@ export const Play = ({
 					},
 				},
 				cancel: {
-					label: "Decline",
-					onClick: () => {},
+					label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
+					onClick: () => {
+						triggerNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
+					},
 				},
 				duration: 15_000
 			})
