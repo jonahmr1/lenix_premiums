@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router'
 import { Moon, Sun } from 'lucide-react'
 import { Play } from '@/rank/pages/valo/play'
-// import { Leaderboard } from '@/rank/pages/valo/leaderboard'
 import type { Route } from '@/rank/types'
 import { Button } from '@workspace/valo/components/button'
 import { Layout } from '@workspace/ui/elements/layout'
@@ -37,11 +36,6 @@ export const Lobby = () => {
 			label: 'PLAY',
 			element: <Play {...{ profile }} />,
 		},
-		// {
-		// 	to: '/leaderboard',
-		// 	label: 'LEADERBOARD',
-		// 	element: <Leaderboard />,
-		// },
 	]
 
 	return (
