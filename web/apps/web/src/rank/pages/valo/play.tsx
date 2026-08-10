@@ -45,12 +45,14 @@ export const Play = ({
 			setParty(createdParty)
 		})()
 
-		const dispose = onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', name => {
+		const dispose = onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
 			toast('New party invite', {
 				description: `${name} invited you to their party.`,
 				action: {
 					label: "Accept",
-					onClick: () => {},
+					onClick: () => {
+						triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+					},
 				},
 				cancel: {
 					label: "Decline",

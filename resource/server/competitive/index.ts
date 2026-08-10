@@ -217,6 +217,10 @@ onClientCallback('lenix:server:competitive:invitePlayer', async (client, id: num
 	emitNet('lenix:server:competitive:getInvited', id, client)
 })
 
+onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number) => {
+
+})
+
 const printSnapshot = (data: object) => {
 	const size = Buffer.byteLength(JSON.stringify(data), 'utf8')
 	console.error(`snapshot: ${(size / 1024).toFixed(2)} KB | ${size} Bytes`)

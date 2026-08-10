@@ -155,8 +155,15 @@ onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
 })
 
+onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({ inviter }) => {
+	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:acceptInvite', defaultDelay, inviter)
+	if (!party) throw 'Failed to accept invite'
+
+	return party
+})
+
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
 	const profile = await getProfile(inviter)
-	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name)
+	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)
 })
 

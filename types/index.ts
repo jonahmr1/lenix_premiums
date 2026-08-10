@@ -3,7 +3,7 @@ import type { Event, Request } from 'lenix'
 export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
-		playerInvited: Event<'competitive:playerInvited', [string]>
+		playerInvited: Event<'competitive:playerInvited', [string, number]>
 	}
 
 	export interface Requests {
@@ -19,6 +19,7 @@ export namespace Competitive {
 		setStatus: Request<Player['Profile']['status'] | null, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<void, 'competitive:invitePlayer', { id: number }>
+		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 	}
 
 	export interface APIs {
