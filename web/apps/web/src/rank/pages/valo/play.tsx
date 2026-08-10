@@ -1,4 +1,3 @@
-// import { useNavigate } from 'react-router'
 import { Crosshair, Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { GAME_MODES } from '@/rank/constants.valo'
@@ -39,7 +38,22 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
-	// const nav = useNavigate()
+
+	useEffect(() => {
+		(async () => {
+			const createdParty = await triggerNui<Competitive.Requests['party']['get']>('competitive:party:create', {})
+			setParty(createdParty)
+		})()
+	}, [])
+
+	useEffect(() => {
+		(async () => {
+			if (!stats && profile) {
+				const stats = await triggerNui<Competitive.Requests['getStats']>('competitive:getStats', {})
+				setStats(prev => ({ ...prev, [profile.profile_id]: stats }))
+			}
+		})()
+	}, [profile])
 
 	if (!party) return <Loading className='h-full' />
 	
@@ -47,53 +61,6 @@ export const Play = ({
 	
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
-
-	useEffect(() => {
-		(async () => {
-			// DEV: setParty({
-			// 	profiles: [
-			// 		{
-			// 			profile_id: '1',
-			// 			name: 'Lenix',
-			// 			avatar: null,
-			// 			status: "online",
-			// 			ready: true
-			// 		},
-			// 		{
-			// 			profile_id: '2',
-			// 			name: 'Dev',
-			// 			avatar: null,
-			// 			status: "online",
-			// 			ready: true
-			// 		},
-			// 	],
-			// 	size: 3,
-			// 	leader: '1',
-			// })
-			// DEV: setStats({
-			// 	'1': {
-			// 		kills: 1,
-			// 		deaths: 1,
-			// 		assists: 1,
-			// 		wins: 1,
-			// 		losses: 1,
-			// 		winRate: 1,
-			// 		killsDeathsRatio: 1,
-			// 		matches: 1,
-			// 	},
-			// 	'2': {
-			// 		kills: 1,
-			// 		deaths: 1,
-			// 		assists: 1,
-			// 		wins: 1,
-			// 		losses: 1,
-			// 		winRate: 1,
-			// 		killsDeathsRatio: 1,
-			// 		matches: 1,
-			// 	},
-			// })
-		})()
-	}, [])
 
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
