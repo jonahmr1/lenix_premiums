@@ -73,12 +73,10 @@ export default async function () {
 
 				return web.length ? web : null
 			},
-			{ interval: 500, timeout: 1200000 },
+			{ interval: 5500, timeout: 1200000 },
 		)
 	} catch {}
 	
-	await sleep(2000)
-
 	if (web) files.push(...web)
 
 	files.unshift('locales/*.json')
