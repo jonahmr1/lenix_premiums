@@ -9,20 +9,41 @@ import { DiamondIcon } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { triggerNui } from 'lenix/nui'
+import { focus, onEvent, triggerNui } from 'lenix/nui'
 
 export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
+	const [display, setDisplay] = useState(false)
 
 	useEffect(() => {
-		(async () => {
+		const dispose = onEvent<Competitive.Events['open']>('competitive:open', () => {
+			setDisplay(true)
+			focus()
+		})
+
+		;(async () => {
 			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)
 		})()
+
+		const handler = (e: KeyboardEvent) => {
+			if (e.key !== 'Escape') return
+			setDisplay(false)
+			focus(false, false)
+		}
+
+		window.addEventListener('keydown', handler)
+
+		return () => {
+			dispose()
+			window.removeEventListener('keydown', handler)
+		}
 	}, [])
+
+	if (!display) return
 
 	const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
 		{

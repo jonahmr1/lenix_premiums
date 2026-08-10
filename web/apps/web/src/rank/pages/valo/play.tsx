@@ -152,7 +152,7 @@ export const Play = ({
 					) : (
 						<Dialog>
 							<DialogTrigger
-								className='flex-1 max-w-[15%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-1 max-w-[25%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
