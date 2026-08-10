@@ -217,8 +217,28 @@ onClientCallback('lenix:server:competitive:invitePlayer', async (client, id: num
 	emitNet('lenix:server:competitive:getInvited', id, client)
 })
 
-onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number) => {
+onClientCallback('lenix:server:competitive:acceptInvite', async (client, inviter: number) => {
+	const inviterParty = parties.get(inviter)
+	if (!inviterParty) throw `Failed to get inviter<${inviter}> party`
 
+	const profile = await getProfile(client)
+	if (!profile) throw `Failed to get client<${client}> profile`
+
+	const party = parties.get(client)
+	if (!party) throw `Failed to get client<${client}> party`
+
+	party.profiles = party.profiles.filter(self => self.profile_id !== profile.profile_id)
+	const newPartyLeader = party.profiles[0]?.profile_id
+	if (newPartyLeader) {
+		party.leader = newPartyLeader
+		const newPartyLeaderSource = getPlayers().find(player => getProfileId(Number(player)) === newPartyLeader)
+		if (!newPartyLeaderSource) throw `Failed to get the new leader<${newPartyLeader}>'s source`
+		
+		parties.set(Number(newPartyLeaderSource), party)
+	}
+	parties.delete(client)
+
+	inviterParty.profiles.push({ ...profile, ready: false })
 })
 
 const printSnapshot = (data: object) => {
