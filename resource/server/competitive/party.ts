@@ -37,7 +37,7 @@ export abstract class Parties {
 		return party
 	}
 
-	static async acceptInvite(client: number, inviter: number) {
+	static async acceptInvite(client: number, inviter: number): Promise<Party> {
 		const inviterParty = this.parties.get(inviter)
 		asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
 
@@ -47,7 +47,9 @@ export abstract class Parties {
 		const party = this.parties.get(client)
 		asserts(party, `Failed to get client<${client}> party`)
 
-		party.profiles = party.profiles.filter(self => self.profile_id !== profile.profile_id)
+		const profilesLeft = party.profiles.filter(self => self.profile_id !== profile.profile_id)
+		party.profiles = profilesLeft
+
 		const newPartyLeader = party.profiles[0]?.profile_id
 		if (newPartyLeader) {
 			party.leader = newPartyLeader
@@ -59,5 +61,7 @@ export abstract class Parties {
 		this.parties.delete(client)
 
 		inviterParty.profiles.push({ ...profile, ready: false })
+
+		return inviterParty
 	}
 }

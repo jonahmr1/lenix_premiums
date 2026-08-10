@@ -50,8 +50,9 @@ export const Play = ({
 				description: `${name} invited you to their party.`,
 				action: {
 					label: "Accept",
-					onClick: () => {
-						triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+					onClick: async () => {
+						const newParty = await triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+						setParty(newParty)
 					},
 				},
 				cancel: {

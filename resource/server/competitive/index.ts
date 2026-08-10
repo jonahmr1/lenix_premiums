@@ -178,9 +178,7 @@ onClientCallback('lenix:server:competitive:invitePlayer', async (client, id: num
 	emitNet('lenix:server:competitive:getInvited', id, client)
 })
 
-onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number) => {
-	Parties.acceptInvite(client, inviter)
-})
+onClientCallback('lenix:server:competitive:acceptInvite', async (client, inviter: number): Promise<Competitive.Player['Party']> => await Parties.acceptInvite(client, inviter))
 
 const printSnapshot = (data: object) => {
 	const size = Buffer.byteLength(JSON.stringify(data), 'utf8')
