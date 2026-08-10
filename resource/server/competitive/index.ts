@@ -2,51 +2,19 @@ import { onClientCallback } from "@overextended/ox_lib/server"
 import type { Competitive } from 'types/index'
 import { oxmysql } from "@overextended/oxmysql"
 import { fullName } from "./db"
-import { parties, Party } from "./party"
+import { Parties } from "./party"
 import Config from "common/config"
 import { palette } from "lenix"
+import { getProfileId } from "./utils"
+import { getProfile } from "./modules"
+import { asserts } from "@lenix/lenix"
 
 const profileCols = ['profile_id', 'name', 'status'] as const
 
-const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
-
-const getProfile = async (client: number) => {
-	const profileId = getProfileId(client)
-
-	const selectedCols = ['profile_id', 'name', 'status'] as const
-	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? LIMIT 1`
-
-	try {
-		const profile = await oxmysql.single<Pick<Competitive.Player['Profile'], typeof selectedCols[number]>>(
-			selectProfile,
-			[profileId]
-		)
-
-		if (profile) return {
-			...profile,
-			avatar: null
-		}
-
-		// create new player
-		const name = GetPlayerName(client.toString())
-		const re = await oxmysql.insert(
-			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
-			[profileId, name, 'online']
-		)
-		if (!re) throw 'Failed to create a new profile'
-
-		return await oxmysql.single<Competitive.Player['Profile']>(
-			selectProfile,
-			[profileId]
-		)
-	} catch (e) {
-		console.log(palette('red', String(e)))
-	}
-}
-
 onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
 	const profile = await getProfile(player ?? client)
-	if (!profile) throw `Failed to get profile for player<${client}>`
+	asserts(profile, `Failed to get profile for player<${client}>`)
+
 	return profile
 })
 
@@ -128,7 +96,7 @@ onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<
 
 		return matches.map(match => {
 			const matchPerformance = matchesPerformance.find(self => self.match_id === match.match_id)
-			if (!matchPerformance) throw `Could not find match<${match.match_id}> in matchesPerformance`
+			asserts(matchPerformance, `Could not find match<${match.match_id}> in matchesPerformance`)
 
 			return {
 				...match,
@@ -147,26 +115,19 @@ onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<
 			}
 		})
 	} catch (e) {
+		console.log(palette('red', String(e)))
 		throw e
 	}
 })
 
 onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => {
 	const profile = await getProfile(client)
-	if (!profile) throw `Failed to get profile for player<${client}>`
-	const party = new Party({ ...profile, ready: true })
-
-	parties.set(client, party)
-	return party
+	asserts(profile, `Failed to get profile for player<${client}>`)
+	
+	return Parties.new(profile, client)
 })
 
-onClientCallback('lenix:server:competitive:setSize', async (client, size: number): Promise<Competitive.Player['Party']> => {
-	const party = parties.get(client)
-	if (!party) throw `Could not find party for client<${client}>`
-	party.size = size
-
-	return party
-})
+onClientCallback('lenix:server:competitive:setSize', (client, size: number): Competitive.Player['Party'] => Parties.setSize(client, size))
 
 onClientCallback('lenix:server:competitive:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
@@ -205,7 +166,7 @@ onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus:
 			`UPDATE ${fullName('profiles')} SET status = ? WHERE profile_id = ?`,
 			[newStatus, profileId]
 		)
-		if (!re) throw `Failed to update status for player<${client}>`
+		asserts(re, `Failed to update status for player<${client}>`)
 		return true
 	} catch (error) {
 		console.log(palette('red', String(error)))
@@ -217,28 +178,8 @@ onClientCallback('lenix:server:competitive:invitePlayer', async (client, id: num
 	emitNet('lenix:server:competitive:getInvited', id, client)
 })
 
-onClientCallback('lenix:server:competitive:acceptInvite', async (client, inviter: number) => {
-	const inviterParty = parties.get(inviter)
-	if (!inviterParty) throw `Failed to get inviter<${inviter}> party`
-
-	const profile = await getProfile(client)
-	if (!profile) throw `Failed to get client<${client}> profile`
-
-	const party = parties.get(client)
-	if (!party) throw `Failed to get client<${client}> party`
-
-	party.profiles = party.profiles.filter(self => self.profile_id !== profile.profile_id)
-	const newPartyLeader = party.profiles[0]?.profile_id
-	if (newPartyLeader) {
-		party.leader = newPartyLeader
-		const newPartyLeaderSource = getPlayers().find(player => getProfileId(Number(player)) === newPartyLeader)
-		if (!newPartyLeaderSource) throw `Failed to get the new leader<${newPartyLeader}>'s source`
-		
-		parties.set(Number(newPartyLeaderSource), party)
-	}
-	parties.delete(client)
-
-	inviterParty.profiles.push({ ...profile, ready: false })
+onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number) => {
+	Parties.acceptInvite(client, inviter)
 })
 
 const printSnapshot = (data: object) => {
