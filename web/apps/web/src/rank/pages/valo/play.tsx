@@ -31,12 +31,12 @@ export const Play = ({
 	profile: Competitive.Player['Profile'] | undefined
 }) => {
 	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
-	const [playersAmountSelected, setPlayersAmountSelected] = useState<number>(1)
-	const renderOrder = getRenderOrder(playersAmountSelected)
 	// const nav = useNavigate()
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
-
+	
+	const renderOrder = getRenderOrder(party?.size ?? 0)
+	
 	const partyProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party?.leader === profile?.profile_id
 
@@ -94,10 +94,10 @@ export const Play = ({
 					className={selectedMode ? 'opacity-100' : 'opacity-0'}
 					variant='outline'
 					type='single'
-					value={playersAmountSelected?.toString()}
-					onValueChange={value =>
-						Number(value) > 0 ? setPlayersAmountSelected(Number(value)) : setPlayersAmountSelected(playersAmountSelected)
-					}
+					value={party?.size?.toString()}
+					onValueChange={value => {
+						const v = Number(value)
+					}}
 				>
 					{Array.from(
 						{ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 },
@@ -105,7 +105,7 @@ export const Play = ({
 							<ToggleGroupItem
 								key={amountOfPlayers}
 								value={String(amountOfPlayers + 1)}
-								className={`${playersAmountSelected === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+								className={`${party?.size === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
 							>
 								{amountOfPlayers + 1}v{amountOfPlayers + 1}
 							</ToggleGroupItem>
