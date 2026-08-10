@@ -1,3 +1,4 @@
+import { asserts } from '@lenix/lenix'
 import { triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
 import { control, emitEvent, onNui } from 'lenix/client'
@@ -20,14 +21,14 @@ control.on({
 
 const getProfiles = async () => {
 	const profiles = await triggerServerCallback<Competitive.Player['Profile'][]>('lenix:server:competitive:getProfiles', defaultDelay)
-	if (!profiles) throw 'Failed to get profiles'
+	asserts(profiles, 'Failed to get profiles')
 
 	return profiles
 }
 
 const getProfile = async (inviter?: number) => {
 	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:competitive:getProfile', defaultDelay, inviter)
-	if (!profile) throw 'Failed to get profile'
+	asserts(profile, 'Failed to get profile')
 
 	return profile
 }
@@ -36,7 +37,7 @@ onNui<Competitive.Requests['getProfile']>('competitive:getProfile', async () => 
 
 onNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', async () => {
 	const performances = await triggerServerCallback<Competitive.Player['Performance'][]>('lenix:server:competitive:getPerformances', defaultDelay)
-	if (!performances) throw 'Failed to get performances'
+	asserts(performances, 'Failed to get performances')
 
 	const profiles = await getProfiles()
 
@@ -84,14 +85,14 @@ onNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', asyn
 
 onNui<Competitive.Requests['getMatches']>('competitive:getMatches', async () => {
 	const matches = await triggerServerCallback<Competitive.Player['Match'][]>('lenix:server:competitive:getMatches', defaultDelay)
-	if (!matches) throw 'Failed to get matches'
+	asserts(matches, 'Failed to get matches')
 
 	return matches
 })
 
 onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 	const stats = await triggerServerCallback<Competitive.APIs['getStats']>('lenix:server:competitive:getStats', defaultDelay)
-	if (!stats) throw 'Failed to get stats'
+	asserts(stats, 'Failed to get stats')
 
 	const totals = stats.reduce(
 		(acc, stat) => {
@@ -121,7 +122,7 @@ onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 
 onNui<Competitive.Requests['party']['get']>('competitive:party:create', async () => {
 	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:createParty', defaultDelay)
-	if (!party) throw 'Failed to create party'
+	asserts(party, 'Failed to create party')
 
 	return party
 })
@@ -129,14 +130,14 @@ onNui<Competitive.Requests['party']['get']>('competitive:party:create', async ()
 onNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async ({ size }) => {
 	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:setSize', defaultDelay, size)
 	if (party === undefined) return null
-	if (!party) throw 'Failed to set party size'
+	asserts(party, 'Failed to set party size')
 
 	return party
 })
 
 onNui<Competitive.Requests['getFriends']>('competitive:getFriends', async () => {
 	const friends = await triggerServerCallback<Competitive.Player['Profile'][] | undefined>('lenix:server:competitive:getFriends', defaultDelay)
-	if (!friends) throw 'Failed to get friends'
+	asserts(friends, 'Failed to get friends')
 
 	return friends
 })
@@ -144,7 +145,7 @@ onNui<Competitive.Requests['getFriends']>('competitive:getFriends', async () => 
 onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ status }) => {
 	const newStatus = await triggerServerCallback<boolean>('lenix:server:competitive:setStatus', defaultDelay, status)
 	if (newStatus === undefined) return null
-	if (!newStatus) throw 'Failed to set status'
+	asserts(newStatus, 'Failed to set status')
 
 	return status
 })
@@ -157,7 +158,7 @@ onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({
 
 onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({ inviter }) => {
 	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:acceptInvite', defaultDelay, inviter)
-	if (!party) throw 'Failed to accept invite'
+	asserts(party, 'Failed to accept invite')
 
 	return party
 })
