@@ -22,12 +22,6 @@ export const Lobby = () => {
 			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)
 		})()
-		DEV: setProfile({
-			name: 'Lenix',
-			profile_id: '1',
-			status: 'online',
-			avatar: null
-		})
 	}, [])
 
 	const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
