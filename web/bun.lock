@@ -6,7 +6,7 @@
       "name": "web",
       "dependencies": {
         "@lenix/lenix": "npm:@jsr/lenix__lenix",
-        "lenix": "^1.7.16",
+        "lenix": "^1.7.20",
       },
       "devDependencies": {
         "prettier": "^3.8.3",
@@ -962,7 +962,7 @@
 
     "kleur": ["kleur@4.1.5", "", {}, "sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ=="],
 
-    "lenix": ["lenix@1.7.16", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix" }, "peerDependencies": { "typescript": "^5" } }, "sha512-znznxJdjY71wh1DPIGQXMOsxjIcJoLb4FohEZpspCcqJ8cq9jynamT0otiGWAPpmHIn0bsg0ixvHJv1+YH7LyA=="],
+    "lenix": ["lenix@1.7.20", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix" }, "peerDependencies": { "typescript": "^5" } }, "sha512-qVA8SjgsMK+kClFXP9Gajnv0wVbeJFt2fqG/D2NR+5A4ZVl6jE6J+oZvzMH3yS14n3Ito32oeWoEeIw3vEitag=="],
 
     "levn": ["levn@0.4.1", "", { "dependencies": { "prelude-ls": "^1.2.1", "type-check": "~0.4.0" } }, "sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ=="],
 
