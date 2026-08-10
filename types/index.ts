@@ -17,6 +17,7 @@ export namespace Competitive {
 		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
 		setStatus: Request<Player['Profile']['status'] | null, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
+		invitePlayer: Request<void, 'competitive:invitePlayer', { id: number }>
 	}
 
 	export interface APIs {

@@ -147,3 +147,11 @@ onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () =
 
 	return profiles
 })
+
+onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
+	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
+})
+
+onNet('lenix:server:competitive:getInvited', (inviter: number) => {
+	
+})
