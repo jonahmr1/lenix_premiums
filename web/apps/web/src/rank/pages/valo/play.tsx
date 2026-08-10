@@ -12,6 +12,8 @@ import avatar from '@workspace/valo/assets/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { triggerNui } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
+import { Input } from '@workspace/ui/components/input'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -46,14 +48,23 @@ export const Play = ({
 		(async () => {
 			
 			DEV: setParty({
-				profiles: [{
-					profile_id: '1',
-					name: 'Lenix',
-					avatar: null,
-					status: "online",
-					ready: true
-				}],
-				size: 2,
+				profiles: [
+					{
+						profile_id: '1',
+						name: 'Lenix',
+						avatar: null,
+						status: "online",
+						ready: true
+					},
+					{
+						profile_id: '2',
+						name: 'Dev',
+						avatar: null,
+						status: "online",
+						ready: true
+					},
+				],
+				size: 6,
 				leader: '1',
 			})
 			DEV: setStats({
@@ -99,12 +110,12 @@ export const Play = ({
 					value={party?.size?.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
-						const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
-						if (!party) {
-							toast('Try again later')
-							return
-						}
-						setParty(party)
+						// const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
+						// if (!party) {
+						// 	toast('Try again later')
+						// 	return
+						// }
+						// setParty(party)
 					}}
 				>
 					{Array.from(
@@ -124,43 +135,73 @@ export const Play = ({
 			<div className='flex flex-8 items-center justify-center w-full gap-2 h-full'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
-
-					return (
+					const profile = party?.profiles[i]
+					return profile ? (
 						<Button
 							key={i}
-							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden'
+							className='flex-1 max-w-[15%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden'
 							style={{ height: `${h}%` }}
+							onClick={() => {
+								if (profile) {
+									return
+								}
+							}}
 						>
-							{i === 0 ? party?.profiles.map(profile => (
-								<>
-									<div className='flex flex-4 items-center w-full'>
-										<img src={profile.avatar ?? avatar} alt='' className='h-full object-cover' />
-									</div>
-									<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
-										<div className={`w-full flex justify-center items-center pt-0.5 text-3xl tracking-tighter font-bold`}>{profile.name}</div>
-										<Badge variant={profile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
-											{profile.ready ? 'Ready' : 'Not Ready'}
-										</Badge>
-									</div>
-									<div className='flex flex-1 flex-col w-full justify-around h-full'>
-										<Separator />
-										<div className='flex flex-1 justify-around items-center'>
-											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats[profile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.475rem]'>K/D Ratio</p>
-											</div>
-											<Separator orientation='vertical' />
-											<div className='flex-1 flex items-center flex-col'>
-												{stats ? <p>{stats[profile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
-												<p className='text-[0.475rem]'>Win Ratio</p>
-											</div>
+							<>
+								<div className='flex flex-4 items-center w-full'>
+									<img src={profile.avatar ?? avatar} alt='' className='h-full object-cover' />
+								</div>
+								<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
+									<div className={`w-full flex justify-center items-center pt-0.5 text-3xl tracking-tighter font-bold`}>{profile.name}</div>
+									<Badge variant={profile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
+										{profile.ready ? 'Ready' : 'Not Ready'}
+									</Badge>
+								</div>
+								<div className='flex flex-1 flex-col w-full justify-around h-full'>
+									<Separator />
+									<div className='flex flex-1 justify-around items-center'>
+										<div className='flex-1 flex items-center flex-col'>
+											{stats?.[profile.profile_id] ? <p>{stats[profile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
+											<p className='text-[0.475rem]'>K/D Ratio</p>
+										</div>
+										<Separator orientation='vertical' />
+										<div className='flex-1 flex items-center flex-col'>
+											{stats?.[profile.profile_id] ? <p>{stats[profile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
+											<p className='text-[0.475rem]'>Win Ratio</p>
 										</div>
 									</div>
-								</>
-							)) : (
-								<Plus />
-							)}
+								</div>
+							</>
 						</Button>
+					) : (
+						<Dialog>
+							<DialogTrigger
+								className='flex-1 max-w-[15%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								style={{ height: `${h}%` }}
+							>
+								<Plus />
+							</DialogTrigger>
+							<DialogContent className="sm:max-w-md">
+								<DialogHeader>
+									<DialogTitle>Invite a player</DialogTitle>
+									<DialogDescription>
+										Send an invite to a player and wait for them to accept
+									</DialogDescription>
+								</DialogHeader>
+								<div className="flex items-center gap-2">
+									<div className="grid flex-1 gap-2">
+										<Input
+											placeholder='67'
+										/>
+									</div>
+								</div>
+								<DialogFooter>
+									<DialogClose>
+										<Button type="button">Send</Button>
+									</DialogClose>
+								</DialogFooter>
+							</DialogContent>
+						</Dialog>
 					)
 				})}
 			</div>
