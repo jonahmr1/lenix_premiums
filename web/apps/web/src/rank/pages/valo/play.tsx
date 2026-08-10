@@ -14,6 +14,7 @@ import { triggerNui } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
+import { Loading } from '@workspace/elite/elements/loading'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -39,56 +40,58 @@ export const Play = ({
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
 	// const nav = useNavigate()
+
+	if (!party) return <Loading className='h-full' />
 	
-	const renderOrder = getRenderOrder(party?.size ?? 0)
+	const renderOrder = getRenderOrder(party.size)
 	
-	const partyProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
-	const isPartyLeader = party?.leader === profile?.profile_id
+	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
+	const isPartyLeader = party.leader === profile?.profile_id
 
 	useEffect(() => {
 		(async () => {
-			DEV: setParty({
-				profiles: [
-					{
-						profile_id: '1',
-						name: 'Lenix',
-						avatar: null,
-						status: "online",
-						ready: true
-					},
-					{
-						profile_id: '2',
-						name: 'Dev',
-						avatar: null,
-						status: "online",
-						ready: true
-					},
-				],
-				size: 3,
-				leader: '1',
-			})
-			DEV: setStats({
-				'1': {
-					kills: 1,
-					deaths: 1,
-					assists: 1,
-					wins: 1,
-					losses: 1,
-					winRate: 1,
-					killsDeathsRatio: 1,
-					matches: 1,
-				},
-				'2': {
-					kills: 1,
-					deaths: 1,
-					assists: 1,
-					wins: 1,
-					losses: 1,
-					winRate: 1,
-					killsDeathsRatio: 1,
-					matches: 1,
-				},
-			})
+			// DEV: setParty({
+			// 	profiles: [
+			// 		{
+			// 			profile_id: '1',
+			// 			name: 'Lenix',
+			// 			avatar: null,
+			// 			status: "online",
+			// 			ready: true
+			// 		},
+			// 		{
+			// 			profile_id: '2',
+			// 			name: 'Dev',
+			// 			avatar: null,
+			// 			status: "online",
+			// 			ready: true
+			// 		},
+			// 	],
+			// 	size: 3,
+			// 	leader: '1',
+			// })
+			// DEV: setStats({
+			// 	'1': {
+			// 		kills: 1,
+			// 		deaths: 1,
+			// 		assists: 1,
+			// 		wins: 1,
+			// 		losses: 1,
+			// 		winRate: 1,
+			// 		killsDeathsRatio: 1,
+			// 		matches: 1,
+			// 	},
+			// 	'2': {
+			// 		kills: 1,
+			// 		deaths: 1,
+			// 		assists: 1,
+			// 		wins: 1,
+			// 		losses: 1,
+			// 		winRate: 1,
+			// 		killsDeathsRatio: 1,
+			// 		matches: 1,
+			// 	},
+			// })
 		})()
 	}, [])
 
@@ -117,7 +120,7 @@ export const Play = ({
 					className={selectedMode ? 'opacity-100' : 'opacity-0'}
 					variant='outline'
 					type='single'
-					value={party?.size?.toString()}
+					value={party.size.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
 						const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
@@ -134,7 +137,7 @@ export const Play = ({
 							<ToggleGroupItem
 								key={amountOfPlayers}
 								value={String(amountOfPlayers + 1)}
-								className={`${party?.size === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+								className={`${party.size === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
 							>
 								{amountOfPlayers + 1}v{amountOfPlayers + 1}
 							</ToggleGroupItem>
@@ -145,17 +148,13 @@ export const Play = ({
 			<div className='flex flex-8 items-center justify-center w-full gap-2 h-full'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
-					const partyProfile = party?.profiles[i]
+					const partyProfile = party.profiles[i]
 					return partyProfile ? (
 						<Button
 							key={i}
 							className='flex-1 max-w-[15%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 							style={{ height: `${h}%` }}
-							onClick={() => {
-								if (partyProfile) {
-									return
-								}
-							}}
+							onClick={() => {/* TODO */}}
 						>
 							<>
 								<div className='flex flex-4 items-center w-full'>
