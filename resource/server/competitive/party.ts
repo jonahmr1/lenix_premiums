@@ -21,13 +21,13 @@ export abstract class Parties {
 		const profile = await getProfile(client)
 		asserts(profile, `Failed to get profile for player<${client}>`)
 	
-		 this.parties.set(source, {
+		 this.parties.set(client, {
 			profiles: [{ ...profile, ready: true }],
 			leader: profile.profile_id,
 			size: 1
 		})
 
-		const party = this.parties.get(source)
+		const party = this.parties.get(client)
 		asserts(party)
 		
 		return party
@@ -72,7 +72,15 @@ export abstract class Parties {
 			const newPartyLeaderSource = getSourceByProfileId(newPartyLeader)
 			asserts(newPartyLeaderSource, `Failed to get the new leader<${newPartyLeader}>'s source`)
 
-			this.parties.set(newPartyLeaderSource, party)
+			const newParty = this.parties.set(newPartyLeaderSource, party).get(newPartyLeaderSource)
+			asserts(newParty)
+			
+			profilesLeft.forEach(profile => {
+				const src = getSourceByProfileId(profile.profile_id)
+				asserts(src, `Failed to get profile_id<${profile.profile_id}>'s source`)
+	
+				triggerClientCallback('lenix:server:competitive:updateParty', src, newParty)
+			})
 		}
 		this.parties.delete(client)
 
@@ -81,6 +89,7 @@ export abstract class Parties {
 		inviterParty.profiles.forEach(profile => {
 			const src = getSourceByProfileId(profile.profile_id)
 			asserts(src, `Failed to get profile_id<${profile.profile_id}>'s source`)
+
 			triggerClientCallback('lenix:server:competitive:updateParty', src, inviterParty)
 		})
 		
