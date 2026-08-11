@@ -14,6 +14,7 @@ export abstract class Parties {
 		size: Party['size']
 	}>()
 	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
+	static #pendingInvites = new Map<number, Set<number>>()
 
 	static async new(
 		client: number
@@ -33,18 +34,39 @@ export abstract class Parties {
 		return party
 	}
 
-	static invite(client: number, invited: number) {
-		if (this.playersIgnoringInvites.get(invited)?.has(client)) return
+	static invite(client: number, invited: number, recursive?: true): void {
+		if (!recursive) {
+			if (this.playersIgnoringInvites.get(invited)?.has(client)) return
+		}
+
+		const invites = this.#pendingInvites.get(client)
+		if (!invites) {
+			const newInvites = new Set<number>()
+			this.#pendingInvites.set(client, newInvites.add(invited))
+			return this.invite(client, invited, true)
+		}
+
+		if (invites.has(invited) && !recursive) return
+
+		invites.add(invited)
+
+		setTimeout(() => {
+			invites.delete(invited)
+		}, Config.invitesSpamPeriod * 1000);
 	
 		emitNet('lenix:server:competitive:getInvited', invited, client)
 	}
 
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
+		const inviterInvites = this.#pendingInvites.get(inviter)
+		asserts(inviterInvites?.has(client), 'No pending invite from this player')
+
 		const inviterProfile = await getProfile(inviter)
 		asserts(inviterProfile, `Failed to get inviter<${inviter}> profile`)
 
 		const inviterParty = this.partyByProfileId(inviterProfile.profile_id)
 		asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
+		asserts(inviterParty.profiles.length < inviterParty.size, 'Party is full')
 
 		const profile = await getProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
@@ -57,6 +79,7 @@ export abstract class Parties {
 		const profilesLeft = party.profiles.filter(self => self.profile_id !== profile.profile_id)
 		party.profiles = profilesLeft
 
+		// first profile to join the party after the leader ofc
 		const newPartyLeader = party.profiles[0]?.profile_id
 
 		const getSourceByProfileId = (profile_id: string) => Number(getPlayers().find(player => getProfileId(Number(player)) === profile_id))
@@ -87,6 +110,7 @@ export abstract class Parties {
 			triggerClientCallback('lenix:server:competitive:updateParty', src, inviterParty)
 		})
 		
+		inviterInvites?.delete(client)
 		return inviterParty
 	}
 

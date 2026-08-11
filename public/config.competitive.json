@@ -80,5 +80,6 @@
 		"assist": 2,
 		"death": -3
 	},
-	"ignoreInvitesPeriod": 15
+	"ignoreInvitesPeriod": 15,
+	"invitesSpamPeriod": 15
 }
