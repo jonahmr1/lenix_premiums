@@ -33,15 +33,6 @@ export abstract class Parties {
 		return party
 	}
 
-	static setSize(client: number, size: number): Party {
-		const party = this.parties.get(client)
-		asserts(party, `Could not find party for client<${client}>`)
-
-		party.size = size
-
-		return party
-	}
-
 	static invite(client: number, invited: number) {
 		if (this.playersIgnoringInvites.get(invited)?.has(client)) return
 	
@@ -49,15 +40,16 @@ export abstract class Parties {
 	}
 
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
-		const inviterParty = this.parties.get(inviter)
+		const inviterProfile = await getProfile(inviter)
+		asserts(inviterProfile, `Failed to get inviter<${inviter}> profile`)
+
+		const inviterParty = this.partyByProfileId(inviterProfile.profile_id)
 		asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
 
 		const profile = await getProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
-		const party = [...this.parties.values()].find(party =>
-			party.profiles.some(member => member.profile_id === profile.profile_id)
-		)
+		const party = this.partyByProfileId(profile.profile_id)
 		asserts(party, `Failed to get client<${client}> party`)
 
 		asserts(party !== inviterParty, 'Client is already in this party')
@@ -115,5 +107,20 @@ export abstract class Parties {
 
 			this.playersIgnoringInvites.delete(client)
 		}, Config.ignoreInvitesPeriod * 60_000)
+	}
+
+	static partyByProfileId(profile_id: string) {
+		return [...this.parties.values()].find(party =>
+			party.profiles.some(profile => profile.profile_id === profile_id)
+		)
+	}
+
+	static setSize(client: number, size: number): Party {
+		const party = this.parties.get(client)
+		asserts(party, `Could not find party for client<${client}>`)
+
+		party.size = size
+
+		return party
 	}
 }
