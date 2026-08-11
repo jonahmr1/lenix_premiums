@@ -55,7 +55,9 @@ export abstract class Parties {
 		const profile = await getProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
-		const party = this.parties.get(client)
+		const party = [...this.parties.values()].find(party =>
+			party.profiles.some(member => member.profile_id === profile.profile_id)
+		)
 		asserts(party, `Failed to get client<${client}> party`)
 
 		asserts(party !== inviterParty, 'Client is already in this party')
