@@ -6,6 +6,7 @@ import { palette } from "lenix"
 import { asserts } from "@lenix/lenix"
 
 export const getProfile = async (client: number): Promise<Competitive.Player['Profile'] | undefined> => {
+	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['profile_id', 'name', 'status'] as const

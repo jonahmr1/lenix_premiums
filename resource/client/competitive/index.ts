@@ -1,5 +1,5 @@
-import { asserts } from '@lenix/lenix'
-import { onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
+import { asserts, entries } from '@lenix/lenix'
+import { notify, onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
 import { client, control, emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
@@ -31,6 +31,33 @@ const getProfile = async (inviter?: number) => {
 	asserts(profile, 'Failed to get profile')
 
 	return profile
+}
+
+const getDetailedStats = (stats: Competitive.APIs['getStats']) => {
+	const totals = stats.reduce(
+		(acc, stat) => {
+			acc.kills += stat.kills
+			acc.deaths += stat.deaths
+			acc.assists += stat.assists
+			acc.wins += stat.result === 'win' ? 1 : 0
+			acc.losses += stat.result === 'loss' ? 1 : 0
+			return acc
+		},
+		{
+			kills: 0,
+			deaths: 0,
+			assists: 0,
+			wins: 0,
+			losses: 0,
+		},
+	)
+
+	return {
+		...totals,
+		winRate: totals.wins + totals.losses ? totals.wins / (totals.wins + totals.losses) : 0,
+		killsDeathsRatio: totals.deaths ? totals.kills / totals.deaths : totals.kills,
+		matches: totals.wins + totals.losses,
+	}
 }
 
 onNui<Competitive.Requests['getProfile']>('competitive:getProfile', async () => await getProfile())
@@ -91,38 +118,15 @@ onNui<Competitive.Requests['getMatches']>('competitive:getMatches', async () => 
 })
 
 onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
-	const stats = await triggerServerCallback<Competitive.APIs['getStats']>('lenix:server:competitive:getStats', defaultDelay)
+	const stats = await triggerServerCallback<Competitive.APIs['getStats']>('lenix:server:competitive:getPerformances', defaultDelay)
 	asserts(stats, 'Failed to get stats')
 
-	const totals = stats.reduce(
-		(acc, stat) => {
-			acc.kills += stat.kills
-			acc.deaths += stat.deaths
-			acc.assists += stat.assists
-			acc.wins += stat.result === 'win' ? 1 : 0
-			acc.losses += stat.result === 'loss' ? 1 : 0
-			return acc
-		},
-		{
-			kills: 0,
-			deaths: 0,
-			assists: 0,
-			wins: 0,
-			losses: 0,
-		},
-	)
-
-	return {
-		...totals,
-		winRate: totals.wins + totals.losses ? totals.wins / (totals.wins + totals.losses) : 0,
-		killsDeathsRatio: totals.deaths ? totals.kills / totals.deaths : totals.kills,
-		matches: totals.wins + totals.losses,
-	}
+	return getDetailedStats(stats)
 })
 
-onNui<Competitive.Requests['party']['get']>('competitive:party:create', async () => {
-	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:createParty', defaultDelay)
-	asserts(party, 'Failed to create party')
+onNui<Competitive.Requests['party']['get']>('competitive:party:get', async () => {
+	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:getParty', defaultDelay)
+	asserts(party, 'Failed to get party')
 
 	return party
 })
@@ -154,6 +158,7 @@ onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', getProfile
 
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
 	if (client.player.serverId() === id) return 'You can\'t invite yourself'
+
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
 	return null
 })
@@ -169,9 +174,23 @@ onNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', ({ inv
 	triggerServerCallback('lenix:server:competitive:ignoreInvites', defaultDelay, inviter)
 })
 
+onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', async ({ profiles }) => {
+	const stats = await triggerServerCallback<Competitive.APIs['getProfilesStats']>('lenix:server:competitive:getProfilesStats', defaultDelay, profiles)
+	asserts(stats, `Failed to get profiles stats`)
+
+	return Object.fromEntries(
+		entries(stats).map(([profile_id, stat]) => [
+			profile_id,
+			getDetailedStats([stat]),
+		])
+	)
+})
+
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
 	const profile = await getProfile(inviter)
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)
+	// TODO
+	notify({ title: 'You have received a new invite' })
 })
 
 onServerCallback('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {

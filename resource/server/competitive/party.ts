@@ -164,9 +164,14 @@ export abstract class Parties {
 		)
 	}
 
-	static setSize(client: number, size: number): Party {
-		const party = this.parties.get(client)
+	static async setSize(client: number, size: number): Promise<Party> {
+		const profile = await getProfile(client)
+		asserts(profile, `Failed to get client<${client}> profile`)
+
+		const party = this.partyByProfileId(profile.profile_id)
 		asserts(party, `Could not find party for client<${client}>`)
+
+		asserts(party.leader === profile.profile_id, `client<${client}> tried to modify party size while he wasn't the leader`)
 
 		party.size = size
 

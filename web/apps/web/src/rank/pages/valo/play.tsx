@@ -42,8 +42,8 @@ export const Play = ({
 
 	useEffect(() => {
 		(async () => {
-			const createdParty = await triggerNui<Competitive.Requests['party']['get']>('competitive:party:create', {})
-			setParty(createdParty)
+			const party = await triggerNui<Competitive.Requests['party']['get']>('competitive:party:get', {})
+			setParty(party)
 		})()
 
 		const disposes = [
@@ -74,12 +74,11 @@ export const Play = ({
 
 	useEffect(() => {
 		(async () => {
-			if (!stats && profile) {
-				const stats = await triggerNui<Competitive.Requests['getStats']>('competitive:getStats', {})
-				setStats(prev => ({ ...prev, [profile.profile_id]: stats }))
-			}
+			if (!party) return
+			const stats = await triggerNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) })
+			setStats(stats)
 		})()
-	}, [profile])
+	}, [party])
 
 	if (!party) return <Loading className='h-full' />
 	
@@ -145,7 +144,7 @@ export const Play = ({
 					return partyProfile ? (
 						<Button
 							key={i}
-							className='flex-1 max-w-[20%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
+							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 							style={{ height: `${h}%` }}
 						>
 							<>

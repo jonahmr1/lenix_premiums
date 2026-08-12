@@ -10,6 +10,8 @@ import { asserts } from "@lenix/lenix"
 import { Config } from "common/config/competitive"
 
 const profileCols = ['profile_id', 'name', 'status'] as const
+const performancesCols = ['result', 'kills', 'deaths', 'assists'] as const
+
 
 onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
 	const profile = await getProfile(player ?? client)
@@ -49,21 +51,20 @@ onClientCallback('lenix:server:competitive:getPerformances', async (_client): Pr
 	return performances
 })
 
-onClientCallback('lenix:server:competitive:getStats', async (client): Promise<Competitive.APIs['getStats']> => {
+onClientCallback('lenix:server:competitive:getPerformances', async (client): Promise<Competitive.APIs['getStats']> => {
 	const profile_id = getProfileId(client)
 
-	const selectedCols = ['result', 'kills', 'deaths', 'assists'] as const
-	const stats = await oxmysql.query<{
+	const performances = await oxmysql.query<{
 		result: 'win' | 'loss'
 		kills: number
 		deaths: number
 		assists: number
 	}[]>(
-		`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
+		`SELECT ${performancesCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
 		[profile_id]
-	) satisfies Record<(typeof selectedCols)[number], any>[]
+	) satisfies Record<(typeof performancesCols)[number], any>[]
 
-	return stats
+	return performances
 })
 
 onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
@@ -166,9 +167,39 @@ onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus:
 })
 
 
-onClientCallback('lenix:server:competitive:createParty', async (client): Promise<Competitive.Player['Party']> => await Parties.new(client))
+onClientCallback('lenix:server:competitive:getParty', async (client): Promise<Competitive.Player['Party']> => {
+	const profile = await getProfile(client)
+	asserts(profile, `Failed to get client<${client}> profile`)
 
-onClientCallback('lenix:server:competitive:setSize', (client, size: number): Competitive.Player['Party'] => Parties.setSize(client, size))
+	const currentParty = Parties.partyByProfileId(profile.profile_id)
+	return currentParty ?? await Parties.new(client)
+})
+
+onClientCallback('lenix:server:competitive:getProfilesStats', async (_client, profiles: string[]): Promise<Competitive.APIs['getProfilesStats']> => {
+	const selectedCols = ['profile_id', ...performancesCols] as const
+	try {
+		const performances = await oxmysql.query<{
+			profile_id: string
+			result: 'win' | 'loss'
+			kills: number
+			deaths: number
+			assists: number
+		}[]>(
+			`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id IN (?)`,
+			[profiles]
+		) satisfies Record<(typeof selectedCols)[number], any>[]
+
+		const re = Object.fromEntries(
+			performances.map(({ profile_id, ...stats }) => [profile_id, stats])
+		)
+		return re
+	} catch (e) {
+		console.log(palette('red', String(e)))
+		throw e
+	}
+})
+
+onClientCallback('lenix:server:competitive:setSize', (client, size: number): Promise<Competitive.Player['Party']> => Parties.setSize(client, size))
 
 onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: number) => Parties.invite(client, invited))
 

@@ -11,8 +11,9 @@ export namespace Competitive {
 		getProfile: Request<Player['Profile'], 'competitive:getProfile'>
 		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
 		party: {
-			get: Request<Player['Party'], 'competitive:party:create'>
+			get: Request<Player['Party'], 'competitive:party:get'>
 			setSize: Request<Player['Party'] | null, 'competitive:party:setSize', { size: number }>
+			getStats: Request<Record<string, Player['Stats']>, 'competitive:party:getStats', { profiles: string[] }>
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
 		getStats: Request<Player['Stats'], 'competitive:getStats'>
@@ -26,6 +27,7 @@ export namespace Competitive {
 
 	export interface APIs {
 		getStats: (Pick<Competitive.Player['Stats'], 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
+		getProfilesStats: Record<string, APIs['getStats'][number]>
 	}
 
 	export interface Player {
