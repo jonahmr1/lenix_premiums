@@ -46,27 +46,30 @@ export const Play = ({
 			setParty(createdParty)
 		})()
 
-		const dispose = onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
-			toast('New party invite', {
-				description: `${name} invited you to their party.`,
-				action: {
-					label: "Accept",
-					onClick: async () => {
-						const newParty = await triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
-						setParty(newParty)
+		const disposes = [
+			onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
+				toast('New party invite', {
+					description: `${name} invited you to their party.`,
+					action: {
+						label: "Accept",
+						onClick: async () => {
+							const newParty = await triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+							setParty(newParty)
+						},
 					},
-				},
-				cancel: {
-					label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
-					onClick: () => {
-						triggerNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
+					cancel: {
+						label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
+						onClick: () => {
+							triggerNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
+						},
 					},
-				},
-				duration: config.invitesSpamPeriod * 1000
-			})
-		})
+					duration: config.invitesSpamPeriod * 1000
+				})
+			}),
+			onEvent<Competitive.Events['updateParty']>('competitive:updateParty', setParty)
+		]
 
-		return dispose
+		return () => disposes.forEach(dispose => dispose())
 	}, [])
 
 	useEffect(() => {
@@ -115,7 +118,7 @@ export const Play = ({
 						const size = Number(value)
 						const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
 						if (!party) {
-							toast('Try again later')
+							toast('Wait a moment')
 							return
 						}
 						setParty(party)
@@ -142,7 +145,7 @@ export const Play = ({
 					return partyProfile ? (
 						<Button
 							key={i}
-							className='flex-1 max-w-[25%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
+							className='flex-1 max-w-[20%] px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 							style={{ height: `${h}%` }}
 						>
 							<>
@@ -174,7 +177,7 @@ export const Play = ({
 					) : (
 						<Dialog>
 							<DialogTrigger
-								className='flex-1 max-w-[25%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-1 max-w-[20%] bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
