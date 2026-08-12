@@ -150,7 +150,7 @@ export const Play = ({
 									<img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' />
 								</div>
 								<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
-									<div className={`w-full flex justify-center items-center pt-0.5 text-3xl tracking-tighter font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
+									<div className={`w-full flex justify-center items-center pt-0.5 text-xl tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
 									<Badge variant={partyProfile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
 										{partyProfile.ready ? 'Ready' : 'Not Ready'}
 									</Badge>
