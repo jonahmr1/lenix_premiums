@@ -28,7 +28,7 @@ export const getProfile = async (client: number): Promise<Competitive.Player['Pr
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
 			[profileId, name, 'online']
 		)
-		asserts(re, `Failed to create a new profile for player<${client}>`)
+		asserts(re !== null && re !== undefined, `Failed to create a new profile for player<${client}>`)
 
 		return await getProfile(client)
 	} catch (e) {
