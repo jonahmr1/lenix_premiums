@@ -62,7 +62,7 @@ export const Play = ({
 						triggerNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
 					},
 				},
-				duration: 15_000
+				duration: config.invitesSpamPeriod * 1000
 			})
 		})
 
