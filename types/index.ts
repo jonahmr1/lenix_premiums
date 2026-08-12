@@ -19,7 +19,7 @@ export namespace Competitive {
 		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
 		setStatus: Request<Player['Profile']['status'] | null, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
-		invitePlayer: Request<void, 'competitive:invitePlayer', { id: number }>
+		invitePlayer: Request<null | string, 'competitive:invitePlayer', { id: number }>
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<void, 'competitive:ignoreInvites', { inviter: number }>
 	}

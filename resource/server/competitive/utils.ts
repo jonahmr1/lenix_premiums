@@ -1,1 +1,1 @@
-export const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'fivem')
+export const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'license')

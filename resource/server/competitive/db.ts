@@ -1,7 +1,7 @@
 import { oxmysql } from '@overextended/oxmysql'
 import knex from 'knex'
 
-export const fullName = (table: string) => `\`lenix_competitive:${table}\`` as const
+export const fullName = (table: string) => `lenix_competitive_${table}` as const
 
 const db = knex({ client: 'mysql' })
 
@@ -14,7 +14,7 @@ if (!database.length) throw 'Could not get database name'
 const create = (
 	table: string,
 	cb: Parameters<ReturnType<typeof db.schema.withSchema>['createTableIfNotExists']>[1]
-) => db.schema.withSchema(database).createTableIfNotExists(`${fullName(table)}`, cb)
+) => db.schema.withSchema(database).createTableIfNotExists(fullName(table), cb)
 
 /* FORIEGN */
 const tables = [

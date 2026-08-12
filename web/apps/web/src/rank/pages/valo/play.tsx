@@ -198,9 +198,13 @@ export const Play = ({
 								<DialogFooter>
 									<DialogClose>
 										<Button
-											onClick={() => {
+											onClick={async () => {
 												if (!invitedPlayer) return
-												triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { id: invitedPlayer })
+												const error = await triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { id: invitedPlayer })
+												console.log(error)
+												if (!error) return
+
+												toast(error)
 											}}
 										>Send</Button>
 									</DialogClose>

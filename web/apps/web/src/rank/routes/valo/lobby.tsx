@@ -24,11 +24,6 @@ export const Lobby = () => {
 			focus()
 		})
 
-		;(async () => {
-			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
-			setProfile(profile)
-		})()
-
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
 			setDisplay(false)
@@ -42,6 +37,14 @@ export const Lobby = () => {
 			window.removeEventListener('keydown', handler)
 		}
 	}, [])
+
+	useEffect(() => {
+		if (!display) return
+		;(async () => {
+			const profile = await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
+			setProfile(profile)
+		})()
+	}, [display])
 
 	if (!display) return
 

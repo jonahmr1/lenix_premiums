@@ -1,7 +1,7 @@
 import { asserts } from '@lenix/lenix'
 import { onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
-import { control, emitEvent, onNui } from 'lenix/client'
+import { client, control, emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
@@ -153,7 +153,9 @@ onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ statu
 onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', getProfiles)
 
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
+	if (client.player.serverId() === id) return 'You can\'t invite yourself'
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
+	return null
 })
 
 onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({ inviter }) => {

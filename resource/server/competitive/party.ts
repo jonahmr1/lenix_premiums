@@ -4,6 +4,7 @@ import { getProfile } from "./modules"
 import { getProfileId } from "./utils"
 import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
+import { palette } from "lenix"
 
 type Party = Competitive.Player['Party']
 
@@ -35,26 +36,31 @@ export abstract class Parties {
 	}
 
 	static invite(client: number, invited: number, recursive?: true): void {
-		if (!recursive) {
-			if (this.playersIgnoringInvites.get(invited)?.has(client)) return
+		try {
+			asserts(client !== invited, `client<${client}> tried to invite himself`)
+			if (!recursive) {
+				if (this.playersIgnoringInvites.get(invited)?.has(client)) return
+			}
+
+			const invites = this.#pendingInvites.get(client)
+			if (!invites) {
+				const newInvites = new Set<number>()
+				this.#pendingInvites.set(client, newInvites.add(invited))
+				return this.invite(client, invited, true)
+			}
+
+			if (invites.has(invited) && !recursive) return
+
+			invites.add(invited)
+
+			setTimeout(() => {
+				invites.delete(invited)
+			}, Config.invitesSpamPeriod * 1000);
+		
+			emitNet('lenix:server:competitive:getInvited', invited, client)
+		} catch (e) {
+			console.log(palette('red', String(e)))
 		}
-
-		const invites = this.#pendingInvites.get(client)
-		if (!invites) {
-			const newInvites = new Set<number>()
-			this.#pendingInvites.set(client, newInvites.add(invited))
-			return this.invite(client, invited, true)
-		}
-
-		if (invites.has(invited) && !recursive) return
-
-		invites.add(invited)
-
-		setTimeout(() => {
-			invites.delete(invited)
-		}, Config.invitesSpamPeriod * 1000);
-	
-		emitNet('lenix:server:competitive:getInvited', invited, client)
 	}
 
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
