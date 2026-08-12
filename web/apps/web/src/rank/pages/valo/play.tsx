@@ -201,7 +201,6 @@ export const Play = ({
 											onClick={async () => {
 												if (!invitedPlayer) return
 												const error = await triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { id: invitedPlayer })
-												console.log(error)
 												if (!error) return
 
 												toast(error)
