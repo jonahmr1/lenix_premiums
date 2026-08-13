@@ -83,12 +83,12 @@ export const Play = ({
 	}, [party])
 
 	if (!party) return <Loading className='h-full' />
-	
+
 	const renderOrder = getRenderOrder(party.size)
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
 	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
-	
+
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
 			<div className='flex flex-col items-center justify-center'>
@@ -222,19 +222,21 @@ export const Play = ({
 					<div />
 					<div />
 					<Button
-						className={`text-xl px-20 py-5`}
+						className='group text-xl px-20 py-5'
 						onClick={() => {
-							switch(playStatus) {
-								case 'Get Ready': {
-									triggerNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', { status: 'ready' })
-								} break
-								case 'Ready': {
-									triggerNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', { status: 'unready' })
-								} break
-							}
+							triggerNui<Competitive.Requests['updateReadiness']>(
+								'competitive:updateReadiness',
+								{ status: playStatus === 'Ready' ? 'unready' : 'ready' }
+							)
+						}}
+						onMouseOver={e => {
+							playStatus === 'Ready' && (e.currentTarget.value = 'UnReady')
 						}}
 					>
-						{playStatus}
+						<span className='group-hover:hidden'>{playStatus}</span>
+						{playStatus === 'Ready' && (
+							<span className='hidden group-hover:inline'>UnReady</span>
+						)}
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button hidden={isPartyLeader} variant='outline' className='justify-evenly'>
