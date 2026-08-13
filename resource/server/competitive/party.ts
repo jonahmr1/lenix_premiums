@@ -20,30 +20,6 @@ export abstract class Parties {
 	static #pendingInvites = new Map<number, Set<number>>()
 	
 
-	static async setSize(client: number, size: number): Promise<Party> {
-		const profile = await fetchProfile(client)
-		asserts(profile, `Failed to get client<${client}> profile`)
-
-		const party = this.getPartyByClient(client)
-
-		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
-		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
-
-		party.roomAvailable = size
-
-		return party
-	}
-
-	static async updateReadiness(client: number, status: 'ready' | 'unready') {
-		const profile = await fetchProfile(client)
-		const party = this.getPartyByClient(client)
-
-		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
-		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
-
-		partyProfile.ready = status === 'ready' ? true : false
-	}
-
 	static getProfile(client: number) {
 		const profile = this.getPartyByClient(client)?.profiles.find(profile => profile.sessionId === client)
 		asserts(profile)
@@ -60,6 +36,20 @@ export abstract class Parties {
 		return party
 	}
 
+	static async setSize(client: number, size: number): Promise<Party> {
+		const profile = await fetchProfile(client)
+		asserts(profile, `Failed to get client<${client}> profile`)
+
+		const party = this.getPartyByClient(client)
+
+		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
+		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
+
+		party.roomAvailable = size
+
+		return party
+	}
+	
 	static async new(
 		client: number
 	): Promise<Party> {
@@ -88,15 +78,18 @@ export abstract class Parties {
 	}
 
 	static remove(client: number, party: Party) {
-		const profilesLeft = party.profiles.filter(self => self.sessionId !== client)
+		const profilesLeft = party.profiles.filter(profile => profile.sessionId !== client)
+
+		if (!profilesLeft.length) {
+			this.parties.delete(party)
+			return
+		}
 
 		if (party.leader === client) {
 			// first profile to join the party after the leader ofc
-			const newPartyLeader = party.profiles[0]?.sessionId
-			if (!newPartyLeader) {
-				this.parties.delete(party)
-				return
-			}
+			const newPartyLeader = profilesLeft?.[0]?.sessionId
+			asserts(newPartyLeader, `Failed to find new party leader for the leader<${client}>`)
+
 			party.leader = newPartyLeader
 		}
 
@@ -111,6 +104,16 @@ export abstract class Parties {
 		this.remove(client, party)
 
 		return this.new(client)
+	}
+
+	static async updateReadiness(client: number, status: 'ready' | 'unready') {
+		const profile = await fetchProfile(client)
+		const party = this.getPartyByClient(client)
+
+		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
+		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
+
+		partyProfile.ready = status === 'ready' ? true : false
 	}
 
 	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
