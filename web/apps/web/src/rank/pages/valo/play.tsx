@@ -84,7 +84,7 @@ export const Play = ({
 
 	if (!party) return <Loading className='h-full' />
 
-	const renderOrder = getRenderOrder(party.size)
+	const renderOrder = getRenderOrder(party.roomAvailable)
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
 	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
@@ -114,7 +114,7 @@ export const Play = ({
 					className={selectedMode ? 'opacity-100' : 'opacity-0'}
 					variant='outline'
 					type='single'
-					value={party.size.toString()}
+					value={party.roomAvailable.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
 						const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
@@ -131,7 +131,7 @@ export const Play = ({
 							<ToggleGroupItem
 								key={amountOfPlayers}
 								value={String(amountOfPlayers + 1)}
-								className={`${party.size === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
+								className={`${party.roomAvailable === amountOfPlayers + 1 ? 'data-[state=on]:bg-primary data-[state=on]:text-primary-foreground' : ''}`}
 							>
 								{amountOfPlayers + 1}v{amountOfPlayers + 1}
 							</ToggleGroupItem>

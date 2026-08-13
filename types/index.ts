@@ -84,7 +84,7 @@ export namespace Competitive {
 		}
 		Party: {
 			profiles: Competitive.Player['Profile'][]
-			size: number
+			roomAvailable: number
 			leader: Competitive.Player['Profile']['profile_id']
 		}
 	}

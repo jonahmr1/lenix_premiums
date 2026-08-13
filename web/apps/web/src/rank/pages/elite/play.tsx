@@ -230,7 +230,7 @@ export const Play = ({
 								className='grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]'
 								style={{ gridTemplateColumns: `repeat(${entries(PvP_AMOUNT).length}, minmax(0, 1fr))` }}
 								type='single'
-								value={party.size.toString()}
+								value={party.roomAvailable.toString()}
 								onValueChange={async value => {
 									if (!value) return
 									const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size: Number(value) })

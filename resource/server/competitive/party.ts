@@ -14,7 +14,7 @@ export abstract class Parties {
 	private static readonly parties = new Set<{
 		profiles: Party['profiles']
 		leader: Party['leader']
-		size: Party['size']
+		roomAvailable: Party['roomAvailable']
 	}>()
 	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	static #pendingInvites = new Map<number, Set<number>>()
@@ -34,13 +34,17 @@ export abstract class Parties {
 		this.parties.add({
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: profile.profile_id,
-			size: 1
+			roomAvailable: 1
 		})
 
 		const party = this.getPartyByClient(client)
 		asserts(party)
 
 		return party
+	}
+
+	static add(profile: Competitive.Player['Profile']) {
+
 	}
 
 	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
@@ -92,7 +96,7 @@ export abstract class Parties {
 
 			const inviterParty = this.getPartyByClient(inviter)
 			asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
-			asserts(inviterParty.profiles.length < inviterParty.size, 'Party is full')
+			asserts(inviterParty.profiles.length < inviterParty.roomAvailable, 'Party is full')
 
 			const profile = this.getProfile(client)
 			asserts(profile, `Failed to get client<${client}> profile`)
@@ -172,7 +176,7 @@ export abstract class Parties {
 		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
 		asserts(party.leader === profile.profile_id, `client<${client}> tried to modify party size while he wasn't the leader`)
 
-		party.size = size
+		party.roomAvailable = size
 
 		return party
 	}
