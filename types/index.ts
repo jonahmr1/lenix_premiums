@@ -24,6 +24,7 @@ export namespace Competitive {
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<void, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<void, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
+		leaveParty: Request<void, 'competitive:leaveParty'>
 	}
 
 	export interface APIs {

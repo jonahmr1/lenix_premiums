@@ -190,6 +190,10 @@ onNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', ({
 	triggerServerCallback<void>('lenix:server:competitive:updateReadiness', defaultDelay, status)
 })
 
+onNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', () => {
+	triggerServerCallback<void>('lenix:server:competitive:leaveParty', defaultDelay)
+})
+
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
 	const profile = await getProfile(inviter)
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)

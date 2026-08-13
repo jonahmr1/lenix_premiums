@@ -239,7 +239,13 @@ export const Play = ({
 						)}
 					</Button>
 					<Separator hidden={isPartyLeader} />
-					<Button hidden={isPartyLeader} variant='outline' className='justify-evenly'>
+					<Button
+						hidden={isPartyLeader}
+						variant='outline' className='justify-evenly'
+						onClick={() => {
+							triggerNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+						}}
+					>
 						<LogOut />
 						Leave Lobby
 					</Button>

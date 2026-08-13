@@ -1,7 +1,7 @@
 import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { getProfile } from "./modules"
-import { getProfileId } from "./utils"
+import { getProfileId, getSourceByProfileId } from "./utils"
 import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
 import { palette } from "lenix"
@@ -103,8 +103,6 @@ export abstract class Parties {
 			// first profile to join the party after the leader ofc
 			const newPartyLeader = party.profiles[0]?.profile_id
 
-			const getSourceByProfileId = (profile_id: string) => Number(getPlayers().find(player => getProfileId(Number(player)) === profile_id))
-
 			if (newPartyLeader) {
 				party.leader = newPartyLeader
 				const newPartyLeaderSource = getSourceByProfileId(newPartyLeader)
@@ -171,6 +169,7 @@ export abstract class Parties {
 		const party = this.partyByProfileId(profile.profile_id)
 		asserts(party, `Could not find party for client<${client}>`)
 
+		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
 		asserts(party.leader === profile.profile_id, `client<${client}> tried to modify party size while he wasn't the leader`)
 
 		party.size = size
@@ -189,5 +188,20 @@ export abstract class Parties {
 		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
 
 		partyProfile.ready = status === 'ready' ? true : false
+	}
+
+	static async leaveParty(client: number) {
+		const profile = await getProfile(client)
+		asserts(profile, `Failed to get client<${client}> profile`)
+
+		const party = this.partyByProfileId(profile.profile_id)
+		asserts(party, `Failed to get client<${client}> party`)
+
+		party.profiles = party.profiles.filter(self => self.profile_id !== profile.profile_id)
+		party.profiles.forEach(profile => {
+			const src = getSourceByProfileId(profile.profile_id)
+
+			triggerClientCallback('lenix:server:competitive:updateParty', src, party)
+		})
 	}
 }
