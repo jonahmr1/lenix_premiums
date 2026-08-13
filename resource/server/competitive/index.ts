@@ -189,7 +189,17 @@ onClientCallback('lenix:server:competitive:getProfilesStats', async (_client, pr
 		) satisfies Record<(typeof selectedCols)[number], any>[]
 
 		return Object.fromEntries(
-			performances.map(({ profile_id, ...stats }) => [profile_id, stats])
+			profiles.map(profile_id => [
+				profile_id,
+				Object.fromEntries(
+					performances.map(({ profile_id, ...stat }) => [profile_id, stat])
+				)[profile_id] ?? {
+					kills: 0,
+					deaths: 0,
+					assists: 0,
+					result: 'loss',
+				},
+			])
 		)
 	} catch (e) {
 		console.log(palette('red', String(e)))
