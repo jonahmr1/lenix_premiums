@@ -1,10 +1,10 @@
 import './nui'
 import { onClientCallback } from "@overextended/ox_lib/server"
 import type { Competitive } from 'types/index'
-import { getProfile } from "./modules"
+import { fetchProfile } from "./modules"
 
 onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
-	const profile = await getProfile(player ?? client)
+	const profile = await fetchProfile(player ?? client)
 
 	return profile
 })

@@ -1,6 +1,6 @@
 import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
-import { getProfile } from "./modules"
+import { fetchProfile } from "./modules"
 import { getSourceByProfileId } from "./utils"
 import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
@@ -28,10 +28,10 @@ export abstract class Parties {
 	static async new(
 		client: number
 	): Promise<Party> {
-		const profile = await getProfile(client)
+		const profile = await fetchProfile(client)
 		asserts(profile, `Failed to get profile for player<${client}>`)
-	
-		 this.parties.add({
+
+		this.parties.add({
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: profile.profile_id,
 			size: 1
@@ -39,7 +39,7 @@ export abstract class Parties {
 
 		const party = this.getPartyByClient(client)
 		asserts(party)
-		
+
 		return party
 	}
 
@@ -50,19 +50,13 @@ export abstract class Parties {
 			}
 
 			asserts(client !== invited, `client<${client}> tried to invite himself`)
-			const profile = await getProfile(client)
-			asserts(profile, `Failed to get client<${client}> profile`)
-
-			const party = this.partyByProfileId(profile.profile_id)
+			const party = this.getPartyByClient(client)
 			asserts(party, `Failed to get client<${client}> party`)
 
-			const invitedProfile = await getProfile(invited)
-			asserts(invitedProfile, `Failed to get invited<${invited}> profile`)
-
 			asserts(
-        !party.profiles.some((profile) => profile.profile_id === invitedProfile.profile_id),
-        `invited<${invited}> is already in client<${client}>'s party`
-  		)
+				!party.profiles.some((profile) => profile.sessionId === invited),
+				`invited<${invited}> is already in client<${client}>'s party`
+			)
 
 			const invites = this.#pendingInvites.get(client)
 			if (!invites) {
@@ -78,11 +72,15 @@ export abstract class Parties {
 			setTimeout(() => {
 				invites.delete(invited)
 			}, Config.invitesSpamPeriod * 1000);
-		
+
 			emitNet('lenix:server:competitive:getInvited', invited, client)
 		} catch (e) {
 			console.log(palette('red', String(e)))
 		}
+	}
+
+	static getProfile(client: number) {
+		return this.getPartyByClient(client)?.profiles.find(profile => profile.sessionId === client)
 	}
 
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
@@ -90,22 +88,19 @@ export abstract class Parties {
 			const inviterInvites = this.#pendingInvites.get(inviter)
 			asserts(inviterInvites?.has(client), 'No pending invite from this player')
 
-			const inviterProfile = await getProfile(inviter)
-			asserts(inviterProfile, `Failed to get inviter<${inviter}> profile`)
-
-			const inviterParty = this.partyByProfileId(inviterProfile.profile_id)
+			const inviterParty = this.getPartyByClient(inviter)
 			asserts(inviterParty, `Failed to get inviter<${inviter}> party`)
 			asserts(inviterParty.profiles.length < inviterParty.size, 'Party is full')
 
-			const profile = await getProfile(client)
+			const profile = this.getProfile(client)
 			asserts(profile, `Failed to get client<${client}> profile`)
 
-			const party = this.partyByProfileId(profile.profile_id)
+			const party = this.getPartyByClient(client)
 			asserts(party, `Failed to get client<${client}> party`)
 
 			asserts(party !== inviterParty, 'Client is already in this party')
 
-			const profilesLeft = party.profiles.filter(self => self.profile_id !== profile.profile_id)
+			const profilesLeft = party.profiles.filter(self => self.sessionId !== client)
 			party.profiles = profilesLeft
 
 			// first profile to join the party after the leader ofc
@@ -119,11 +114,11 @@ export abstract class Parties {
 				this.parties.add(party)
 				const newParty = this.getPartyByClient(newPartyLeaderSource)
 				asserts(newParty)
-				
+
 				profilesLeft.forEach(profile => {
 					const src = getSourceByProfileId(profile.profile_id)
 					asserts(src, `Failed to get profile_id<${profile.profile_id}>'s source`)
-		
+
 					triggerClientCallback('lenix:server:competitive:updateParty', src, newParty)
 				})
 			}
@@ -137,7 +132,7 @@ export abstract class Parties {
 
 				triggerClientCallback('lenix:server:competitive:updateParty', src, inviterParty)
 			})
-			
+
 			inviterInvites?.delete(client)
 			return inviterParty
 		} catch (e) {
@@ -165,17 +160,11 @@ export abstract class Parties {
 		}, Config.ignoreInvitesPeriod * 60_000)
 	}
 
-	static partyByProfileId(profile_id: string) {
-		return [...this.parties.values()].find(party =>
-			party.profiles.some(profile => profile.profile_id === profile_id)
-		)
-	}
-
 	static async setSize(client: number, size: number): Promise<Party> {
-		const profile = await getProfile(client)
+		const profile = await fetchProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
-		const party = this.partyByProfileId(profile.profile_id)
+		const party = this.getPartyByClient(client)
 		asserts(party, `Could not find party for client<${client}>`)
 
 		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
@@ -187,10 +176,10 @@ export abstract class Parties {
 	}
 
 	static async updateReadiness(client: number, status: 'ready' | 'unready') {
-		const profile = await getProfile(client)
+		const profile = await fetchProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
-		const party = this.partyByProfileId(profile.profile_id)
+		const party = this.getPartyByClient(client)
 		asserts(party, `Failed to get client<${client}> party`)
 
 		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
@@ -200,10 +189,10 @@ export abstract class Parties {
 	}
 
 	static async leaveParty(client: number) {
-		const profile = await getProfile(client)
+		const profile = await fetchProfile(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
-		const party = this.partyByProfileId(profile.profile_id)
+		const party = this.getPartyByClient(client)
 		asserts(party, `Failed to get client<${client}> party`)
 
 		party.profiles = party.profiles.filter(self => self.profile_id !== profile.profile_id)

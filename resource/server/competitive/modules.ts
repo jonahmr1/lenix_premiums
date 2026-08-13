@@ -8,7 +8,7 @@ import { asserts } from "@lenix/lenix"
 export const profileCols = ['profile_id', 'name', 'status'] as const
 
 
-export const getProfile = async (client: number): Promise<Competitive.Player['Profile']> => {
+export const fetchProfile = async (client: number): Promise<Competitive.Player['Profile']> => {
 	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
 	const profileId = getProfileId(client)
 
@@ -34,7 +34,7 @@ export const getProfile = async (client: number): Promise<Competitive.Player['Pr
 		)
 		asserts(re !== null && re !== undefined, `Failed to create a new profile for player<${client}>`)
 
-		return await getProfile(client)
+		return await fetchProfile(client)
 	} catch (e) {
 		console.log(palette('red', String(e)))
 		throw e
