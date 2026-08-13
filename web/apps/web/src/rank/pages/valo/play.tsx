@@ -78,7 +78,6 @@ export const Play = ({
 			const stats = await triggerNui<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
 			)
-			console.log(JSON.stringify(stats), stats)
 			setStats(stats)
 		})()
 	}, [party])
@@ -89,6 +88,8 @@ export const Play = ({
 	
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
+
+	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
 	
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
@@ -224,9 +225,15 @@ export const Play = ({
 					<div />
 					<Button
 						className={`text-xl px-20 py-5`}
-						onClick={() => {/* TODO */}}
+						onClick={() => {
+							switch(playStatus) {
+								case 'Get Ready': {
+									triggerNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', { status: 'ready' })
+								} break
+							}
+						}}
 					>
-						{partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'}
+						{}
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button hidden={isPartyLeader} variant='outline' className='justify-evenly'>

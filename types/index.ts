@@ -23,6 +23,7 @@ export namespace Competitive {
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { id: number }>
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<void, 'competitive:ignoreInvites', { inviter: number }>
+		updateReadiness: Request<void, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
 	}
 
 	export interface APIs {

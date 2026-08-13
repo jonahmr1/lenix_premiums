@@ -177,4 +177,17 @@ export abstract class Parties {
 
 		return party
 	}
+
+	static async updateReadiness(client: number, status: 'ready' | 'unready') {
+		const profile = await getProfile(client)
+		asserts(profile, `Failed to get client<${client}> profile`)
+
+		const party = this.partyByProfileId(profile.profile_id)
+		asserts(party, `Failed to get client<${client}> party`)
+
+		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
+		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
+
+		partyProfile.ready = status === 'ready' ? true : false
+	}
 }

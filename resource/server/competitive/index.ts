@@ -207,6 +207,10 @@ onClientCallback('lenix:server:competitive:getProfilesStats', async (_client, pr
 	}
 })
 
+onClientCallback('lenix:server:competitive:updateReadiness', (client, status: Competitive.Requests['updateReadiness']['2']['status']) => {
+	Parties.updateReadiness(client, status)
+})
+
 onClientCallback('lenix:server:competitive:setSize', (client, size: number): Promise<Competitive.Player['Party']> => Parties.setSize(client, size))
 
 onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: number) => Parties.invite(client, invited))

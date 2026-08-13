@@ -186,6 +186,10 @@ onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', a
 	)
 })
 
+onNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', ({ status }) => {
+	triggerServerCallback<void>('lenix:server:competitive:updateReadiness', defaultDelay, status)
+})
+
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
 	const profile = await getProfile(inviter)
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)
