@@ -1,7 +1,7 @@
 import { asserts, entries } from '@lenix/lenix'
 import { notify, onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
-import { client, control, emitEvent, onNui } from 'lenix/client'
+import { client, control, emitNui as emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 const defaultDelay = 5000
