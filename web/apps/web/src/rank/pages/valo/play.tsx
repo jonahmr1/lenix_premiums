@@ -86,7 +86,7 @@ export const Play = ({
 
 	const renderOrder = getRenderOrder(party.roomAvailable)
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
-	const isPartyLeader = party.leader === profile?.profile_id
+	const isPartyLeader = party.leader === profile?.sessionId
 	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
 
 	return (
@@ -242,8 +242,9 @@ export const Play = ({
 					<Button
 						hidden={isPartyLeader}
 						variant='outline' className='justify-evenly'
-						onClick={() => {
-							fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+						onClick={async () => {
+							const newParty = await fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+							setParty(newParty)
 						}}
 					>
 						<LogOut />

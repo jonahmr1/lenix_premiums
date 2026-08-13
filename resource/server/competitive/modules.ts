@@ -1,8 +1,9 @@
 import { oxmysql } from "@overextended/oxmysql"
-import { fullName, getProfileId } from "./utils"
+import { fullName, getProfileId, getSourceByProfileId } from "./utils"
 import type { Competitive } from "types/index"
 import { palette } from "lenix"
 import { asserts } from "@lenix/lenix"
+import { Parties } from "./party"
 
 
 export const profileCols = ['profile_id', 'name', 'status'] as const
@@ -43,7 +44,7 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	}
 }
 
-export const getProfiles = async () => {
+export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
@@ -52,10 +53,15 @@ export const getProfiles = async () => {
 		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
 	) satisfies Record<(typeof profileCols)[number], any>[]
 
-	return profiles.map(profile => ({
-		...profile,
-		avatar: null
-	}))
+	return profiles.map(profile => {
+		const { ready, sessionId } = Parties.getProfile(getSourceByProfileId(profile.profile_id))
+		return {
+			...profile,
+			ready,
+			sessionId,
+			avatar: null
+		}
+	})
 }
 
 export const getStatsDetails = (stats: Competitive.APIs['getStats']) => {

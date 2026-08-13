@@ -24,7 +24,7 @@ export namespace Competitive {
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
-		leaveParty: Request<null, 'competitive:leaveParty'>
+		leaveParty: Request<Player['Party'], 'competitive:leaveParty'>
 	}
 
 	export interface APIs {
@@ -85,7 +85,7 @@ export namespace Competitive {
 		Party: {
 			profiles: Competitive.Player['Profile'][]
 			roomAvailable: number
-			leader: Competitive.Player['Profile']['profile_id']
+			leader: Competitive.Player['Profile']['sessionId']
 		}
 	}
 

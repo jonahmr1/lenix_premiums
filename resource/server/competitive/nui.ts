@@ -148,7 +148,7 @@ onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadines
 })
 
 onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async (client) => {
-	return await Parties.leaveParty(client), null
+	return await Parties.leaveParty(client)
 })
 
 onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
