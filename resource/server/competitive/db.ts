@@ -1,7 +1,7 @@
 import { oxmysql } from '@overextended/oxmysql'
 import knex from 'knex'
+import { fullName } from './utils'
 
-export const fullName = (table: string) => `lenix_competitive_${table}` as const
 
 const db = knex({ client: 'mysql' })
 

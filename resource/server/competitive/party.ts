@@ -6,7 +6,9 @@ import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
 import { palette } from "lenix"
 
+
 type Party = Competitive.Player['Party']
+
 
 export abstract class Parties {
 	private static readonly parties = new Map<number, {
