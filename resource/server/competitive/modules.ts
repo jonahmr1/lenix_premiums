@@ -23,6 +23,8 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 
 		if (profile) return {
 			...profile,
+			ready: false,
+			sessionId: client,
 			avatar: null
 		}
 

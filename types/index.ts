@@ -3,7 +3,7 @@ import type { Event, Request } from 'lenix'
 export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
-		playerInvited: Event<'competitive:playerInvited', [string, number]>
+		playerInvited: Event<'competitive:playerInvited', [Player['Profile']]>
 		updateParty: Event<'competitive:updateParty', [Player['Party']]>
 	}
 
@@ -38,6 +38,8 @@ export namespace Competitive {
 			name: string
 			avatar: string | null
 			status: 'online' | 'offline' | 'dnd'
+			ready: boolean
+			sessionId: number
 		}
 		Friend: Player['Profile']['profile_id']
 		Stats: {
@@ -81,7 +83,7 @@ export namespace Competitive {
 			assists: number
 		}
 		Party: {
-			profiles: (Competitive.Player['Profile'] & { ready: boolean, sessionId: number })[]
+			profiles: Competitive.Player['Profile'][]
 			size: number
 			leader: Competitive.Player['Profile']['profile_id']
 		}

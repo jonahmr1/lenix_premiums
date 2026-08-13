@@ -47,23 +47,23 @@ export const Play = ({
 		})()
 
 		const disposes = [
-			onNuiEmit<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
+			onNuiEmit<Competitive.Events['playerInvited']>('competitive:playerInvited', (inviter) => {
 				toast('New party invite', {
-					description: `${name} invited you to their party.`,
+					description: `${inviter.name} invited you to their party.`,
 					action: {
 						label: "Accept",
 						onClick: async () => {
-							const newParty = await fetchNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+							const newParty = await fetchNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter: inviter.sessionId })
 							setParty(newParty)
 						},
 					},
 					cancel: {
 						label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
 						onClick: () => {
-							fetchNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
+							fetchNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter: inviter.sessionId })
 						},
 					},
-					duration: config.invitesSpamPeriod * 1000
+					duration: config.invitesSpamPeriod * 1000,
 				})
 			}),
 			onNuiEmit<Competitive.Events['updateParty']>('competitive:updateParty', setParty)

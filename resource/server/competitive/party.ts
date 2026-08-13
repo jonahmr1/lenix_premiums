@@ -67,13 +67,15 @@ export abstract class Parties {
 
 			if (invites.has(invited) && !recursive) return
 
+			const profile = this.getProfile(client)
+			asserts(profile, `Failed to get client<${client}>`)
 			invites.add(invited)
 
 			setTimeout(() => {
 				invites.delete(invited)
 			}, Config.invitesSpamPeriod * 1000);
 
-			emitNet('lenix:server:competitive:getInvited', invited, client)
+			emitNet('lenix:server:competitive:getInvited', invited, profile)
 		} catch (e) {
 			console.log(palette('red', String(e)))
 		}
