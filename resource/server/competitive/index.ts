@@ -19,65 +19,16 @@ onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async 
 	return profile
 })
 
-onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
-	const profile = await getProfile(player ?? client)
-
-	return profile
+onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, { inviter }) => {
+	return await Parties.acceptInvite(client, inviter)
 })
 
-const getProfiles = async () => {
-	const profiles = await oxmysql.query<{
-		profile_id: string;
-		name: string;
-		status: "offline" | "online" | "dnd"
-	}[]>(
-		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
-	) satisfies Record<(typeof profileCols)[number], any>[]
-
-	return profiles.map(profile => ({
-		...profile,
-		avatar: null
-	}))
-}
+onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async (client, { size }) => {
+	return await Parties.setSize(client, size)
+})
 
 onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {
 	return await getProfiles()
-})
-
-onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
-	return await getProfiles()
-})
-
-onClientCallback('lenix:server:competitive:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
-	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
-	const performances: Competitive.Player['Performance'][] = await oxmysql.query<{
-		match_id: number
-		profile_id: string
-		result: 'win' | 'loss'
-		kills: number
-		deaths: number
-		assists: number
-	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')}`) satisfies Record<(typeof selectedCols)[number], any>[]
-
-	if (!performances.length) return []
-
-	return performances
-})
-
-onClientCallback('lenix:server:competitive:getPerformances', async (client): Promise<Competitive.APIs['getStats']> => {
-	const profile_id = getProfileId(client)
-
-	const performances = await oxmysql.query<{
-		result: 'win' | 'loss'
-		kills: number
-		deaths: number
-		assists: number
-	}[]>(
-		`SELECT ${performancesCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
-		[profile_id]
-	) satisfies Record<(typeof performancesCols)[number], any>[]
-
-	return performances
 })
 
 onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {
@@ -137,7 +88,7 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 onNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', async (client) => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
-	
+
 	try {
 		const friends = await oxmysql.query<{
 			status: 'accepted' | 'pending'
@@ -222,22 +173,79 @@ onClientCallback('lenix:server:competitive:getProfilesStats', async (_client, pr
 	}
 })
 
-onClientCallback('lenix:server:competitive:updateReadiness', (client, status: Competitive.Requests['updateReadiness']['2']['status']) => Parties.updateReadiness(client, status))
+onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
+	const profile = await getProfile(player ?? client)
 
-onClientCallback('lenix:server:competitive:leaveParty', (client) => {
-	Parties.leaveParty(client)
+	return profile
 })
 
-onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async (client, { size }) => {
-	return await Parties.setSize(client, size)
+const getProfiles = async () => {
+	const profiles = await oxmysql.query<{
+		profile_id: string;
+		name: string;
+		status: "offline" | "online" | "dnd"
+	}[]>(
+		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
+	) satisfies Record<(typeof profileCols)[number], any>[]
+
+	return profiles.map(profile => ({
+		...profile,
+		avatar: null
+	}))
+}
+
+onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
+	return await getProfiles()
 })
 
-onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: number) => Parties.invite(client, invited))
+onClientCallback('lenix:server:competitive:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
+	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
+	const performances: Competitive.Player['Performance'][] = await oxmysql.query<{
+		match_id: number
+		profile_id: string
+		result: 'win' | 'loss'
+		kills: number
+		deaths: number
+		assists: number
+	}[]>(`SELECT ${selectedCols.join(', ')} FROM ${fullName('performances')}`) satisfies Record<(typeof selectedCols)[number], any>[]
 
-onClientCallback('lenix:server:competitive:ignoreInvites', (client, inviter: number) => Parties.ignoreInvites(client, inviter))
+	if (!performances.length) return []
 
-onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, { inviter }) => {
-	return await Parties.acceptInvite(client, inviter)
+	return performances
+})
+
+onClientCallback('lenix:server:competitive:getPerformances', async (client): Promise<Competitive.APIs['getStats']> => {
+	const profile_id = getProfileId(client)
+
+	const performances = await oxmysql.query<{
+		result: 'win' | 'loss'
+		kills: number
+		deaths: number
+		assists: number
+	}[]>(
+		`SELECT ${performancesCols.join(', ')} FROM ${fullName('performances')} WHERE profile_id = ?`,
+		[profile_id]
+	) satisfies Record<(typeof performancesCols)[number], any>[]
+
+	return performances
+})
+
+onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
+	return await Parties.updateReadiness(client, status), null
+})
+
+onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async (client) => {
+	return await Parties.leaveParty(client), null
+})
+
+onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
+	if (client === invited) return 'You can\'t invite yourself'
+
+	return await Parties.invite(client, invited), null
+})
+
+onNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', (client, { inviter }) => {
+	return Parties.ignoreInvites(client, inviter), null
 })
 
 const printSnapshot = (data: object) => {

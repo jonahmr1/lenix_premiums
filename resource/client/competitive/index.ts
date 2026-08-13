@@ -108,18 +108,6 @@ onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 	return getDetailedStats(stats)
 })
 
-onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
-	if (client.player.serverId() === id) return 'You can\'t invite yourself'
-
-	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
-	return null
-})
-
-onNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', ({ inviter }) => {
-	triggerServerCallback('lenix:server:competitive:ignoreInvites', defaultDelay, inviter)
-	return null
-})
-
 onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', async ({ profiles }) => {
 	const stats = await triggerServerCallback<Competitive.APIs['getProfilesStats']>('lenix:server:competitive:getProfilesStats', defaultDelay, profiles)
 	asserts(stats, `Failed to get profiles stats`)
@@ -130,16 +118,6 @@ onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', a
 			getDetailedStats([stat]),
 		])
 	)
-})
-
-onNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', ({ status }) => {
-	triggerServerCallback<void>('lenix:server:competitive:updateReadiness', defaultDelay, status)
-	return null
-})
-
-onNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', () => {
-	triggerServerCallback<void>('lenix:server:competitive:leaveParty', defaultDelay)
-	return null
 })
 
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {

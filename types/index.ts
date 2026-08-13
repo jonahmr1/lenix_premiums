@@ -20,7 +20,7 @@ export namespace Competitive {
 		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
 		setStatus: Request<true, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
-		invitePlayer: Request<null | string, 'competitive:invitePlayer', { id: number }>
+		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>

@@ -204,7 +204,7 @@ export const Play = ({
 										<Button
 											onClick={async () => {
 												if (!invitedPlayer) return
-												const error = await triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { id: invitedPlayer })
+												const error = await triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { invited: invitedPlayer })
 												if (!error) return
 
 												toast(error)
