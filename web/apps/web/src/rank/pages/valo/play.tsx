@@ -9,7 +9,7 @@ import { Separator } from '@workspace/ui/components/separator'
 import type { Competitive } from 'types'
 import avatar from '@workspace/valo/assets/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { fetchNuiServer, onNuiEmit, fetchNui as triggerNui } from 'lenix/nui'
+import { fetchNuiServer, onNuiEmit } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
@@ -53,14 +53,14 @@ export const Play = ({
 					action: {
 						label: "Accept",
 						onClick: async () => {
-							const newParty = await triggerNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
+							const newParty = await fetchNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter })
 							setParty(newParty)
 						},
 					},
 					cancel: {
 						label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
 						onClick: () => {
-							triggerNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
+							fetchNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter })
 						},
 					},
 					duration: config.invitesSpamPeriod * 1000
@@ -75,7 +75,7 @@ export const Play = ({
 	useEffect(() => {
 		(async () => {
 			if (!party) return
-			const stats = await triggerNui<Competitive.Requests['party']['getStats']>(
+			const stats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
 			)
 			setStats(stats)
@@ -204,7 +204,7 @@ export const Play = ({
 										<Button
 											onClick={async () => {
 												if (!invitedPlayer) return
-												const error = await triggerNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { invited: invitedPlayer })
+												const error = await fetchNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { invited: invitedPlayer })
 												if (!error) return
 
 												toast(error)
@@ -224,7 +224,7 @@ export const Play = ({
 					<Button
 						className='group text-xl px-20 py-5'
 						onClick={() => {
-							triggerNui<Competitive.Requests['updateReadiness']>(
+							fetchNuiServer<Competitive.Requests['updateReadiness']>(
 								'competitive:updateReadiness',
 								{ status: playStatus === 'Ready' ? 'unready' : 'ready' }
 							)
@@ -243,7 +243,7 @@ export const Play = ({
 						hidden={isPartyLeader}
 						variant='outline' className='justify-evenly'
 						onClick={() => {
-							triggerNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+							fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
 						}}
 					>
 						<LogOut />

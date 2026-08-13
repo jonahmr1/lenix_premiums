@@ -27,7 +27,7 @@ import {
 import { Button } from '@workspace/elite/components/button'
 import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
-import { fetchNuiServer, focus, onNuiEmit, fetchNui as triggerNui } from 'lenix/nui'
+import { fetchNuiServer, focus, onNuiEmit } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import { Spinner } from '@workspace/ui/components/spinner'
