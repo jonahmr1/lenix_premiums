@@ -1,9 +1,8 @@
 import type { Competitive } from 'types/index'
 import { oxmysql } from "@overextended/oxmysql"
-import { fullName } from "./db"
 import { Parties } from "./party"
 import { palette } from "lenix"
-import { getProfileId } from "./utils"
+import { fullName, getProfileId } from "./utils"
 import { getProfile, getProfiles, getStatsDetails, profileCols } from "./modules"
 import { asserts, entries } from "@lenix/lenix"
 import { Config } from "common/config/competitive"

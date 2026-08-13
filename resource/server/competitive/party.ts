@@ -1,7 +1,7 @@
 import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { getProfile } from "./modules"
-import { getProfileId, getSourceByProfileId } from "./utils"
+import { getSourceByProfileId } from "./utils"
 import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
 import { palette } from "lenix"
@@ -26,7 +26,7 @@ export abstract class Parties {
 		asserts(profile, `Failed to get profile for player<${client}>`)
 	
 		 this.parties.set(client, {
-			profiles: [{ ...profile, ready: true }],
+			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: profile.profile_id,
 			size: 1
 		})
@@ -122,7 +122,7 @@ export abstract class Parties {
 			}
 			this.parties.delete(client)
 
-			inviterParty.profiles.push({ ...profile, ready: false })
+			inviterParty.profiles.push({ ...profile, ready: false, sessionId: client })
 
 			inviterParty.profiles.forEach(profile => {
 				const src = getSourceByProfileId(profile.profile_id)

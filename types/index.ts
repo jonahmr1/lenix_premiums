@@ -81,7 +81,7 @@ export namespace Competitive {
 			assists: number
 		}
 		Party: {
-			profiles: (Competitive.Player['Profile'] & { ready: boolean })[]
+			profiles: (Competitive.Player['Profile'] & { ready: boolean, sessionId: number })[]
 			size: number
 			leader: Competitive.Player['Profile']['profile_id']
 		}
