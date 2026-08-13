@@ -165,19 +165,19 @@ onNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', async 
 	}
 })
 
-onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus: Competitive.Player['Profile']['status']): Promise<boolean> => {
+onNuiServer<Competitive.Requests['setStatus']>('competitive:setStatus', async (client, { status }) => {
 	const profileId = getProfileId(client)
 
 	try {
 		const re = await oxmysql.query(
 			`UPDATE ${fullName('profiles')} SET status = ? WHERE profile_id = ?`,
-			[newStatus, profileId]
+			[status, profileId]
 		)
 		asserts(re, `Failed to update status for player<${client}>`)
-		return true
+		return true as const
 	} catch (error) {
 		console.log(palette('red', String(error)))
-		return false
+		throw error
 	}
 })
 
@@ -228,13 +228,15 @@ onClientCallback('lenix:server:competitive:leaveParty', (client) => {
 	Parties.leaveParty(client)
 })
 
-onClientCallback('lenix:server:competitive:setSize', (client, size: number): Promise<Competitive.Player['Party']> => Parties.setSize(client, size))
+onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async (client, { size }) => {
+	return await Parties.setSize(client, size)
+})
 
 onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: number) => Parties.invite(client, invited))
 
 onClientCallback('lenix:server:competitive:ignoreInvites', (client, inviter: number) => Parties.ignoreInvites(client, inviter))
 
-onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, inviter: number) => {
+onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, { inviter }) => {
 	return await Parties.acceptInvite(client, inviter)
 })
 

@@ -18,7 +18,7 @@ export namespace Competitive {
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
 		getStats: Request<Player['Stats'], 'competitive:getStats'>
 		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
-		setStatus: Request<Player['Profile']['status'] | null, 'competitive:setStatus', { status: Player['Profile']['status'] }>
+		setStatus: Request<true, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { id: number }>
 		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>

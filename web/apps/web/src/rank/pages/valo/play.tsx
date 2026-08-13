@@ -117,7 +117,7 @@ export const Play = ({
 					value={party.size.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
-						const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
+						const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
 						if (!party) {
 							toast('Wait a moment')
 							return

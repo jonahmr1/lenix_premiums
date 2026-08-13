@@ -108,23 +108,6 @@ onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 	return getDetailedStats(stats)
 })
 
-
-onNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async ({ size }) => {
-	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:setSize', defaultDelay, size)
-	if (party === undefined) return null
-	asserts(party, 'Failed to set party size')
-
-	return party
-})
-
-onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ status }) => {
-	const newStatus = await triggerServerCallback<boolean>('lenix:server:competitive:setStatus', defaultDelay, status)
-	if (newStatus === undefined) return null
-	asserts(newStatus, 'Failed to set status')
-
-	return status
-})
-
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
 	if (client.player.serverId() === id) return 'You can\'t invite yourself'
 

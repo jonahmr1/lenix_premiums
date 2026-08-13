@@ -142,12 +142,12 @@ const Status = ({ profile, setProfile }: {
 							key={value}
 							onClick={async () => {
 								if (value === 'in_game') throw `unexpected profile status<${value}>`
-								const status = await triggerNui<Competitive.Requests['setStatus']>('competitive:setStatus', { status: value })
+								const status = await fetchNuiServer<Competitive.Requests['setStatus']>('competitive:setStatus', { status: value })
 								if (!status) {
 									toast('Try again later')
 									return
 								}
-								setProfile(prev => (prev ? { ...prev, status } : prev))
+								setProfile(prev => (prev ? { ...prev, status: value } : prev))
 							}}
 						>
 							<span className={`size-2 rounded-full ${option.className}`} />
