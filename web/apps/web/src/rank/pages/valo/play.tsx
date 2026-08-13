@@ -85,10 +85,8 @@ export const Play = ({
 	if (!party) return <Loading className='h-full' />
 	
 	const renderOrder = getRenderOrder(party.size)
-	
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.profile_id
-
 	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
 	
 	return (
@@ -230,10 +228,13 @@ export const Play = ({
 								case 'Get Ready': {
 									triggerNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', { status: 'ready' })
 								} break
+								case 'Ready': {
+									triggerNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', { status: 'unready' })
+								} break
 							}
 						}}
 					>
-						{}
+						{playStatus}
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button hidden={isPartyLeader} variant='outline' className='justify-evenly'>
