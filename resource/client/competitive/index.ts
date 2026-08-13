@@ -26,13 +26,6 @@ const getProfiles = async () => {
 	return profiles
 }
 
-const getProfile = async (inviter?: number) => {
-	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:competitive:getProfile', defaultDelay, inviter)
-	asserts(profile, 'Failed to get profile')
-
-	return profile
-}
-
 const getDetailedStats = (stats: Competitive.APIs['getStats']) => {
 	const totals = stats.reduce(
 		(acc, stat) => {
@@ -59,8 +52,6 @@ const getDetailedStats = (stats: Competitive.APIs['getStats']) => {
 		matches: totals.wins + totals.losses,
 	}
 }
-
-onNui<Competitive.Requests['getProfile']>('competitive:getProfile', async () => await getProfile())
 
 onNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', async () => {
 	const performances = await triggerServerCallback<Competitive.Player['Performance'][]>('lenix:server:competitive:getPerformances', defaultDelay)
@@ -110,13 +101,6 @@ onNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', asyn
 		}))
 })
 
-onNui<Competitive.Requests['getMatches']>('competitive:getMatches', async () => {
-	const matches = await triggerServerCallback<Competitive.Player['Match'][]>('lenix:server:competitive:getMatches', defaultDelay)
-	asserts(matches, 'Failed to get matches')
-
-	return matches
-})
-
 onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 	const stats = await triggerServerCallback<Competitive.APIs['getStats']>('lenix:server:competitive:getPerformances', defaultDelay)
 	asserts(stats, 'Failed to get stats')
@@ -124,12 +108,6 @@ onNui<Competitive.Requests['getStats']>('competitive:getStats', async () => {
 	return getDetailedStats(stats)
 })
 
-onNui<Competitive.Requests['party']['get']>('competitive:party:get', async () => {
-	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:getParty', defaultDelay)
-	asserts(party, 'Failed to get party')
-
-	return party
-})
 
 onNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async ({ size }) => {
 	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:setSize', defaultDelay, size)
@@ -137,13 +115,6 @@ onNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', asy
 	asserts(party, 'Failed to set party size')
 
 	return party
-})
-
-onNui<Competitive.Requests['getFriends']>('competitive:getFriends', async () => {
-	const friends = await triggerServerCallback<Competitive.Player['Profile'][] | undefined>('lenix:server:competitive:getFriends', defaultDelay)
-	asserts(friends, 'Failed to get friends')
-
-	return friends
 })
 
 onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ status }) => {
@@ -154,20 +125,11 @@ onNui<Competitive.Requests['setStatus']>('competitive:setStatus', async ({ statu
 	return status
 })
 
-onNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', getProfiles)
-
 onNui<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async ({ id }) => {
 	if (client.player.serverId() === id) return 'You can\'t invite yourself'
 
 	triggerServerCallback('lenix:server:competitive:invitePlayer', defaultDelay, id)
 	return null
-})
-
-onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({ inviter }) => {
-	const party = await triggerServerCallback<Competitive.Player['Party']>('lenix:server:competitive:acceptInvite', defaultDelay, inviter)
-	asserts(party, 'Failed to accept invite')
-
-	return party
 })
 
 onNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', ({ inviter }) => {
@@ -198,7 +160,9 @@ onNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', () => {
 })
 
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {
-	const profile = await getProfile(inviter)
+	const profile = await triggerServerCallback<Competitive.Player['Profile']>('lenix:server:competitive:getProfile', defaultDelay, inviter)
+	asserts(profile, 'Failed to get profile')
+
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', profile.name, inviter)
 	// TODO
 	notify({ title: 'You have received a new invite' })

@@ -9,7 +9,7 @@ import { DiamondIcon } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { focus, onNuiEmit, onKeyDown, fetchNui, unFocus } from 'lenix/nui'
+import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer } from 'lenix/nui'
 
 export const Lobby = () => {
 	const { pathname } = useLocation()
@@ -36,7 +36,7 @@ export const Lobby = () => {
 	useEffect(() => {
 		if (!display) return
 		;(async () => {
-			const profile = await fetchNui<Competitive.Requests['getProfile']>('competitive:getProfile', {})
+			const profile = await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)
 		})()
 	}, [display])

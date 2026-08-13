@@ -8,19 +8,24 @@ import { getProfileId } from "./utils"
 import { getProfile } from "./modules"
 import { asserts } from "@lenix/lenix"
 import { Config } from "common/config/competitive"
+import { onNuiServer } from "lenix/server"
 
 const profileCols = ['profile_id', 'name', 'status'] as const
 const performancesCols = ['result', 'kills', 'deaths', 'assists'] as const
 
-
-onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
-	const profile = await getProfile(player ?? client)
-	asserts(profile, `Failed to get profile for player<${client}>`)
+onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async (client) => {
+	const profile = await getProfile(client)
 
 	return profile
 })
 
-onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
+onClientCallback('lenix:server:competitive:getProfile', async (client, player?: number): Promise<Competitive.Player['Profile']> => {
+	const profile = await getProfile(player ?? client)
+
+	return profile
+})
+
+const getProfiles = async () => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
@@ -33,6 +38,14 @@ onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promis
 		...profile,
 		avatar: null
 	}))
+}
+
+onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {
+	return await getProfiles()
+})
+
+onClientCallback('lenix:server:competitive:getProfiles', async (_client): Promise<Competitive.Player['Profile'][]> => {
+	return await getProfiles()
 })
 
 onClientCallback('lenix:server:competitive:getPerformances', async (_client): Promise<Competitive.Player['Performance'][]> => {
@@ -67,7 +80,7 @@ onClientCallback('lenix:server:competitive:getPerformances', async (client): Pro
 	return performances
 })
 
-onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<Competitive.Player['Match'][]> => {
+onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
@@ -121,9 +134,10 @@ onClientCallback('lenix:server:competitive:getMatches', async (client): Promise<
 	}
 })
 
-onClientCallback('lenix:server:competitive:getFriends', async (client): Promise<Competitive.Player['Profile'][] | undefined> => {
+onNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', async (client) => {
 	const selectedCols = ['sender_id', 'receiver_id', 'status'] as const
 	const profile_id = getProfileId(client)
+	
 	try {
 		const friends = await oxmysql.query<{
 			status: 'accepted' | 'pending'
@@ -147,6 +161,7 @@ onClientCallback('lenix:server:competitive:getFriends', async (client): Promise<
 		return profiles
 	} catch (e) {
 		console.log(palette('red', String(e)))
+		throw e
 	}
 })
 
@@ -166,7 +181,7 @@ onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus:
 	}
 })
 
-onClientCallback('lenix:server:competitive:getParty', async (client): Promise<Competitive.Player['Party']> => {
+onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
 	const profile = await getProfile(client)
 	asserts(profile, `Failed to get client<${client}> profile`)
 
@@ -219,7 +234,9 @@ onClientCallback('lenix:server:competitive:invitePlayer', (client, invited: numb
 
 onClientCallback('lenix:server:competitive:ignoreInvites', (client, inviter: number) => Parties.ignoreInvites(client, inviter))
 
-onClientCallback('lenix:server:competitive:acceptInvite', (client, inviter: number): Promise<Competitive.Player['Party']> => Parties.acceptInvite(client, inviter))
+onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, inviter: number) => {
+	return await Parties.acceptInvite(client, inviter)
+})
 
 const printSnapshot = (data: object) => {
 	const size = Buffer.byteLength(JSON.stringify(data), 'utf8')

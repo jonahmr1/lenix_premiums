@@ -9,7 +9,7 @@ import { Separator } from '@workspace/ui/components/separator'
 import type { Competitive } from 'types'
 import avatar from '@workspace/valo/assets/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { onEvent, fetchNui as triggerNui } from 'lenix/nui'
+import { fetchNuiServer, onNuiEmit, fetchNui as triggerNui } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
@@ -42,12 +42,12 @@ export const Play = ({
 
 	useEffect(() => {
 		(async () => {
-			const party = await triggerNui<Competitive.Requests['party']['get']>('competitive:party:get', {})
+			const party = await fetchNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', {})
 			setParty(party)
 		})()
 
 		const disposes = [
-			onEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
+			onNuiEmit<Competitive.Events['playerInvited']>('competitive:playerInvited', (name, inviter) => {
 				toast('New party invite', {
 					description: `${name} invited you to their party.`,
 					action: {
@@ -66,7 +66,7 @@ export const Play = ({
 					duration: config.invitesSpamPeriod * 1000
 				})
 			}),
-			onEvent<Competitive.Events['updateParty']>('competitive:updateParty', setParty)
+			onNuiEmit<Competitive.Events['updateParty']>('competitive:updateParty', setParty)
 		]
 
 		return () => disposes.forEach(dispose => dispose())

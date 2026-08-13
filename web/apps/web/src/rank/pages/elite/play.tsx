@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
-import { triggerNui } from 'lenix/nui'
+import { fetchNuiServer } from 'lenix/nui'
 import avatar from '@workspace/elite/assets/avatar.png'
 import { entries, type S } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
@@ -56,14 +56,14 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 
 	useEffect(() => {
-		triggerNui<Competitive.Requests['party']['get']>('competitive:party:create', {}).then(setParty)
+		fetchNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', {}).then(setParty)
 
 		if (!stats) {
-			triggerNui<Competitive.Requests['getStats']>('competitive:getStats', {}).then(setStats)
+			fetchNuiServer<Competitive.Requests['getStats']>('competitive:getStats', {}).then(setStats)
 		}
 
 		if (!leaderboard) {
-			triggerNui<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', {}).then(setLeaderboard)
+			fetchNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', {}).then(setLeaderboard)
 		}
 	}, [])
 
@@ -233,7 +233,7 @@ export const Play = ({
 								value={party.size.toString()}
 								onValueChange={async value => {
 									if (!value) return
-									const party = await triggerNui<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size: Number(value) })
+									const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size: Number(value) })
 									if (!party) {
 										// TODO: add how much secs left
 										toast('Try again later')

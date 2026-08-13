@@ -5,7 +5,7 @@ import type { Competitive } from "types/index"
 import { palette } from "lenix"
 import { asserts } from "@lenix/lenix"
 
-export const getProfile = async (client: number): Promise<Competitive.Player['Profile'] | undefined> => {
+export const getProfile = async (client: number): Promise<Competitive.Player['Profile']> => {
 	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
 	const profileId = getProfileId(client)
 
@@ -34,5 +34,6 @@ export const getProfile = async (client: number): Promise<Competitive.Player['Pr
 		return await getProfile(client)
 	} catch (e) {
 		console.log(palette('red', String(e)))
+		throw e
 	}
 }

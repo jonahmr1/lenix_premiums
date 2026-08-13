@@ -5,7 +5,7 @@ import { Activity, BarChart3, Clock, Crosshair, History, Shield, Skull, Sparkles
 import type { Competitive } from 'types'
 import { useEffect, useState } from 'react'
 import { Loading } from '@workspace/elite/elements/loading.js'
-import { triggerNui } from 'lenix/nui'
+import { fetchNuiServer } from 'lenix/nui'
 
 const copy = {
 	title: 'Statistics',
@@ -29,7 +29,7 @@ export const Stats = ({
 	const [matches, setMatches] = useState<Competitive.Player['Match'][]>()
 
 	useEffect(() => {
-		triggerNui<Competitive.Requests['getMatches']>('competitive:getMatches', {}).then(setMatches)
+		fetchNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', {}).then(setMatches)
 	}, [])
 
 	if (!matches || !stats) return <Loading className='h-full' />

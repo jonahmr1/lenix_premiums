@@ -27,7 +27,7 @@ import {
 import { Button } from '@workspace/elite/components/button'
 import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
-import { focus, onEvent, fetchNui as triggerNui } from 'lenix/nui'
+import { fetchNuiServer, focus, onNuiEmit, fetchNui as triggerNui } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import { Spinner } from '@workspace/ui/components/spinner'
@@ -185,7 +185,7 @@ const Friends = ({ drawer, setDrawer, friends }: {
 						</div>
 						<Button onClick={async () => {
 							setOpen(true)
-							const profiles = await triggerNui<Competitive.Requests['getProfiles']>('competitive:getProfiles', {})
+							const profiles = await fetchNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', {})
 							setProfiles(profiles)
 						}} size='sm' className='gap-2'>
 							<Plus className='size-4' />
@@ -303,11 +303,11 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		const disposes = [
-			onEvent<Competitive.Events['open']>('competitive:open', async () => {
+			onNuiEmit<Competitive.Events['open']>('competitive:open', async () => {
 				setDisplay(true)
 				focus()
-				setProfile(await triggerNui<Competitive.Requests['getProfile']>('competitive:getProfile', {}))
-				setFriends(await triggerNui<Competitive.Requests['getFriends']>('competitive:getFriends', {}))
+				setProfile(await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {}))
+				setFriends(await fetchNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', {}))
 			}),
 		]
 		const handler = (e: KeyboardEvent) => {
