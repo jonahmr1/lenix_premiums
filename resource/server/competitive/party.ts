@@ -11,7 +11,7 @@ type Party = Competitive.Player['Party']
 
 
 export abstract class Parties {
-	private static readonly parties = new Map<number, {
+	private static readonly parties = new Set<{
 		profiles: Party['profiles']
 		leader: Party['leader']
 		size: Party['size']
@@ -19,19 +19,25 @@ export abstract class Parties {
 	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	static #pendingInvites = new Map<number, Set<number>>()
 
+	static getPartyByClient(client: number) {
+		return [...this.parties.values()].find(party =>
+			party.profiles.some(profile => profile.sessionId === client)
+		)
+	}
+
 	static async new(
 		client: number
 	): Promise<Party> {
 		const profile = await getProfile(client)
 		asserts(profile, `Failed to get profile for player<${client}>`)
 	
-		 this.parties.set(client, {
+		 this.parties.add({
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: profile.profile_id,
 			size: 1
 		})
 
-		const party = this.parties.get(client)
+		const party = this.getPartyByClient(client)
 		asserts(party)
 		
 		return party
@@ -110,7 +116,8 @@ export abstract class Parties {
 				const newPartyLeaderSource = getSourceByProfileId(newPartyLeader)
 				asserts(newPartyLeaderSource, `Failed to get the new leader<${newPartyLeader}>'s source`)
 
-				const newParty = this.parties.set(newPartyLeaderSource, party).get(newPartyLeaderSource)
+				this.parties.add(party)
+				const newParty = this.getPartyByClient(newPartyLeaderSource)
 				asserts(newParty)
 				
 				profilesLeft.forEach(profile => {
@@ -120,7 +127,7 @@ export abstract class Parties {
 					triggerClientCallback('lenix:server:competitive:updateParty', src, newParty)
 				})
 			}
-			this.parties.delete(client)
+			this.parties.delete(party)
 
 			inviterParty.profiles.push({ ...profile, ready: false, sessionId: client })
 
