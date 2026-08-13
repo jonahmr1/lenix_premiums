@@ -166,7 +166,6 @@ onClientCallback('lenix:server:competitive:setStatus', async (client, newStatus:
 	}
 })
 
-
 onClientCallback('lenix:server:competitive:getParty', async (client): Promise<Competitive.Player['Party']> => {
 	const profile = await getProfile(client)
 	asserts(profile, `Failed to get client<${client}> profile`)
@@ -189,10 +188,9 @@ onClientCallback('lenix:server:competitive:getProfilesStats', async (_client, pr
 			[profiles]
 		) satisfies Record<(typeof selectedCols)[number], any>[]
 
-		const re = Object.fromEntries(
+		return Object.fromEntries(
 			performances.map(({ profile_id, ...stats }) => [profile_id, stats])
 		)
-		return re
 	} catch (e) {
 		console.log(palette('red', String(e)))
 		throw e

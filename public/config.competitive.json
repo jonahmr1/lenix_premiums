@@ -81,5 +81,5 @@
 		"death": -3
 	},
 	"ignoreInvitesPeriod": 15,
-	"invitesSpamPeriod": 15
+	"invitesSpamPeriod": 5
 }

@@ -75,7 +75,10 @@ export const Play = ({
 	useEffect(() => {
 		(async () => {
 			if (!party) return
-			const stats = await triggerNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) })
+			const stats = await triggerNui<Competitive.Requests['party']['getStats']>(
+				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
+			)
+			console.log(JSON.stringify(stats), stats)
 			setStats(stats)
 		})()
 	}, [party])
