@@ -27,7 +27,7 @@ import {
 import { Button } from '@workspace/elite/components/button'
 import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
-import { focus, onEvent, triggerNui } from 'lenix/nui'
+import { focus, onEvent, fetchNui as triggerNui } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
 import { Spinner } from '@workspace/ui/components/spinner'
@@ -313,7 +313,7 @@ export const Lobby = () => {
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
 			setDisplay(false)
-			focus(false, false)
+			focus()
 		}
 
 		window.addEventListener('keydown', handler)

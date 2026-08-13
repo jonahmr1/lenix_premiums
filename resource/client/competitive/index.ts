@@ -172,6 +172,7 @@ onNui<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async ({
 
 onNui<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', ({ inviter }) => {
 	triggerServerCallback('lenix:server:competitive:ignoreInvites', defaultDelay, inviter)
+	return null
 })
 
 onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', async ({ profiles }) => {
@@ -188,10 +189,12 @@ onNui<Competitive.Requests['party']['getStats']>('competitive:party:getStats', a
 
 onNui<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', ({ status }) => {
 	triggerServerCallback<void>('lenix:server:competitive:updateReadiness', defaultDelay, status)
+	return null
 })
 
 onNui<Competitive.Requests['leaveParty']>('competitive:leaveParty', () => {
 	triggerServerCallback<void>('lenix:server:competitive:leaveParty', defaultDelay)
+	return null
 })
 
 onNet('lenix:server:competitive:getInvited', async (inviter: number) => {

@@ -11,7 +11,7 @@
         "@overextended/oxmysql": "^2.14.1",
         "@polar-sh/sdk": "^1.0.0-alpha.16",
         "knex": "^3.3.0",
-        "lenix": "^1.7.21",
+        "lenix": "^1.7.24",
       },
       "devDependencies": {
         "@citizenfx/client": "latest",
@@ -461,7 +461,7 @@
 
     "knex": ["knex@3.3.0", "", { "dependencies": { "colorette": "2.0.19", "commander": "^10.0.0", "debug": "4.3.4", "escalade": "^3.1.1", "esm": "^3.2.25", "get-package-type": "^0.1.0", "getopts": "2.3.0", "interpret": "^2.2.0", "lodash": "^4.18.1", "pg-connection-string": "2.6.2", "rechoir": "^0.8.0", "resolve-from": "^5.0.0", "tarn": "^3.1.0", "tildify": "2.0.0" }, "peerDependencies": { "better-sqlite3": "*", "mariadb": "*", "mysql": "*", "mysql2": "*", "pg": "*", "pg-native": "*", "pg-query-stream": "^4.14.0", "sqlite3": "*", "tedious": "*" }, "optionalPeers": ["better-sqlite3", "mariadb", "mysql", "mysql2", "pg", "pg-native", "pg-query-stream", "sqlite3", "tedious"], "bin": { "knex": "bin/cli.js" } }, "sha512-LgWl031hNuLv9Lhxdd9093zULa2aNcoP04Bk29e5NidgRcEr/T0rAr2WYi4BhjTiCDoQiRU56meUE5rppLKZzQ=="],
 
-    "lenix": ["lenix@1.7.21", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix" }, "peerDependencies": { "typescript": "^5" } }, "sha512-WcG7ncHaTm5KXtW+jwU0SsK3FWqyL8CTk7/jN2xopABly1YhWbd7eaJM7Lx6BeZTVN1XG2gcAfEf10YQUaUqMA=="],
+    "lenix": ["lenix@1.7.24", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.16" }, "peerDependencies": { "typescript": "^5" } }, "sha512-1vVMiuvN9+qHV5VAxKll4RziNrP++fjBp+fI7IPqNV+l9U+hHi8xJ0FsWPBC1RUfiB1uXwWgPkqLofNTc1tGvA=="],
 
     "levn": ["levn@0.3.0", "", { "dependencies": { "prelude-ls": "~1.1.2", "type-check": "~0.3.2" } }, "sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA=="],
 
@@ -635,8 +635,12 @@
 
     "knex/commander": ["commander@10.0.1", "", {}, "sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug=="],
 
+    "lenix/@lenix/lenix": ["@jsr/lenix__lenix@1.8.16", "https://npm.jsr.io/~/11/@jsr/lenix__lenix/1.8.16.tgz", {}, "sha512-88e6pnzXcjXTrEbFF2eYz9RfAoBjR9PO4YZCdebCT8GDbeTqEoBCXQsuVXMLT3wtSEi5RHDDVyjagjF2AZH3+A=="],
+
     "md5/is-buffer": ["is-buffer@1.1.6", "", {}, "sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w=="],
 
     "micromatch/picomatch": ["picomatch@2.3.2", "", {}, "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA=="],
+
+    "web/@lenix/lenix": ["@jsr/lenix__lenix@1.8.16", "https://npm.jsr.io/~/11/@jsr/lenix__lenix/1.8.16.tgz", {}, "sha512-88e6pnzXcjXTrEbFF2eYz9RfAoBjR9PO4YZCdebCT8GDbeTqEoBCXQsuVXMLT3wtSEi5RHDDVyjagjF2AZH3+A=="],
   }
 }

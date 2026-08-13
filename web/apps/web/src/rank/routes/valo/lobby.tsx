@@ -9,7 +9,7 @@ import { DiamondIcon } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { focus, onEvent, triggerNui } from 'lenix/nui'
+import { focus, onEvent, onKeyDown, fetchNui as triggerNui, unFocus } from 'lenix/nui'
 
 export const Lobby = () => {
 	const { pathname } = useLocation()
@@ -19,23 +19,18 @@ export const Lobby = () => {
 	const [display, setDisplay] = useState(false)
 
 	useEffect(() => {
-		const dispose = onEvent<Competitive.Events['open']>('competitive:open', () => {
-			setDisplay(true)
-			focus()
-		})
+		const disposes = [
+			onEvent<Competitive.Events['open']>('competitive:open', () => {
+				setDisplay(true)
+				focus()
+			}),
+			onKeyDown('Escape', () => {
+				setDisplay(false)
+				unFocus()
+			})
+		]
 
-		const handler = (e: KeyboardEvent) => {
-			if (e.key !== 'Escape') return
-			setDisplay(false)
-			focus(false, false)
-		}
-
-		window.addEventListener('keydown', handler)
-
-		return () => {
-			dispose()
-			window.removeEventListener('keydown', handler)
-		}
+		return () => disposes.forEach(dispose => dispose())
 	}, [])
 
 	useEffect(() => {
