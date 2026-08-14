@@ -74,11 +74,11 @@ export const Play = ({
 
 	useEffect(() => {
 		setTimeout(async () => {
-			if (!party) return
-			const stats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
+			if (!party || stats) return
+			const newStats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
 			)
-			setStats(stats)
+			setStats(newStats)
 		})
 	}, [party])
 
@@ -117,12 +117,9 @@ export const Play = ({
 					value={party.roomAvailable.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
-						const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
-						if (!party) {
-							toast('Wait a moment')
-							return
-						}
-						setParty(party)
+						if (size === party.roomAvailable) return
+						const updatedParty = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
+						setParty(updatedParty)
 					}}
 				>
 					{Array.from(
@@ -203,11 +200,11 @@ export const Play = ({
 									<DialogClose>
 										<Button
 											onClick={async () => {
-												if (!invitedPlayer) return
-												const error = await fetchNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { invited: invitedPlayer })
-												if (!error) return
-
-												toast(error)
+												if (!invitedPlayer || invitedPlayer === profile?.sessionId) {
+													toast('Invitation failed')
+													return
+												}
+												fetchNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', { invited: invitedPlayer })
 											}}
 										>Send</Button>
 									</DialogClose>

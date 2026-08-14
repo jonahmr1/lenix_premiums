@@ -3,7 +3,7 @@ import { oxmysql } from "@overextended/oxmysql"
 import { Parties } from "./party"
 import { palette } from "lenix"
 import { fullName, getProfileId } from "./utils"
-import { getProfiles, getStatsDetails, profileCols } from "./modules"
+import { fetchProfile, getProfiles, getStatsDetails, profileCols } from "./modules"
 import { asserts, entries } from "@lenix/lenix"
 import { Config } from "common/config/competitive"
 import { onNuiServer } from "lenix/server"
@@ -20,7 +20,7 @@ const defaultStats = {
 
 
 onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async (client) => {
-	const profile = await Parties.getProfileFromParties(client)
+	const profile = await fetchProfile(client)
 
 	return profile
 })

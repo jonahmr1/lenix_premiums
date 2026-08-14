@@ -21,7 +21,7 @@ export abstract class Parties {
 
 	static async getProfileFromParties(client: number) {
 		const profile = (await this.getPartyByClient(client)).profiles.find(profile => profile.sessionId === client)
-		asserts(profile)
+		asserts(profile, `Failed to get client<${client}> profile`)
 
 		return profile
 	}
@@ -40,11 +40,9 @@ export abstract class Parties {
 
 	static async setSize(client: number, size: number): Promise<Party> {
 		const profile = await this.getProfileFromParties(client)
-		asserts(profile, `Failed to get client<${client}> profile`)
-
 		const party = await this.getPartyByClient(client)
 
-		asserts(party.profiles.length <= size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
+		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
 		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
 
 		party.roomAvailable = size
@@ -55,7 +53,6 @@ export abstract class Parties {
 	static async new(
 		client: number
 	): Promise<Party> {
-		console.log('new party')
 		const profile = await fetchProfile(client)
 
 		this.parties.add({

@@ -12,7 +12,7 @@ export namespace Competitive {
 		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
 		party: {
 			get: Request<Player['Party'], 'competitive:party:get'>
-			setSize: Request<Player['Party'] | null, 'competitive:party:setSize', { size: number }>
+			setSize: Request<Player['Party'], 'competitive:party:setSize', { size: number }>
 			getStats: Request<Record<string, Player['Stats']>, 'competitive:party:getStats', { profiles: string[] }>
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>

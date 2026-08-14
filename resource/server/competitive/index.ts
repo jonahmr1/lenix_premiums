@@ -1,6 +1,4 @@
 import './nui'
-import { onClientCallback } from "@overextended/ox_lib/server"
-import type { Competitive } from 'types/index'
 
 const printSnapshot = (data: object) => {
 	const size = Buffer.byteLength(JSON.stringify(data), 'utf8')
