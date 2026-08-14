@@ -35,10 +35,10 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
-		;(async () => {
+		setTimeout(async () => {
 			const profile = await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)
-		})()
+		})
 	}, [display])
 
 	if (!display) return

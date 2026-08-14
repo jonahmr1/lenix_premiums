@@ -1,7 +1,6 @@
 import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
-import { getSourceByProfileId } from "./utils"
 import { Config } from "common/config/competitive"
 import { triggerClientCallback } from "@overextended/ox_lib/server"
 import { palette } from "lenix"
