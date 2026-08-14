@@ -117,7 +117,7 @@ export const Play = ({
 					value={party.roomAvailable.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
-						if (size === party.roomAvailable) return
+						if (size === 0) return
 						const updatedParty = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
 						setParty(updatedParty)
 					}}
