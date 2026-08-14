@@ -66,9 +66,7 @@ export abstract class Parties {
 		return party
 	}
 
-	static join(client: number, inviterParty: Party) {
-		const profile = this.getProfileFromParties(client)
-
+	static join(profile: Party['profiles'][number], inviterParty: Party) {
 		// add and set him unready
 		inviterParty.profiles.push({ ...profile, ready: false })
 
@@ -163,8 +161,9 @@ export abstract class Parties {
 			const party = this.getPartyByClient(client)
 			asserts(party !== inviterParty, 'Client is already in this party')
 
+			const profile = this.getProfileFromParties(client)
 			this.remove(client, party)
-			this.join(client, inviterParty)
+			this.join(profile, inviterParty)
 
 			inviterInvites?.delete(client)
 
