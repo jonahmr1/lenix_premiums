@@ -231,9 +231,9 @@ export const Play = ({
 							<span>{playStatus}</span>
 						) : (
 							<>
-								<span className='group-hover:hidden'>{playStatus}</span>
+								<span className='group-hover:hidden'>{playStatus === 'Get Ready' ? 'UnReady' : 'Ready'}</span>
 								<span className='hidden group-hover:inline'>
-									{playStatus === 'Ready' ? 'UnReady' : 'Ready'}
+									{playStatus === 'Ready' ? 'UnReady' : 'Get Ready'}
 								</span>
 							</>
 						)}

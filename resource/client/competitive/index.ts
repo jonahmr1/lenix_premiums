@@ -1,9 +1,6 @@
-import { asserts } from '@lenix/lenix'
 import { notify, onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
 import { control, emitNui as emitEvent } from 'lenix/client'
 import type { Competitive } from 'types/index'
-
-const defaultDelay = 5000
 
 control.on({
 	event: 'press',
@@ -17,6 +14,6 @@ onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player[
 	notify({ title: 'You have received a new invite' })
 })
 
-onServerCallback('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
+onNet('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
 	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
 })

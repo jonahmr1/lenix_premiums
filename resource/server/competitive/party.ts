@@ -2,7 +2,6 @@ import { asserts } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
 import { Config } from "common/config/competitive"
-import { triggerClientCallback } from "@overextended/ox_lib/server"
 import { palette } from "lenix"
 
 
@@ -71,7 +70,7 @@ export abstract class Parties {
 		inviterParty.profiles.push({ ...profile, ready: false })
 
 		inviterParty.profiles.forEach(profile => {
-			triggerClientCallback('lenix:server:competitive:updateParty', profile.sessionId, inviterParty)
+			emitNet('lenix:server:competitive:updateParty', profile.sessionId, inviterParty)
 		})
 	}
 
@@ -93,7 +92,7 @@ export abstract class Parties {
 
 		party.profiles = profilesLeft
 		profilesLeft.forEach(profile => {
-			triggerClientCallback('lenix:server:competitive:updateParty', profile.sessionId, party)
+			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
 		})
 	}
 
@@ -112,6 +111,10 @@ export abstract class Parties {
 		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
 
 		partyProfile.ready = status === 'ready' ? true : false
+
+		party.profiles.forEach(profile => {
+			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
+		})
 	}
 
 	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
