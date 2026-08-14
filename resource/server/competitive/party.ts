@@ -26,12 +26,12 @@ export abstract class Parties {
 		return profile
 	}
 
-	static async getPartyByClient(client: number, newParty?: boolean /* create new party if not found */) {
-		const party = [...this.parties.values()].find(party =>
+	static async getPartyByClient(client: number, fallToCreate?: boolean /* create new party if not found */) {
+		let party = [...this.parties.values()].find(party =>
 			party.profiles.some(profile => profile.sessionId === client)
 		)
-		if (!party && !newParty) {
-			return await Parties.new(client)
+		if (fallToCreate && !party) {
+			party = await Parties.new(client)
 		}
 		asserts(party, `Failed to get client<${client}> party`)
 
@@ -139,7 +139,7 @@ export abstract class Parties {
 
 			if (invites.has(invited) && !recursive) return
 
-			const profile = this.getProfileFromParties(client)
+			const profile = await this.getProfileFromParties(client)
 			invites.add(invited)
 
 			setTimeout(() => {
