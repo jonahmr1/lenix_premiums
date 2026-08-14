@@ -229,12 +229,14 @@ export const Play = ({
 					>
 						{isPartyLeader ? (
 							<span>{playStatus}</span>
-						) : <>
-							<span className='group-hover:hidden'>{playStatus}</span>
-							{playStatus === 'Ready' && (
-								<span className='hidden group-hover:inline'>UnReady</span>
-							)}
-						</>}
+						) : (
+							<>
+								<span className='group-hover:hidden'>{playStatus}</span>
+								<span className='hidden group-hover:inline'>
+									{playStatus === 'Ready' ? 'UnReady' : 'Ready'}
+								</span>
+							</>
+						)}
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button
