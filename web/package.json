@@ -15,7 +15,6 @@
 		"i": "cd packages/ui && bun i && cd ../elite && bun i && cd ../../apps/web && bun i"
 	},
 	"dependencies": {
-		"@lenix/lenix": "npm:@jsr/lenix__lenix",
 		"lenix": "^1.8.2"
 	},
 	"devDependencies": {

@@ -31,7 +31,6 @@
       "name": "web",
       "version": "0.0.1",
       "dependencies": {
-        "@lenix/lenix": "npm:@jsr/lenix__lenix",
         "lenix": "^1.8.2",
       },
       "devDependencies": {
@@ -640,7 +639,5 @@
     "md5/is-buffer": ["is-buffer@1.1.6", "", {}, "sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w=="],
 
     "micromatch/picomatch": ["picomatch@2.3.2", "", {}, "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA=="],
-
-    "web/@lenix/lenix": ["@jsr/lenix__lenix@1.8.16", "https://npm.jsr.io/~/11/@jsr/lenix__lenix/1.8.16.tgz", {}, "sha512-88e6pnzXcjXTrEbFF2eYz9RfAoBjR9PO4YZCdebCT8GDbeTqEoBCXQsuVXMLT3wtSEi5RHDDVyjagjF2AZH3+A=="],
   }
 }
