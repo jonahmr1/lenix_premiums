@@ -170,7 +170,7 @@ export const Play = ({
 							</div>
 							<div className='mx-auto mb-[clamp(0.55rem,0.9vw,0.9rem)] w-[min(78%,28rem)] overflow-hidden rounded-lg border border-foreground/10 bg-background/35'>
 								{party.profiles.map((profile, index) => {
-									const isLeader = party.leader === profile.name
+									const isLeader = party.leader === profile.sessionId
 
 									return (
 										<ContextMenu key={profile.name}>

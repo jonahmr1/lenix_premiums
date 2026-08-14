@@ -3,7 +3,7 @@ import { Routes, Route, MemoryRouter } from 'react-router'
 import { Home } from '@/ipad/routes/home'
 import { Settings } from '@/ipad/routes/settings'
 import { Index } from '@/ipad/routes'
-import { getStorage, setStorage } from '@lenix/lenix'
+import { storage } from '@lenix/lenix'
 import type { Orientation, Storage } from '@/ipad/types'
 import { apps } from './ipad/constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
@@ -17,12 +17,12 @@ const AppFragment = ({ appName, children }: { appName: string; children: React.R
 
 export const Ipad = () => {
 	const [orientation, setOrientation] = useState<Orientation>(
-		getStorage<Storage, 'orientation'>('orientation') || 'portrait',
+		storage.get<Storage, 'orientation'>('orientation') || 'portrait',
 	)
 	const tabletBg = orientation === 'portrait' ? veritcalBg : horizontalBg
 
 	useEffect(() => {
-		setStorage<Storage>('orientation', orientation)
+		storage.set<Storage>('orientation', orientation)
 	}, [orientation])
 
 	return (

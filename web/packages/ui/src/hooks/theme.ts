@@ -1,4 +1,4 @@
-import { asserts, setStorage } from '@lenix/lenix'
+import { asserts, storage } from '@lenix/lenix'
 import { useState } from 'react'
 
 interface Storage {
@@ -15,7 +15,7 @@ export const toggleTheme = (theme: Storage['theme'] = getTheme() === 'dark' ? 'l
 	if (theme === 'dark') html.classList.add(theme)
 	else html.classList.remove('dark')
 
-	setStorage<Storage>('theme', theme)
+	storage.set<Storage>('theme', theme)
 }
 
 export const useTheme = () => {
