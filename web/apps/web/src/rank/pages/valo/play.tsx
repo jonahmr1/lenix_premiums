@@ -73,14 +73,17 @@ export const Play = ({
 	}, [])
 
 	useEffect(() => {
-		setTimeout(async () => {
-			if (!party || stats) return
+		if (!party) return
+
+		const timeout = setTimeout(async () => {
 			const newStats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
 			)
 			setStats(newStats)
 		})
-	}, [party])
+		
+		return () => clearTimeout(timeout)
+	}, [party?.profiles.length])
 
 	if (!party) return <Loading className='h-full' />
 
