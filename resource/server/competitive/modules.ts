@@ -44,6 +44,16 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	}
 }
 
+export const getBucketProfiles = (profiles: Omit<Competitive.Player['Profile'], 'ready' | 'sessionId' | 'avatar'>[]) => Promise.all(profiles.map(async profile => {
+	const { ready, sessionId } = await Parties.getProfileFromParties(getSourceByProfileId(profile.profile_id))
+	return {
+		...profile,
+		ready,
+		sessionId,
+		avatar: null
+	}
+}))
+
 export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
@@ -53,15 +63,7 @@ export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> =>
 		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
 	) satisfies Record<(typeof profileCols)[number], any>[]
 
-	return await Promise.all(profiles.map(async profile => {
-		const { ready, sessionId } = await Parties.getProfileFromParties(getSourceByProfileId(profile.profile_id))
-		return {
-			...profile,
-			ready,
-			sessionId,
-			avatar: null
-		}
-	}))
+	return await getBucketProfiles(profiles)
 }
 
 export const getStatsDetails = (stats: Competitive.APIs['getStats']) => {

@@ -3,7 +3,7 @@ import { oxmysql } from "@overextended/oxmysql"
 import { Parties } from "./party"
 import { palette } from "lenix"
 import { fullName, getProfileId } from "./utils"
-import { fetchProfile, getProfiles, getStatsDetails, profileCols } from "./modules"
+import { fetchProfile, getBucketProfiles as getProfilesBucket, getProfiles, getStatsDetails, profileCols } from "./modules"
 import { asserts, entries } from "@lenix/lenix"
 import { Config } from "common/config/competitive"
 import { onNuiServer } from "lenix/server"
@@ -110,12 +110,16 @@ onNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', async 
 		)
 		if (!friendIds.length) return []
 
-		const profiles = await oxmysql.query<Competitive.Player['Profile'][]>(
+		const profiles = await oxmysql.query<{
+			profile_id: string
+			name: string
+			status: 'online' | 'offline' | 'dnd'
+		}[]>(
 			`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id IN (?)`,
 			[friendIds]
 		) satisfies Record<(typeof profileCols)[number], any>[]
 
-		return profiles
+		return await getProfilesBucket(profiles)
 	} catch (e) {
 		console.log(palette('red', String(e)))
 		throw e
