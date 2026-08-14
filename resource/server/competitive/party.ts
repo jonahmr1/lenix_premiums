@@ -39,7 +39,7 @@ export abstract class Parties {
 	}
 
 	static async setSize(client: number, size: number): Promise<Party> {
-		const profile = await fetchProfile(client)
+		const profile = await this.getProfileFromParties(client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
 		const party = await this.getPartyByClient(client)
@@ -107,7 +107,7 @@ export abstract class Parties {
 	}
 
 	static async updateReadiness(client: number, status: 'ready' | 'unready') {
-		const profile = await fetchProfile(client)
+		const profile = await this.getProfileFromParties(client)
 		const party = await this.getPartyByClient(client)
 
 		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
