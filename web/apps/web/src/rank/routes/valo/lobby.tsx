@@ -9,7 +9,7 @@ import { DiamondIcon } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer } from 'lenix/nui'
+import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 
 export const Lobby = () => {
 	const { pathname } = useLocation()
@@ -27,6 +27,7 @@ export const Lobby = () => {
 			onKeyDown('Escape', () => {
 				setDisplay(false)
 				unFocus()
+				fetchNui('competitive:unFocus', {})
 			})
 		]
 
