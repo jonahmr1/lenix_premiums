@@ -44,7 +44,7 @@ export abstract class Parties {
 
 		const party = await this.getPartyByClient(client)
 
-		asserts(party.profiles.length < size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
+		asserts(party.profiles.length <= size, `client<${client}> tried to set party size into a value less than the current party profiles length`)
 		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
 
 		party.roomAvailable = size
