@@ -73,9 +73,9 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 				...match,
 				delta:
 					matchPerformance.assists * Config.weights.assist +
-						matchPerformance.deaths * Config.weights.death +
-						matchPerformance.kills * Config.weights.kill +
-						matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss
+					matchPerformance.deaths * Config.weights.death +
+					matchPerformance.kills * Config.weights.kill +
+					(matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss)
 				,
 				result: matchPerformance.result,
 				stats: {
