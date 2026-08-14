@@ -229,14 +229,15 @@ export const Play = ({
 								{ status: playStatus === 'Ready' ? 'unready' : 'ready' }
 							)
 						}}
-						onMouseOver={e => {
-							playStatus === 'Ready' && (e.currentTarget.value = 'UnReady')
-						}}
 					>
-						<span className='group-hover:hidden'>{playStatus}</span>
-						{playStatus === 'Ready' && (
-							<span className='hidden group-hover:inline'>UnReady</span>
-						)}
+						{isPartyLeader ? (
+							<span>{playStatus}</span>
+						) : <>
+							<span className='group-hover:hidden'>{playStatus}</span>
+							{playStatus === 'Ready' && (
+								<span className='hidden group-hover:inline'>UnReady</span>
+							)}
+						</>}
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button
