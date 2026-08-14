@@ -155,7 +155,7 @@ export const Play = ({
 								</div>
 								<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
 									<div className={`w-full flex justify-center items-center pt-0.5 text-xl tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
-									<Badge variant={partyProfile.ready ? 'outline' : 'destructive'} className='text-[0.5rem]'>
+									<Badge variant={partyProfile.ready ? 'default' : 'destructive'} className={`${partyProfile.ready && 'bg-green-700'} text-[0.5rem]`}>
 										{partyProfile.ready ? 'Ready' : 'Not Ready'}
 									</Badge>
 								</div>
