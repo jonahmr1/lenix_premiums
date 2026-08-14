@@ -139,8 +139,7 @@ onNuiServer<Competitive.Requests['setStatus']>('competitive:setStatus', async (c
 })
 
 onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
-	const currentParty = Parties.getPartyByClient(client)
-	return currentParty ?? await Parties.new(client)
+	return Parties.getPartyByClient(client, true)
 })
 
 onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
