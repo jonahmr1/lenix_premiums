@@ -1,4 +1,4 @@
-import { notify, onServerCallback, triggerServerCallback } from '@overextended/ox_lib/client'
+import { notify } from '@overextended/ox_lib/client'
 import { control, emitNui as emitEvent } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
