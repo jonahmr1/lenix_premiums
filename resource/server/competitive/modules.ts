@@ -54,7 +54,7 @@ export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> =>
 	) satisfies Record<(typeof profileCols)[number], any>[]
 
 	return profiles.map(profile => {
-		const { ready, sessionId } = Parties.getProfile(getSourceByProfileId(profile.profile_id))
+		const { ready, sessionId } = Parties.getProfileFromParties(getSourceByProfileId(profile.profile_id))
 		return {
 			...profile,
 			ready,

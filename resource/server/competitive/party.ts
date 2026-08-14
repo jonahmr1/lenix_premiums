@@ -18,9 +18,9 @@ export abstract class Parties {
 	}>()
 	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	static #pendingInvites = new Map<number, Set<number>>()
-	
 
-	static getProfile(client: number) {
+
+	static getProfileFromParties(client: number) {
 		const profile = this.getPartyByClient(client)?.profiles.find(profile => profile.sessionId === client)
 		asserts(profile)
 
@@ -49,7 +49,7 @@ export abstract class Parties {
 
 		return party
 	}
-	
+
 	static async new(
 		client: number
 	): Promise<Party> {
@@ -67,8 +67,8 @@ export abstract class Parties {
 	}
 
 	static join(client: number, inviterParty: Party) {
-		const profile = this.getProfile(client)
-		
+		const profile = this.getProfileFromParties(client)
+
 		// add and set him unready
 		inviterParty.profiles.push({ ...profile, ready: false })
 
@@ -139,7 +139,7 @@ export abstract class Parties {
 
 			if (invites.has(invited) && !recursive) return
 
-			const profile = this.getProfile(client)
+			const profile = this.getProfileFromParties(client)
 			invites.add(invited)
 
 			setTimeout(() => {
@@ -165,7 +165,7 @@ export abstract class Parties {
 
 			this.remove(client, party)
 			this.join(client, inviterParty)
-			
+
 			inviterInvites?.delete(client)
 
 			return inviterParty
