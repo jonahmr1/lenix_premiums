@@ -3,7 +3,7 @@ import { control, emitNui as emitEvent, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 let open: boolean = false
-const inviterWhileUnFocused: Competitive.Player['Profile'][] = []
+let inviterWhileUnFocused: Competitive.Player['Profile'][] = []
 
 control.on({
 	event: 'press',
@@ -11,7 +11,10 @@ control.on({
 	onEvent: () => {
 		emitEvent<Competitive.Events['open']>('competitive:open')
 		open = true
-		inviterWhileUnFocused.forEach(getInvited)
+		setTimeout(() => {
+			inviterWhileUnFocused.forEach(getInvited)
+			inviterWhileUnFocused = []
+		}, 1000);
 	},
 })
 

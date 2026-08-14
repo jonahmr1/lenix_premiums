@@ -134,7 +134,7 @@ export abstract class Parties {
 			const invites = this.#pendingInvites.get(client)
 			if (!invites) {
 				const newInvites = new Set<number>()
-				this.#pendingInvites.set(client, newInvites.add(invited))
+				this.#pendingInvites.set(client, newInvites)
 				return this.invite(client, invited, true)
 			}
 
@@ -156,10 +156,10 @@ export abstract class Parties {
 	static async acceptInvite(client: number, inviter: number): Promise<Party> {
 		try {
 			const inviterInvites = this.#pendingInvites.get(inviter)
-			asserts(inviterInvites?.has(client), 'No pending invite from this player')
+			asserts(inviterInvites?.has(client), `No pending invite from this player<${inviter}>`)
 
 			const inviterParty = await this.getPartyByClient(inviter)
-			asserts(inviterParty.profiles.length < inviterParty.roomAvailable, 'Party is full')
+			asserts(inviterParty.profiles.length < inviterParty.roomAvailable, `Party is full, player<${client}>`)
 
 			const party = await this.getPartyByClient(client)
 			asserts(party !== inviterParty, 'Client is already in this party')
