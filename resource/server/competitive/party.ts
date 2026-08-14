@@ -55,6 +55,7 @@ export abstract class Parties {
 	static async new(
 		client: number
 	): Promise<Party> {
+		console.log('new party')
 		const profile = await fetchProfile(client)
 
 		this.parties.add({
