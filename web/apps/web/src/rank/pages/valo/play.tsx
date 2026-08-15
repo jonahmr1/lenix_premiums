@@ -41,7 +41,8 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
-
+  const [searchTimer, setSeachTimer] = useState(0)
+	
 	useEffect(() => {
 		if (DEV) {
 			setParty({
@@ -111,12 +112,21 @@ export const Play = ({
 		return () => clearTimeout(timeout)
 	}, [party?.profiles.length])
 
-	if (!party) return <Loading className='h-full' />
+	useEffect(() => {
+		if (!party?.searching) return setSeachTimer(0)
+
+		const interval = setInterval(() => setSeachTimer(t => t + 1), 1000)
+		return () => clearInterval(interval)
+  }, [party?.searching])
+
+	const partySelfProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
+	if (!party || !partySelfProfile) return <Loading className='h-full' />
 
 	const renderOrder = getRenderOrder(party.roomAvailable)
-	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.sessionId
-	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Search' : 'Ready' : 'Get Ready'
+	const playLabel = party.searching ? 'Searching...' : isPartyLeader ? 'Search' : partySelfProfile.ready ? 'Ready' : 'UnReady'
+	const playHoverLabel = isPartyLeader ? party.searching ? 'Cancel' : 'Start' : partySelfProfile.ready ? 'UnReady' : 'Get Ready'
+
 
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
@@ -264,23 +274,15 @@ export const Play = ({
 							if (!isPartyLeader) {
 								fetchNuiServer<Competitive.Requests['updateReadiness']>(
 									'competitive:updateReadiness',
-									{ status: playStatus !== 'Ready' }
+									{ status: !partySelfProfile.ready }
 								)
 								return
 							}
 							fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: !party.searching })
 						}}
 					>
-						{isPartyLeader ? (
-							<span>{playStatus}</span>
-						) : (
-							<>
-								<span className='group-hover:hidden'>{playStatus === 'Get Ready' ? 'UnReady' : 'Ready'}</span>
-								<span className='hidden group-hover:inline'>
-									{playStatus === 'Ready' ? 'UnReady' : 'Get Ready'}
-								</span>
-							</>
-						)}
+						<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel} ${searchTimer}s` : playLabel}</span>
+						<span className='hidden group-hover:inline'>{playHoverLabel}</span>
 					</Button>
 					<Separator hidden={isPartyLeader} />
 					<Button
