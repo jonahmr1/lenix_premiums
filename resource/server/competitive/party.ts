@@ -53,7 +53,8 @@ abstract class PartyRegistry {
 		inviterParty.profiles.push({ ...profile, ready: false })
 	}
 
-	protected static remove(client: number, party: Party) {
+	protected static remove(client: number) {
+		const party = this.getPartyByClient(client)
 		const profilesLeft = party.profiles.filter(profile => profile.sessionId !== client)
 
 		if (!profilesLeft.length) {
@@ -94,12 +95,14 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async leaveParty(client: number) {
-		const party = this.getPartyByClient(client)
-		const partyLeft = this.remove(client, party)
+		const partyLeft = this.remove(client)
 		const newParty = await this.new(client)
 
 		this.refreshPartyProfiles(newParty)
-		if (partyLeft) this.refreshPartyProfiles(partyLeft)
+		if (partyLeft) {
+			partyLeft.searching = false
+			this.refreshPartyProfiles(partyLeft)
+		}
 	}
 
 	static async updateReadiness(client: number, status: boolean) {
@@ -160,7 +163,7 @@ export abstract class Parties extends PartyRegistry {
 			asserts(party !== inviterParty, 'Client is already in this party')
 
 			const profile = await this.getProfileFromParties(client)
-			const partyLeft = this.remove(client, party)
+			const partyLeft = this.remove(client)
 			this.add(profile, inviterParty)
 
 			inviterInvites?.delete(client)
@@ -215,5 +218,10 @@ export abstract class Parties extends PartyRegistry {
 
 	static async getParty(client: number) {
 		return this.getPartyByClient(client) ?? await Parties.new(client)
+	}
+
+	static crash(client: number) {
+		const partyLeft = this.remove(client)
+		if (partyLeft) this.refreshPartyProfiles(partyLeft)
 	}
 }
