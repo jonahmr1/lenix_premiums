@@ -274,3 +274,8 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 			place: index + 1,
 		}))
 })
+
+onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', (client, { profile }) => {
+	
+	return null
+})

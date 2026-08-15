@@ -25,6 +25,7 @@ export namespace Competitive {
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
 		leaveParty: Request<Player['Party'], 'competitive:leaveParty'>
+		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
 	}
 
 	export interface APIs {

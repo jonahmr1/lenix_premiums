@@ -207,7 +207,7 @@ export const Play = ({
 							</ContextMenuTrigger>
 							<ContextMenuContent>
 								<ContextMenuItem onClick={() => {
-
+									fetchNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', { profile: partyProfile.sessionId })
 								}}>
 									Kick
 								</ContextMenuItem>

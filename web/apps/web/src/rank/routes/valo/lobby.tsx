@@ -12,7 +12,6 @@ import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 
 export const DEV = true
-
 export const FAKE_PROFILE = {
 	name: 'Lenix',
 	profile_id: '1',
