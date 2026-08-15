@@ -8,7 +8,7 @@ import { palette } from "lenix"
 type Party = Competitive.Player['Party']
 
 
-abstract class Something {
+abstract class PartyRegistry {
 	private static readonly parties = new Set<{
 		profiles: Party['profiles']
 		leader: Party['leader']
@@ -17,7 +17,7 @@ abstract class Something {
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	protected static pendingInvites = new Map<number, Set<number>>()
 
-	static async getProfileFromParties(client: number) {
+	protected static async getProfileFromParties(client: number) {
 		const profile = (await this.getPartyByClient(client)).profiles.find(profile => profile.sessionId === client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
@@ -36,7 +36,7 @@ abstract class Something {
 		return party
 	}
 
-	static async new(
+	protected static async new(
 		client: number
 	): Promise<Party> {
 		const profile = await fetchProfile(client)
@@ -55,7 +55,7 @@ abstract class Something {
 		inviterParty.profiles.push({ ...profile, ready: false })
 	}
 
-	static remove(client: number, party: Party) {
+	protected static remove(client: number, party: Party) {
 		const profilesLeft = party.profiles.filter(profile => profile.sessionId !== client)
 
 		if (!profilesLeft.length) {
@@ -75,14 +75,14 @@ abstract class Something {
 		return party
 	}
 
-	static refreshPartyProfiles(party: Party) {
+	protected static refreshPartyProfiles(party: Party) {
 		party.profiles.forEach(profile => {
 			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
 		})
 	}
 }
 
-export abstract class Parties extends Something {
+export abstract class Parties extends PartyRegistry {
 	static async setSize(client: number, size: number) {
 		const profile = await this.getProfileFromParties(client)
 		const party = await this.getPartyByClient(client)
