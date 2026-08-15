@@ -69,9 +69,7 @@ export abstract class Parties {
 		// add and set him unready
 		inviterParty.profiles.push({ ...profile, ready: false })
 
-		inviterParty.profiles.forEach(profile => {
-			emitNet('lenix:server:competitive:updateParty', profile.sessionId, inviterParty)
-		})
+		this.refreshPartyProfiles(inviterParty)
 	}
 
 	static remove(client: number, party: Party) {
@@ -91,9 +89,7 @@ export abstract class Parties {
 		}
 
 		party.profiles = profilesLeft
-		profilesLeft.forEach(profile => {
-			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
-		})
+		this.refreshPartyProfiles(party)
 	}
 
 	static async leaveParty(client: number) {
@@ -101,6 +97,12 @@ export abstract class Parties {
 		this.remove(client, party)
 
 		return this.new(client)
+	}
+
+	static refreshPartyProfiles(party: Party) {
+		party.profiles.forEach(profile => {
+			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
+		})
 	}
 
 	static async updateReadiness(client: number, status: 'ready' | 'unready') {
@@ -112,9 +114,7 @@ export abstract class Parties {
 
 		partyProfile.ready = status === 'ready' ? true : false
 
-		party.profiles.forEach(profile => {
-			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
-		})
+		this.refreshPartyProfiles(party)
 	}
 
 	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
@@ -194,5 +194,9 @@ export abstract class Parties {
 
 			this.playersIgnoringInvites.delete(client)
 		}, Config.ignoreInvitesPeriod * 60_000)
+	}
+
+	static kick(client: number, kicked: number) {
+		
 	}
 }

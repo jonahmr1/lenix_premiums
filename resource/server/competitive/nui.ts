@@ -276,6 +276,5 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 })
 
 onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', (client, { profile }) => {
-	
-	return null
+	return Parties.kick(client, profile), null
 })
