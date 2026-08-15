@@ -6,7 +6,7 @@ import {
 	ContextMenuItem,
 	ContextMenuSeparator,
 	ContextMenuTrigger,
-} from '@workspace/elite/components/context-menu'
+} from '@workspace/ui/components/context-menu'
 import { Separator } from '@workspace/elite/components/separator'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/elite/components/toggle-group'
 import {
