@@ -205,12 +205,14 @@ export abstract class Parties extends PartyRegistry {
 		await this.leaveParty(kicked)
 	}
 
-	static findmatch(client: number) {
+	static matchSearch(client: number) {
 		const nextClient = this.leadersInQueue.values().next().value
 		if (!nextClient) {
 			this.leadersInQueue.add(client)
 			return
 		}
+		asserts(nextClient !== client, `Duplicated queue leader<${client}> entries tried to self-find a match`)
+
 		this.leadersInQueue.delete(nextClient)
 
 		const nextClientParty = this.getPartyByClient(nextClient)
@@ -228,11 +230,15 @@ export abstract class Parties extends PartyRegistry {
 	static updateGameSearch(client: number, status: Party['status']) {
 		const party = this.getPartyByClient(client)
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
+		party.profiles.forEach(profile => {
+			asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`)
+		})
 
 		party.status = status
 		this.refreshPartyProfiles(party)
 
-		this.findmatch(client)
+		if (status !== 'searching') return
+		this.matchSearch(client)
 	}
 
 	static async getParty(client: number) {

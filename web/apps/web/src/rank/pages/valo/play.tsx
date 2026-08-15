@@ -113,7 +113,7 @@ export const Play = ({
 	}, [party?.profiles.length])
 
 	useEffect(() => {
-		if (party?.status === 'searching') return setSeachTimer(0)
+		if (party?.status !== 'searching') return setSeachTimer(0)
 
 		const interval = setInterval(() => setSeachTimer(t => t + 1), 1000)
 		return () => clearInterval(interval)
@@ -276,7 +276,7 @@ export const Play = ({
 					className='group w-full text-xl px-25 py-5 normal-case'
 					onClick={() => {
 						if (party.status === 'found') return
-						
+
 						if (!isPartyLeader) {
 							fetchNuiServer<Competitive.Requests['updateReadiness']>(
 								'competitive:updateReadiness',
