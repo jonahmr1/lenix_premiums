@@ -193,9 +193,9 @@ export abstract class Parties extends PartyRegistry {
 		const profile = this.getProfileFromParties(client)
 		const party = this.getPartyByClient(client)
 
-		profile.ready = status
+		if (!status) this.updateGameSearch(party.leader, 'idle')
 
-		this.updateGameSearch(party.leader, 'idle')
+		profile.ready = status
 	}
 
 	static async kick(client: number, kicked: number) {
@@ -216,18 +216,20 @@ export abstract class Parties extends PartyRegistry {
 
 	static updateGameSearch(client: number, status: Party['status']) {
 		asserts(status !== 'found')
+
 		const party = this.getPartyByClient(client)
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
-		party.profiles.forEach(profile => {
-			asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`)
-		})
 
 		party.status = status
 		this.refreshPartyProfiles(party)
 
 		if (status === 'idle' && this.leaderInQueue === client) this.leaderInQueue = null
 		if (status !== 'searching') return
-
+		
+		
+		party.profiles.forEach(profile => {
+			asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`)
+		})
 
 		const nextClient = this.leaderInQueue
 		if (!nextClient) {
@@ -274,8 +276,8 @@ export abstract class Parties extends PartyRegistry {
 	static crash(client: number) {
 		const partyLeft = this.remove(client)
 		if (partyLeft) {
-			if (this.leaderInQueue === client) this.leaderInQueue = null
 			this.refreshPartyProfiles(partyLeft)
 		}
+		if (this.leaderInQueue === client) this.leaderInQueue = null
 	}
 }
