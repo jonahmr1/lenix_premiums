@@ -49,7 +49,7 @@ export const Play = ({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
 				roomAvailable: 3,
-				searching: false
+				searching: true
 			})
 			return
 		}
@@ -266,38 +266,34 @@ export const Play = ({
 					)
 				})}
 			</div>
-			<div className='flex-1 items-start'>
-				<div className='grid grid-cols-[1fr_1fr_2fr_1fr_1fr] grid-rows-1 items-center'>
-					<div />
-					<div />
-					<Button
-						className='group text-xl px-20 py-5'
-						onClick={() => {
-							if (!isPartyLeader) {
-								fetchNuiServer<Competitive.Requests['updateReadiness']>(
-									'competitive:updateReadiness',
-									{ status: !partySelfProfile.ready }
-								)
-								return
-							}
-							fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: !party.searching })
-						}}
-					>
-						<span className='group-hover:hidden normal-case'>{playLabel === 'Searching...' ? `${playLabel} ${searchTimer}s` : playLabel}</span>
-						<span className='hidden group-hover:inline'>{playHoverLabel}</span>
-					</Button>
-					<Separator hidden={isPartyLeader} />
-					<Button
-						hidden={isPartyLeader}
-						variant='outline' className='justify-evenly'
-						onClick={() => {
-							fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
-						}}
-					>
-						<LogOut />
-						Leave Lobby
-					</Button>
-				</div>
+			<div className='flex w-1/10 flex-1 flex-col items-center'>
+				<Button
+					className='group w-full text-xl px-25 py-5 normal-case'
+					onClick={() => {
+						if (!isPartyLeader) {
+							fetchNuiServer<Competitive.Requests['updateReadiness']>(
+								'competitive:updateReadiness',
+								{ status: !partySelfProfile.ready }
+							)
+							return
+						}
+						fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: !party.searching })
+					}}
+				>
+					<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel}${searchTimer}s` : playLabel}</span>
+					<span className='hidden group-hover:inline'>{playHoverLabel}</span>
+				</Button>
+				<Separator orientation='vertical' hidden={isPartyLeader} />
+				<Button
+					hidden={isPartyLeader}
+					variant='outline' className='justify-evenly'
+					onClick={() => {
+						fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+					}}
+				>
+					<LogOut />
+					Leave Lobby
+				</Button>
 			</div>
 		</Layout>
 	)
