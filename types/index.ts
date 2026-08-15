@@ -89,8 +89,8 @@ export namespace Competitive {
 		}
 		Party: {
 			profiles: Competitive.Player['GamerProfile'][]
-			roomAvailable: number
 			leader: Competitive.Player['GamerProfile']['sessionId']
+			roomAvailable: number
 			searching: boolean
 		}
 	}

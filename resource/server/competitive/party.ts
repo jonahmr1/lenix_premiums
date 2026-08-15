@@ -9,14 +9,9 @@ type Party = Competitive.Player['Party']
 
 
 abstract class PartyRegistry {
-	private static readonly parties = new Set<{
-		profiles: Party['profiles']
-		leader: Party['leader']
-		roomAvailable: Party['roomAvailable']
-		searching: Party['searching']
-	}>()
+	private static readonly parties = new Set<Party>()
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
-	protected static pendingInvites = new Map<number, Set<number>>()
+	protected static readonly pendingInvites = new Map<number, Set<number>>()
 
 	static getProfileFromParties(client: number) {
 		const profile = this.getPartyByClient(client).profiles.find(profile => profile.sessionId === client)
