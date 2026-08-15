@@ -35,6 +35,36 @@ onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', asyn
 	return await getProfiles()
 })
 
+onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
+	return Parties.getPartyByClient(client, true)
+})
+
+onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
+	return await Parties.updateReadiness(client, status), null
+})
+
+onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async (client) => {
+	return await Parties.leaveParty(client), null
+})
+
+onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
+	if (client === invited) return 'You can\'t invite yourself'
+
+	return await Parties.invite(client, invited), null
+})
+
+onNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', (client, { inviter }) => {
+	return Parties.ignoreInvites(client, inviter), null
+})
+
+onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', async (client, { profile }) => {
+	return await Parties.kick(client, profile), null
+})
+
+onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', async (client, { status }) => {
+	return await Parties.updateGameSearch(client, status), null
+})
+
 onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {
 	const profileId = getProfileId(client)
 
@@ -138,28 +168,6 @@ onNuiServer<Competitive.Requests['setStatus']>('competitive:setStatus', async (c
 		console.log(palette('red', String(error)))
 		throw error
 	}
-})
-
-onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
-	return Parties.getPartyByClient(client, true)
-})
-
-onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
-	return await Parties.updateReadiness(client, status), null
-})
-
-onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async (client) => {
-	return await Parties.leaveParty(client), null
-})
-
-onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
-	if (client === invited) return 'You can\'t invite yourself'
-
-	return await Parties.invite(client, invited), null
-})
-
-onNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', (client, { inviter }) => {
-	return Parties.ignoreInvites(client, inviter), null
 })
 
 onNuiServer<Competitive.Requests['getStats']>('competitive:getStats', async (client) => {
@@ -271,8 +279,4 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 			...profile,
 			place: index + 1,
 		}))
-})
-
-onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', async (client, { profile }) => {
-	return await Parties.kick(client, profile), null
 })

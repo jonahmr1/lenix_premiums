@@ -13,6 +13,7 @@ abstract class PartyRegistry {
 		profiles: Party['profiles']
 		leader: Party['leader']
 		roomAvailable: Party['roomAvailable']
+		searching: Party['searching']
 	}>()
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	protected static pendingInvites = new Map<number, Set<number>>()
@@ -44,7 +45,8 @@ abstract class PartyRegistry {
 		this.parties.add({
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: profile.sessionId,
-			roomAvailable: 1
+			roomAvailable: 1,
+			searching: false
 		})
 
 		return this.getPartyByClient(client)
@@ -104,19 +106,21 @@ export abstract class Parties extends PartyRegistry {
 		if (partyLeft) this.refreshPartyProfiles(partyLeft)
 	}
 
-	static async updateReadiness(client: number, status: 'ready' | 'unready') {
+	static async updateReadiness(client: number, status: boolean) {
 		const profile = await this.getProfileFromParties(client)
 		const party = await this.getPartyByClient(client)
 
 		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
 		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
 
-		partyProfile.ready = status === 'ready' ? true : false
+		partyProfile.ready = status
 
 		this.refreshPartyProfiles(party)
 	}
 
-	static async invite(client: number, invited: number, recursive?: true): Promise<void> { try { if (!recursive) {
+	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
+		try {
+			if (!recursive) {
 				if (this.playersIgnoringInvites.get(invited)?.has(client)) return
 			}
 
@@ -166,7 +170,7 @@ export abstract class Parties extends PartyRegistry {
 			this.add(profile, inviterParty)
 
 			inviterInvites?.delete(client)
-			
+
 			this.refreshPartyProfiles(inviterParty)
 			if (partyLeft) this.refreshPartyProfiles(partyLeft)
 		} catch (e) {
@@ -205,5 +209,11 @@ export abstract class Parties extends PartyRegistry {
 		)
 
 		await this.leaveParty(kicked)
+	}
+
+	static async updateGameSearch(client: number, status: boolean) {
+		const party = await this.getPartyByClient(client)
+		party.searching = status
+		this.refreshPartyProfiles(party)
 	}
 }

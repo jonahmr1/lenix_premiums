@@ -23,9 +23,10 @@ export namespace Competitive {
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
 		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
-		updateReadiness: Request<null, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
+		updateReadiness: Request<null, 'competitive:updateReadiness', { status: boolean }>
 		leaveParty: Request<null, 'competitive:leaveParty'>
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
+		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: boolean }>
 	}
 
 	export interface APIs {
@@ -87,6 +88,7 @@ export namespace Competitive {
 			profiles: Competitive.Player['Profile'][]
 			roomAvailable: number
 			leader: Competitive.Player['Profile']['sessionId']
+			searching: boolean
 		}
 	}
 

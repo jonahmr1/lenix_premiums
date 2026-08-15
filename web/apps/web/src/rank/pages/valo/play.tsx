@@ -47,7 +47,8 @@ export const Play = ({
 			setParty({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
-				roomAvailable: 3
+				roomAvailable: 3,
+				searching: false
 			})
 			return
 		}
@@ -115,7 +116,7 @@ export const Play = ({
 	const renderOrder = getRenderOrder(party.roomAvailable)
 	const partyProfile = party.profiles.find(self => self.profile_id === profile?.profile_id)
 	const isPartyLeader = party.leader === profile?.sessionId
-	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Start' : 'Ready' : 'Get Ready'
+	const playStatus = partyProfile?.ready ? isPartyLeader ? 'Search' : 'Ready' : 'Get Ready'
 
 	return (
 		<Layout className='h-full w-full justify-between pt-2'>
@@ -260,10 +261,14 @@ export const Play = ({
 					<Button
 						className='group text-xl px-20 py-5'
 						onClick={() => {
-							fetchNuiServer<Competitive.Requests['updateReadiness']>(
-								'competitive:updateReadiness',
-								{ status: playStatus === 'Ready' ? 'unready' : 'ready' }
-							)
+							if (!isPartyLeader) {
+								fetchNuiServer<Competitive.Requests['updateReadiness']>(
+									'competitive:updateReadiness',
+									{ status: playStatus !== 'Ready' }
+								)
+								return
+							}
+							fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: !party.searching })
 						}}
 					>
 						{isPartyLeader ? (
