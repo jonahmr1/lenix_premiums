@@ -110,11 +110,9 @@ export abstract class Parties extends PartyRegistry {
 		const profile = await this.getProfileFromParties(client)
 		const party = await this.getPartyByClient(client)
 
-		const partyProfile = party.profiles.find(self => self.profile_id === profile.profile_id)
-		asserts(partyProfile, `Failed to get client<${client}> partyProfile`)
+		profile.ready = status
 
-		partyProfile.ready = status
-
+		if (!status && party.searching) party.searching = false
 		this.refreshPartyProfiles(party)
 	}
 
@@ -213,6 +211,8 @@ export abstract class Parties extends PartyRegistry {
 
 	static async updateGameSearch(client: number, status: boolean) {
 		const party = await this.getPartyByClient(client)
+		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
+
 		party.searching = status
 		this.refreshPartyProfiles(party)
 	}
