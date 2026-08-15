@@ -17,9 +17,9 @@ export namespace Competitive {
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
 		getStats: Request<Player['Stats'], 'competitive:getStats'>
-		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
+		getFriends: Request<Player['OfflineProfile'][], 'competitive:getFriends'>
 		setStatus: Request<true, 'competitive:setStatus', { status: Player['Profile']['status'] }>
-		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
+		getProfiles: Request<Player['OfflineProfile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
 		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
@@ -43,6 +43,7 @@ export namespace Competitive {
 			ready: boolean
 			sessionId: number
 		}
+		OfflineProfile: Pick<Player['Profile'], 'avatar' | 'name' | 'profile_id' | 'status'>
 		Friend: Player['Profile']['profile_id']
 		Stats: {
 			kills: number

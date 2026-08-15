@@ -8,4 +8,4 @@ const printSnapshot = (data: object) => {
 
 on('playerDropped', () => {
 	Parties.crash(source)
-});
+})

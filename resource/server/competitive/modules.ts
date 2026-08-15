@@ -44,17 +44,12 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	}
 }
 
-export const getBucketProfiles = (profiles: Omit<Competitive.Player['Profile'], 'ready' | 'sessionId' | 'avatar'>[]) => Promise.all(profiles.map(async profile => {
-	const { ready, sessionId } = await Parties.getProfileFromParties(getSourceByProfileId(profile.profile_id))
-	return {
-		...profile,
-		ready,
-		sessionId,
-		avatar: null
-	}
-}))
+export const getBucketProfiles = (profiles: Omit<Competitive.Player['OfflineProfile'], 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
+	...profile,
+	avatar: null
+})))
 
-export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> => {
+export const getProfiles = async (): Promise<Competitive.Player['OfflineProfile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;

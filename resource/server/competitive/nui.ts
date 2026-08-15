@@ -23,12 +23,12 @@ onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async 
 	return await fetchProfile(client)
 })
 
-onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, { inviter }) => {
-	return await Parties.acceptInvite(client, inviter), null
+onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', (client, { inviter }) => {
+	return Parties.acceptInvite(client, inviter), null
 })
 
-onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async (client, { size }) => {
-	return await Parties.setSize(client, size), null
+onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', (client, { size }) => {
+	return Parties.setSize(client, size), null
 })
 
 onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {

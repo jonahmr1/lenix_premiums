@@ -18,7 +18,7 @@ abstract class PartyRegistry {
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	protected static pendingInvites = new Map<number, Set<number>>()
 
-	protected static async getProfileFromParties(client: number) {
+	protected static getProfileFromParties(client: number) {
 		const profile = this.getPartyByClient(client).profiles.find(profile => profile.sessionId === client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
@@ -84,8 +84,8 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	static async setSize(client: number, size: number) {
-		const profile = await this.getProfileFromParties(client)
+	static setSize(client: number, size: number) {
+		const profile = this.getProfileFromParties(client)
 		const party = this.getPartyByClient(client)
 
 		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
@@ -105,7 +105,7 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async updateReadiness(client: number, status: boolean) {
-		const profile = await this.getProfileFromParties(client)
+		const profile = this.getProfileFromParties(client)
 		const party = this.getPartyByClient(client)
 
 		profile.ready = status
@@ -114,7 +114,7 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(party)
 	}
 
-	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
+	static invite(client: number, invited: number, recursive?: true): void {
 		try {
 			if (!recursive) {
 				if (this.playersIgnoringInvites.get(invited)?.has(client)) return
@@ -137,7 +137,7 @@ export abstract class Parties extends PartyRegistry {
 
 			if (invites.has(invited) && !recursive) return
 
-			const profile = await this.getProfileFromParties(client)
+			const profile = this.getProfileFromParties(client)
 			invites.add(invited)
 
 			setTimeout(() => {
@@ -150,7 +150,7 @@ export abstract class Parties extends PartyRegistry {
 		}
 	}
 
-	static async acceptInvite(client: number, inviter: number) {
+	static acceptInvite(client: number, inviter: number) {
 		try {
 			const inviterInvites = this.pendingInvites.get(inviter)
 			asserts(inviterInvites?.has(client), `No pending invite from this player<${inviter}>`)
@@ -161,7 +161,7 @@ export abstract class Parties extends PartyRegistry {
 			const party = this.getPartyByClient(client)
 			asserts(party !== inviterParty, 'Client is already in this party')
 
-			const profile = await this.getProfileFromParties(client)
+			const profile = this.getProfileFromParties(client)
 			const partyLeft = this.remove(client)
 			this.add(profile, inviterParty)
 
