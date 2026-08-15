@@ -11,13 +11,24 @@ import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 
+export const DEV = true
+
+export const FAKE_PROFILE = {
+	name: 'Lenix',
+	profile_id: '1',
+	ready: true,
+	sessionId: 1,
+	status: 'online',
+	avatar: null
+} as const
+
 export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
-	const [display, setDisplay] = useState(false)
-
+	const [display, setDisplay] = useState(DEV)
+	
 	useEffect(() => {
 		const disposes = [
 			onNuiEmit<Competitive.Events['open']>('competitive:open', () => {
@@ -36,6 +47,10 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
+		if (DEV) {
+			setProfile(FAKE_PROFILE)
+			return
+		}
 		setTimeout(async () => {
 			const profile = await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {})
 			setProfile(profile)

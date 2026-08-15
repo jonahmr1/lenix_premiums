@@ -15,6 +15,8 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Input } from '@workspace/ui/components/input'
 import { Loading } from '@workspace/elite/elements/loading'
 import { config } from '@/rank/lib'
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@workspace/ui/components/context-menu'
+import { DEV, FAKE_PROFILE } from '@/rank/routes/valo/lobby'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -41,6 +43,14 @@ export const Play = ({
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
 
 	useEffect(() => {
+		if (DEV) {
+			setParty({
+				profiles: [FAKE_PROFILE],
+				'leader': 1,
+				'roomAvailable': 1
+			})
+			return
+		}
 		(async () => {
 			const party = await fetchNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', {})
 			setParty(party)
@@ -75,6 +85,22 @@ export const Play = ({
 	useEffect(() => {
 		if (!party) return
 
+		if (DEV) {
+			setStats({
+				1: {
+					'assists': 0,
+					'deaths': 0,
+					'kills': 0,
+					'killsDeathsRatio': 0,
+					'losses': 0,
+					'matches': 0,
+					'winRate': 0,
+					'wins': 0,
+				}
+			})
+			return
+		}
+		
 		const timeout = setTimeout(async () => {
 			const newStats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
@@ -144,37 +170,49 @@ export const Play = ({
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 					const partyProfile = party.profiles[i]
 					return partyProfile ? (
-						<Button
+						<ContextMenu
 							key={i}
-							className='flex-none w-1/5 px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
-							style={{ height: `${h}%` }}
 						>
-							<>
-								<div className='flex flex-4 items-center w-full'>
-									<img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' />
-								</div>
-								<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
-									<div className={`w-full flex justify-center items-center pt-0.5 text-xl tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
-									<Badge variant={partyProfile.ready ? 'default' : 'destructive'} className={`${partyProfile.ready && 'bg-green-700'} text-[0.5rem]`}>
-										{partyProfile.ready ? 'Ready' : 'Not Ready'}
-									</Badge>
-								</div>
-								<div className='flex flex-1 flex-col w-full justify-around h-full'>
-									<Separator />
-									<div className='flex flex-1 justify-around items-center'>
-										<div className='flex-1 flex items-center flex-col'>
-											{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
-											<p className='text-[0.475rem]'>K/D Ratio</p>
+							<ContextMenuTrigger asChild>
+								<Button
+									className='flex-none w-1/5 px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
+									style={{ height: `${h}%` }}
+								>
+									<>
+										<div className='flex flex-4 items-center w-full'>
+											<img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' />
 										</div>
-										<Separator orientation='vertical' />
-										<div className='flex-1 flex items-center flex-col'>
-											{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
-											<p className='text-[0.475rem]'>Win Ratio</p>
+										<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
+											<div className={`w-full flex justify-center items-center pt-0.5 text-xl tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
+											<Badge variant={partyProfile.ready ? 'default' : 'destructive'} className={`${partyProfile.ready && 'bg-green-700'} text-[0.5rem]`}>
+												{partyProfile.ready ? 'Ready' : 'Not Ready'}
+											</Badge>
 										</div>
-									</div>
-								</div>
-							</>
-						</Button>
+										<div className='flex flex-1 flex-col w-full justify-around h-full'>
+											<Separator />
+											<div className='flex flex-1 justify-around items-center'>
+												<div className='flex-1 flex items-center flex-col'>
+													{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
+													<p className='text-[0.475rem]'>K/D Ratio</p>
+												</div>
+												<Separator orientation='vertical' />
+												<div className='flex-1 flex items-center flex-col'>
+													{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
+													<p className='text-[0.475rem]'>Win Ratio</p>
+												</div>
+											</div>
+										</div>
+									</>
+								</Button>
+							</ContextMenuTrigger>
+							<ContextMenuContent>
+								<ContextMenuItem onClick={() => {
+
+								}}>
+									Kick
+								</ContextMenuItem>
+							</ContextMenuContent>
+						</ContextMenu>
 					) : (
 						<Dialog>
 							<DialogTrigger
