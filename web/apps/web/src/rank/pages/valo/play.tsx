@@ -156,7 +156,7 @@ export const Play = ({
 					value={party.roomAvailable.toString()}
 					onValueChange={async value => {
 						const size = Number(value)
-						if (size === 0 || !isPartyLeader || size <= party.profiles.length) return
+						if (size === 0 || !isPartyLeader || size < party.profiles.length) return
 						fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
 					}}
 				>
@@ -174,7 +174,7 @@ export const Play = ({
 					)}
 				</ToggleGroup>
 			</div>
-			<div className='flex flex-8 items-center justify-center w-full gap-2 h-3/5'>
+			<div className='flex flex-10 items-center justify-center w-full gap-2 h-3/5'>
 				{renderOrder.map(i => {
 					const h = 80 - Math.floor((i + 1) / 2) * 5 // 80,75,75,70,70,...
 					const partyProfile = party.profiles[i]
@@ -223,9 +223,11 @@ export const Play = ({
 							</ContextMenuContent>
 						</ContextMenu>
 					) : (
-						<Dialog>
+						<Dialog
+							key={i}
+						>
 							<DialogTrigger
-							className='flex-none w-1/5 bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-none w-1/5 bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />

@@ -216,7 +216,12 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async getParty(client: number) {
-		return this.getPartyByClient(client) ?? await Parties.new(client)
+		try {
+			return this.getPartyByClient(client)
+		} catch (e) {
+			console.log(palette('red', String(e)))
+			return await Parties.new(client)
+		}
 	}
 
 	static crash(client: number) {

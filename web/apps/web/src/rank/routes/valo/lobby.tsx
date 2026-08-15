@@ -11,7 +11,7 @@ import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 
-export const DEV = true
+export const DEV = false
 export const FAKE_PROFILE = {
 	name: 'Lenix',
 	profile_id: '1',
@@ -108,7 +108,7 @@ export const Lobby = () => {
 				{pages.map(page => (
 					<div
 						key={page.to}
-						className={`${pathname === page.to ? 'visible' : 'hidden'} h-full`}
+						className={`${pathname === page.to ? 'visible' : 'hidden'} h-full w-full`}
 					>
 						{page.element}
 					</div>
