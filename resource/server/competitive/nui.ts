@@ -20,7 +20,11 @@ const defaultStats = {
 
 
 onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async (client) => {
-	return await fetchProfile(client)
+	return {
+		...await fetchProfile(client),
+		ready: false,
+		sessionId: client
+	}
 })
 
 onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', (client, { inviter }) => {
@@ -47,10 +51,10 @@ onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async 
 	return await Parties.leaveParty(client), null
 })
 
-onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
+onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', (client, { invited }) => {
 	if (client === invited) return 'You can\'t invite yourself'
 
-	return await Parties.invite(client, invited), null
+	return Parties.invite(client, invited), null
 })
 
 onNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', (client, { inviter }) => {
@@ -61,8 +65,12 @@ onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', asyn
 	return await Parties.kick(client, profile), null
 })
 
-onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', async (client, { status }) => {
-	return await Parties.updateGameSearch(client, status), null
+onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', (client, { status }) => {
+	return Parties.updateGameSearch(client, status), null
+})
+
+onNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', (client) => {
+	return Parties.getProfileFromParties(client)
 })
 
 onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {

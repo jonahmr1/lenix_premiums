@@ -3,12 +3,13 @@ import type { Event, Request } from 'lenix'
 export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
-		playerInvited: Event<'competitive:playerInvited', [Player['Profile']]>
+		playerInvited: Event<'competitive:playerInvited', [Player['GamerProfile']]>
 		updateParty: Event<'competitive:updateParty', [Player['Party']]>
 	}
 
 	export interface Requests {
 		getProfile: Request<Player['Profile'], 'competitive:getProfile'>
+		getGamerProfile: Request<Player['GamerProfile'], 'competitive:getGamerProfile'>
 		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
 		party: {
 			get: Request<Player['Party'], 'competitive:party:get'>
@@ -17,9 +18,9 @@ export namespace Competitive {
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
 		getStats: Request<Player['Stats'], 'competitive:getStats'>
-		getFriends: Request<Player['OfflineProfile'][], 'competitive:getFriends'>
-		setStatus: Request<true, 'competitive:setStatus', { status: Player['Profile']['status'] }>
-		getProfiles: Request<Player['OfflineProfile'][], 'competitive:getProfiles'>
+		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
+		setStatus: Request<true, 'competitive:setStatus', { status: Player['GamerProfile']['status'] }>
+		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
 		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
@@ -40,11 +41,12 @@ export namespace Competitive {
 			name: string
 			avatar: string | null
 			status: 'online' | 'offline' | 'dnd'
+		}
+		GamerProfile: {
 			ready: boolean
 			sessionId: number
-		}
-		OfflineProfile: Pick<Player['Profile'], 'avatar' | 'name' | 'profile_id' | 'status'>
-		Friend: Player['Profile']['profile_id']
+		} & Player['Profile']
+		Friend: Player['GamerProfile']['profile_id']
 		Stats: {
 			kills: number
 			deaths: number
@@ -74,7 +76,7 @@ export namespace Competitive {
 			description: string
 			createdAt: number
 			author: {
-				avatar: Player['Profile']['avatar']
+				avatar: Player['GamerProfile']['avatar']
 			}
 		}
 		Performance: {
@@ -86,9 +88,9 @@ export namespace Competitive {
 			assists: number
 		}
 		Party: {
-			profiles: Competitive.Player['Profile'][]
+			profiles: Competitive.Player['GamerProfile'][]
 			roomAvailable: number
-			leader: Competitive.Player['Profile']['sessionId']
+			leader: Competitive.Player['GamerProfile']['sessionId']
 			searching: boolean
 		}
 	}
@@ -96,8 +98,8 @@ export namespace Competitive {
 	export type Leaderboard = {
 		place: number
 		score: number
-		profile_id: Player['Profile']['profile_id']
-		name: Player['Profile']['name']
-		avatar: Player['Profile']['avatar']
+		profile_id: Player['GamerProfile']['profile_id']
+		name: Player['GamerProfile']['name']
+		avatar: Player['GamerProfile']['avatar']
 	}[]
 }

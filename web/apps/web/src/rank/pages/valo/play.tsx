@@ -35,7 +35,7 @@ const getRenderOrder = (count: number) => {
 export const Play = ({
 	profile
 }: {
-	profile: Competitive.Player['Profile'] | undefined
+	profile: Competitive.Player['GamerProfile'] | undefined
 }) => {
 	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
 	const [party, setParty] = useState<Competitive.Player['Party']>()

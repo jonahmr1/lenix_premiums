@@ -25,7 +25,7 @@ export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
-	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
+	const [profile, setProfile] = useState<Competitive.Player['GamerProfile']>()
 	const [display, setDisplay] = useState(DEV)
 	
 	useEffect(() => {
@@ -51,7 +51,7 @@ export const Lobby = () => {
 			return
 		}
 		setTimeout(async () => {
-			const profile = await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {})
+			const profile = await fetchNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', {})
 			setProfile(profile)
 		})
 	}, [display])

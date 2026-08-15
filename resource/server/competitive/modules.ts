@@ -1,9 +1,8 @@
 import { oxmysql } from "@overextended/oxmysql"
-import { fullName, getProfileId, getSourceByProfileId } from "./utils"
+import { fullName, getProfileId } from "./utils"
 import type { Competitive } from "types/index"
 import { palette } from "lenix"
 import { asserts } from "@lenix/lenix"
-import { Parties } from "./party"
 
 
 export const profileCols = ['profile_id', 'name', 'status'] as const
@@ -24,8 +23,6 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 
 		if (profile) return {
 			...profile,
-			ready: false,
-			sessionId: client,
 			avatar: null
 		}
 
@@ -44,12 +41,12 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	}
 }
 
-export const getBucketProfiles = (profiles: Omit<Competitive.Player['OfflineProfile'], 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
+export const getBucketProfiles = (profiles: Omit<Competitive.Player['Profile'], 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
 	...profile,
 	avatar: null
 })))
 
-export const getProfiles = async (): Promise<Competitive.Player['OfflineProfile'][]> => {
+export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;

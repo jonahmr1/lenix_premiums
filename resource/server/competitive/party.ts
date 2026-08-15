@@ -18,7 +18,7 @@ abstract class PartyRegistry {
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	protected static pendingInvites = new Map<number, Set<number>>()
 
-	protected static getProfileFromParties(client: number) {
+	static getProfileFromParties(client: number) {
 		const profile = this.getPartyByClient(client).profiles.find(profile => profile.sessionId === client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
@@ -41,7 +41,7 @@ abstract class PartyRegistry {
 
 		this.parties.add({
 			profiles: [{ ...profile, ready: true, sessionId: client }],
-			leader: profile.sessionId,
+			leader: client,
 			roomAvailable: 1,
 			searching: false
 		})
