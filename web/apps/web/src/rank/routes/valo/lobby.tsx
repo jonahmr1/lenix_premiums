@@ -47,7 +47,7 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
-		if (DEV) {
+		if (DEV) {{}
 			setProfile(FAKE_PROFILE)
 			return
 		}

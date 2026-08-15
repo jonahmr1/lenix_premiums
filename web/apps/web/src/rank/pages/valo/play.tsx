@@ -46,8 +46,8 @@ export const Play = ({
 		if (DEV) {
 			setParty({
 				profiles: [FAKE_PROFILE],
-				'leader': 1,
-				'roomAvailable': 1
+				leader: 1,
+				roomAvailable: 3
 			})
 			return
 		}
@@ -88,14 +88,14 @@ export const Play = ({
 		if (DEV) {
 			setStats({
 				1: {
-					'assists': 0,
-					'deaths': 0,
-					'kills': 0,
-					'killsDeathsRatio': 0,
-					'losses': 0,
-					'matches': 0,
-					'winRate': 0,
-					'wins': 0,
+					assists: 67,
+					deaths: 67,
+					kills: 67,
+					killsDeathsRatio: 67,
+					losses: 67,
+					matches: 67,
+					winRate: 67,
+					wins: 67,
 				}
 			})
 			return
