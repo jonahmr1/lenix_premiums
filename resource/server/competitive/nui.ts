@@ -80,7 +80,7 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 	const profileId = getProfileId(client)
 
 	const selectedCols = ['match_id', 'result', 'kills', 'deaths', 'assists'] as const
-	const selectedMatchsCols = ['match_id', 'mode', 'map', 'played_at'] as const
+	const selectedMatchsCols = ['match_id', 'map', 'played_at'] as const
 
 	try {
 		const matchesPerformance = await oxmysql.query<{
