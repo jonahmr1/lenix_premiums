@@ -142,7 +142,7 @@ export abstract class Parties extends PartyRegistry {
 				invites.delete(invited)
 			}, Config.invitesSpamPeriod * 1000);
 
-			emitNet('lenix:server:competitive:getInvited', invited, profile)
+			emitNet('lenix:server:competitive:getInvited', invited, profile satisfies Competitive.Player['GamerProfile'])
 		} catch (e) {
 			console.log(palette('red', String(e)))
 		}
