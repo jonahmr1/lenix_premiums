@@ -11,9 +11,9 @@ export namespace Competitive {
 		getProfile: Request<Player['Profile'], 'competitive:getProfile'>
 		getGamerProfile: Request<Player['GamerProfile'], 'competitive:getGamerProfile'>
 		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
+		getParty: Request<Player['Party'], 'competitive:getParty'>
+		setPartySize: Request<null, 'competitive:setPartySize', { size: number }>
 		party: {
-			get: Request<Player['Party'], 'competitive:party:get'>
-			setSize: Request<null, 'competitive:party:setSize', { size: number }>
 			getStats: Request<Record<string, Player['Stats']>, 'competitive:party:getStats', { profiles: string[] }>
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
@@ -28,6 +28,7 @@ export namespace Competitive {
 		leaveParty: Request<null, 'competitive:leaveParty'>
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
 		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: Player['Party']['status'] }>
+		transferLeadership: Request<null, 'competitive:transferPartyLeadership', { leader: number }>
 	}
 
 	export interface APIs {

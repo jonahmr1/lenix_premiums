@@ -80,7 +80,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static readonly leadersInQueue = new Set<number>
+	private static leaderInQueue: null | number = null
 
 	static setSize(client: number, size: number) {
 		const profile = this.getProfileFromParties(client)
@@ -206,14 +206,14 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static matchSearch(client: number) {
-		const nextClient = this.leadersInQueue.values().next().value
+		const nextClient = this.leaderInQueue
 		if (!nextClient) {
-			this.leadersInQueue.add(client)
+			this.leaderInQueue = client
 			return
 		}
 		asserts(nextClient !== client, `Duplicated queue leader<${client}> entries tried to self-find a match`)
 
-		this.leadersInQueue.delete(nextClient)
+		this.leaderInQueue = null
 
 		const nextClientParty = this.getPartyByClient(nextClient)
 		const party = this.getPartyByClient(client)
@@ -237,6 +237,7 @@ export abstract class Parties extends PartyRegistry {
 		party.status = status
 		this.refreshPartyProfiles(party)
 
+		if (status === 'idle') this.leaderInQueue = null
 		if (status !== 'searching') return
 		this.matchSearch(client)
 	}
@@ -248,6 +249,16 @@ export abstract class Parties extends PartyRegistry {
 			console.log(palette('red', String(e)))
 			return await Parties.new(client)
 		}
+	}
+
+	static async transferLeadership(client: number, leader: number) {
+		const party = this.getPartyByClient(client)
+		const profile = this.getProfileFromParties(client)
+		asserts(party.leader === profile.sessionId, `client<${client}> to transfer leadership while he wasn't the leader`)
+		asserts(client !== leader, `client<${client}> tried to give himself leadership while he already was`)
+
+		party.leader = leader
+		this.refreshPartyProfiles(party)
 	}
 
 	static crash(client: number) {

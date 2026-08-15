@@ -54,7 +54,7 @@ export const Play = ({
 			return
 		}
 		(async () => {
-			const party = await fetchNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', {})
+			const party = await fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {})
 			setParty(party)
 		})()
 
@@ -162,7 +162,7 @@ export const Play = ({
 					onValueChange={async value => {
 						const size = Number(value)
 						if (size === 0 || !isPartyLeader || size < party.profiles.length) return
-						fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
+						fetchNuiServer<Competitive.Requests['setPartySize']>('competitive:setPartySize', { size })
 					}}
 				>
 					{Array.from(
@@ -224,6 +224,11 @@ export const Play = ({
 									fetchNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', { profile: partyProfile.sessionId })
 								}}>
 									Kick
+								</ContextMenuItem>
+								<ContextMenuItem onClick={() => {
+									fetchNuiServer<Competitive.Requests['transferLeadership']>('competitive:transferPartyLeadership', { leader: partyProfile.sessionId })
+								}}>
+									Make Leader
 								</ContextMenuItem>
 							</ContextMenuContent>
 						</ContextMenu>

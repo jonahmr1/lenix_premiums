@@ -56,7 +56,7 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 
 	useEffect(() => {
-		fetchNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', {}).then(setParty)
+		fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {}).then(setParty)
 
 		if (!stats) {
 			fetchNuiServer<Competitive.Requests['getStats']>('competitive:getStats', {}).then(setStats)
@@ -233,7 +233,7 @@ export const Play = ({
 								value={party.roomAvailable.toString()}
 								onValueChange={async value => {
 									if (!value) return
-									const party = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size: Number(value) })
+									const party = await fetchNuiServer<Competitive.Requests['setPartySize']>('competitive:setPartySize', { size: Number(value) })
 									if (!party) {
 										// TODO: add how much secs left
 										toast('Try again later')

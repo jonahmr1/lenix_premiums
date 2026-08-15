@@ -27,20 +27,24 @@ onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async 
 	}
 })
 
-onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', (client, { inviter }) => {
-	return Parties.acceptInvite(client, inviter), null
-})
-
-onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', (client, { size }) => {
-	return Parties.setSize(client, size), null
-})
-
 onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {
 	return await getProfiles()
 })
 
-onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
+onNuiServer<Competitive.Requests['getParty']>('competitive:getParty', async (client) => {
 	return Parties.getParty(client)
+})
+
+onNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', (client) => {
+	return Parties.getProfileFromParties(client)
+})
+
+onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', (client, { inviter }) => {
+	return Parties.acceptInvite(client, inviter), null
+})
+
+onNuiServer<Competitive.Requests['setPartySize']>('competitive:setPartySize', (client, { size }) => {
+	return Parties.setSize(client, size), null
 })
 
 onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
@@ -68,9 +72,8 @@ onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', asyn
 onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', (client, { status }) => {
 	return Parties.updateGameSearch(client, status), null
 })
-
-onNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', (client) => {
-	return Parties.getProfileFromParties(client)
+onNuiServer<Competitive.Requests['transferLeadership']>('competitive:transferPartyLeadership', (client, { leader }) => {
+	return Parties.transferLeadership(client, leader), null
 })
 
 onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {
