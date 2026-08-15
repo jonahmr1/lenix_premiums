@@ -190,8 +190,9 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async updateReadiness(client: number, status: boolean) {
-		const profile = this.getProfileFromParties(client)
 		const party = this.getPartyByClient(client)
+		asserts(party.status !== 'found', `client<${client}> tried to update readiness while a match was found`)
+		const profile = this.getProfileFromParties(client)
 
 		if (!status) this.updateGameSearch(party.leader, 'idle')
 
@@ -220,6 +221,7 @@ export abstract class Parties extends PartyRegistry {
 		const party = this.getPartyByClient(client)
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
 
+		party.profiles.forEach(profile => asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`))
 		party.status = status
 		this.refreshPartyProfiles(party)
 
@@ -227,10 +229,6 @@ export abstract class Parties extends PartyRegistry {
 		if (status !== 'searching') return
 		
 		
-		party.profiles.forEach(profile => {
-			asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`)
-		})
-
 		const nextClient = this.leaderInQueue
 		if (!nextClient) {
 			this.leaderInQueue = client
