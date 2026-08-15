@@ -19,19 +19,16 @@ abstract class PartyRegistry {
 	protected static pendingInvites = new Map<number, Set<number>>()
 
 	protected static async getProfileFromParties(client: number) {
-		const profile = (await this.getPartyByClient(client)).profiles.find(profile => profile.sessionId === client)
+		const profile = this.getPartyByClient(client).profiles.find(profile => profile.sessionId === client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
 		return profile
 	}
 
-	static async getPartyByClient(client: number, fallToCreate?: boolean /* create new party if not found */) {
-		let party = [...this.parties.values()].find(party =>
+	protected static getPartyByClient(client: number) {
+		const party = [...this.parties.values()].find(party =>
 			party.profiles.some(profile => profile.sessionId === client)
 		)
-		if (fallToCreate && !party) {
-			party = await Parties.new(client)
-		}
 		asserts(party, `Failed to get client<${client}> party`)
 
 		return party
@@ -52,8 +49,7 @@ abstract class PartyRegistry {
 		return this.getPartyByClient(client)
 	}
 
-	static add(profile: Party['profiles'][number], inviterParty: Party) {
-		// add and set him unready
+	protected static add(profile: Party['profiles'][number], inviterParty: Party) {
 		inviterParty.profiles.push({ ...profile, ready: false })
 	}
 
@@ -87,7 +83,7 @@ abstract class PartyRegistry {
 export abstract class Parties extends PartyRegistry {
 	static async setSize(client: number, size: number) {
 		const profile = await this.getProfileFromParties(client)
-		const party = await this.getPartyByClient(client)
+		const party = this.getPartyByClient(client)
 
 		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
 		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
@@ -98,7 +94,7 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async leaveParty(client: number) {
-		const party = await this.getPartyByClient(client)
+		const party = this.getPartyByClient(client)
 		const partyLeft = this.remove(client, party)
 		const newParty = await this.new(client)
 
@@ -108,7 +104,7 @@ export abstract class Parties extends PartyRegistry {
 
 	static async updateReadiness(client: number, status: boolean) {
 		const profile = await this.getProfileFromParties(client)
-		const party = await this.getPartyByClient(client)
+		const party = this.getPartyByClient(client)
 
 		profile.ready = status
 
@@ -123,7 +119,7 @@ export abstract class Parties extends PartyRegistry {
 			}
 
 			asserts(client !== invited, `client<${client}> tried to invite himself`)
-			const party = await this.getPartyByClient(client)
+			const party = this.getPartyByClient(client)
 
 			asserts(
 				!party.profiles.some((profile) => profile.sessionId === invited),
@@ -157,10 +153,10 @@ export abstract class Parties extends PartyRegistry {
 			const inviterInvites = this.pendingInvites.get(inviter)
 			asserts(inviterInvites?.has(client), `No pending invite from this player<${inviter}>`)
 
-			const inviterParty = await this.getPartyByClient(inviter)
+			const inviterParty = this.getPartyByClient(inviter)
 			asserts(inviterParty.profiles.length < inviterParty.roomAvailable, `Party is full, player<${client}>`)
 
-			const party = await this.getPartyByClient(client)
+			const party = this.getPartyByClient(client)
 			asserts(party !== inviterParty, 'Client is already in this party')
 
 			const profile = await this.getProfileFromParties(client)
@@ -199,7 +195,7 @@ export abstract class Parties extends PartyRegistry {
 	static async kick(client: number, kicked: number) {
 		asserts(client !== kicked, `client<${client}> tried to kick himself`)
 
-		const party = await this.getPartyByClient(client)
+		const party = this.getPartyByClient(client)
 		asserts(party.leader === client, `client<${client}> tried to kick a player while he wasn't the leader`)
 		asserts(
 			party.profiles.some(profile => profile.sessionId === kicked),
@@ -209,11 +205,15 @@ export abstract class Parties extends PartyRegistry {
 		await this.leaveParty(kicked)
 	}
 
-	static async updateGameSearch(client: number, status: boolean) {
-		const party = await this.getPartyByClient(client)
+	static updateGameSearch(client: number, status: boolean) {
+		const party = this.getPartyByClient(client)
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
 
 		party.searching = status
 		this.refreshPartyProfiles(party)
+	}
+
+	static async getParty(client: number) {
+		return this.getPartyByClient(client) ?? await Parties.new(client)
 	}
 }

@@ -36,7 +36,7 @@ onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', asyn
 })
 
 onNuiServer<Competitive.Requests['party']['get']>('competitive:party:get', async (client) => {
-	return Parties.getPartyByClient(client, true)
+	return Parties.getParty(client)
 })
 
 onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadiness', async (client, { status }) => {
