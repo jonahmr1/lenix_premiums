@@ -41,15 +41,15 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
-  const [searchTimer, setSeachTimer] = useState(0)
-	
+	const [searchTimer, setSeachTimer] = useState(0)
+
 	useEffect(() => {
 		if (DEV) {
 			setParty({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
 				roomAvailable: 3,
-				searching: true
+				status: 'searching'
 			})
 			return
 		}
@@ -101,31 +101,36 @@ export const Play = ({
 			})
 			return
 		}
-		
+
 		const timeout = setTimeout(async () => {
 			const newStats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(
 				'competitive:party:getStats', { profiles: party.profiles.map(profile => profile.profile_id) }
 			)
 			setStats(newStats)
 		})
-		
+
 		return () => clearTimeout(timeout)
 	}, [party?.profiles.length])
 
 	useEffect(() => {
-		if (!party?.searching) return setSeachTimer(0)
+		if (party?.status === 'searching') return setSeachTimer(0)
 
 		const interval = setInterval(() => setSeachTimer(t => t + 1), 1000)
 		return () => clearInterval(interval)
-  }, [party?.searching])
+	}, [party?.status])
 
 	const partySelfProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
 	if (!party || !partySelfProfile) return <Loading className='h-full' />
 
 	const renderOrder = getRenderOrder(party.roomAvailable)
 	const isPartyLeader = party.leader === profile?.sessionId
-	const playLabel = party.searching ? 'Searching...' : isPartyLeader ? 'Search' : partySelfProfile.ready ? 'Ready' : 'UnReady'
-	const playHoverLabel = isPartyLeader ? party.searching ? 'Cancel' : 'Start' : partySelfProfile.ready ? 'UnReady' : 'Get Ready'
+	const playLabel = party.status === 'found' ? 'Match Found!'
+		: party.status === 'searching' ? 'Searching...'
+			: isPartyLeader ? 'Search'
+				: partySelfProfile.ready ? 'Ready' : 'UnReady'
+	const playHoverLabel = party.status === 'found' ? 'Match Found!'
+		: isPartyLeader ? party.status === 'searching' ? 'Cancel' : 'Start'
+			: partySelfProfile.ready ? 'UnReady' : 'Get Ready'
 
 
 	return (
@@ -270,6 +275,8 @@ export const Play = ({
 				<Button
 					className='group w-full text-xl px-25 py-5 normal-case'
 					onClick={() => {
+						if (party.status === 'found') return
+						
 						if (!isPartyLeader) {
 							fetchNuiServer<Competitive.Requests['updateReadiness']>(
 								'competitive:updateReadiness',
@@ -277,7 +284,7 @@ export const Play = ({
 							)
 							return
 						}
-						fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: !party.searching })
+						fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: party.status === 'searching' ? 'idle' : 'searching' })
 					}}
 				>
 					<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel}${searchTimer}s` : playLabel}</span>

@@ -27,7 +27,7 @@ export namespace Competitive {
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: boolean }>
 		leaveParty: Request<null, 'competitive:leaveParty'>
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
-		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: boolean }>
+		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: Player['Party']['status'] }>
 	}
 
 	export interface APIs {
@@ -91,7 +91,7 @@ export namespace Competitive {
 			profiles: Competitive.Player['GamerProfile'][]
 			leader: Competitive.Player['GamerProfile']['sessionId']
 			roomAvailable: number
-			searching: boolean
+			status: 'searching' | 'idle' | 'found'
 		}
 	}
 

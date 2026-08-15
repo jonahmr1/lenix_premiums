@@ -3,6 +3,7 @@ import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
 import { Config } from "common/config/competitive"
 import { palette } from "lenix"
+import { Match } from "./match"
 
 
 type Party = Competitive.Player['Party']
@@ -38,7 +39,7 @@ abstract class PartyRegistry {
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: client,
 			roomAvailable: 1,
-			searching: false
+			status: 'idle'
 		})
 
 		return this.getPartyByClient(client)
@@ -66,7 +67,7 @@ abstract class PartyRegistry {
 		}
 
 		party.profiles = profilesLeft
-		party.searching = false
+		party.status = 'idle'
 
 		return party
 	}
@@ -107,7 +108,7 @@ export abstract class Parties extends PartyRegistry {
 
 		profile.ready = status
 
-		if (!status && party.searching) party.searching = false
+		if (!status && party.status) party.status = 'idle'
 		this.refreshPartyProfiles(party)
 	}
 
@@ -204,20 +205,34 @@ export abstract class Parties extends PartyRegistry {
 		await this.leaveParty(kicked)
 	}
 
-	static updateGameSearch(client: number, status: boolean) {
-		const party = this.getPartyByClient(client)
-		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
-
-		party.searching = status
-		this.refreshPartyProfiles(party)
-
-		const nextLeader = this.leadersInQueue.values().next().value
-		if (!nextLeader) {
+	static findmatch(client: number) {
+		const nextClient = this.leadersInQueue.values().next().value
+		if (!nextClient) {
 			this.leadersInQueue.add(client)
 			return
 		}
-		this.leadersInQueue.delete(nextLeader)
-		// start a game between client and nextleader
+		this.leadersInQueue.delete(nextClient)
+
+		const nextClientParty = this.getPartyByClient(nextClient)
+		const party = this.getPartyByClient(client)
+
+		nextClientParty.status = 'found'
+		party.status = 'found'
+		
+		this.refreshPartyProfiles(nextClientParty)
+		this.refreshPartyProfiles(party)
+
+		new Match([nextClientParty, party])
+	}
+
+	static updateGameSearch(client: number, status: Party['status']) {
+		const party = this.getPartyByClient(client)
+		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
+
+		party.status = status
+		this.refreshPartyProfiles(party)
+
+		this.findmatch(client)
 	}
 
 	static async getParty(client: number) {
