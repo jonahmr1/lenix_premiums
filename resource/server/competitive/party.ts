@@ -60,7 +60,6 @@ abstract class PartyRegistry {
 		}
 
 		if (party.leader === client) {
-			// first profile to join the party after the leader ofc
 			const newPartyLeader = profilesLeft?.[0]?.sessionId
 			asserts(newPartyLeader, `Failed to find new party leader for the leader<${client}>`)
 
@@ -85,6 +84,8 @@ export abstract class Parties extends PartyRegistry {
 
 	static setSize(client: number, size: number) {
 		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to set party size while not in idle mode`)
+
 		const profile = this.getProfileFromParties(client, party)
 
 		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
@@ -96,6 +97,9 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static async leaveParty(client: number) {
+		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to leave a party while not in idle mode`)
+
 		const partyLeft = this.remove(client)
 		const newParty = await this.new(client)
 
@@ -109,7 +113,10 @@ export abstract class Parties extends PartyRegistry {
 
 		profile.ready = status
 
-		if (!status && party.status) party.status = 'idle'
+		if (!status && party.status) {
+			party.status = 'idle'
+			if (this.leaderInQueue === client) this.leaderInQueue = null
+		}
 		this.refreshPartyProfiles(party)
 	}
 
@@ -119,8 +126,9 @@ export abstract class Parties extends PartyRegistry {
 				if (this.playersIgnoringInvites.get(invited)?.has(client)) return
 			}
 
-			asserts(client !== invited, `client<${client}> tried to invite himself`)
 			const party = this.getPartyByClient(client)
+			asserts(party.status === 'idle', `client<${client}> tried to invite client<${invited}> while not in idle mode`)
+			asserts(client !== invited, `client<${client}> tried to invite himself`)
 
 			asserts(
 				!party.profiles.some((profile) => profile.sessionId === invited),
@@ -156,8 +164,10 @@ export abstract class Parties extends PartyRegistry {
 
 			const inviterParty = this.getPartyByClient(inviter)
 			asserts(inviterParty.profiles.length < inviterParty.roomAvailable, `Party is full, player<${client}>`)
+			asserts(inviterParty.status === 'idle', `client<${client}> accepted client<${inviter}>'s invite while client<${inviter}>'s party not in idle mode`)
 
 			const party = this.getPartyByClient(client)
+			asserts(party.status === 'idle', `client<${client}> accepted client<${inviter}>'s invite while his party not in idle mode`)
 			asserts(party !== inviterParty, 'Client is already in this party')
 
 			const profile = this.getProfileFromParties(client, party)
@@ -197,6 +207,8 @@ export abstract class Parties extends PartyRegistry {
 		asserts(client !== kicked, `client<${client}> tried to kick himself`)
 
 		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to kick client<${kicked}> while not in idle mode`)
+
 		asserts(party.leader === client, `client<${client}> tried to kick a player while he wasn't the leader`)
 		asserts(
 			party.profiles.some(profile => profile.sessionId === kicked),
@@ -253,6 +265,8 @@ export abstract class Parties extends PartyRegistry {
 
 	static async transferLeadership(client: number, leader: number) {
 		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to transfer leadership while not in idle mode`)
+
 		const profile = this.getProfileFromParties(client, party)
 		asserts(party.leader === profile.sessionId, `client<${client}> to transfer leadership while he wasn't the leader`)
 		asserts(client !== leader, `client<${client}> tried to give himself leadership while he already was`)
@@ -264,6 +278,9 @@ export abstract class Parties extends PartyRegistry {
 
 	static crash(client: number) {
 		const partyLeft = this.remove(client)
-		if (partyLeft) this.refreshPartyProfiles(partyLeft)
+		if (partyLeft) {
+			if (this.leaderInQueue === client) this.leaderInQueue = null
+			this.refreshPartyProfiles(partyLeft)
+		}
 	}
 }
