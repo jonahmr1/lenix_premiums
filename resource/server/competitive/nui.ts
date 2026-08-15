@@ -20,17 +20,15 @@ const defaultStats = {
 
 
 onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async (client) => {
-	const profile = await fetchProfile(client)
-
-	return profile
+	return await fetchProfile(client)
 })
 
 onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', async (client, { inviter }) => {
-	return await Parties.acceptInvite(client, inviter)
+	return await Parties.acceptInvite(client, inviter), null
 })
 
 onNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', async (client, { size }) => {
-	return await Parties.setSize(client, size)
+	return await Parties.setSize(client, size), null
 })
 
 onNuiServer<Competitive.Requests['getProfiles']>('competitive:getProfiles', async () => {
@@ -151,7 +149,7 @@ onNuiServer<Competitive.Requests['updateReadiness']>('competitive:updateReadines
 })
 
 onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async (client) => {
-	return await Parties.leaveParty(client)
+	return await Parties.leaveParty(client), null
 })
 
 onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', async (client, { invited }) => {
@@ -275,6 +273,6 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 		}))
 })
 
-onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', (client, { profile }) => {
-	return Parties.kick(client, profile), null
+onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', async (client, { profile }) => {
+	return await Parties.kick(client, profile), null
 })

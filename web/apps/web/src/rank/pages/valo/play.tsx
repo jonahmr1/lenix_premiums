@@ -63,8 +63,7 @@ export const Play = ({
 					action: {
 						label: "Accept",
 						onClick: async () => {
-							const newParty = await fetchNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter: inviter.sessionId })
-							setParty(newParty)
+							await fetchNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', { inviter: inviter.sessionId })
 						},
 					},
 					cancel: {
@@ -147,8 +146,7 @@ export const Play = ({
 					onValueChange={async value => {
 						const size = Number(value)
 						if (size === 0 || !isPartyLeader || size <= party.profiles.length) return
-						const updatedParty = await fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
-						setParty(updatedParty)
+						fetchNuiServer<Competitive.Requests['party']['setSize']>('competitive:party:setSize', { size })
 					}}
 				>
 					{Array.from(
@@ -283,9 +281,8 @@ export const Play = ({
 					<Button
 						hidden={isPartyLeader}
 						variant='outline' className='justify-evenly'
-						onClick={async () => {
-							const newParty = await fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
-							setParty(newParty)
+						onClick={() => {
+							fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
 						}}
 					>
 						<LogOut />

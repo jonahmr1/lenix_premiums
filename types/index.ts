@@ -12,7 +12,7 @@ export namespace Competitive {
 		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
 		party: {
 			get: Request<Player['Party'], 'competitive:party:get'>
-			setSize: Request<Player['Party'], 'competitive:party:setSize', { size: number }>
+			setSize: Request<null, 'competitive:party:setSize', { size: number }>
 			getStats: Request<Record<string, Player['Stats']>, 'competitive:party:getStats', { profiles: string[] }>
 		}
 		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
@@ -21,10 +21,10 @@ export namespace Competitive {
 		setStatus: Request<true, 'competitive:setStatus', { status: Player['Profile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
 		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
-		acceptInvite: Request<Player['Party'], 'competitive:acceptInvite', { inviter: number }>
+		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: 'ready' | 'unready' }>
-		leaveParty: Request<Player['Party'], 'competitive:leaveParty'>
+		leaveParty: Request<null, 'competitive:leaveParty'>
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
 	}
 

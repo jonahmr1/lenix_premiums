@@ -8,15 +8,14 @@ import { palette } from "lenix"
 type Party = Competitive.Player['Party']
 
 
-export abstract class Parties {
+abstract class Something {
 	private static readonly parties = new Set<{
 		profiles: Party['profiles']
 		leader: Party['leader']
 		roomAvailable: Party['roomAvailable']
 	}>()
-	private static readonly playersIgnoringInvites = new Map<number, Set<number>>()
-	static #pendingInvites = new Map<number, Set<number>>()
-
+	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
+	protected static pendingInvites = new Map<number, Set<number>>()
 
 	static async getProfileFromParties(client: number) {
 		const profile = (await this.getPartyByClient(client)).profiles.find(profile => profile.sessionId === client)
@@ -37,18 +36,6 @@ export abstract class Parties {
 		return party
 	}
 
-	static async setSize(client: number, size: number): Promise<Party> {
-		const profile = await this.getProfileFromParties(client)
-		const party = await this.getPartyByClient(client)
-
-		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
-		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
-
-		party.roomAvailable = size
-
-		return party
-	}
-
 	static async new(
 		client: number
 	): Promise<Party> {
@@ -60,16 +47,12 @@ export abstract class Parties {
 			roomAvailable: 1
 		})
 
-		const party = this.getPartyByClient(client)
-
-		return party
+		return this.getPartyByClient(client)
 	}
 
-	static join(profile: Party['profiles'][number], inviterParty: Party) {
+	static add(profile: Party['profiles'][number], inviterParty: Party) {
 		// add and set him unready
 		inviterParty.profiles.push({ ...profile, ready: false })
-
-		this.refreshPartyProfiles(inviterParty)
 	}
 
 	static remove(client: number, party: Party) {
@@ -77,7 +60,7 @@ export abstract class Parties {
 
 		if (!profilesLeft.length) {
 			this.parties.delete(party)
-			return
+			return null
 		}
 
 		if (party.leader === client) {
@@ -89,20 +72,36 @@ export abstract class Parties {
 		}
 
 		party.profiles = profilesLeft
-		this.refreshPartyProfiles(party)
-	}
-
-	static async leaveParty(client: number) {
-		const party = await this.getPartyByClient(client)
-		this.remove(client, party)
-
-		return this.new(client)
+		return party
 	}
 
 	static refreshPartyProfiles(party: Party) {
 		party.profiles.forEach(profile => {
 			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
 		})
+	}
+}
+
+export abstract class Parties extends Something {
+	static async setSize(client: number, size: number) {
+		const profile = await this.getProfileFromParties(client)
+		const party = await this.getPartyByClient(client)
+
+		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
+		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
+
+		party.roomAvailable = size
+
+		this.refreshPartyProfiles(party)
+	}
+
+	static async leaveParty(client: number) {
+		const party = await this.getPartyByClient(client)
+		const partyLeft = this.remove(client, party)
+		const newParty = await this.new(client)
+
+		this.refreshPartyProfiles(newParty)
+		if (partyLeft) this.refreshPartyProfiles(partyLeft)
 	}
 
 	static async updateReadiness(client: number, status: 'ready' | 'unready') {
@@ -117,9 +116,7 @@ export abstract class Parties {
 		this.refreshPartyProfiles(party)
 	}
 
-	static async invite(client: number, invited: number, recursive?: true): Promise<void> {
-		try {
-			if (!recursive) {
+	static async invite(client: number, invited: number, recursive?: true): Promise<void> { try { if (!recursive) {
 				if (this.playersIgnoringInvites.get(invited)?.has(client)) return
 			}
 
@@ -131,10 +128,10 @@ export abstract class Parties {
 				`invited<${invited}> is already in client<${client}>'s party`
 			)
 
-			const invites = this.#pendingInvites.get(client)
+			const invites = this.pendingInvites.get(client)
 			if (!invites) {
 				const newInvites = new Set<number>()
-				this.#pendingInvites.set(client, newInvites)
+				this.pendingInvites.set(client, newInvites)
 				return this.invite(client, invited, true)
 			}
 
@@ -153,9 +150,9 @@ export abstract class Parties {
 		}
 	}
 
-	static async acceptInvite(client: number, inviter: number): Promise<Party> {
+	static async acceptInvite(client: number, inviter: number) {
 		try {
-			const inviterInvites = this.#pendingInvites.get(inviter)
+			const inviterInvites = this.pendingInvites.get(inviter)
 			asserts(inviterInvites?.has(client), `No pending invite from this player<${inviter}>`)
 
 			const inviterParty = await this.getPartyByClient(inviter)
@@ -165,12 +162,13 @@ export abstract class Parties {
 			asserts(party !== inviterParty, 'Client is already in this party')
 
 			const profile = await this.getProfileFromParties(client)
-			this.remove(client, party)
-			this.join(profile, inviterParty)
+			const partyLeft = this.remove(client, party)
+			this.add(profile, inviterParty)
 
 			inviterInvites?.delete(client)
-
-			return inviterParty
+			
+			this.refreshPartyProfiles(inviterParty)
+			if (partyLeft) this.refreshPartyProfiles(partyLeft)
 		} catch (e) {
 			console.log(palette('red', String(e)))
 			throw e
@@ -196,7 +194,16 @@ export abstract class Parties {
 		}, Config.ignoreInvitesPeriod * 60_000)
 	}
 
-	static kick(client: number, kicked: number) {
-		
+	static async kick(client: number, kicked: number) {
+		asserts(client !== kicked, `client<${client}> tried to kick himself`)
+
+		const party = await this.getPartyByClient(client)
+		asserts(party.leader === client, `client<${client}> tried to kick a player while he wasn't the leader`)
+		asserts(
+			party.profiles.some(profile => profile.sessionId === kicked),
+			`client<${client}> tried to kick player<${kicked}> who isn't in his party`
+		)
+
+		await this.leaveParty(kicked)
 	}
 }
