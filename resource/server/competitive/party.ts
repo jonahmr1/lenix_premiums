@@ -71,6 +71,8 @@ abstract class PartyRegistry {
 		}
 
 		party.profiles = profilesLeft
+		party.searching = false
+
 		return party
 	}
 
@@ -99,10 +101,7 @@ export abstract class Parties extends PartyRegistry {
 		const newParty = await this.new(client)
 
 		this.refreshPartyProfiles(newParty)
-		if (partyLeft) {
-			partyLeft.searching = false
-			this.refreshPartyProfiles(partyLeft)
-		}
+		if (partyLeft) this.refreshPartyProfiles(partyLeft)
 	}
 
 	static async updateReadiness(client: number, status: boolean) {
