@@ -79,6 +79,8 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
+	private static readonly leadersInQueue = new Set<number>
+
 	static setSize(client: number, size: number) {
 		const profile = this.getProfileFromParties(client)
 		const party = this.getPartyByClient(client)
@@ -208,6 +210,14 @@ export abstract class Parties extends PartyRegistry {
 
 		party.searching = status
 		this.refreshPartyProfiles(party)
+
+		const nextLeader = this.leadersInQueue.values().next().value
+		if (!nextLeader) {
+			this.leadersInQueue.add(client)
+			return
+		}
+		this.leadersInQueue.delete(nextLeader)
+		// start a game between client and nextleader
 	}
 
 	static async getParty(client: number) {
