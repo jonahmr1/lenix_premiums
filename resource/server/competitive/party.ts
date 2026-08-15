@@ -82,44 +82,6 @@ abstract class PartyRegistry {
 export abstract class Parties extends PartyRegistry {
 	private static leaderInQueue: null | number = null
 
-	static setSize(client: number, size: number) {
-		const party = this.getPartyByClient(client)
-		asserts(party.status === 'idle', `client<${client}> tried to set party size while not in idle mode`)
-
-		const profile = this.getProfileFromParties(client, party)
-
-		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
-		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
-
-		party.roomAvailable = size
-
-		this.refreshPartyProfiles(party)
-	}
-
-	static async leaveParty(client: number) {
-		const party = this.getPartyByClient(client)
-		asserts(party.status === 'idle', `client<${client}> tried to leave a party while not in idle mode`)
-
-		const partyLeft = this.remove(client)
-		const newParty = await this.new(client)
-
-		this.refreshPartyProfiles(newParty)
-		if (partyLeft) this.refreshPartyProfiles(partyLeft)
-	}
-
-	static async updateReadiness(client: number, status: boolean) {
-		const profile = this.getProfileFromParties(client)
-		const party = this.getPartyByClient(client)
-
-		profile.ready = status
-
-		if (!status && party.status) {
-			party.status = 'idle'
-			if (this.leaderInQueue === client) this.leaderInQueue = null
-		}
-		this.refreshPartyProfiles(party)
-	}
-
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
 			if (!recursive) {
@@ -201,6 +163,39 @@ export abstract class Parties extends PartyRegistry {
 
 			this.playersIgnoringInvites.delete(client)
 		}, Config.ignoreInvitesPeriod * 60_000)
+	}
+	static setSize(client: number, size: number) {
+		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to set party size while not in idle mode`)
+
+		const profile = this.getProfileFromParties(client, party)
+
+		asserts(party.profiles.length <= size, `client<${client}> tried to set party size<${size}> into a value less than the current party profiles length`)
+		asserts(party.leader === profile.sessionId, `client<${client}> tried to modify party size while he wasn't the leader`)
+
+		party.roomAvailable = size
+
+		this.refreshPartyProfiles(party)
+	}
+
+	static async leaveParty(client: number) {
+		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to leave a party while not in idle mode`)
+
+		const partyLeft = this.remove(client)
+		const newParty = await this.new(client)
+
+		this.refreshPartyProfiles(newParty)
+		if (partyLeft) this.refreshPartyProfiles(partyLeft)
+	}
+
+	static async updateReadiness(client: number, status: boolean) {
+		const profile = this.getProfileFromParties(client)
+		const party = this.getPartyByClient(client)
+
+		profile.ready = status
+
+		this.updateGameSearch(party.leader, 'idle')
 	}
 
 	static async kick(client: number, kicked: number) {
