@@ -184,7 +184,7 @@ export const Play = ({
 						>
 							<ContextMenuTrigger asChild>
 								<Button
-									className='flex-none w-1/5 px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
+									className='flex-none w-1/6 px-0 bg-foreground/5 border-foreground/33 hover:bg-foreground/10 flex-col overflow-hidden text-foreground'
 									style={{ height: `${h}%` }}
 								>
 									<>
@@ -227,7 +227,7 @@ export const Play = ({
 							key={i}
 						>
 							<DialogTrigger
-								className='flex-none w-1/5 bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-none w-1/6 bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
