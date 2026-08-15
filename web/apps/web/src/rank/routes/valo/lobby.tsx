@@ -80,6 +80,9 @@ export const Lobby = () => {
 										<Button
 											key={page.to}
 											className={`relative border-0 h-full w-full text-foreground flex tracking-widest px-15 flex-col ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground text-2xl' : 'text-sm'}`}
+											style={isInCurrentRoute ? {
+												backgroundImage: 'linear-gradient(to top, rgba(var(--primary-rgb), 1), transparent)',
+											} : undefined}
 											variant={isInCurrentRoute ? 'default' : 'ghost'}
 											onClick={() => nav(page.to)}
 										>
