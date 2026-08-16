@@ -1,50 +1,21 @@
 {
 	"GAME_MODES": {
+		"custom": {
+			"label": "Custom Game",
+			"minPlayersPerTeam": 1
+		},
 		"back_to_back": {
-			"label": "Back-To-Back"
+			"label": "Back-To-Back",
+			"minPlayersPerTeam": 1
 		},
 		"bomb_plant": {
-			"label": "Bomb Plant"
+			"label": "Bomb Plant",
+			"minPlayersPerTeam": 3
 		},
 		"ground_battle": {
-			"label": "Ground Battle"
-		},
-		"custom": {
-			"label": "Custom Game"
+			"label": "Ground Battle",
+			"minPlayersPerTeam": 4
 		}
-	},
-	"PvP_AMOUNT": {
-		"1": [
-			"back_to_back",
-			"custom"
-		],
-		"2": [
-			"back_to_back",
-			"custom"
-		],
-		"3": [
-			"back_to_back",
-			"custom",
-			"bomb_plant"
-		],
-		"4": [
-			"back_to_back",
-			"custom",
-			"bomb_plant",
-			"ground_battle"
-		],
-		"5": [
-			"back_to_back",
-			"custom",
-			"bomb_plant",
-			"ground_battle"
-		],
-		"6": [
-			"back_to_back",
-			"custom",
-			"bomb_plant",
-			"ground_battle"
-		]
 	},
 	"rankTiers": [
 		{

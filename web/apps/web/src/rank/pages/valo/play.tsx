@@ -1,6 +1,6 @@
 import { Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { GAME_MODES } from '@/rank/constants.valo'
+import { GAME_MODES } from 'config'
 import { Layout } from '@workspace/ui/elements/layout'
 import { Button } from '@workspace/valo/components/button'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
@@ -17,6 +17,7 @@ import { Loading } from '@workspace/elite/elements/loading'
 import { config } from '@/rank/lib'
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@workspace/ui/components/context-menu'
 import { DEV, FAKE_PROFILE } from '@/rank/routes/valo/lobby'
+import { entries } from '@lenix/lenix'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []
@@ -37,7 +38,7 @@ export const Play = ({
 }: {
 	profile: Competitive.Player['GamerProfile'] | undefined
 }) => {
-	const [selectedMode, setSelectedMode] = useState<(typeof GAME_MODES)[number]['name']>('Back-To-Back')
+	const [selectedMode, setSelectedMode] = useState<keyof Competitive.GameModes>('back_to_back')
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
@@ -137,16 +138,16 @@ export const Play = ({
 		<Layout className='h-full w-full justify-between pt-2'>
 			<div className='flex flex-col items-center justify-center'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
-					{GAME_MODES.map(mode => (
+					{entries(GAME_MODES).map(([mode]) => (
 						<Button
-							key={mode.name}
-							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode.name ? 'border-primary' : ''}`}
+							key={mode}
+							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode ? 'border-primary' : ''}`}
 							variant='link'
-							onClick={() => (selectedMode !== mode.name && setSelectedMode(mode.name))}
+							onClick={() => (selectedMode !== mode && setSelectedMode(mode))}
 						>
-							{mode.name}
+							{mode}
 							<Dot
-								className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode.name ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
+								className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
 							/>
 						</Button>
 					))}
@@ -166,7 +167,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: GAME_MODES.find(mode => mode.name === selectedMode)?.playersPerTeam || 1 },
+						{ length: GAME_MODES[selectedMode].minPlayersPerTeam || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

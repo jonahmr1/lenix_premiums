@@ -26,10 +26,10 @@ import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading.js'
 import { fetchNuiServer } from 'lenix/nui'
 import avatar from '@workspace/elite/assets/avatar.png'
-import { entries, type S } from '@lenix/lenix'
+import { type S } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
-import { calculatePlayerScore, getRankTier } from '@/rank/lib'
-import { rankTiers, PvP_AMOUNT } from 'config'
+import { calculatePlayerScore, getMaxPvp, getRankTier } from '@/rank/lib'
+import { rankTiers } from 'config'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
@@ -228,7 +228,7 @@ export const Play = ({
 							</h3>
 							<ToggleGroup
 								className='grid w-full gap-[clamp(0.45rem,0.8vw,0.75rem)]'
-								style={{ gridTemplateColumns: `repeat(${entries(PvP_AMOUNT).length}, minmax(0, 1fr))` }}
+								style={{ gridTemplateColumns: `repeat(${getMaxPvp()}, minmax(0, 1fr))` }}
 								type='single'
 								value={party.roomAvailable.toString()}
 								onValueChange={async value => {
@@ -242,7 +242,7 @@ export const Play = ({
 									setParty(party)
 								}}
 							>
-								{Array.from({ length: entries(PvP_AMOUNT).length }).map((_, index) => {
+								{Array.from({ length: getMaxPvp() }).map((_, index) => {
 									const size = index + 1
 									return (
 										<ToggleGroupItem

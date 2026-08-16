@@ -1,5 +1,6 @@
 import type { Competitive } from 'types'
 import rankConfig, { weights, rankTiers } from 'config' with { type: 'json' }
+import { entries } from '@lenix/lenix'
 
 export const calculatePlayerScore = (stats: Competitive.Player['Stats']) => {
 	return Math.max(
@@ -14,5 +15,9 @@ export const calculatePlayerScore = (stats: Competitive.Player['Stats']) => {
 
 export const getRankTier = (score: number) =>
 	rankTiers.find(rank => score >= rank.minScore) ?? rankTiers[rankTiers.length - 1]
+
+export const getMaxPvp = () => entries(config.GAME_MODES).reduce((maxFound, [, currentMode]) => 
+	Math.max(maxFound, currentMode.minPlayersPerTeam), 1
+)
 
 export const config = rankConfig

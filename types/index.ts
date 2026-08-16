@@ -1,4 +1,5 @@
 import type { Event, Request } from 'lenix'
+import type { Public } from './public'
 
 export namespace Competitive {
 	export interface Events {
@@ -103,4 +104,6 @@ export namespace Competitive {
 		name: Player['GamerProfile']['name']
 		avatar: Player['GamerProfile']['avatar']
 	}[]
+
+	export type GameModes = Public['public/config.competitive.json']['GAME_MODES']
 }
