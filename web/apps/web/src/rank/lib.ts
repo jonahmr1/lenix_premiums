@@ -17,7 +17,7 @@ export const getRankTier = (score: number) =>
 	rank_tiers.find(rank => score >= rank.min_score) ?? rank_tiers[rank_tiers.length - 1]
 
 export const getMaxPvp = () => entries(config.game_modes).reduce((maxFound, [, currentMode]) =>
-	Math.max(maxFound, currentMode.min_players_perTeam), 1
+	Math.max(maxFound, currentMode.min_players_per_team), 1
 )
 
 export const config = rankConfig

@@ -20,7 +20,10 @@
 			"additionalProperties": {
 				"type": "object",
 				"additionalProperties": false,
-				"required": ["label", "team_spawn_points"],
+				"required": [
+					"label",
+					"team_spawn_points"
+				],
 				"properties": {
 					"label": {
 						"type": "string",
@@ -51,13 +54,17 @@
 			"additionalProperties": {
 				"type": "object",
 				"additionalProperties": false,
-				"required": ["label", "min_players_perTeam", "maps_allowed"],
+				"required": [
+					"label",
+					"min_players_per_team",
+					"maps_allowed"
+				],
 				"properties": {
 					"label": {
 						"type": "string",
 						"minLength": 1
 					},
-					"min_players_perTeam": {
+					"min_players_per_team": {
 						"type": "integer",
 						"minimum": 1
 					},
@@ -77,13 +84,29 @@
 		"score_weights": {
 			"type": "object",
 			"additionalProperties": false,
-			"required": ["win", "loss", "kill", "assist", "death"],
+			"required": [
+				"win",
+				"loss",
+				"kill",
+				"assist",
+				"death"
+			],
 			"properties": {
-				"win": { "type": "number" },
-				"loss": { "type": "number" },
-				"kill": { "type": "number" },
-				"assist": { "type": "number" },
-				"death": { "type": "number" }
+				"win": {
+					"type": "number"
+				},
+				"loss": {
+					"type": "number"
+				},
+				"kill": {
+					"type": "number"
+				},
+				"assist": {
+					"type": "number"
+				},
+				"death": {
+					"type": "number"
+				}
 			}
 		},
 		"ignore_invites_period": {
@@ -100,7 +123,11 @@
 			"items": {
 				"type": "object",
 				"additionalProperties": false,
-				"required": ["label", "min_score", "className"],
+				"required": [
+					"label",
+					"min_score",
+					"className"
+				],
 				"properties": {
 					"label": {
 						"type": "string",

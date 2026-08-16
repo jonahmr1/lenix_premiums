@@ -171,7 +171,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: game_modes[party.gameMode].min_players_perTeam || 1 },
+						{ length: game_modes[party.gameMode].min_players_per_team || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

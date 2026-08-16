@@ -179,7 +179,7 @@ export abstract class Parties extends PartyRegistry {
 
 		this.refreshPartyProfiles(party)
 	}
-	
+
 	static async getParty(client: number) {
 		try {
 			return this.getPartyByClient(client)
@@ -278,7 +278,7 @@ export abstract class Parties extends PartyRegistry {
 		asserts(party.status === 'idle', `client<${client}> tried to update party game mode while search for a match`)
 		asserts(party.gameMode !== mode, `client<${client}> tried to update party game mode to the same current game mode`)
 		asserts(
-			Config.game_modes[mode].min_players_perTeam <= party.roomAvailable,
+			Config.game_modes[mode].min_players_per_team <= party.roomAvailable,
 			`client<${client}> tried to update party game mode while the mode allow >= than the currect room available`
 		)
 
