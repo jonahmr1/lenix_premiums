@@ -5,7 +5,11 @@ import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 
 export abstract class Matches {
-	private static readonly matches = new Set<Omit<Competitive.Match, 'match_id'>>()
+	private static readonly matches = new Set<
+		Omit<Competitive.Match, 'match_id'> & {
+			teams: Competitive.Player['Party'][]
+		}
+	>()
 
 	static new(teams: Competitive.Player['Party'][]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
@@ -14,7 +18,8 @@ export abstract class Matches {
 		
 		this.matches.add({
 			map: modeMap,
-			played_at: Math.floor(Date.now() / 1000)
+			played_at: Math.floor(Date.now() / 1000),
+			teams
 		})
 
 		teams.forEach((team, iter) => {
