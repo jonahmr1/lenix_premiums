@@ -16,7 +16,7 @@ export class Match {
 
 			team.profiles.forEach((profile, iter) => {
 				const playerSpawnPoint = teamSpawnSide[iter]
-				asserts(playerSpawnPoint, `Failed to find player<${profile.sessionId}> spawn point`)
+				asserts(playerSpawnPoint?.length === 4, `Failed to find player<${profile.sessionId}> spawn point`)
 
 				const entity = server.entity.handleBySource(profile.sessionId)
 				server.entity.teleport(entity, ...playerSpawnPoint as Vec4)
