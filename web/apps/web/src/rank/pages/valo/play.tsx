@@ -70,12 +70,12 @@ export const Play = ({
 						},
 					},
 					cancel: {
-						label: `Ignore for ${config.ignoreInvitesPeriod} minutes`,
+						label: `Ignore for ${config.ignore_invites_period} minutes`,
 						onClick: () => {
 							fetchNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter: inviter.sessionId })
 						},
 					},
-					duration: config.invitesSpamPeriod * 1000,
+					duration: config.invites_spam_period * 1000,
 				})
 			}),
 			onNuiEmit<Competitive.Events['updateParty']>('competitive:updateParty', setParty)
@@ -167,7 +167,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: game_modes[selectedMode].minPlayersPerTeam || 1 },
+						{ length: game_modes[selectedMode].min_players_perTeam || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

@@ -29,7 +29,7 @@ import avatar from '@workspace/elite/assets/avatar.png'
 import { type S } from '@lenix/lenix'
 import { toast } from '@workspace/ui/lib/utils'
 import { calculatePlayerScore, getMaxPvp, getRankTier } from '@/rank/lib'
-import { rankTiers } from 'config'
+import { rank_tiers } from 'config'
 
 const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className?: string }>) => (
 	<section className={`rounded-xl border border-foreground/10 ${className}`}>{children}</section>
@@ -77,10 +77,10 @@ export const Play = ({
 			: leaderboard.slice(0, 6)
 	const currentPlayerScore = calculatePlayerScore(stats)
 	const currentRank = getRankTier(currentPlayerScore)
-	const currentRankIndex = rankTiers.findIndex(rank => rank.label === currentRank.label)
-	const nextRank = currentRankIndex > 0 ? rankTiers[currentRankIndex - 1] : undefined
-	const rankMinScore = currentRank.minScore
-	const nextRankMinScore = nextRank?.minScore ?? currentPlayerScore
+	const currentRankIndex = rank_tiers.findIndex(rank => rank.label === currentRank.label)
+	const nextRank = currentRankIndex > 0 ? rank_tiers[currentRankIndex - 1] : undefined
+	const rankMinScore = currentRank.min_score
+	const nextRankMinScore = nextRank?.min_score ?? currentPlayerScore
 	const rankProgress = nextRank
 		? Math.min(100, Math.max(0, ((currentPlayerScore - rankMinScore) / (nextRankMinScore - rankMinScore)) * 100))
 		: 100

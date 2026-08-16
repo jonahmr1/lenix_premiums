@@ -111,7 +111,7 @@ export abstract class Parties extends PartyRegistry {
 
 			setTimeout(() => {
 				invites.delete(invited)
-			}, Config.invitesSpamPeriod * 1000);
+			}, Config.invites_spam_period * 1000);
 
 			emitNet('lenix:server:competitive:getInvited', invited, profile satisfies Competitive.Player['GamerProfile'])
 		} catch (e) {
@@ -162,7 +162,7 @@ export abstract class Parties extends PartyRegistry {
 			if (newInstance.size > 0) return
 
 			this.playersIgnoringInvites.delete(client)
-		}, Config.ignoreInvitesPeriod * 60_000)
+		}, Config.ignore_invites_period * 60_000)
 	}
 	static setSize(client: number, size: number) {
 		const party = this.getPartyByClient(client)
@@ -228,8 +228,8 @@ export abstract class Parties extends PartyRegistry {
 
 		if (status === 'idle' && this.partyInQueue === party) this.partyInQueue = null
 		if (status !== 'searching') return
-		
-		
+
+
 		const partyInQueue = this.partyInQueue
 		if (!partyInQueue) {
 			this.partyInQueue = party
@@ -241,7 +241,7 @@ export abstract class Parties extends PartyRegistry {
 
 		partyInQueue.status = 'found'
 		party.status = 'found'
-		
+
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
