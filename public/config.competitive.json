@@ -1,10 +1,17 @@
 {
+	"$schema": "./config.competitive.schema.json",
 	"game_maps": {
 		"italien_street": {
 			"label": "The Italien Street",
-			"teams_spawn_point": [
-				[100.00, 100.00, 100.00, 100.00],
-				[50.00, 50.00, 50.00, 50.00]
+			"team_spawn_points": [
+				[
+					[102,	100, 100, 100],
+					[102,	100, 100, 100]
+				],
+				[
+					[102,	100, 100, 100],
+					[102,	100, 100, 100]
+				]
 			]
 		}
 	},
@@ -12,22 +19,30 @@
 		"custom": {
 			"label": "Custom Game",
 			"min_players_perTeam": 1,
-			"maps_allowed": ["italien_street"]
+			"maps_allowed": [
+				"italien_street"
+			]
 		},
 		"back_to_back": {
 			"label": "Back-To-Back",
 			"min_players_perTeam": 1,
-			"maps_allowed": ["italien_street"]
+			"maps_allowed": [
+				"italien_street"
+			]
 		},
 		"bomb_plant": {
 			"label": "Bomb Plant",
 			"min_players_perTeam": 3,
-			"maps_allowed": ["italien_street"]
+			"maps_allowed": [
+				"italien_street"
+			]
 		},
 		"ground_battle": {
 			"label": "Ground Battle",
 			"min_players_perTeam": 4,
-			"maps_allowed": ["italien_street"]
+			"maps_allowed": [
+				"italien_street"
+			]
 		}
 	},
 	"score_weights": {
