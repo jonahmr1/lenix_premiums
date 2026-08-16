@@ -95,6 +95,7 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 		) satisfies Record<(typeof selectedCols)[number], any>[]
 		if (!matchesPerformance.length) return []
 
+		//@ts-expect-error
 		const matches: {
 			match_id: number
 			map: string

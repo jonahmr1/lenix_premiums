@@ -220,6 +220,7 @@ export abstract class Parties extends PartyRegistry {
 
 		const party = this.getPartyByClient(client)
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
+		asserts(party.status !== 'found', `client<${client}> tried to update game searching status while the party already found a match`)
 
 		party.profiles.forEach(profile => asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`))
 		party.status = status
@@ -274,8 +275,8 @@ export abstract class Parties extends PartyRegistry {
 	static crash(client: number) {
 		const partyLeft = this.remove(client)
 		if (partyLeft) {
+			this.updateGameSearch(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
-		}
-		if (this.leaderInQueue === client) this.leaderInQueue = null
+		} else if (this.leaderInQueue === client) this.leaderInQueue = null
 	}
 }
