@@ -16,8 +16,9 @@ import { Input } from '@workspace/ui/components/input'
 import { Loading } from '@workspace/elite/elements/loading'
 import { config } from '@/rank/lib'
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@workspace/ui/components/context-menu'
-import { DEV, FAKE_PROFILE } from '@/rank/routes/valo/lobby'
+import { FAKE_PROFILE } from '@/rank/routes/valo/lobby'
 import { entries } from '@lenix/lenix'
+import { DEV } from '@/App.rank'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []

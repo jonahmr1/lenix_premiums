@@ -32,6 +32,8 @@ export abstract class Matches {
 
 				const entity = server.entity.handleBySource(profile.sessionId)
 				server.entity.teleport(entity, ...playerSpawnPoint as Vec4)
+
+				emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
 			})
 		})
 	}

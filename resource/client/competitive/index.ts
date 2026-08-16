@@ -1,9 +1,14 @@
 import { notify } from '@overextended/ox_lib/client'
-import { control, emitNui as emitEvent, onNui } from 'lenix/client'
+import { control, emitNui as emitEvent, emitNui, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 let open: boolean = false
 let inviterWhileUnFocused: Competitive.Player['GamerProfile'][] = []
+
+
+const getInvited = (inviter: Competitive.Player['GamerProfile']) =>
+	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
+
 
 control.on({
 	event: 'press',
@@ -23,8 +28,9 @@ onNui('competitive:unFocus', () => {
 	return null
 })
 
-const getInvited = (inviter: Competitive.Player['GamerProfile']) =>
-	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
+onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
+	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
+)
 
 onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player['GamerProfile']) => {
 	if (open) {

@@ -6,6 +6,7 @@ export namespace Competitive {
 		open: Event<'competitive:open', []>
 		playerInvited: Event<'competitive:playerInvited', [Player['GamerProfile']]>
 		updateParty: Event<'competitive:updateParty', [Player['Party']]>
+		updateStage: Event<'competitive:updateStage', [Stage]>
 	}
 
 	export interface Requests {
@@ -111,4 +112,6 @@ export namespace Competitive {
 	}[]
 
 	export type GameModes = Public['public/config.competitive.json']['game_modes']
+
+	export type Stage = 'lobby' | 'in-game'
 }
