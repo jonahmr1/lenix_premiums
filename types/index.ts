@@ -22,7 +22,7 @@ export namespace Competitive {
 		getFriends: Request<Player['Profile'][], 'competitive:getFriends'>
 		setStatus: Request<true, 'competitive:setStatus', { status: Player['GamerProfile']['status'] }>
 		getProfiles: Request<Player['Profile'][], 'competitive:getProfiles'>
-		invitePlayer: Request<null | string, 'competitive:invitePlayer', { invited: number }>
+		invitePlayer: Request<null, 'competitive:invitePlayer', { invited: number }>
 		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
 		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: boolean }>
@@ -30,6 +30,7 @@ export namespace Competitive {
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
 		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: Player['Party']['status'] }>
 		transferLeadership: Request<null, 'competitive:transferPartyLeadership', { leader: number }>
+		updatePartyGameMode: Request<null, 'competitive:updatePartyGameMode', { mode: Player['Party']['gameMode'] }>
 	}
 
 	export interface APIs {
@@ -94,6 +95,7 @@ export namespace Competitive {
 			leader: Competitive.Player['GamerProfile']['sessionId']
 			roomAvailable: number
 			status: 'searching' | 'idle' | 'found'
+			gameMode: keyof GameModes
 		}
 	}
 

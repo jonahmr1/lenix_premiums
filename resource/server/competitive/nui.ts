@@ -56,8 +56,6 @@ onNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', async 
 })
 
 onNuiServer<Competitive.Requests['invitePlayer']>('competitive:invitePlayer', (client, { invited }) => {
-	if (client === invited) return 'You can\'t invite yourself'
-
 	return Parties.invite(client, invited), null
 })
 
@@ -72,8 +70,13 @@ onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', asyn
 onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', (client, { status }) => {
 	return Parties.updateGameSearch(client, status), null
 })
+
 onNuiServer<Competitive.Requests['transferLeadership']>('competitive:transferPartyLeadership', (client, { leader }) => {
 	return Parties.transferLeadership(client, leader), null
+})
+
+onNuiServer<Competitive.Requests['updatePartyGameMode']>('competitive:updatePartyGameMode', (client, { mode }) => {
+	return Parties.updateGameMode(client, mode), null
 })
 
 onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async (client) => {

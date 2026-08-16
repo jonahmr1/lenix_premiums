@@ -38,7 +38,6 @@ export const Play = ({
 }: {
 	profile: Competitive.Player['GamerProfile'] | undefined
 }) => {
-	const [selectedMode, setSelectedMode] = useState<keyof Competitive.GameModes>('back_to_back')
 	const [party, setParty] = useState<Competitive.Player['Party']>()
 	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
@@ -50,7 +49,8 @@ export const Play = ({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
 				roomAvailable: 3,
-				status: 'searching'
+				status: 'searching',
+				gameMode: 'back_to_back'
 			})
 			return
 		}
@@ -141,13 +141,17 @@ export const Play = ({
 					{entries(game_modes).map(([mode]) => (
 						<Button
 							key={mode}
-							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode ? 'border-primary' : ''}`}
+							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${party.gameMode === mode ? 'border-primary' : ''}`}
 							variant='link'
-							onClick={() => (selectedMode !== mode && setSelectedMode(mode))}
+							onClick={() => {
+								if (party.gameMode === mode) return
+
+								fetchNuiServer<Competitive.Requests['updatePartyGameMode']>('competitive:updatePartyGameMode', { mode })
+							}}
 						>
 							{mode}
 							<Dot
-								className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${selectedMode === mode ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
+								className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 ${party.gameMode === mode ? 'size-10 text-primary' : 'size-4 text-foreground'}`}
 							/>
 						</Button>
 					))}
@@ -156,7 +160,7 @@ export const Play = ({
 					<Separator orientation='vertical' className='h-5' />
 				</div>
 				<ToggleGroup
-					className={selectedMode ? 'opacity-100' : 'opacity-0'}
+					className={party.gameMode ? 'opacity-100' : 'opacity-0'}
 					variant='outline'
 					type='single'
 					value={party.roomAvailable.toString()}
@@ -167,7 +171,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: game_modes[selectedMode].min_players_perTeam || 1 },
+						{ length: game_modes[party.gameMode].min_players_perTeam || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

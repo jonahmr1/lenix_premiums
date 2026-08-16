@@ -40,7 +40,8 @@ abstract class PartyRegistry {
 			profiles: [{ ...profile, ready: true, sessionId: client }],
 			leader: client,
 			roomAvailable: 1,
-			status: 'idle'
+			status: 'idle',
+			gameMode: 'back_to_back'
 		})
 
 		return this.getPartyByClient(client)
@@ -164,6 +165,7 @@ export abstract class Parties extends PartyRegistry {
 			this.playersIgnoringInvites.delete(client)
 		}, Config.ignore_invites_period * 60_000)
 	}
+
 	static setSize(client: number, size: number) {
 		const party = this.getPartyByClient(client)
 		asserts(party.status === 'idle', `client<${client}> tried to set party size while not in idle mode`)
@@ -176,6 +178,15 @@ export abstract class Parties extends PartyRegistry {
 		party.roomAvailable = size
 
 		this.refreshPartyProfiles(party)
+	}
+	
+	static async getParty(client: number) {
+		try {
+			return this.getPartyByClient(client)
+		} catch (e) {
+			console.log(palette('red', String(e)))
+			return await Parties.new(client)
+		}
 	}
 
 	static async leaveParty(client: number) {
@@ -248,15 +259,6 @@ export abstract class Parties extends PartyRegistry {
 		new Match([partyInQueue, party])
 	}
 
-	static async getParty(client: number) {
-		try {
-			return this.getPartyByClient(client)
-		} catch (e) {
-			console.log(palette('red', String(e)))
-			return await Parties.new(client)
-		}
-	}
-
 	static async transferLeadership(client: number, leader: number) {
 		const party = this.getPartyByClient(client)
 		asserts(party.status === 'idle', `client<${client}> tried to transfer leadership while not in idle mode`)
@@ -267,6 +269,20 @@ export abstract class Parties extends PartyRegistry {
 		asserts(this.getProfileFromParties(leader, party), `client<${client}> tried to give leadership to client<${leader}> that wasn't in the same party`)
 
 		party.leader = leader
+		this.refreshPartyProfiles(party)
+	}
+
+	static updateGameMode(client: number, mode: Party['gameMode']) {
+		const party = this.getPartyByClient(client)
+		asserts(party.leader === client, `client<${client}> tried to update party game mode while he wasn't the leader`)
+		asserts(party.status === 'idle', `client<${client}> tried to update party game mode while search for a match`)
+		asserts(party.gameMode !== mode, `client<${client}> tried to update party game mode to the same current game mode`)
+		asserts(
+			Config.game_modes[mode].min_players_perTeam <= party.roomAvailable,
+			`client<${client}> tried to update party game mode while the mode allow >= than the currect room available`
+		)
+
+		party.gameMode = mode
 		this.refreshPartyProfiles(party)
 	}
 
