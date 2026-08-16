@@ -61,17 +61,9 @@ export namespace Competitive {
 			matches: number
 		}
 		Match: {
-			match_id: number
-			map: string
-			played_at: number
 			result: Player['Performance']['result']
 			delta: number
-			stats: {
-				kills: Player['Stats']['kills']
-				deaths: Player['Stats']['deaths']
-				assits: Player['Stats']['assists']
-			}
-		},
+		} & Match
 		Notification: {
 			id: string
 			type: 'party_invite'
@@ -96,6 +88,17 @@ export namespace Competitive {
 			roomAvailable: number
 			status: 'searching' | 'idle' | 'found'
 			gameMode: keyof GameModes
+		}
+	}
+
+	export interface Match {
+		match_id: number
+		map: string
+		played_at: number
+		stats: {
+			kills: Player['Stats']['kills']
+			deaths: Player['Stats']['deaths']
+			assits: Player['Stats']['assists']
 		}
 	}
 

@@ -3,7 +3,7 @@ import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
 import { Config } from "common/config/competitive"
 import { palette } from "lenix"
-import { Match } from "./match"
+import { Matches } from "./match"
 
 
 type Party = Competitive.Player['Party']
@@ -256,7 +256,7 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		new Match([partyInQueue, party])
+		Matches.new([partyInQueue, party])
 	}
 
 	static async transferLeadership(client: number, leader: number) {

@@ -1,3 +1,4 @@
+import { Matches } from './match';
 import './nui'
 import { Parties } from './party';
 
@@ -8,4 +9,5 @@ const printSnapshot = (data: object) => {
 
 on('playerDropped', () => {
 	Parties.crash(source)
+	Matches.crash(source)
 })

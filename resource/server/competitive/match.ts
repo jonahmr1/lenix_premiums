@@ -4,8 +4,10 @@ import type { Vec4 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 
-export class Match {
-	constructor(teams: Competitive.Player['Party'][]) {
+export abstract class Matches {
+	private static readonly matches = new Set<Competitive.Player['Match']>()
+
+	static new(teams: Competitive.Player['Party'][]) {
 		teams.forEach((team, iter) => {
 			const allowedMaps = Config.game_modes[team.gameMode].maps_allowed
 			const modeMap = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
@@ -22,5 +24,9 @@ export class Match {
 				server.entity.teleport(entity, ...playerSpawnPoint as Vec4)
 			})
 		})
+	}
+
+	static crash(client: number) {
+		
 	}
 }
