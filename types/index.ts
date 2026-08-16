@@ -63,6 +63,11 @@ export namespace Competitive {
 		Match: {
 			result: Player['Performance']['result']
 			delta: number
+			stats: {
+				kills: Player['Stats']['kills']
+				deaths: Player['Stats']['deaths']
+				assits: Player['Stats']['assists']
+			}
 		} & Match
 		Notification: {
 			id: string
@@ -91,15 +96,10 @@ export namespace Competitive {
 		}
 	}
 
-	export interface Match {
+	export type Match = {
 		match_id: number
 		map: string
 		played_at: number
-		stats: {
-			kills: Player['Stats']['kills']
-			deaths: Player['Stats']['deaths']
-			assits: Player['Stats']['assists']
-		}
 	}
 
 	export type Leaderboard = {
