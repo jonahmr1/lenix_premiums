@@ -17,7 +17,7 @@
 			"minPlayersPerTeam": 4
 		}
 	},
-	"weights": {
+	"score_weights": {
 		"win": 100,
 		"loss": -35,
 		"kill": 4,

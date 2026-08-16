@@ -1,15 +1,15 @@
 import type { Competitive } from 'types'
-import rankConfig, { weights, rankTiers } from 'config' with { type: 'json' }
+import rankConfig, { score_weights, rankTiers } from 'config' with { type: 'json' }
 import { entries } from '@lenix/lenix'
 
 export const calculatePlayerScore = (stats: Competitive.Player['Stats']) => {
 	return Math.max(
 		0,
-		stats.wins * weights.win +
-		stats.losses * weights.loss +
-		stats.kills * weights.kill +
-		stats.assists * weights.assist +
-		stats.deaths * weights.death,
+		stats.wins * score_weights.win +
+		stats.losses * score_weights.loss +
+		stats.kills * score_weights.kill +
+		stats.assists * score_weights.assist +
+		stats.deaths * score_weights.death,
 	)
 }
 

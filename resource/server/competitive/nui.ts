@@ -112,10 +112,10 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 			return {
 				...match,
 				delta:
-					matchPerformance.assists * Config.weights.assist +
-					matchPerformance.deaths * Config.weights.death +
-					matchPerformance.kills * Config.weights.kill +
-					(matchPerformance.result === 'win' ? Config.weights.win : Config.weights.loss)
+					matchPerformance.assists * Config.score_weights.assist +
+					matchPerformance.deaths * Config.score_weights.death +
+					matchPerformance.kills * Config.score_weights.kill +
+					(matchPerformance.result === 'win' ? Config.score_weights.win : Config.score_weights.loss)
 				,
 				result: matchPerformance.result,
 				stats: {
@@ -256,6 +256,7 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 		Pick<Competitive.Player['Stats'], 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
 	>()
 
+	//@ts-expect-error
 	for (const performance of performances) {
 		const current = statsByProfile.get(performance.profile_id) ?? defaultStats
 
@@ -275,11 +276,11 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 
 			return Math.max(
 				0,
-				stats.wins * Config.weights.win +
-				stats.kills * Config.weights.kill +
-				stats.losses * Config.weights.loss +
-				stats.deaths * Config.weights.death +
-				stats.assists * Config.weights.assist
+				stats.wins * Config.score_weights.win +
+				stats.kills * Config.score_weights.kill +
+				stats.losses * Config.score_weights.loss +
+				stats.deaths * Config.score_weights.death +
+				stats.assists * Config.score_weights.assist
 			)
 		})(),
 		profile_id: profile.profile_id,
