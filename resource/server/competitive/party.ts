@@ -80,7 +80,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static partyInQueue: Party | null = null
+	private static searchingParty: Party | null = null
 
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
@@ -226,18 +226,18 @@ export abstract class Parties extends PartyRegistry {
 		party.status = status
 		this.refreshPartyProfiles(party)
 
-		if (status === 'idle' && this.partyInQueue === party) this.partyInQueue = null
+		if (status === 'idle' && this.searchingParty === party) this.searchingParty = null
 		if (status !== 'searching') return
 
 
-		const partyInQueue = this.partyInQueue
+		const partyInQueue = this.searchingParty
 		if (!partyInQueue) {
-			this.partyInQueue = party
+			this.searchingParty = party
 			return
 		}
 		asserts(partyInQueue !== party, `Duplicated party in queue with client<${client}> entries tried to self-find a match`)
 
-		this.partyInQueue = null
+		this.searchingParty = null
 
 		partyInQueue.status = 'found'
 		party.status = 'found'
@@ -276,6 +276,6 @@ export abstract class Parties extends PartyRegistry {
 		if (partyLeft) {
 			this.updateGameSearch(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
-		} else if (this.partyInQueue === party) this.partyInQueue = null
+		} else if (this.searchingParty === party) this.searchingParty = null
 	}
 }
