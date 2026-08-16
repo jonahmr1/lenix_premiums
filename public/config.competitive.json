@@ -1,5 +1,5 @@
 {
-	"GAME_MODES": {
+	"game_modes": {
 		"custom": {
 			"label": "Custom Game",
 			"minPlayersPerTeam": 1
@@ -17,6 +17,15 @@
 			"minPlayersPerTeam": 4
 		}
 	},
+	"weights": {
+		"win": 100,
+		"loss": -35,
+		"kill": 4,
+		"assist": 2,
+		"death": -3
+	},
+	"ignoreInvitesPeriod": 15,
+	"invitesSpamPeriod": 5,
 	"rankTiers": [
 		{
 			"label": "Champion",
@@ -43,14 +52,5 @@
 			"minScore": 0,
 			"className": "text-primary"
 		}
-	],
-	"weights": {
-		"win": 100,
-		"loss": -35,
-		"kill": 4,
-		"assist": 2,
-		"death": -3
-	},
-	"ignoreInvitesPeriod": 15,
-	"invitesSpamPeriod": 5
+	]
 }

@@ -1,6 +1,6 @@
 import { Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { GAME_MODES } from 'config'
+import { game_modes } from 'config'
 import { Layout } from '@workspace/ui/elements/layout'
 import { Button } from '@workspace/valo/components/button'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
@@ -138,7 +138,7 @@ export const Play = ({
 		<Layout className='h-full w-full justify-between pt-2'>
 			<div className='flex flex-col items-center justify-center'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
-					{entries(GAME_MODES).map(([mode]) => (
+					{entries(game_modes).map(([mode]) => (
 						<Button
 							key={mode}
 							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${selectedMode === mode ? 'border-primary' : ''}`}
@@ -167,7 +167,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: GAME_MODES[selectedMode].minPlayersPerTeam || 1 },
+						{ length: game_modes[selectedMode].minPlayersPerTeam || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

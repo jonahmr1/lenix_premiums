@@ -6,17 +6,17 @@ export const calculatePlayerScore = (stats: Competitive.Player['Stats']) => {
 	return Math.max(
 		0,
 		stats.wins * weights.win +
-			stats.losses * weights.loss +
-			stats.kills * weights.kill +
-			stats.assists * weights.assist +
-			stats.deaths * weights.death,
+		stats.losses * weights.loss +
+		stats.kills * weights.kill +
+		stats.assists * weights.assist +
+		stats.deaths * weights.death,
 	)
 }
 
 export const getRankTier = (score: number) =>
 	rankTiers.find(rank => score >= rank.minScore) ?? rankTiers[rankTiers.length - 1]
 
-export const getMaxPvp = () => entries(config.GAME_MODES).reduce((maxFound, [, currentMode]) => 
+export const getMaxPvp = () => entries(config.game_modes).reduce((maxFound, [, currentMode]) =>
 	Math.max(maxFound, currentMode.minPlayersPerTeam), 1
 )
 

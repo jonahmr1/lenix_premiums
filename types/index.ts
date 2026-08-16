@@ -105,5 +105,5 @@ export namespace Competitive {
 		avatar: Player['GamerProfile']['avatar']
 	}[]
 
-	export type GameModes = Public['public/config.competitive.json']['GAME_MODES']
+	export type GameModes = Public['public/config.competitive.json']['game_modes']
 }

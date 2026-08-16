@@ -50,8 +50,8 @@ abstract class PartyRegistry {
 		inviterParty.profiles.push({ ...profile, ready: false })
 	}
 
-	protected static remove(client: number) {
-		const party = this.getPartyByClient(client)
+	protected static remove(client: number, from?: Party) {
+		const party = from ?? this.getPartyByClient(client)
 		const profilesLeft = party.profiles.filter(profile => profile.sessionId !== client)
 
 		if (!profilesLeft.length) {
@@ -80,7 +80,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static leaderInQueue: null | number = null
+	private static partyInQueue: Party | null = null
 
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
@@ -226,28 +226,26 @@ export abstract class Parties extends PartyRegistry {
 		party.status = status
 		this.refreshPartyProfiles(party)
 
-		if (status === 'idle' && this.leaderInQueue === client) this.leaderInQueue = null
+		if (status === 'idle' && this.partyInQueue === party) this.partyInQueue = null
 		if (status !== 'searching') return
 		
 		
-		const nextClient = this.leaderInQueue
-		if (!nextClient) {
-			this.leaderInQueue = client
+		const partyInQueue = this.partyInQueue
+		if (!partyInQueue) {
+			this.partyInQueue = party
 			return
 		}
-		asserts(nextClient !== client, `Duplicated queue leader<${client}> entries tried to self-find a match`)
+		asserts(partyInQueue !== party, `Duplicated party in queue with client<${client}> entries tried to self-find a match`)
 
-		this.leaderInQueue = null
+		this.partyInQueue = null
 
-		const nextClientParty = this.getPartyByClient(nextClient)
-
-		nextClientParty.status = 'found'
+		partyInQueue.status = 'found'
 		party.status = 'found'
 		
-		this.refreshPartyProfiles(nextClientParty)
+		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		new Match([nextClientParty, party])
+		new Match([partyInQueue, party])
 	}
 
 	static async getParty(client: number) {
@@ -273,10 +271,11 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 	static crash(client: number) {
-		const partyLeft = this.remove(client)
+		const party = this.getPartyByClient(client)
+		const partyLeft = this.remove(client, party)
 		if (partyLeft) {
 			this.updateGameSearch(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
-		} else if (this.leaderInQueue === client) this.leaderInQueue = null
+		} else if (this.partyInQueue === party) this.partyInQueue = null
 	}
 }
