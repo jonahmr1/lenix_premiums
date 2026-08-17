@@ -44,3 +44,7 @@ onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player[
 onNet('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
 	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
 })
+
+onNet('lenix:server:competitive:matchStarted', () => {
+	
+})
