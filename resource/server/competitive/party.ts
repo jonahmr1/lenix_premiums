@@ -92,10 +92,15 @@ export abstract class Parties extends PartyRegistry {
 			const party = this.getPartyByClient(client)
 			asserts(party.status === 'idle', `client<${client}> tried to invite client<${invited}> while not in idle mode`)
 			asserts(client !== invited, `client<${client}> tried to invite himself`)
-
 			asserts(
 				!party.profiles.some((profile) => profile.sessionId === invited),
 				`invited<${invited}> is already in client<${client}>'s party`
+			)
+
+			const invitedProfile = this.getProfileFromParties(invited)
+			asserts(
+				invitedProfile.status !== 'in_game' && invitedProfile.status !== 'dnd',
+				`client<${client}> tried to invite client<${invited}> while he's status was ${invitedProfile.status}`
 			)
 
 			const invites = this.pendingInvites.get(client)

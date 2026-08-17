@@ -3,7 +3,7 @@ import { Config } from "common/config/competitive";
 import type { Vec4 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
-
+ 
 export abstract class Matches {
 	private static readonly matches = new Set<
 		Omit<Competitive.Match, 'match_id'> & {
