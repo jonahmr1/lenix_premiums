@@ -284,7 +284,7 @@ export abstract class Parties extends PartyRegistry {
 		const party = this.getPartyByClient(client)
 		asserts(party.leader === client, `client<${client}> tried to update party game mode while he wasn't the leader`)
 		asserts(party.status === 'idle', `client<${client}> tried to update party game mode while search for a match`)
-		asserts(party.gameMode !== mode, `client<${client}> tried to update party game mode to the same current game mode`)
+		asserts(party.gameMode === mode, `client<${client}> tried to update party game mode to the same current game mode`)
 		asserts(
 			Config.game_modes[mode].min_players_per_team <= party.roomAvailable,
 			`client<${client}> tried to update party game mode while the mode allow >= than the currect room available`

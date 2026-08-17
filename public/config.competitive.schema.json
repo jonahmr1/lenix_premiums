@@ -86,6 +86,10 @@
 					"round_time": {
 						"type": "integer",
 						"minimum": 10
+					},
+					"pre_round_time": {
+						"type": "integer",
+						"minimum": 3
 					}
 				}
 			}

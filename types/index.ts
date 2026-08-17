@@ -7,6 +7,7 @@ export namespace Competitive {
 		playerInvited: Event<'competitive:playerInvited', [Player['GamerProfile']]>
 		updateParty: Event<'competitive:updateParty', [Player['Party']]>
 		updateStage: Event<'competitive:updateStage', [Stage]>
+		newRound: Event<'competitive:newRound', [Player['Party']['gameMode'], RoundTeams]>
 	}
 
 	export interface Requests {
@@ -117,11 +118,11 @@ export namespace Competitive {
 
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 
-	export type Round = Record<'own' | 'opponent', {
+	export type RoundTeams = Record<'own' | 'opponent', {
 		roundsWon: number
 		players: {
 			isDead: boolean,
-			avatar: string
+			avatar: Player['Profile']['avatar']
 		}[]
 	}>
 }

@@ -11,7 +11,7 @@ export abstract class Matches {
 			bucket: number
 		}
 	>()
-	private static bucketId = 0
+	private static bucketId = 1
 
 	static async prepare(teams: Competitive.Player['Party'][]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
@@ -29,7 +29,6 @@ export abstract class Matches {
 		for (const team of teams) for (const profile of team.profiles) {
 			SetPlayerRoutingBucket(profile.sessionId.toString(), bucket)
 			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'loading' satisfies Competitive.Stage)
-			emitNet('lenix:server:competitive:matchStarted', profile.sessionId)
 		}
 
 		for (const [iter, team] of teams.entries()) {
@@ -52,9 +51,45 @@ export abstract class Matches {
 	}
 
 	static start(teams: Competitive.Player['Party'][]) {
-		for (const team of teams) for (const profile of team.profiles) {
-			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
-			emitNet('lenix:server:competitive:newRound', profile.sessionId)
+		for (const [teamIndex, team] of teams.entries()) {
+			const opponent = teams[teamIndex === 0 ? 1 : 0]
+			asserts(opponent, 'Failed to find opponent team')
+
+			const ownPlayers = team.profiles.map(profile => ({
+				isDead: false,
+				avatar: profile.avatar
+			}))
+
+			const opponentPlayers = opponent.profiles.map(profile => ({
+				isDead: false,
+				avatar: profile.avatar
+			}))
+
+			for (const profile of team.profiles) {
+				const roundTeam = {
+					own: {
+						roundsWon: 0,
+						players: ownPlayers
+					},
+					opponent: {
+						roundsWon: 0,
+						players: opponentPlayers
+					}
+				} satisfies Competitive.RoundTeams
+
+				emitNet(
+					'lenix:server:competitive:updateStage',
+					profile.sessionId,
+					'in-game' satisfies Competitive.Stage
+				)
+
+				emitNet(
+					'lenix:server:competitive:newRound',
+					profile.sessionId,
+					team.gameMode,
+					roundTeam
+				)
+			}
 		}
 	}
 
