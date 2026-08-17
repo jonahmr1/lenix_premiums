@@ -63,7 +63,7 @@ const RoundBoard = ({ time }: { time: number }) => {
 				},
 			})
 			
-			const interval = setInterval(() => setTimer(t => t - 1), 1000)
+			const interval = setInterval(() => setTimer(t => t && t - 1), 1000)
 
 			return () => clearInterval(interval)
 		}
