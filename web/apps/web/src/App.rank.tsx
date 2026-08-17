@@ -37,6 +37,7 @@ const RankRoutes = () => {
 		const dispose = onNuiEmit<Competitive.Events['updateStage']>('competitive:updateStage', stage => {
 			navigate(
 				stage === 'lobby' ? '/' :
+				stage === 'loading' ? '/loading' :
 				stage === 'in-game' ? '/in-game' :
 				'/'
 			)

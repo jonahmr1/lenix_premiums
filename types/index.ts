@@ -37,6 +37,7 @@ export namespace Competitive {
 	export interface APIs {
 		getStats: (Pick<Competitive.Player['Stats'], 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
 		getProfilesStats: Record<string, APIs['getStats'][number]>
+		prepareForMatch: boolean
 	}
 
 	export interface Player {
@@ -114,5 +115,5 @@ export namespace Competitive {
 
 	export type GameModes = Public['public/config.competitive.json']['game_modes']
 
-	export type Stage = 'lobby' | 'in-game'
+	export type Stage = 'lobby' | 'loading' | 'in-game'
 }
