@@ -2,7 +2,7 @@ import { Badge } from '@workspace/elite/components/badge'
 import { Crown, Shield, Skull, Target, Trophy, Users } from 'lucide-react'
 import type { Competitive } from 'types'
 import { Loading } from '@workspace/elite/elements/loading'
-import avatar from '@workspace/elite/assets/avatar.png'
+import avatar from '@workspace/ui/assets/avatar.png'
 import { getRankTier } from '@/rank/lib'
 
 const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` })
