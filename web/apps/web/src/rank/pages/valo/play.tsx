@@ -7,7 +7,7 @@ import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-
 import { Badge } from '@workspace/valo/components/badge'
 import { Separator } from '@workspace/ui/components/separator'
 import type { Competitive } from 'types'
-import avatar from '@workspace/ui/assets/avatar.png'
+import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { fetchNuiServer, onNuiEmit } from 'lenix/nui'
 import { toast } from '@workspace/ui/lib/utils'
