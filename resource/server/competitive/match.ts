@@ -1,9 +1,9 @@
 import { asserts, random } from "@lenix/lenix";
+import { triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
-import type { Vec4 } from "lenix";
-import { server } from "lenix/server";
+import type { Vec3 } from "lenix";
 import type { Competitive } from "types/index";
- 
+
 export abstract class Matches {
 	private static readonly matches = new Set<
 		Omit<Competitive.Match, 'match_id'> & {
@@ -13,7 +13,7 @@ export abstract class Matches {
 	>()
 	private static bucketId = 0
 
-	static start(teams: Competitive.Player['Party'][]) {
+	static async prepare(teams: Competitive.Player['Party'][]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
@@ -26,21 +26,34 @@ export abstract class Matches {
 			bucket
 		})
 
+		for (const team of teams) for (const profile of team.profiles) {
+			SetPlayerRoutingBucket(profile.sessionId.toString(), bucket)
+			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'loading' satisfies Competitive.Stage)
+			emitNet('lenix:server:competitive:matchStarted', profile.sessionId)
+		}
+
 		for (const [iter, team] of teams.entries()) {
 			const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
 			asserts(teamSpawnSide, `Failed to find team spawn side points`)
 
-			team.profiles.forEach((profile, iter) => {
+			for (const [iter, profile] of team.profiles.entries()) {
 				const playerSpawnPoint = teamSpawnSide[iter]
 				asserts(playerSpawnPoint?.length === 4, `Failed to find player<${profile.sessionId}> spawn point`)
 
-				const entity = server.entity.handleBySource(profile.sessionId)
-				server.entity.teleport(entity, ...playerSpawnPoint as Vec4)
+				const loaded = await triggerClientCallback<boolean>(
+					'lenix:server:competitive:getPrepared',
+					profile.sessionId, [playerSpawnPoint[0]!, playerSpawnPoint[1]!, playerSpawnPoint[2]!] satisfies Vec3
+				)
+				asserts(loaded, `client<${profile.sessionId}> was not ready to play this match`)
+			}
+		}
 
-				SetPlayerRoutingBucket(profile.sessionId.toString(), bucket)
-				emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
-				emitNet('lenix:server:competitive:matchStarted', profile.sessionId)				
-			})
+		this.start(teams)
+	}
+
+	static start(teams: Competitive.Player['Party'][]) {
+		for (const team of teams) for (const profile of team.profiles) {
+			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
 		}
 	}
 

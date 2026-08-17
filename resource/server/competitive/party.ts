@@ -264,7 +264,7 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		Matches.start([partyInQueue, party])
+		Matches.prepare([partyInQueue, party])
 	}
 
 	static async transferLeadership(client: number, leader: number) {
