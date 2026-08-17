@@ -29,14 +29,24 @@ onNui('competitive:unFocus', () => {
 	return null
 })
 
+onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player['GamerProfile']) => {
+	if (open) {
+		getInvited(inviter)
+		return
+	}
+	notify({ title: 'You have received a new invite' })
+	inviterWhileUnFocused.push(inviter)
+})
+
+onNet('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
+	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
+})
+
 onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): Promise<Competitive.APIs['prepareForMatch']> => {
 	const ped = client.player.entity()
 
 	SetFocusPosAndVel(...coords, 0, 0, 0)
 	SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
-
-	// spawn wall
-	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
 
 	try {
 		return await repeat(() => {
@@ -56,17 +66,11 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player['GamerProfile']) => {
-	if (open) {
-		getInvited(inviter)
-		return
-	}
-	notify({ title: 'You have received a new invite' })
-	inviterWhileUnFocused.push(inviter)
-})
+onNet('lenix:server:competitive:newRound', () => {
 
-onNet('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
-	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
+	// spawn wall
+	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
+
 })
 
 onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>

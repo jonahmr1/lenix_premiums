@@ -20,4 +20,6 @@ export const getMaxPvp = () => entries(config.game_modes).reduce((maxFound, [, c
 	Math.max(maxFound, currentMode.min_players_per_team), 1
 )
 
+export const showTimer = (timer: number) => `${String(Math.floor(timer / 60)).padStart(2, '0')}:${String(timer % 60).padStart(2, '0')}`
+
 export const config = rankConfig

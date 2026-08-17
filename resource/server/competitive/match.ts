@@ -54,6 +54,7 @@ export abstract class Matches {
 	static start(teams: Competitive.Player['Party'][]) {
 		for (const team of teams) for (const profile of team.profiles) {
 			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
+			emitNet('lenix:server:competitive:newRound', profile.sessionId)
 		}
 	}
 

@@ -116,4 +116,12 @@ export namespace Competitive {
 	export type GameModes = Public['public/config.competitive.json']['game_modes']
 
 	export type Stage = 'lobby' | 'loading' | 'in-game'
+
+	export type Round = Record<'own' | 'opponent', {
+		roundsWon: number
+		players: {
+			isDead: boolean,
+			avatar: string
+		}[]
+	}>
 }

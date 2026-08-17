@@ -16,30 +16,11 @@
 		}
 	},
 	"game_modes": {
-		"custom": {
-			"label": "Custom Game",
-			"min_players_per_team": 1,
-			"maps_allowed": [
-				"italien_street"
-			]
-		},
 		"back_to_back": {
 			"label": "Back-To-Back",
 			"min_players_per_team": 1,
-			"maps_allowed": [
-				"italien_street"
-			]
-		},
-		"bomb_plant": {
-			"label": "Bomb Plant",
-			"min_players_per_team": 3,
-			"maps_allowed": [
-				"italien_street"
-			]
-		},
-		"ground_battle": {
-			"label": "Ground Battle",
-			"min_players_per_team": 4,
+			"rounds": 3,
+			"round_time": 60,
 			"maps_allowed": [
 				"italien_street"
 			]
