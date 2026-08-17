@@ -51,31 +51,17 @@ export abstract class Matches {
 	}
 
 	static start(teams: Competitive.Player['Party'][]) {
-		for (const [teamIndex, team] of teams.entries()) {
-			const opponent = teams[teamIndex === 0 ? 1 : 0]
-			asserts(opponent, 'Failed to find opponent team')
-
-			const ownPlayers = team.profiles.map(profile => ({
-				isDead: false,
-				avatar: profile.avatar
-			}))
-
-			const opponentPlayers = opponent.profiles.map(profile => ({
-				isDead: false,
-				avatar: profile.avatar
-			}))
-
+		for (const team of teams) {
 			for (const profile of team.profiles) {
-				const roundTeam = {
-					own: {
-						roundsWon: 0,
-						players: ownPlayers
-					},
-					opponent: {
-						roundsWon: 0,
-						players: opponentPlayers
-					}
-				} satisfies Competitive.RoundTeams
+				const ownTeam = teams.find(team =>
+					team.profiles.some(self => self.sessionId === profile.sessionId)
+				)
+
+				const opponentTeam = teams.find(team =>
+					!team.profiles.some(self => self.sessionId === profile.sessionId)
+				)
+
+				asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
 
 				emitNet(
 					'lenix:server:competitive:updateStage',
@@ -87,7 +73,22 @@ export abstract class Matches {
 					'lenix:server:competitive:newRound',
 					profile.sessionId,
 					team.gameMode,
-					roundTeam
+					{
+						own: {
+							roundsWon: 0,
+							players: ownTeam.profiles.map(profile => ({
+								isDead: false,
+								avatar: profile.avatar ?? ''
+							}))
+						},
+						opponent: {
+							roundsWon: 0,
+							players: opponentTeam.profiles.map(profile => ({
+								isDead: false,
+								avatar: profile.avatar ?? ''
+							}))
+						}
+					} satisfies Competitive.RoundTeams
 				)
 			}
 		}

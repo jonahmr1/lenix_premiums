@@ -75,9 +75,10 @@ export const InGame = () => {
 
 		const interval = setInterval(() => setTimer(t => t && t - 1), 1000)
 
-		return () => clearInterval(interval)
-
-		return dispose
+		return () => {
+			dispose()
+			clearInterval(interval)
+		}
 	}, [])
 
 	if (!teams || !timer) return
