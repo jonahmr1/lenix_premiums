@@ -46,10 +46,11 @@ export namespace Competitive {
 			avatar: string | null
 			status: 'online' | 'offline' | 'dnd'
 		}
-		GamerProfile: {
+		GamerProfile: Omit<Player['Profile'], 'status'> & {
 			ready: boolean
 			sessionId: number
-		} & Player['Profile']
+			status: Player['Profile']['status'] | 'in_game'
+		}
 		Friend: Player['GamerProfile']['profile_id']
 		Stats: {
 			kills: number

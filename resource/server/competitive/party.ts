@@ -253,6 +253,9 @@ export abstract class Parties extends PartyRegistry {
 		partyInQueue.status = 'found'
 		party.status = 'found'
 
+		partyInQueue.profiles.forEach(profile => profile.status = 'in_game')
+		party.profiles.forEach(profile => profile.status = 'in_game')
+
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 

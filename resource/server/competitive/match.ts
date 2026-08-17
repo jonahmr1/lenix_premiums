@@ -8,22 +8,26 @@ export abstract class Matches {
 	private static readonly matches = new Set<
 		Omit<Competitive.Match, 'match_id'> & {
 			teams: Competitive.Player['Party'][]
+			bucket: number
 		}
 	>()
+	private static bucketId = 0
 
 	static start(teams: Competitive.Player['Party'][]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
-		const modeMap = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
-		asserts(modeMap, `Failed to find a map for a found match, expected 'string', got ${modeMap}`)
+		const map = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
+		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
 
+		const bucket = this.bucketId++
 		this.matches.add({
-			map: modeMap,
+			map,
 			played_at: Math.floor(Date.now() / 1000),
-			teams
+			teams,
+			bucket
 		})
 
 		for (const [iter, team] of teams.entries()) {
-			const teamSpawnSide = Config.game_maps[modeMap].team_spawn_points[iter]
+			const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
 			asserts(teamSpawnSide, `Failed to find team spawn side points`)
 
 			team.profiles.forEach((profile, iter) => {
@@ -33,8 +37,9 @@ export abstract class Matches {
 				const entity = server.entity.handleBySource(profile.sessionId)
 				server.entity.teleport(entity, ...playerSpawnPoint as Vec4)
 
+				SetPlayerRoutingBucket(profile.sessionId.toString(), bucket)
 				emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'in-game' satisfies Competitive.Stage)
-				emitNet('lenix:server:competitive:matchStarted', profile.sessionId)
+				emitNet('lenix:server:competitive:matchStarted', profile.sessionId)				
 			})
 		}
 	}
