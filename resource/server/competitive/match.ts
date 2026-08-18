@@ -90,8 +90,22 @@ export abstract class Matches {
 						}
 					} satisfies Competitive.RoundTeams
 				)
+
+				const gameMode = Config.game_modes[team.gameMode]
+
+				setTimeout(() => {
+					this.finishRound()
+				}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
 			}
 		}
+	}
+
+	static startRound() {
+		
+	}
+
+	static finishRound() {
+		
 	}
 
 	static crash(client: number) {

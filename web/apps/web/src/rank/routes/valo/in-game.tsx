@@ -71,7 +71,7 @@ export const InGame = () => {
 			'competitive:newRound', (mode, round) => {
 				const gameMode = config.game_modes[mode]
 				setTeams(round)
-				setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_round_time)
+				setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_and_post_round_time)
 			})
 
 		const interval = setInterval(() => setTimer(t => t && t - 1), 1000)
