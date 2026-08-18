@@ -111,6 +111,7 @@ export namespace Competitive {
 		mode: Competitive.GameMode
 		map: Competitive.GameMap
 		playedAt: number
+		currentRound: number
 		teams: {
 			roundsWon: number
 			players: {

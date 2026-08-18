@@ -1,5 +1,5 @@
 import { asserts, random } from "@lenix/lenix";
-import { triggerClientCallback } from "@overextended/ox_lib/server";
+import { createObject, triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
 import type { Vec3 } from "lenix";
 import { server } from "lenix/server";
@@ -29,6 +29,7 @@ export abstract class Matches {
 			mode,
 			map,
 			playedAt: Math.floor(Date.now() / 1000),
+			currentRound: 0,
 			teams,
 		})
 
@@ -60,52 +61,12 @@ export abstract class Matches {
 			}
 		}
 
-		this.start(mode, teams)
-	}
-
-	static start(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
-		const gameMode = Config.game_modes[mode]
-
 		this.startRound(mode, teams)
-
-		on(
-			'weaponDamageEvent',
-			(attacker: number, data: { willKill: boolean; hitGlobalId?: number }) => {
-				if (!data.willKill || data.hitGlobalId === undefined) return
-
-				const attackerTeam = teams.find(team =>
-					team.players.some(player => player.sessionId === attacker)
-				)
-
-				if (!attackerTeam) return
-
-				const victimEntity = server.entity.handle(data.hitGlobalId)
-				if (!victimEntity || !DoesEntityExist(victimEntity)) return
-
-				const victim = NetworkGetEntityOwner(victimEntity)
-
-				const victimTeam = teams.find(team =>
-					team.players.some(player => player.sessionId === victim)
-				)
-
-				if (!victimTeam || victimTeam === attackerTeam) return
-
-				teams.forEach(team => team.players.forEach(player =>
-					emitNet(
-						'lenix:server:competitive:updateRound',
-						player.sessionId,
-						this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.RoundTeams
-					)
-				))
-			}
-		)
-
-		setTimeout(() => {
-			this.finishRound()
-		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
 	}
 
 	static startRound(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
+		const gameMode = Config.game_modes[mode]
+
 		for (const team of teams) {
 			for (const player of team.players) {
 				emitNet(
@@ -116,6 +77,10 @@ export abstract class Matches {
 				)
 			}
 		}
+
+		setTimeout(() => {
+			this.finishRound()
+		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
 	}
 
 	static finishRound() {
@@ -124,6 +89,42 @@ export abstract class Matches {
 
 	static crash(client: number) {
 
+	}
+
+	static onPlayerDead(client: number, killer?: number) {
+		const victimTeam = this.getClientTeam(client)
+		if (!victimTeam) return
+
+		const match = this.getClientMatch(client)
+		asserts(match, `Failed to get client<${client}>'s match`)
+		
+		match.teams.forEach(team => team.players.forEach(player =>
+			emitNet(
+				'lenix:server:competitive:updateRound',
+				player.sessionId,
+				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.RoundTeams
+			)
+		))
+	}
+
+	static getClientMatch(client: number) {
+		for (const match of this.matches) {
+			const isClientInMatch = match.teams.some(team =>
+				team.players.some(player => player.sessionId === client)
+			)
+
+			if (isClientInMatch) return match
+		}
+	}
+
+	static getClientTeam(client: number) {
+		for (const match of this.matches) {
+			const team = match.teams.find(team =>
+				team.players.some(player => player.sessionId === client)
+			)
+
+			if (team) return team
+		}
 	}
 
 	static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
@@ -149,3 +150,15 @@ export abstract class Matches {
 		}
 	}
 }
+
+onNet('baseevents:onPlayerDied', () => {
+	Matches.onPlayerDead(source)
+})
+
+onNet('baseevents:onPlayerKilled', (killer: number) => {
+	Matches.onPlayerDead(source, killer)
+})
+
+setTimeout(() => {
+	createObject('ap1_01_d_wall_cap', ...GetEntityCoords(server.entity.handleBySource(1)) as Vec3, 0, false, false, false)
+})
