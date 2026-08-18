@@ -14,7 +14,7 @@ export abstract class Matches {
 	>()
 	private static bucketId = 1
 
-	static async prepare(teams: Competitive.Player['Party'][]) {
+	static async request(teams: Competitive.Player['Party'][]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
@@ -118,7 +118,7 @@ export abstract class Matches {
 
 				if (!victimTeam || victimTeam === attackerTeam) return
 
-				teams.forEach(team => team.profiles.forEach(profile => 
+				teams.forEach(team => team.profiles.forEach(profile =>
 					emitNet('lenix:server:competitive:updateRound', profile.sessionId)
 				))
 			}

@@ -41,7 +41,7 @@ abstract class PartyRegistry {
 			leader: client,
 			roomAvailable: 1,
 			status: 'idle',
-			gameMode: 'back_to_back'
+			gameMode: 'casual'
 		})
 
 		return this.getPartyByClient(client)
@@ -81,7 +81,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static searchingParty = new Map<Competitive.Player['Party']['gameMode'], Party | null>()
+	private static partiesInQueue = new Map<Competitive.Player['Party']['gameMode'], Party | null>()
 
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
@@ -244,19 +244,19 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(party)
 
 		const searcherMode = party.gameMode
-		const partyInQueue = this.searchingParty.get(searcherMode)
-		if (status === 'idle' && partyInQueue === party) this.searchingParty.set(searcherMode, null)
+		const partyInQueue = this.partiesInQueue.get(searcherMode)
+		if (status === 'idle' && partyInQueue === party) this.partiesInQueue.set(searcherMode, null)
 		if (status !== 'searching') return
 
 
 		if (!partyInQueue) {
-			this.searchingParty.set(searcherMode, party)
+			this.partiesInQueue.set(searcherMode, party)
 			return
 		}
 		asserts(partyInQueue !== party, `Duplicated party in queue with client<${client}> entries tried to self-find a match`)
-		
 
-		this.searchingParty.set(searcherMode, null)
+
+		this.partiesInQueue.set(searcherMode, null)
 
 		partyInQueue.status = 'found'
 		party.status = 'found'
@@ -267,7 +267,7 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		Matches.prepare([partyInQueue, party])
+		Matches.request([partyInQueue, party])
 	}
 
 	static async transferLeadership(client: number, leader: number) {
@@ -304,6 +304,6 @@ export abstract class Parties extends PartyRegistry {
 		if (partyLeft) {
 			this.updateGameSearch(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
-		} else if (this.searchingParty.get(partyMode) === party) this.searchingParty.set(partyMode, null)
+		} else if (this.partiesInQueue.get(partyMode) === party) this.partiesInQueue.set(partyMode, null)
 	}
 }

@@ -12,7 +12,7 @@
 				]
 			]
 		},
-		"cinematic_scene": {
+		"movie_studio": {
 			"label": "Cinema Studio",
 			"team_spawn_points": [
 				[
@@ -25,14 +25,15 @@
 		}
 	},
 	"game_modes": {
-		"back_to_back": {
-			"label": "Back-To-Back",
+		"casual": {
+			"label": "Casual",
 			"min_players_per_team": 1,
 			"rounds": 3,
 			"round_time": 60,
 			"pre_and_post_round_time": 10,
 			"maps_allowed": [
-				"italien_street"
+				"italien_street",
+				"movie_studio"
 			]
 		}
 	},
