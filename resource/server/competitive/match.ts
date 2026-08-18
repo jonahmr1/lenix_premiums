@@ -5,8 +5,45 @@ import type { Vec3 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 
-export abstract class Matches {
-	private static readonly matches = new Set<Competitive.Match>()
+export abstract class MatchRegistry {
+	protected static readonly matches = new Set<Competitive.Match>()
+
+	protected static getClientMatch(client: number) {
+		for (const match of this.matches) {
+			const isClientInMatch = match.teams.some(team =>
+				team.players.some(player => player.sessionId === client)
+			)
+
+			if (isClientInMatch) return match
+		}
+	}
+
+	protected static getClientTeam(client: number) {
+		for (const match of this.matches) {
+			const team = match.teams.find(team =>
+				team.players.some(player => player.sessionId === client)
+			)
+
+			if (team) return team
+		}
+	}
+
+	protected static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
+		const own = teams.find(team =>
+			team.players.some(self => self.sessionId === client)
+		)
+
+		const opponent = teams.find(team =>
+			!team.players.some(self => self.sessionId === client)
+		)
+
+		asserts(own && opponent, 'Failed to resolve match teams')
+
+		return { own, opponent }
+	}
+}
+
+export abstract class Matches extends MatchRegistry {
 	private static bucketId = 1
 
 	static async new(
@@ -119,40 +156,6 @@ export abstract class Matches {
 			() => this.startRound(match),
 			Config.game_modes[match.mode].pre_and_post_round_time * 1000
 		)
-	}
-
-	static getClientMatch(client: number) {
-		for (const match of this.matches) {
-			const isClientInMatch = match.teams.some(team =>
-				team.players.some(player => player.sessionId === client)
-			)
-
-			if (isClientInMatch) return match
-		}
-	}
-
-	static getClientTeam(client: number) {
-		for (const match of this.matches) {
-			const team = match.teams.find(team =>
-				team.players.some(player => player.sessionId === client)
-			)
-
-			if (team) return team
-		}
-	}
-
-	static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
-		const own = teams.find(team =>
-			team.players.some(self => self.sessionId === client)
-		)
-
-		const opponent = teams.find(team =>
-			!team.players.some(self => self.sessionId === client)
-		)
-
-		asserts(own && opponent, 'Failed to resolve match teams')
-
-		return { own, opponent }
 	}
 }
 
