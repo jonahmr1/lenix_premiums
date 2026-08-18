@@ -73,10 +73,8 @@ abstract class PartyRegistry {
 		return party
 	}
 
-	protected static refreshPartyProfiles(party: Party) {
-		party.profiles.forEach(profile => {
-			emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
-		})
+	public static refreshPartyProfiles(party: Party) {
+		for (const profile of party.profiles) emitNet('lenix:server:competitive:updateParty', profile.sessionId, party)
 	}
 }
 
@@ -239,7 +237,8 @@ export abstract class Parties extends PartyRegistry {
 		asserts(client === party.leader, `client<${client}> tried to update game searching status while he wasn't the leader`)
 		asserts(party.status !== 'found', `client<${client}> tried to update game searching status while the party already found a match`)
 
-		party.profiles.forEach(profile => asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`))
+		for (const profile of party.profiles) asserts(profile.ready, `client<${profile.sessionId}> wasn't ready to search a match`)
+
 		party.status = status
 		this.refreshPartyProfiles(party)
 
@@ -265,34 +264,7 @@ export abstract class Parties extends PartyRegistry {
 
 		const parties = [partyInQueue, party]
 
-		const previousStatuses = new Map(
-			parties.flatMap(party =>
-				party.profiles.map(profile => [
-					profile.profile_id,
-					profile.status
-				] as const)
-			)
-		)
-
-		parties.forEach(party => {
-			party.status = 'found'
-			party.profiles.forEach(profile => profile.status = 'in_game')
-			this.refreshPartyProfiles(party)
-		})
-		try {
-			await Matches.new(partyInQueue.gameMode, map, parties)
-		} catch(e) {
-			parties.forEach(party => {
-				party.status = 'idle'
-				party.profiles.forEach(profile => {
-					const status = previousStatuses.get(profile.profile_id)
-					asserts(status)
-					profile.status = status
-				})
-				this.refreshPartyProfiles(party)
-			})
-			throw e
-		}
+		Matches.new(partyInQueue.gameMode, map, parties)
 	}
 
 	static async transferLeadership(client: number, leader: number) {

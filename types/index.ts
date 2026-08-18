@@ -120,6 +120,7 @@ export namespace Competitive {
 				sessionId: number
 			}[]
 		}[]
+		parties: Competitive.Party[]
 	}
 
 	export type Leaderboard = {
