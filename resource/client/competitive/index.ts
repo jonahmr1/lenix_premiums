@@ -72,6 +72,10 @@ onNet('lenix:server:competitive:newRound', (mode: Competitive.Player['Party']['g
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
+onNet('lenix:server:competitive:updateRound', (teams: Competitive.RoundTeams) => {
+	emitNui<Competitive.Events['updateRound']>('competitive:updateRound', teams)
+})
+
 onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
 	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
 )

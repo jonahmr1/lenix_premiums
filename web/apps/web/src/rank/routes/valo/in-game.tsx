@@ -67,17 +67,25 @@ export const InGame = () => {
 			return
 		}
 
-		const dispose = onNuiEmit<Competitive.Events['newRound']>(
-			'competitive:newRound', (mode, round) => {
-				const gameMode = config.game_modes[mode]
-				setTeams(round)
-				setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_and_post_round_time)
-			})
+		const disposes = [
+			onNuiEmit<Competitive.Events['newRound']>(
+				'competitive:newRound', (mode, teams) => {
+					const gameMode = config.game_modes[mode]
+					setTeams(teams)
+					setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_and_post_round_time)
+				}
+			),
+			onNuiEmit<Competitive.Events['updateRound']>(
+				'competitive:updateRound', (teams) => {
+					setTeams(teams)
+				}
+			),
+		]
 
 		const interval = setInterval(() => setTimer(t => t && t - 1), 1000)
 
 		return () => {
-			dispose()
+			disposes.forEach(dispose => dispose())
 			clearInterval(interval)
 		}
 	}, [])

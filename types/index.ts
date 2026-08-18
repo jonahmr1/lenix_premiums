@@ -8,6 +8,7 @@ export namespace Competitive {
 		updateParty: Event<'competitive:updateParty', [Player['Party']]>
 		updateStage: Event<'competitive:updateStage', [Stage]>
 		newRound: Event<'competitive:newRound', [Player['Party']['gameMode'], RoundTeams]>
+		updateRound: Event<'competitive:updateRound', [RoundTeams]>
 	}
 
 	export interface Requests {
