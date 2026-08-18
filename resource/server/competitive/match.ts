@@ -9,36 +9,36 @@ export abstract class Matches {
 	private static readonly matches = new Set<Competitive.Match>()
 	private static bucketId = 1
 
-	static async request(
+	static async new(
 		mode: Competitive.Match['mode'],
 		map: Competitive.Match['map'],
 		parties: Competitive.Party[]
 	) {
 		const bucket = this.bucketId++
-		const teams = parties.map(team => ({
-			roundsWon: 0,
-			players: team.profiles.map(profile => ({
-				isDead: false,
-				avatar: profile.avatar,
-				sessionId: profile.sessionId
-			}))
-		}))
-
-		this.matches.add({
+		const match = {
 			bucket,
 			mode,
 			map,
 			playedAt: Math.floor(Date.now() / 1000),
 			currentRound: 0,
-			teams,
-		})
+			teams: parties.map(team => ({
+				roundsWon: 0,
+				players: team.profiles.map(profile => ({
+					isDead: false,
+					avatar: profile.avatar,
+					sessionId: profile.sessionId
+				}))
+			})),
+		}
 
-		for (const team of teams) for (const player of team.players) {
+		this.matches.add(match)
+
+		for (const team of match.teams) for (const player of team.players) {
 			SetPlayerRoutingBucket(player.sessionId.toString(), bucket)
 			emitNet('lenix:server:competitive:updateStage', player.sessionId, 'loading' satisfies Competitive.Stage)
 		}
 
-		for (const [iter, team] of teams.entries()) {
+		for (const [iter, team] of match.teams.entries()) {
 			const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
 			asserts(teamSpawnSide, `Failed to find team spawn side points`)
 
@@ -61,19 +61,19 @@ export abstract class Matches {
 			}
 		}
 
-		this.startRound(mode, teams)
+		this.startRound(match)
 	}
 
-	static startRound(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
-		const gameMode = Config.game_modes[mode]
+	static startRound(match: Competitive.Match) {
+		const gameMode = Config.game_modes[match.mode]
 
-		for (const team of teams) {
+		for (const team of match.teams) {
 			for (const player of team.players) {
 				emitNet(
 					'lenix:server:competitive:newRound',
 					player.sessionId,
-					mode satisfies Competitive.Match['mode'],
-					this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.RoundTeams
+					match.mode satisfies Competitive.Match['mode'],
+					this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
 				)
 			}
 		}
@@ -95,16 +95,30 @@ export abstract class Matches {
 		const victimTeam = this.getClientTeam(client)
 		if (!victimTeam) return
 
+		const victim = victimTeam.players.find(
+			player => player.sessionId === client
+		)
+
+		asserts(victim)
+		asserts(victim.isDead)
+
 		const match = this.getClientMatch(client)
 		asserts(match, `Failed to get client<${client}>'s match`)
-		
+
+		victim.isDead = true
+
 		match.teams.forEach(team => team.players.forEach(player =>
 			emitNet(
 				'lenix:server:competitive:updateRound',
 				player.sessionId,
-				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.RoundTeams
+				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
 			)
 		))
+
+		if (victimTeam.players.every(player => player.isDead)) setTimeout(
+			() => this.startRound(match),
+			Config.game_modes[match.mode].pre_and_post_round_time * 1000
+		)
 	}
 
 	static getClientMatch(client: number) {
@@ -128,26 +142,17 @@ export abstract class Matches {
 	}
 
 	static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
-		const ownTeam = teams.find(team =>
+		const own = teams.find(team =>
 			team.players.some(self => self.sessionId === client)
 		)
 
-		const opponentTeam = teams.find(team =>
+		const opponent = teams.find(team =>
 			!team.players.some(self => self.sessionId === client)
 		)
 
-		asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
+		asserts(own && opponent, 'Failed to resolve match teams')
 
-		return {
-			own: {
-				roundsWon: 0,
-				players: ownTeam.players
-			},
-			opponent: {
-				roundsWon: 0,
-				players: opponentTeam.players
-			}
-		}
+		return { own, opponent }
 	}
 }
 

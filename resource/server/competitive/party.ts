@@ -267,13 +267,13 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		
+
 		const gameMode = Config.game_modes[partyInQueue.gameMode]
 		const allowedMaps = gameMode.maps_allowed
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as Competitive.GameMap
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
 
-		Matches.request(partyInQueue.gameMode, map, [partyInQueue, party])
+		Matches.new(partyInQueue.gameMode, map, [partyInQueue, party])
 	}
 
 	static async transferLeadership(client: number, leader: number) {

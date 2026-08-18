@@ -7,8 +7,8 @@ export namespace Competitive {
 		playerInvited: Event<'competitive:playerInvited', [GamerProfile]>
 		updateParty: Event<'competitive:updateParty', [Party]>
 		updateStage: Event<'competitive:updateStage', [Stage]>
-		newRound: Event<'competitive:newRound', [Party['gameMode'], RoundTeams]>
-		updateRound: Event<'competitive:updateRound', [RoundTeams]>
+		newRound: Event<'competitive:newRound', [Party['gameMode'], CasualMatch]>
+		updateRound: Event<'competitive:updateRound', [CasualMatch]>
 	}
 
 	export interface Requests {
@@ -115,7 +115,7 @@ export namespace Competitive {
 		teams: {
 			roundsWon: number
 			players: {
-			isDead: boolean
+				isDead: boolean
 				avatar: string | null
 				sessionId: number
 			}[]
@@ -137,7 +137,7 @@ export namespace Competitive {
 
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 
-	export type RoundTeams = Record<'own' | 'opponent', {
+	export type CasualMatch = Record<'own' | 'opponent', {
 		players: {
 			isDead: boolean,
 			avatar: Profile['avatar']

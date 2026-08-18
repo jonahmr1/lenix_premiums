@@ -66,13 +66,13 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-onNet('lenix:server:competitive:newRound', (mode: Competitive.Match['mode'], round: Competitive.RoundTeams) => {
+onNet('lenix:server:competitive:newRound', (mode: Competitive.Match['mode'], round: Competitive.CasualMatch) => {
 	// spawn wall
 	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
-onNet('lenix:server:competitive:updateRound', (teams: Competitive.RoundTeams) => {
+onNet('lenix:server:competitive:updateRound', (teams: Competitive.CasualMatch) => {
 	emitNui<Competitive.Events['updateRound']>('competitive:updateRound', teams)
 })
 
