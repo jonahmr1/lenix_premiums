@@ -12,9 +12,17 @@ export abstract class Matches {
 	static async request(
 		mode: Competitive.Match['mode'],
 		map: Competitive.Match['map'],
-		teams: Competitive.Match['teams']
+		parties: Competitive.Party[]
 	) {
 		const bucket = this.bucketId++
+		const teams = parties.map(team => ({
+			roundsWon: 0,
+			players: team.profiles.map(profile => ({
+				isDead: false,
+				avatar: profile.avatar,
+				sessionId: profile.sessionId
+			}))
+		}))
 
 		this.matches.add({
 			bucket,
