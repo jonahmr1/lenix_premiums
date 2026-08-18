@@ -2,6 +2,7 @@ import { asserts, random } from "@lenix/lenix";
 import { triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
 import type { Vec3 } from "lenix";
+import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 
 export abstract class Matches {
@@ -57,6 +58,8 @@ export abstract class Matches {
 	}
 
 	static start(teams: Competitive.Player['Party'][]) {
+		const gameMode = Config.game_modes[teams[0]!.gameMode]
+
 		for (const team of teams) {
 			for (const profile of team.profiles) {
 				const ownTeam = teams.find(team =>
@@ -90,22 +93,48 @@ export abstract class Matches {
 						}
 					} satisfies Competitive.RoundTeams
 				)
-
-				const gameMode = Config.game_modes[team.gameMode]
-
-				setTimeout(() => {
-					this.finishRound()
-				}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
 			}
 		}
+
+		on(
+			'weaponDamageEvent',
+			(attacker: number, data: { willKill: boolean; hitGlobalId?: number }) => {
+				if (!data.willKill || data.hitGlobalId === undefined) return
+
+				const attackerTeam = teams.find(team =>
+					team.profiles.some(profile => profile.sessionId === attacker)
+				)
+
+				if (!attackerTeam) return
+
+				const victimEntity = server.entity.handle(data.hitGlobalId)
+				if (!victimEntity || !DoesEntityExist(victimEntity)) return
+
+				const victim = NetworkGetEntityOwner(victimEntity)
+
+				const victimTeam = teams.find(team =>
+					team.profiles.some(profile => profile.sessionId === victim)
+				)
+
+				if (!victimTeam || victimTeam === attackerTeam) return
+
+				teams.forEach(team => team.profiles.forEach(profile => 
+					emitNet('lenix:server:competitive:updateRound', profile.sessionId)
+				))
+			}
+		)
+
+		setTimeout(() => {
+			this.finishRound()
+		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
 	}
 
 	static startRound() {
-		
+
 	}
 
 	static finishRound() {
-		
+
 	}
 
 	static crash(client: number) {
