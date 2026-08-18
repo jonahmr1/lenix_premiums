@@ -273,11 +273,14 @@ export abstract class Parties extends PartyRegistry {
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as Competitive.GameMap
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
 
-		const teams = [partyInQueue, party].map(team => team.profiles.map(profile => ({
-			isDead: false,
-			avatar: profile.avatar,
-			sessionId: profile.sessionId
-		})))
+		const teams = [partyInQueue, party].map(team => ({
+			roundsWon: 0,
+			players: team.profiles.map(profile => ({
+				isDead: false,
+				avatar: profile.avatar,
+				sessionId: profile.sessionId
+			}))
+		}))
 		Matches.request(partyInQueue.gameMode, map, teams)
 	}
 

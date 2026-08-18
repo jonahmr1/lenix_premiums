@@ -24,7 +24,7 @@ export abstract class Matches {
 			teams,
 		})
 
-		for (const team of teams) for (const player of team) {
+		for (const team of teams) for (const player of team.players) {
 			SetPlayerRoutingBucket(player.sessionId.toString(), bucket)
 			emitNet('lenix:server:competitive:updateStage', player.sessionId, 'loading' satisfies Competitive.Stage)
 		}
@@ -33,7 +33,7 @@ export abstract class Matches {
 			const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
 			asserts(teamSpawnSide, `Failed to find team spawn side points`)
 
-			for (const [iter, player] of team.entries()) {
+			for (const [iter, player] of team.players.entries()) {
 				const playerSpawnPoint = teamSpawnSide[iter]
 				asserts(playerSpawnPoint?.length === 4, `Failed to find player<${player.sessionId}> spawn point`)
 
@@ -64,7 +64,7 @@ export abstract class Matches {
 				if (!data.willKill || data.hitGlobalId === undefined) return
 
 				const attackerTeam = teams.find(team =>
-					team.some(player => player.sessionId === attacker)
+					team.players.some(player => player.sessionId === attacker)
 				)
 
 				if (!attackerTeam) return
@@ -75,12 +75,12 @@ export abstract class Matches {
 				const victim = NetworkGetEntityOwner(victimEntity)
 
 				const victimTeam = teams.find(team =>
-					team.some(player => player.sessionId === victim)
+					team.players.some(player => player.sessionId === victim)
 				)
 
 				if (!victimTeam || victimTeam === attackerTeam) return
 
-				teams.forEach(team => team.forEach(player =>
+				teams.forEach(team => team.players.forEach(player =>
 					emitNet(
 						'lenix:server:competitive:updateRound',
 						player.sessionId,
@@ -97,7 +97,7 @@ export abstract class Matches {
 
 	static startRound(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
 		for (const team of teams) {
-			for (const player of team) {
+			for (const player of team.players) {
 				emitNet(
 					'lenix:server:competitive:newRound',
 					player.sessionId,
@@ -118,11 +118,11 @@ export abstract class Matches {
 
 	static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
 		const ownTeam = teams.find(team =>
-			team.some(self => self.sessionId === client)
+			team.players.some(self => self.sessionId === client)
 		)
 
 		const opponentTeam = teams.find(team =>
-			!team.some(self => self.sessionId === client)
+			!team.players.some(self => self.sessionId === client)
 		)
 
 		asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
@@ -130,14 +130,14 @@ export abstract class Matches {
 		return {
 			own: {
 				roundsWon: 0,
-				players: ownTeam.map(player => ({
+				players: ownTeam.players.map(player => ({
 					isDead: false,
 					avatar: player.avatar ?? ''
 				}))
 			},
 			opponent: {
 				roundsWon: 0,
-				players: opponentTeam.map(player => ({
+				players: opponentTeam.players.map(player => ({
 					isDead: false,
 					avatar: player.avatar ?? ''
 				}))

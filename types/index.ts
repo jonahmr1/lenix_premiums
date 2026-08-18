@@ -111,11 +111,14 @@ export namespace Competitive {
 		mode: Competitive.GameMode
 		map: Competitive.GameMap
 		playedAt: number
-		teams: Array<{
+		teams: {
+			roundsWon: number
+			players: {
 			isDead: boolean
-			avatar: string | null
-			sessionId: number
-		}[]>
+				avatar: string | null
+				sessionId: number
+			}[]
+		}[]
 	}
 
 	export type Leaderboard = {
@@ -134,7 +137,6 @@ export namespace Competitive {
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 
 	export type RoundTeams = Record<'own' | 'opponent', {
-		roundsWon: number
 		players: {
 			isDead: boolean,
 			avatar: Profile['avatar']
