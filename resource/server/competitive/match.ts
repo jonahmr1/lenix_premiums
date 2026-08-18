@@ -19,15 +19,14 @@ export abstract class MatchRegistry {
 		asserts(false, `Failed to get client<${client}>'s match`)
 	}
 
-	protected static getClientTeam(client: number) {
-		for (const match of this.matches) {
-			const team = match.teams.find(team =>
-				team.players.some(player => player.sessionId === client)
-			)
+	protected static getClientTeam(client: number, from?: Competitive.Match['teams']) {
+		const teams = from ?? this.getClientMatch(client).teams
+		const team = teams.find(team =>
+			team.players.some(player => player.sessionId === client)
+		)
+		asserts(team, `Failed to get client<${client}>'s team`)
 
-			if (team) return team
-		}
-		asserts(false, `Failed to get client<${client}>'s team`)
+		return team
 	}
 
 	protected static getPlayerByMatch(client: number, from?: Competitive.Match) {
@@ -180,10 +179,11 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static crash(client: number) {
-		const team = this.getClientTeam(client)
+		const { teams } = this.getClientMatch(client)
+		
+		const team = this.getClientTeam(client, teams)
 		team.players = team.players.filter(player => player.sessionId !== client)
 
-		const { teams } = this.getClientMatch(client)
 
 		this.refreshTeams(teams)
 	}
