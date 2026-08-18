@@ -91,8 +91,9 @@ export const InGame = () => {
 		<Layout className="h-screen bg-muted justify-start font-medium">
 			<div className="w-full h-1/13 flex justify-center">
 				<div className="flex gap-xs">
-					{teams.own.players.map(player => (
-						<Player 
+					{teams.own.players.map((player, i) => (
+						<Player
+							key={i}
 							type='own'
 							avatar={player.avatar ?? avatar}
 							dead= {player.isDead}
@@ -119,8 +120,9 @@ export const InGame = () => {
 					</div>
 				</div>
 				<div className="flex gap-xs">
-					{teams.opponent.players.map(player => (
-						<Player 
+					{teams.opponent.players.map((player, i) => (
+						<Player
+							key={i}
 							type='opponent'
 							avatar={player.avatar ?? avatar}
 							dead= {player.isDead}

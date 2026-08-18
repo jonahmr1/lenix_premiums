@@ -46,7 +46,7 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	const ped = client.player.entity()
 
 	SetFocusPosAndVel(...coords, 0, 0, 0)
-	SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
+	// SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
 
 	try {
 		return await repeat(() => {
