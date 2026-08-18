@@ -145,7 +145,18 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static stop(match: Competitive.Match) {
+		if (!this.matches.delete(match)) return
 
+		for (const team of match.teams) {
+			for (const player of team.players) {
+				SetPlayerRoutingBucket(player.sessionId.toString(), 0)
+				emitNet(
+					'lenix:server:competitive:updateStage',
+					player.sessionId,
+					'lobby' satisfies Competitive.Stage
+				)
+			}
+		}
 	}
 
 	static startRound(match: Competitive.Match) {
