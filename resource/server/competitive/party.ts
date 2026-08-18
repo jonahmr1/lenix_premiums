@@ -81,7 +81,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static searchingParty: Party | null = null
+	private static searchingParty = new Map<Competitive.Player['Party']['gameMode'], Party | null>()
 
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
@@ -213,6 +213,8 @@ export abstract class Parties extends PartyRegistry {
 		if (!status) this.updateGameSearch(party.leader, 'idle')
 
 		profile.ready = status
+
+		this.refreshPartyProfiles(party)
 	}
 
 	static async kick(client: number, kicked: number) {
@@ -242,18 +244,20 @@ export abstract class Parties extends PartyRegistry {
 		party.status = status
 		this.refreshPartyProfiles(party)
 
-		if (status === 'idle' && this.searchingParty === party) this.searchingParty = null
+		const searcherMode = party.gameMode
+		const partyInQueue = this.searchingParty.get(searcherMode)
+		if (status === 'idle' && partyInQueue === party) this.searchingParty.set(searcherMode, null)
 		if (status !== 'searching') return
 
 
-		const partyInQueue = this.searchingParty
 		if (!partyInQueue) {
-			this.searchingParty = party
+			this.searchingParty.set(searcherMode, party)
 			return
 		}
 		asserts(partyInQueue !== party, `Duplicated party in queue with client<${client}> entries tried to self-find a match`)
+		
 
-		this.searchingParty = null
+		this.searchingParty.set(searcherMode, null)
 
 		partyInQueue.status = 'found'
 		party.status = 'found'
@@ -296,10 +300,11 @@ export abstract class Parties extends PartyRegistry {
 
 	static crash(client: number) {
 		const party = this.getPartyByClient(client)
+		const partyMode = party.gameMode
 		const partyLeft = this.remove(client, party)
 		if (partyLeft) {
 			this.updateGameSearch(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
-		} else if (this.searchingParty === party) this.searchingParty = null
+		} else if (this.searchingParty.get(partyMode) === party) this.searchingParty.set(partyMode, null)
 	}
 }
