@@ -58,42 +58,6 @@ export abstract class Matches {
 	static start(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
 		const gameMode = Config.game_modes[mode]
 
-		for (const team of teams) {
-			for (const player of team) {
-				const ownTeam = teams.find(team =>
-					team.some(self => self.sessionId === player.sessionId)
-				)
-
-				const opponentTeam = teams.find(team =>
-					!team.some(self => self.sessionId === player.sessionId)
-				)
-
-				asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
-
-				emitNet(
-					'lenix:server:competitive:newRound',
-					player.sessionId,
-					mode satisfies Competitive.Match['mode'],
-					{
-						own: {
-							roundsWon: 0,
-							players: ownTeam.map(player => ({
-								isDead: false,
-								avatar: player.avatar ?? ''
-							}))
-						},
-						opponent: {
-							roundsWon: 0,
-							players: opponentTeam.map(player => ({
-								isDead: false,
-								avatar: player.avatar ?? ''
-							}))
-						}
-					} satisfies Competitive.RoundTeams
-				)
-			}
-		}
-
 		on(
 			'weaponDamageEvent',
 			(attacker: number, data: { willKill: boolean; hitGlobalId?: number }) => {
@@ -117,7 +81,11 @@ export abstract class Matches {
 				if (!victimTeam || victimTeam === attackerTeam) return
 
 				teams.forEach(team => team.forEach(player =>
-					emitNet('lenix:server:competitive:updateRound', player.sessionId)
+					emitNet(
+						'lenix:server:competitive:updateRound',
+						player.sessionId,
+						this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.RoundTeams
+					)
 				))
 			}
 		)
@@ -127,8 +95,17 @@ export abstract class Matches {
 		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
 	}
 
-	static startRound() {
-
+	static startRound(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
+		for (const team of teams) {
+			for (const player of team) {
+				emitNet(
+					'lenix:server:competitive:newRound',
+					player.sessionId,
+					mode satisfies Competitive.Match['mode'],
+					this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.RoundTeams
+				)
+			}
+		}
 	}
 
 	static finishRound() {
@@ -137,5 +114,34 @@ export abstract class Matches {
 
 	static crash(client: number) {
 
+	}
+
+	static getClientRoundTeams(client: number, teams: Competitive.Match['teams']) {
+		const ownTeam = teams.find(team =>
+			team.some(self => self.sessionId === client)
+		)
+
+		const opponentTeam = teams.find(team =>
+			!team.some(self => self.sessionId === client)
+		)
+
+		asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
+
+		return {
+			own: {
+				roundsWon: 0,
+				players: ownTeam.map(player => ({
+					isDead: false,
+					avatar: player.avatar ?? ''
+				}))
+			},
+			opponent: {
+				roundsWon: 0,
+				players: opponentTeam.map(player => ({
+					isDead: false,
+					avatar: player.avatar ?? ''
+				}))
+			}
+		}
 	}
 }
