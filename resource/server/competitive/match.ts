@@ -62,6 +62,12 @@ export abstract class MatchRegistry {
 			)
 		))
 	}
+
+	protected static getMatchByBucketId(bucket: number) {
+		for (const match of this.matches) {
+			if (match.bucket === bucket) return match
+		}
+	}
 }
 
 export abstract class Matches extends MatchRegistry {
@@ -143,7 +149,7 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static startRound(match: Competitive.Match) {
-		match.currentRound++
+		const round = ++match.currentRound
 		const gameMode = Config.game_modes[match.mode]
 
 		for (const team of match.teams) {
@@ -159,9 +165,10 @@ export abstract class Matches extends MatchRegistry {
 		}
 
 		setTimeout(() => {
-			if (match.currentRound < gameMode.rounds) {
-				this.startRound(match)
-			}
+			const latestMatch = this.getMatchByBucketId(match.bucket)
+			if (latestMatch?.currentRound !== round) return
+
+			this.startRound(latestMatch)
 		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
 	}
 
