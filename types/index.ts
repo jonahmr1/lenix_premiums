@@ -103,13 +103,19 @@ export namespace Competitive {
 		leader: Competitive.GamerProfile['sessionId']
 		roomAvailable: number
 		status: 'searching' | 'idle' | 'found'
-		gameMode: keyof GameModes
+		gameMode: Match['mode']
 	}
 
 	export type Match = {
-		match_id: number
-		map: string
-		played_at: number
+		bucket: number
+		mode: Competitive.GameMode
+		map: Competitive.GameMap
+		playedAt: number
+		teams: Array<{
+			isDead: boolean
+			avatar: string | null
+			sessionId: number
+		}[]>
 	}
 
 	export type Leaderboard = {
@@ -121,6 +127,9 @@ export namespace Competitive {
 	}[]
 
 	export type GameModes = Public['public/config.competitive.json']['game_modes']
+	export type GameMaps = Public['public/config.competitive.json']['game_maps']
+	export type GameMode = keyof GameModes
+	export type GameMap = keyof GameMaps
 
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 

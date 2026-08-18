@@ -6,89 +6,87 @@ import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 
 export abstract class Matches {
-	private static readonly matches = new Set<
-		Omit<Competitive.Match, 'match_id'> & {
-			teams: Competitive.Party[]
-			bucket: number
-		}
-	>()
+	private static readonly matches = new Set<Competitive.Match>()
 	private static bucketId = 1
 
-	static async request(teams: Competitive.Party[]) {
-		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
-		const map = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
-		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
-
+	static async request(
+		mode: Competitive.Match['mode'],
+		map: Competitive.Match['map'],
+		teams: Competitive.Match['teams']
+	) {
 		const bucket = this.bucketId++
+
 		this.matches.add({
+			bucket,
+			mode,
 			map,
-			played_at: Math.floor(Date.now() / 1000),
+			playedAt: Math.floor(Date.now() / 1000),
 			teams,
-			bucket
 		})
 
-		for (const team of teams) for (const profile of team.profiles) {
-			SetPlayerRoutingBucket(profile.sessionId.toString(), bucket)
-			emitNet('lenix:server:competitive:updateStage', profile.sessionId, 'loading' satisfies Competitive.Stage)
+		for (const team of teams) for (const player of team) {
+			SetPlayerRoutingBucket(player.sessionId.toString(), bucket)
+			emitNet('lenix:server:competitive:updateStage', player.sessionId, 'loading' satisfies Competitive.Stage)
 		}
 
 		for (const [iter, team] of teams.entries()) {
 			const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
 			asserts(teamSpawnSide, `Failed to find team spawn side points`)
 
-			for (const [iter, profile] of team.profiles.entries()) {
+			for (const [iter, player] of team.entries()) {
 				const playerSpawnPoint = teamSpawnSide[iter]
-				asserts(playerSpawnPoint?.length === 4, `Failed to find player<${profile.sessionId}> spawn point`)
+				asserts(playerSpawnPoint?.length === 4, `Failed to find player<${player.sessionId}> spawn point`)
 
 				const loaded = await triggerClientCallback<boolean>(
 					'lenix:server:competitive:getPrepared',
-					profile.sessionId, [playerSpawnPoint[0]!, playerSpawnPoint[1]!, playerSpawnPoint[2]!] satisfies Vec3
+					player.sessionId,
+					[playerSpawnPoint[0]!, playerSpawnPoint[1]!, playerSpawnPoint[2]!] satisfies Vec3
 				)
-				asserts(loaded, `client<${profile.sessionId}> was not ready to play this match`)
+				asserts(loaded, `client<${player.sessionId}> was not ready to play this match`)
 
 				emitNet(
 					'lenix:server:competitive:updateStage',
-					profile.sessionId,
+					player.sessionId,
 					'in-game' satisfies Competitive.Stage
 				)
 			}
 		}
 
-		this.start(teams)
+		this.start(mode, teams)
 	}
 
-	static start(teams: Competitive.Party[]) {
-		const gameMode = Config.game_modes[teams[0]!.gameMode]
+	static start(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
+		const gameMode = Config.game_modes[mode]
 
 		for (const team of teams) {
-			for (const profile of team.profiles) {
+			for (const player of team) {
 				const ownTeam = teams.find(team =>
-					team.profiles.some(self => self.sessionId === profile.sessionId)
+					team.some(self => self.sessionId === player.sessionId)
 				)
 
 				const opponentTeam = teams.find(team =>
-					!team.profiles.some(self => self.sessionId === profile.sessionId)
+					!team.some(self => self.sessionId === player.sessionId)
 				)
 
 				asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
 
 				emitNet(
 					'lenix:server:competitive:newRound',
-					profile.sessionId,
-					team.gameMode,
+					player.sessionId,
+					mode satisfies Competitive.Match['mode'],
 					{
 						own: {
 							roundsWon: 0,
-							players: ownTeam.profiles.map(profile => ({
+							players: ownTeam.map(player => ({
 								isDead: false,
-								avatar: profile.avatar ?? ''
+								avatar: player.avatar ?? ''
 							}))
 						},
 						opponent: {
 							roundsWon: 0,
-							players: opponentTeam.profiles.map(profile => ({
+							players: opponentTeam.map(player => ({
 								isDead: false,
-								avatar: profile.avatar ?? ''
+								avatar: player.avatar ?? ''
 							}))
 						}
 					} satisfies Competitive.RoundTeams
@@ -102,7 +100,7 @@ export abstract class Matches {
 				if (!data.willKill || data.hitGlobalId === undefined) return
 
 				const attackerTeam = teams.find(team =>
-					team.profiles.some(profile => profile.sessionId === attacker)
+					team.some(player => player.sessionId === attacker)
 				)
 
 				if (!attackerTeam) return
@@ -113,13 +111,13 @@ export abstract class Matches {
 				const victim = NetworkGetEntityOwner(victimEntity)
 
 				const victimTeam = teams.find(team =>
-					team.profiles.some(profile => profile.sessionId === victim)
+					team.some(player => player.sessionId === victim)
 				)
 
 				if (!victimTeam || victimTeam === attackerTeam) return
 
-				teams.forEach(team => team.profiles.forEach(profile =>
-					emitNet('lenix:server:competitive:updateRound', profile.sessionId)
+				teams.forEach(team => team.forEach(player =>
+					emitNet('lenix:server:competitive:updateRound', player.sessionId)
 				))
 			}
 		)

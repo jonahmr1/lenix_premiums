@@ -1,4 +1,4 @@
-import { asserts } from "@lenix/lenix"
+import { asserts, random } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
 import { Config } from "common/config/competitive"
@@ -267,7 +267,18 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(partyInQueue)
 		this.refreshPartyProfiles(party)
 
-		Matches.request([partyInQueue, party])
+		
+		const gameMode = Config.game_modes[partyInQueue.gameMode]
+		const allowedMaps = gameMode.maps_allowed
+		const map = allowedMaps[random(0, allowedMaps.length - 1)] as Competitive.GameMap
+		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
+
+		const teams = [partyInQueue, party].map(team => team.profiles.map(profile => ({
+			isDead: false,
+			avatar: profile.avatar,
+			sessionId: profile.sessionId
+		})))
+		Matches.request(partyInQueue.gameMode, map, teams)
 	}
 
 	static async transferLeadership(client: number, leader: number) {
