@@ -138,6 +138,10 @@ export abstract class Matches extends MatchRegistry {
 		this.startRound(match)
 	}
 
+	static stop(match: Competitive.Match) {
+
+	}
+
 	static startRound(match: Competitive.Match) {
 		const gameMode = Config.game_modes[match.mode]
 
@@ -156,6 +160,10 @@ export abstract class Matches extends MatchRegistry {
 		setTimeout(() => {
 			this.finishRound(match)
 		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
+	}
+
+	static finishRound() {
+
 	}
 
 	static playerDied(client: number, killer?: number) {
@@ -192,10 +200,6 @@ export abstract class Matches extends MatchRegistry {
 		}
 	}
 
-	static finishRound() {
-
-	}
-
 	static crash(client: number) {
 		const match = this.getClientMatch(client, true)
 		if (!match) return
@@ -205,6 +209,10 @@ export abstract class Matches extends MatchRegistry {
 
 
 		this.refreshTeams(match.teams)
+
+		if (!team.players.length) {
+			this.stop(match)
+		}
 	}
 }
 
