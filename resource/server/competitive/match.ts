@@ -106,6 +106,7 @@ export abstract class Matches extends MatchRegistry {
 
 		for (const team of match.teams) {
 			for (const player of team.players) {
+				player.isDead = false
 				emitNet(
 					'lenix:server:competitive:newRound',
 					player.sessionId,
@@ -135,13 +136,12 @@ export abstract class Matches extends MatchRegistry {
 		const victim = victimTeam.players.find(
 			player => player.sessionId === client
 		)
-
-		asserts(victim)
-		asserts(victim.isDead)
-
+		asserts(victim && !victim.isDead)
+		
 		const match = this.getClientMatch(client)
 		asserts(match, `Failed to get client<${client}>'s match`)
 
+		const gameMode = Config.game_modes[match.mode]
 		victim.isDead = true
 
 		match.teams.forEach(team => team.players.forEach(player =>
@@ -153,8 +153,16 @@ export abstract class Matches extends MatchRegistry {
 		))
 
 		if (victimTeam.players.every(player => player.isDead)) setTimeout(
-			() => this.startRound(match),
-			Config.game_modes[match.mode].pre_and_post_round_time * 1000
+			() => {
+				if (gameMode.rounds === match.currentRound) this.finishRound()
+				this.startRound(match)
+				match.currentRound++
+				const winnerTeam = match.teams.find(team => team.players.every(player => player.sessionId !== client))
+				asserts(winnerTeam)
+
+				winnerTeam.roundsWon++
+			},
+			gameMode.pre_and_post_round_time * 1000
 		)
 	}
 }
