@@ -67,8 +67,8 @@ onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', asyn
 	return await Parties.kick(client, profile), null
 })
 
-onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', (client, { status }) => {
-	return Parties.updateGameSearch(client, status), null
+onNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', async (client, { status }) => {
+	return await Parties.updateGameSearch(client, status), null
 })
 
 onNuiServer<Competitive.Requests['transferLeadership']>('competitive:transferPartyLeadership', (client, { leader }) => {
@@ -129,7 +129,6 @@ onNuiServer<Competitive.Requests['getMatches']>('competitive:getMatches', async 
 			}
 		})
 	} catch (e) {
-		console.log(palette('red', String(e)))
 		throw e
 	}
 })
@@ -241,7 +240,7 @@ onNuiServer<Competitive.Requests['party']['getStats']>('competitive:party:getSta
 
 onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard', async () => {
 	const selectedCols = ['match_id', 'profile_id', 'result', 'kills', 'deaths', 'assists'] as const
-	const performances: Competitive.Player['Performance'][] = await oxmysql.query<{
+	const performances: Competitive.Performance[] = await oxmysql.query<{
 		match_id: number
 		profile_id: string
 		result: 'win' | 'loss'

@@ -232,7 +232,7 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 
-	static updateGameSearch(client: number, status: Party['status']) {
+	static async updateGameSearch(client: number, status: Party['status']) {
 		asserts(status !== 'found')
 
 		const party = this.getPartyByClient(client)
@@ -258,22 +258,41 @@ export abstract class Parties extends PartyRegistry {
 
 		this.partiesInQueue.set(searcherMode, null)
 
-		partyInQueue.status = 'found'
-		party.status = 'found'
-
-		partyInQueue.profiles.forEach(profile => profile.status = 'in_game')
-		party.profiles.forEach(profile => profile.status = 'in_game')
-
-		this.refreshPartyProfiles(partyInQueue)
-		this.refreshPartyProfiles(party)
-
-
 		const gameMode = Config.game_modes[partyInQueue.gameMode]
 		const allowedMaps = gameMode.maps_allowed
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as Competitive.GameMap
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
 
-		Matches.new(partyInQueue.gameMode, map, [partyInQueue, party])
+		const parties = [partyInQueue, party]
+
+		const previousStatuses = new Map(
+			parties.flatMap(party =>
+				party.profiles.map(profile => [
+					profile.profile_id,
+					profile.status
+				] as const)
+			)
+		)
+
+		parties.forEach(party => {
+			party.status = 'found'
+			party.profiles.forEach(profile => profile.status = 'in_game')
+			this.refreshPartyProfiles(party)
+		})
+		try {
+			await Matches.new(partyInQueue.gameMode, map, parties)
+		} catch(e) {
+			parties.forEach(party => {
+				party.status = 'idle'
+				party.profiles.forEach(profile => {
+					const status = previousStatuses.get(profile.profile_id)
+					asserts(status)
+					profile.status = status
+				})
+				this.refreshPartyProfiles(party)
+			})
+			throw e
+		}
 	}
 
 	static async transferLeadership(client: number, leader: number) {

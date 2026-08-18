@@ -116,7 +116,7 @@ export abstract class Matches extends MatchRegistry {
 					)
 				}
 			}
-		} catch(error) {
+		} catch (error) {
 			for (const team of match.teams) {
 				for (const player of team.players) {
 					SetPlayerRoutingBucket(
@@ -139,73 +139,73 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static startRound(match: Competitive.Match) {
-	const gameMode = Config.game_modes[match.mode]
+		const gameMode = Config.game_modes[match.mode]
 
-	for (const team of match.teams) {
-		for (const player of team.players) {
-			player.isDead = false
-			emitNet(
-				'lenix:server:competitive:newRound',
-				player.sessionId,
-				match.mode satisfies Competitive.Match['mode'],
-				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
-			)
+		for (const team of match.teams) {
+			for (const player of team.players) {
+				player.isDead = false
+				emitNet(
+					'lenix:server:competitive:newRound',
+					player.sessionId,
+					match.mode satisfies Competitive.Match['mode'],
+					this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
+				)
+			}
 		}
-	}
 
-	setTimeout(() => {
-		this.finishRound(match)
-	}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
-}
-
-	static playerDied(client: number, killer ?: number) {
-	const match = this.getClientMatch(client, true)
-	if (!match) return
-
-	const victimTeam = this.getClientTeam(client, match.teams)
-	asserts(victimTeam, `Failed to get client<${client}>'s team`)
-
-	const victim = victimTeam.players.find(
-		player => player.sessionId === client
-	)
-	asserts(victim && !victim.isDead)
-
-	const gameMode = Config.game_modes[match.mode]
-	victim.isDead = true
-
-	this.refreshTeams(match.teams)
-
-	if (victimTeam.players.every(player => player.isDead)) {
-		const winnerTeam = match.teams.find(team => team.players.every(player => player.sessionId !== client))
-		asserts(winnerTeam)
-
-		winnerTeam.roundsWon++
-
-		if (gameMode.rounds - 1 === match.currentRound) {
-			this.finishRound(match)
-			return
-		}
 		setTimeout(() => {
-			match.currentRound++
-			this.startRound(match)
-		}, gameMode.pre_and_post_round_time * 1000)
+			this.finishRound(match)
+		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
 	}
-}
+
+	static playerDied(client: number, killer?: number) {
+		const match = this.getClientMatch(client, true)
+		if (!match) return
+
+		const victimTeam = this.getClientTeam(client, match.teams)
+		asserts(victimTeam, `Failed to get client<${client}>'s team`)
+
+		const victim = victimTeam.players.find(
+			player => player.sessionId === client
+		)
+		asserts(victim && !victim.isDead)
+
+		const gameMode = Config.game_modes[match.mode]
+		victim.isDead = true
+
+		this.refreshTeams(match.teams)
+
+		if (victimTeam.players.every(player => player.isDead)) {
+			const winnerTeam = match.teams.find(team => team.players.every(player => player.sessionId !== client))
+			asserts(winnerTeam)
+
+			winnerTeam.roundsWon++
+
+			if (gameMode.rounds - 1 === match.currentRound) {
+				this.finishRound(match)
+				return
+			}
+			setTimeout(() => {
+				match.currentRound++
+				this.startRound(match)
+			}, gameMode.pre_and_post_round_time * 1000)
+		}
+	}
 
 	static finishRound() {
 
-}
+	}
 
 	static crash(client: number) {
-	const match = this.getClientMatch(client, true)
-	if (!match) return
+		const match = this.getClientMatch(client, true)
+		if (!match) return
 
-	const team = this.getClientTeam(client, match.teams)
-	team.players = team.players.filter(player => player.sessionId !== client)
+		const team = this.getClientTeam(client, match.teams)
+		team.players = team.players.filter(player => player.sessionId !== client)
 
 
-	this.refreshTeams(match.teams)
-}
+		this.refreshTeams(match.teams)
+	}
 }
 
 onNet('baseevents:onPlayerDied', () => {
