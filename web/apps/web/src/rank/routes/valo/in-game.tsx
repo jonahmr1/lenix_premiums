@@ -72,7 +72,7 @@ export const InGame = () => {
 				'competitive:newRound', (mode, teams) => {
 					const gameMode = config.game_modes[mode]
 					setTeams(teams)
-					setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_and_post_round_time)
+					setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_and_post_round_time * 1000)
 				}
 			),
 			onNuiEmit<Competitive.Events['updateRound']>(
