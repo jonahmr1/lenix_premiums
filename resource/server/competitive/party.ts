@@ -230,7 +230,7 @@ export abstract class Parties extends PartyRegistry {
 	}
 
 
-	static async updateGameSearch(client: number, status: Party['status']) {
+	static updateGameSearch(client: number, status: Party['status']) {
 		asserts(status !== 'found')
 
 		const party = this.getPartyByClient(client)
