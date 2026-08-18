@@ -30,7 +30,7 @@ const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
 }
 
 export const InGame = () => {
-	const [timer, setTimer] = useState<number>()
+	const [timer, setTimer] = useState(0)
 	const [teams, setTeams] = useState<Competitive.RoundTeams>()
 
 	useEffect(() => {
@@ -69,8 +69,9 @@ export const InGame = () => {
 
 		const dispose = onNuiEmit<Competitive.Events['newRound']>(
 			'competitive:newRound', (mode, round) => {
-				setTimer(config.game_modes[mode].round_time)
+				const gameMode = config.game_modes[mode]
 				setTeams(round)
+				setTimeout(() => setTimer(gameMode.round_time), gameMode.pre_round_time)
 			})
 
 		const interval = setInterval(() => setTimer(t => t && t - 1), 1000)
@@ -81,7 +82,7 @@ export const InGame = () => {
 		}
 	}, [])
 
-	if (!teams || !timer) return
+	if (!teams) return
 
 	const ownPlayersLeft = teams.own.players.filter(player => !player.isDead).length
 	const opponentPlayersLeft = teams.opponent.players.filter(player => !player.isDead).length

@@ -44,6 +44,12 @@ export abstract class Matches {
 					profile.sessionId, [playerSpawnPoint[0]!, playerSpawnPoint[1]!, playerSpawnPoint[2]!] satisfies Vec3
 				)
 				asserts(loaded, `client<${profile.sessionId}> was not ready to play this match`)
+
+				emitNet(
+					'lenix:server:competitive:updateStage',
+					profile.sessionId,
+					'in-game' satisfies Competitive.Stage
+				)
 			}
 		}
 
@@ -62,12 +68,6 @@ export abstract class Matches {
 				)
 
 				asserts(ownTeam && opponentTeam, 'Failed to resolve match teams')
-
-				emitNet(
-					'lenix:server:competitive:updateStage',
-					profile.sessionId,
-					'in-game' satisfies Competitive.Stage
-				)
 
 				emitNet(
 					'lenix:server:competitive:newRound',
