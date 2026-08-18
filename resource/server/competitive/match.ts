@@ -8,7 +8,9 @@ import type { Competitive } from "types/index";
 export abstract class MatchRegistry {
 	protected static readonly matches = new Set<Competitive.Match>()
 
-	protected static getClientMatch(client: number) {
+	protected static getClientMatch(client: number): Competitive.Match
+	protected static getClientMatch(client: number, dontThrow: true): Competitive.Match | undefined
+	protected static getClientMatch(client: number, dontThrow = false) {
 		for (const match of this.matches) {
 			const isClientInMatch = match.teams.some(team =>
 				team.players.some(player => player.sessionId === client)
@@ -16,7 +18,7 @@ export abstract class MatchRegistry {
 
 			if (isClientInMatch) return match
 		}
-		asserts(false, `Failed to get client<${client}>'s match`)
+		asserts(dontThrow, `Failed to get client<${client}>'s match`)
 	}
 
 	protected static getClientTeam(client: number, from?: Competitive.Match['teams']) {
@@ -141,17 +143,17 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static playerDied(client: number, killer?: number) {
-		const victimTeam = this.getClientTeam(client)
-		if (!victimTeam) return
+		const match = this.getClientMatch(client, true)
+		if (!match) return
+		
+		const victimTeam = this.getClientTeam(client, match.teams)
+		asserts(victimTeam, `Failed to get client<${client}>'s team`)
 
 		const victim = victimTeam.players.find(
 			player => player.sessionId === client
 		)
 		asserts(victim && !victim.isDead)
 		
-		const match = this.getClientMatch(client)
-		asserts(match, `Failed to get client<${client}>'s match`)
-
 		const gameMode = Config.game_modes[match.mode]
 		victim.isDead = true
 
@@ -179,13 +181,14 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static crash(client: number) {
-		const { teams } = this.getClientMatch(client)
+		const match = this.getClientMatch(client, true)
+		if (!match) return
 		
-		const team = this.getClientTeam(client, teams)
+		const team = this.getClientTeam(client, match.teams)
 		team.players = team.players.filter(player => player.sessionId !== client)
 
 
-		this.refreshTeams(teams)
+		this.refreshTeams(match.teams)
 	}
 }
 
