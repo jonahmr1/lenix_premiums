@@ -10,9 +10,9 @@ const getAvatarStyle = (avatar: string) => ({ backgroundImage: `url(${avatar})` 
 export const Leaderboard = ({
 	profile, leaderboard, stats
 }: {
-	profile: Competitive.Player['Profile']
+	profile: Competitive.Profile
 	leaderboard: Competitive.Leaderboard | undefined
-	stats: Competitive.Player['Stats'] | undefined
+	stats: Competitive.Stats | undefined
 }) => {
 
 	if (!leaderboard || !stats) return <Loading className='h-full' />

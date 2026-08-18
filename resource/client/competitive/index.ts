@@ -4,10 +4,10 @@ import { client, control, emitNui as emitEvent, emitNui, onNui } from 'lenix/cli
 import type { Competitive } from 'types/index'
 
 let open: boolean = false
-let inviterWhileUnFocused: Competitive.Player['GamerProfile'][] = []
+let inviterWhileUnFocused: Competitive.GamerProfile[] = []
 
 
-const getInvited = (inviter: Competitive.Player['GamerProfile']) =>
+const getInvited = (inviter: Competitive.GamerProfile) =>
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
 
 
@@ -29,7 +29,7 @@ onNui('competitive:unFocus', () => {
 	return null
 })
 
-onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player['GamerProfile']) => {
+onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.GamerProfile) => {
 	if (open) {
 		getInvited(inviter)
 		return
@@ -38,7 +38,7 @@ onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.Player[
 	inviterWhileUnFocused.push(inviter)
 })
 
-onNet('lenix:server:competitive:updateParty', (party: Competitive.Player['Party']) => {
+onNet('lenix:server:competitive:updateParty', (party: Competitive.Party) => {
 	emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
 })
 
@@ -66,7 +66,7 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-onNet('lenix:server:competitive:newRound', (mode: Competitive.Player['Party']['gameMode'], round: Competitive.RoundTeams) => {
+onNet('lenix:server:competitive:newRound', (mode: Competitive.Party['gameMode'], round: Competitive.RoundTeams) => {
 	// spawn wall
 	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)

@@ -8,7 +8,7 @@ import { asserts } from "@lenix/lenix"
 export const profileCols = ['profile_id', 'name', 'status'] as const
 
 
-export const fetchProfile = async (client: number): Promise<Competitive.Player['Profile']> => {
+export const fetchProfile = async (client: number): Promise<Competitive.Profile> => {
 	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
 	const profileId = getProfileId(client)
 
@@ -16,7 +16,7 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? LIMIT 1`
 
 	try {
-		const profile = await oxmysql.single<Pick<Competitive.Player['Profile'], typeof selectedCols[number]>>(
+		const profile = await oxmysql.single<Pick<Competitive.Profile, typeof selectedCols[number]>>(
 			selectProfile,
 			[profileId]
 		)
@@ -41,12 +41,12 @@ export const fetchProfile = async (client: number): Promise<Competitive.Player['
 	}
 }
 
-export const getBucketProfiles = (profiles: Omit<Competitive.Player['Profile'], 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
+export const getBucketProfiles = (profiles: Omit<Competitive.Profile, 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
 	...profile,
 	avatar: null
 })))
 
-export const getProfiles = async (): Promise<Competitive.Player['Profile'][]> => {
+export const getProfiles = async (): Promise<Competitive.Profile[]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;

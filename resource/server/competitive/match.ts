@@ -8,13 +8,13 @@ import type { Competitive } from "types/index";
 export abstract class Matches {
 	private static readonly matches = new Set<
 		Omit<Competitive.Match, 'match_id'> & {
-			teams: Competitive.Player['Party'][]
+			teams: Competitive.Party[]
 			bucket: number
 		}
 	>()
 	private static bucketId = 1
 
-	static async request(teams: Competitive.Player['Party'][]) {
+	static async request(teams: Competitive.Party[]) {
 		const allowedMaps = Config.game_modes[teams[0]!.gameMode].maps_allowed
 		const map = allowedMaps[random(0, allowedMaps.length - 1)] as keyof typeof Config.game_maps
 		asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`)
@@ -57,7 +57,7 @@ export abstract class Matches {
 		this.start(teams)
 	}
 
-	static start(teams: Competitive.Player['Party'][]) {
+	static start(teams: Competitive.Party[]) {
 		const gameMode = Config.game_modes[teams[0]!.gameMode]
 
 		for (const team of teams) {

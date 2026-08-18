@@ -37,10 +37,10 @@ const getRenderOrder = (count: number) => {
 export const Play = ({
 	profile
 }: {
-	profile: Competitive.Player['GamerProfile'] | undefined
+	profile: Competitive.GamerProfile | undefined
 }) => {
-	const [party, setParty] = useState<Competitive.Player['Party']>()
-	const [stats, setStats] = useState<Record<Competitive.Player['Profile']['profile_id'], Competitive.Player['Stats']>>()
+	const [party, setParty] = useState<Competitive.Party>()
+	const [stats, setStats] = useState<Record<Competitive.Profile['profile_id'], Competitive.Stats>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
 	const [searchTimer, setSeachTimer] = useState(0)
 
@@ -51,7 +51,7 @@ export const Play = ({
 				leader: 1,
 				roomAvailable: 3,
 				status: 'searching',
-				gameMode: 'back_to_back'
+				gameMode: 'casual'
 			})
 			return
 		}

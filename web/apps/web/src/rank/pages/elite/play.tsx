@@ -45,15 +45,15 @@ const SectionTitle = ({ icon, children }: React.PropsWithChildren<{ icon: React.
 export const Play = ({
 	profile, stats, leaderboard, setStats, setLeaderboard, setDrawer
 }: {
-	profile: Competitive.Player['Profile']
-	stats: Competitive.Player['Stats'] | undefined
+	profile: Competitive.Profile
+	stats: Competitive.Stats | undefined
 	leaderboard: Competitive.Leaderboard | undefined
-	setStats: S<Competitive.Player['Stats'] | undefined>
+	setStats: S<Competitive.Stats | undefined>
 	setLeaderboard: S<Competitive.Leaderboard | undefined>
 	setDrawer: S<boolean>
 }) => {
 	const nav = useNavigate()
-	const [party, setParty] = useState<Competitive.Player['Party']>()
+	const [party, setParty] = useState<Competitive.Party>()
 
 	useEffect(() => {
 		fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {}).then(setParty)

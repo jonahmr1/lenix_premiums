@@ -42,7 +42,7 @@ import { Stats } from '@/rank/pages/elite/stats'
 import { Leaderboard } from '@/rank/pages/elite/leaderboard'
 
 const Notifications = ({ notifications }: {
-	notifications: Competitive.Player['Notification'][]
+	notifications: Competitive.Notification[]
 }) => {
 	return (
 		<Popover>
@@ -113,8 +113,8 @@ const Notifications = ({ notifications }: {
 }
 
 const Status = ({ profile, setProfile }: {
-	profile: Competitive.Player['Profile']
-	setProfile: React.Dispatch<React.SetStateAction<Competitive.Player['Profile'] | undefined>>
+	profile: Competitive.Profile
+	setProfile: React.Dispatch<React.SetStateAction<Competitive.Profile | undefined>>
 }) => {
 	const playerStatus = PLAYER_STATUSES[profile.status]
 
@@ -162,10 +162,10 @@ const Status = ({ profile, setProfile }: {
 const Friends = ({ drawer, setDrawer, friends }: {
 	drawer: boolean
 	setDrawer: React.Dispatch<React.SetStateAction<boolean>>
-	friends: Competitive.Player['Profile'][]
+	friends: Competitive.Profile[]
 }) => {
 	const [open, setOpen] = useState(false)
-	const [profiles, setProfiles] = useState<Competitive.Player['Profile'][]>()
+	const [profiles, setProfiles] = useState<Competitive.Profile[]>()
 	const availableFriends = friends.filter(friend => friend.status !== 'offline')
 	const offlineFriends = friends.filter(friend => friend.status === 'offline')
 
@@ -294,12 +294,12 @@ export const Lobby = () => {
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [display, setDisplay] = useState<boolean>()
-	const [profile, setProfile] = useState<Competitive.Player['Profile']>()
-	const [friends, setFriends] = useState<Competitive.Player['Profile'][]>()
+	const [profile, setProfile] = useState<Competitive.Profile>()
+	const [friends, setFriends] = useState<Competitive.Profile[]>()
 	const [drawer, setDrawer] = useState(false)
 	const [leaderboard, setLeaderboard] = useState<Competitive.Leaderboard>()
-	const [notifications, _setNotifications] = useState<Competitive.Player['Notification'][]>([])
-	const [stats, setStats] = useState<Competitive.Player['Stats']>()
+	const [notifications, _setNotifications] = useState<Competitive.Notification[]>([])
+	const [stats, setStats] = useState<Competitive.Stats>()
 
 	useEffect(() => {
 		const disposes = [

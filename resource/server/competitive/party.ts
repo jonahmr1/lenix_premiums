@@ -6,7 +6,7 @@ import { palette } from "lenix"
 import { Matches } from "./match"
 
 
-type Party = Competitive.Player['Party']
+type Party = Competitive.Party
 
 
 abstract class PartyRegistry {
@@ -81,7 +81,7 @@ abstract class PartyRegistry {
 }
 
 export abstract class Parties extends PartyRegistry {
-	private static partiesInQueue = new Map<Competitive.Player['Party']['gameMode'], Party | null>()
+	private static partiesInQueue = new Map<Competitive.Party['gameMode'], Party | null>()
 
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
@@ -119,7 +119,7 @@ export abstract class Parties extends PartyRegistry {
 				invites.delete(invited)
 			}, Config.invites_spam_period * 1000);
 
-			emitNet('lenix:server:competitive:getInvited', invited, profile satisfies Competitive.Player['GamerProfile'])
+			emitNet('lenix:server:competitive:getInvited', invited, profile satisfies Competitive.GamerProfile)
 		} catch (e) {
 			console.log(palette('red', String(e)))
 		}

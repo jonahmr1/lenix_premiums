@@ -23,8 +23,8 @@ const Panel = ({ children, className = '' }: React.PropsWithChildren<{ className
 export const Stats = ({
 	profile, stats
 }: {
-	profile: Competitive.Player['Profile']
-	stats: Competitive.Player['Stats'] | undefined
+	profile: Competitive.Profile
+	stats: Competitive.Stats | undefined
 }) => {
 	const [matches, setMatches] = useState<Competitive.Player['Match'][]>()
 

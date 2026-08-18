@@ -255,8 +255,8 @@ onNuiServer<Competitive.Requests['getLeaderboard']>('competitive:getLeaderboard'
 	const profiles = await getProfiles()
 
 	const statsByProfile = new Map<
-		Competitive.Player['Profile']['profile_id'],
-		Pick<Competitive.Player['Stats'], 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
+		Competitive.Profile['profile_id'],
+		Pick<Competitive.Stats, 'kills' | 'deaths' | 'assists' | 'wins' | 'losses'>
 	>()
 
 	//@ts-expect-error

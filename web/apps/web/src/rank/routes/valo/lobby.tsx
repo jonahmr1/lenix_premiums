@@ -25,9 +25,9 @@ export const Lobby = () => {
 	const { pathname } = useLocation()
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
-	const [profile, setProfile] = useState<Competitive.Player['GamerProfile']>()
+	const [profile, setProfile] = useState<Competitive.GamerProfile>()
 	const [display, setDisplay] = useState(DEV)
-	
+
 	useEffect(() => {
 		const disposes = [
 			onNuiEmit<Competitive.Events['open']>('competitive:open', () => {
@@ -100,7 +100,7 @@ export const Lobby = () => {
 					<div className='flex items-center w-1/10 gap-3'>
 						{profile ? (
 							<div className=' cursor-default select-none'>{profile.name}</div>
-						): (
+						) : (
 							<Skeleton className='w-full h-1/2 rounded' />
 						)}
 						<Button variant='ghost' onClick={toggle}>
