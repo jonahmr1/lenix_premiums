@@ -58,6 +58,8 @@ export abstract class Matches {
 	static start(mode: Competitive.Match['mode'], teams: Competitive.Match['teams']) {
 		const gameMode = Config.game_modes[mode]
 
+		this.startRound(mode, teams)
+
 		on(
 			'weaponDamageEvent',
 			(attacker: number, data: { willKill: boolean; hitGlobalId?: number }) => {
@@ -130,17 +132,11 @@ export abstract class Matches {
 		return {
 			own: {
 				roundsWon: 0,
-				players: ownTeam.players.map(player => ({
-					isDead: false,
-					avatar: player.avatar ?? ''
-				}))
+				players: ownTeam.players
 			},
 			opponent: {
 				roundsWon: 0,
-				players: opponentTeam.players.map(player => ({
-					isDead: false,
-					avatar: player.avatar ?? ''
-				}))
+				players: opponentTeam.players
 			}
 		}
 	}
