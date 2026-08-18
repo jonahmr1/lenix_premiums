@@ -11,7 +11,6 @@ import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 import { DEV } from '@/App.rank'
-import { toast } from '@workspace/ui/lib/utils'
 
 export const FAKE_PROFILE = {
 	name: 'Lenix',
@@ -47,17 +46,13 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
-		if (DEV) {{}
+		if (DEV) {
 			setProfile(FAKE_PROFILE)
 			return
 		}
 		setTimeout(async () => {
-			try {
-				const profile = await fetchNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', {})
-				setProfile(profile)
-			} catch (e) {
-				toast(e as string)
-			}
+			const profile = await fetchNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', {})
+			setProfile(profile)
 		})
 	}, [display])
 

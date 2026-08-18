@@ -15,7 +15,7 @@
 		"i": "cd packages/ui && bun i && cd ../elite && bun i && cd ../../apps/web && bun i"
 	},
 	"dependencies": {
-		"lenix": "^1.8.2"
+		"lenix": "^1.8.5"
 	},
 	"devDependencies": {
 		"prettier": "^3.8.3",

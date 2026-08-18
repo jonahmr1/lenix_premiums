@@ -189,7 +189,6 @@ export abstract class Parties extends PartyRegistry {
 		try {
 			return this.getPartyByClient(client)
 		} catch (e) {
-			console.log(palette('red', String(e)))
 			return await Parties.new(client)
 		}
 	}

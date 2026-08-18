@@ -56,8 +56,12 @@ export const Play = ({
 			return
 		}
 		(async () => {
-			const party = await fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {})
-			setParty(party)
+			try {
+				const party = await fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {})
+				setParty(party)
+			} catch (e) {
+				toast(e as string)
+			}
 		})()
 
 		const disposes = [
@@ -112,7 +116,7 @@ export const Play = ({
 		})
 
 		return () => clearTimeout(timeout)
-	}, [party?.profiles.length])
+	}, [party?.profiles?.length])
 
 	useEffect(() => {
 		if (party?.status !== 'searching') return setSeachTimer(0)
@@ -121,7 +125,7 @@ export const Play = ({
 		return () => clearInterval(interval)
 	}, [party?.status])
 
-	const partySelfProfile = party?.profiles.find(self => self.profile_id === profile?.profile_id)
+	const partySelfProfile = party?.profiles?.find(self => self.profile_id === profile?.profile_id)
 	if (!party || !partySelfProfile) return <Loading className='h-full' />
 
 	const renderOrder = getRenderOrder(party.roomAvailable)
@@ -305,8 +309,12 @@ export const Play = ({
 				<Button
 					hidden={isPartyLeader}
 					variant='outline' className='justify-evenly'
-					onClick={() => {
-						fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+					onClick={async () => {
+						try {
+							await fetchNuiServer<Competitive.Requests['leaveParty']>('competitive:leaveParty', {})
+						} catch (e) {
+							console.log(e, typeof e)
+						}
 					}}
 				>
 					<LogOut />

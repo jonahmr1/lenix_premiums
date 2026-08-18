@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 import type { Competitive } from 'types'
 import { onNuiEmit } from 'lenix/nui'
 
-export const DEV = true
+export const DEV = false
 
 const VARIANT: keyof typeof VARIANTS = 'valo'
 const VARIANTS = {
