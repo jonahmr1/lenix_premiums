@@ -219,8 +219,8 @@ export abstract class Matches extends MatchRegistry {
 				'lenix:server:competitive:newRound',
 				player.sessionId,
 				match.mode satisfies Competitive.Match['mode'],
+				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch,
 				coords satisfies Vec4,
-				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
 			)
 		}
 

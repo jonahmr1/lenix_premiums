@@ -1,4 +1,5 @@
 import { createObject, notify, onServerCallback } from '@overextended/ox_lib/client'
+import { Config } from 'common/config/competitive'
 import { repeat, type Vec3, type Vec4 } from 'lenix'
 import { client, control, emitNui as emitEvent, emitNui, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
@@ -65,14 +66,38 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-onNet('lenix:server:competitive:newRound', (
+const createPreRoundStagingArea = async (area: Vec3[], mode: Competitive.Match['mode']) => {
+	const obj = await createObject(
+		'prop_ld_dstsign_01',
+		coords[0] + 1.0,
+		coords[1] + 1.0,
+		coords[2] - 1.0,
+		coords[3] - 90.0,
+		true,  // networked
+		true,  // mission entity
+		true   // dynamic/door flag
+	)
+
+	SetEntityVisible(obj.handle, Config.wall_debug, false)
+	SetEntityCollision(obj.handle, true, true)
+
+	setTimeout(() => {
+		DeleteEntity(obj.handle)
+	}, Config.game_modes[mode].pre_and_post_round_time * 1000)
+}
+
+onNet('lenix:server:competitive:newRound', async (
 	mode: Competitive.Match['mode'],
 	round: Competitive.CasualMatch,
-	coords: Vec4
+	coords: Vec4,
+	area: Vec3[]
 ) => {
-	// spawn wall
-	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
-	// SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
+	const ped = client.player.entity()
+
+	await createPreRoundStagingArea(area, mode)
+
+	SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
+	client.player.teleport(...coords)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
@@ -83,27 +108,3 @@ onNet('lenix:server:competitive:updateRound', (teams: Competitive.CasualMatch) =
 onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
 	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
 )
-
-
-
-// setTimeout(async () => {
-// 	const coords = client.player.coords()
-
-// 	const obj = await createObject(
-// 		'prop_ld_dstsign_01',
-// 		coords[0] + 1.0,
-// 		coords[1] + 1.0,
-// 		coords[2] - 1.0,
-// 		coords[3] - 90.0,
-// 		true,  // networked
-// 		true,  // mission entity
-// 		true   // dynamic/door flag
-// 	)
-
-// 	SetEntityVisible(obj.handle, false, false)
-// 	SetEntityCollision(obj.handle, true, true)
-
-// 	setTimeout(() => {
-// 		DeleteEntity(obj.handle)
-// 	}, 10_000)
-// })
