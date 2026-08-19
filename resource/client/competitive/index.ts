@@ -69,15 +69,38 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 
 
 const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match['mode']) => {
+	const WALL_HEIGHT = 3.5
+	const levels = 2
+
+	for (const coords of walls) {
+		for (let level = 0; level < levels; level++) {
+			const [x, y, z, heading] = coords
+
+			const obj = await createObject(
+				'prop_ld_dstsign_01',
+				x,
+				y,
+				z + level * WALL_HEIGHT,
+				heading,
+			)
+
+			SetEntityVisible(obj.handle, Config.wall_debug, false)
+			SetEntityCollision(obj.handle, true, true)
+
+			setTimeout(() => {
+				DeleteEntity(obj.handle)
+			}, Config.game_modes[mode].pre_and_post_round_time * 1000)
+		}
+	}
 	for (const coords of walls) {
 		const obj = await createObject(
 			'prop_ld_dstsign_01',
 			...coords,
 		)
-	
+
 		SetEntityVisible(obj.handle, Config.wall_debug, false)
 		SetEntityCollision(obj.handle, true, true)
-	
+
 		setTimeout(() => {
 			DeleteEntity(obj.handle)
 		}, Config.game_modes[mode].pre_and_post_round_time * 1000)
@@ -96,9 +119,9 @@ onNet('lenix:server:competitive:newRound', async (
 
 	const weaponHash = GetHashKey('WEAPON_PISTOL')
 
-  GiveWeaponToPed(ped, weaponHash, 9999, false, true)
-  SetCurrentPedWeapon(ped, weaponHash, true)
-  SetPedInfiniteAmmo(ped, true, weaponHash)
+	GiveWeaponToPed(ped, weaponHash, 9999, false, true)
+	SetCurrentPedWeapon(ped, weaponHash, true)
+	SetPedInfiniteAmmo(ped, true, weaponHash)
 
 	client.player.teleport(...coords)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
