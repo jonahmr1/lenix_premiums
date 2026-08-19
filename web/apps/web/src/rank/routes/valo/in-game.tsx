@@ -100,7 +100,7 @@ export const InGame = () => {
 	const opponentPlayersLeft = teams.opponent.players.filter(player => !player.isDead).length
 
 	return (
-		<Layout className="h-screen bg-muted justify-start font-medium">
+		<Layout className="h-screen justify-start font-medium">
 			<div className="w-full h-1/13 flex justify-center">
 				<div className="flex gap-xs">
 					{teams.own.players.map((player, i) => (

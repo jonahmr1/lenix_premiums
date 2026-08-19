@@ -94,7 +94,7 @@ onNet('lenix:server:competitive:newRound', async (
 
 	await createPreRoundStagingArea(walls, mode)
 
-	SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
+	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
 	client.player.teleport(...coords)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
