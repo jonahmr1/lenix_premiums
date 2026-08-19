@@ -5,7 +5,7 @@ export const getProfileId = (client: number) => GetPlayerIdentifierByType(client
 
 export const fullName = (table: string) => `lenix_competitive_${table}` as const
 
-const WALL_OBJECT_LENGTH = 2.5
+const WALL_OBJECT_LENGTH = 2.0
 
 const getWallMidpoint = (start: Vec3, end: Vec3): Vec3 => [
 	(start[0] + end[0]) / 2,
@@ -32,7 +32,7 @@ export const getWallPoints = (area: Vec3[]): Vec4[] => {
 			return [
 				start[0] + (end[0] - start[0]) * progress,
 				start[1] + (end[1] - start[1]) * progress,
-				start[2] + (end[2] - start[2]) * progress,
+				(start[2] + (end[2] - start[2]) * progress) - 1.0,
 				heading,
 			]
 		})
