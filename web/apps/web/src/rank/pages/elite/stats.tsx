@@ -191,7 +191,7 @@ export const Stats = ({
 										<span className='block truncate font-bold text-foreground'>{match.map}</span>
 										<span className='flex items-center gap-1 text-[0.65rem] font-semibold text-muted-foreground'>
 											<Clock className='size-3' />
-											{match.played_at}
+											{match.playedAt}
 										</span>
 									</span>
 									<span className='flex items-center justify-end gap-1 font-bold text-foreground'>

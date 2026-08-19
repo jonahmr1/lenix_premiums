@@ -31,14 +31,13 @@ const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
 
 export const InGame = () => {
 	const [timer, setTimer] = useState(0)
-	const [teams, setTeams] = useState<Competitive.RoundTeams>()
+	const [teams, setTeams] = useState<Competitive.CasualMatch>()
 
 	useEffect(() => {
 		if (DEV) {
 			setTimer(10)
 			setTeams({
 				own: {
-					roundsWon: 1,
 					players: [
 						{
 							isDead: true,
@@ -51,7 +50,6 @@ export const InGame = () => {
 					]
 				},
 				opponent: {
-					roundsWon: 3,
 					players: [
 						{
 							isDead: false,
