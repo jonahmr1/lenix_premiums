@@ -29,14 +29,14 @@ export const fetchProfile = async (client: number): Promise<Competitive.Profile>
 		// create new player
 		const name = GetPlayerName(client.toString())
 		const re = await oxmysql.insert(
-			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)`,
+			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)
+				ON DUPLICATE KEY UPDATE profile_id = profile_id`,
 			[profileId, name, 'online']
 		)
 		asserts(re !== null && re !== undefined, `Failed to create a new profile for player<${client}>`)
 
 		return await fetchProfile(client)
 	} catch (e) {
-		console.log(palette('red', String(e)))
 		throw e
 	}
 }
