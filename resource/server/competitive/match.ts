@@ -93,9 +93,13 @@ export abstract class Matches extends MatchRegistry {
 				}))
 			})),
 			parties: parties.map(party => ({
-				...party, profiles: party.profiles.map(profile => ({
-					...profile, lastStatus: profile.status
-				}))
+				party,
+				lastStatus: Object.fromEntries(
+					party.profiles.map(profile => [
+						profile.profile_id,
+						profile.status
+					])
+				)
 			}))
 		}
 
@@ -167,9 +171,15 @@ export abstract class Matches extends MatchRegistry {
 			}
 		}
 
-		for (const party of match.parties) {
+		for (const { party, lastStatus } of match.parties) {
 			party.status = 'idle'
-			for (const profile of party.profiles) profile.status = profile.lastStatus
+
+			for (const profile of party.profiles) {
+				const status = lastStatus[profile.profile_id]
+				asserts(status)
+				profile.status = status
+			}
+
 			Parties.refreshPartyProfiles(party)
 		}
 	}

@@ -120,7 +120,10 @@ export namespace Competitive {
 				sessionId: number
 			}[]
 		}[]
-		parties: (Omit<Party, 'profiles'> & { profiles: (GamerProfile & { lastStatus: GamerProfile['status'] })[] })[]
+		parties: {
+			party: Party
+			lastStatus: Record<string,GamerProfile['status'] >
+		}[]
 	}
 
 	export type Leaderboard = {
