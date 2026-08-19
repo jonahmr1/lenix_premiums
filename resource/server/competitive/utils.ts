@@ -21,7 +21,7 @@ export const getWallPoints = (area: Vec3[]): Vec4[] => {
 		asserts(end, `Failed to find staging-area wall endpoint`)
 
 		const heading = (
-			Math.atan2(end[1] - start[1], end[0] - start[0]) * 180 / Math.PI + 360
+			Math.atan2(end[1] - start[1], end[0] - start[0]) * 180 / Math.PI + 90 + 360
 		) % 360
 		const length = Math.hypot(end[0] - start[0], end[1] - start[1])
 		const objects = Math.max(1, Math.ceil(length / WALL_OBJECT_LENGTH))
