@@ -41,7 +41,10 @@ export const Lobby = () => {
 			})
 		]
 
-		return () => disposes.forEach(dispose => dispose())
+		return () => {
+			disposes.forEach(dispose => dispose())
+			unFocus()
+		}
 	}, [])
 
 	useEffect(() => {
