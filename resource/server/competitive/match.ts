@@ -1,9 +1,10 @@
 import { asserts, random } from "@lenix/lenix";
-import { createObject, triggerClientCallback } from "@overextended/ox_lib/server";
+import { createObject, sleep, triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
 import type { Vec3 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
+import { Parties } from "./party";
 
 export abstract class MatchRegistry {
 	protected static readonly matches = new Set<Competitive.Match>()
@@ -54,13 +55,11 @@ export abstract class MatchRegistry {
 	}
 
 	protected static refreshTeams(teams: Competitive.Match['teams']) {
-		teams.forEach(team => team.players.forEach(player =>
-			emitNet(
-				'lenix:server:competitive:updateRound',
-				player.sessionId,
-				this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.CasualMatch
-			)
-		))
+		for (const team of teams) for (const player of team.players) emitNet(
+			'lenix:server:competitive:updateRound',
+			player.sessionId,
+			this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.CasualMatch
+		)
 	}
 
 	protected static getMatchByBucketId(bucket: number) {
@@ -93,7 +92,9 @@ export abstract class Matches extends MatchRegistry {
 					sessionId: profile.sessionId
 				}))
 			})),
+			parties: parties.map(party => party.profiles.map(profile => ({ ...profile, lastStatus: profile.status })))
 		}
+
 		for (const team of match.teams) for (const player of team.players) {
 			SetPlayerRoutingBucket(player.sessionId.toString(), bucket)
 			emitNet('lenix:server:competitive:updateStage', player.sessionId, 'loading' satisfies Competitive.Stage)
@@ -123,21 +124,25 @@ export abstract class Matches extends MatchRegistry {
 				}
 			}
 		} catch (error) {
-			for (const team of match.teams) {
-				for (const player of team.players) {
-					SetPlayerRoutingBucket(
-						player.sessionId.toString(),
-						0
-					)
+			for (const team of match.teams) for (const player of team.players) {
+				SetPlayerRoutingBucket(
+					player.sessionId.toString(),
+					0
+				)
 
-					emitNet(
-						'lenix:server:competitive:updateStage',
-						player.sessionId,
-						'lobby' satisfies Competitive.Stage
-					)
-				}
+				emitNet(
+					'lenix:server:competitive:updateStage',
+					player.sessionId,
+					'lobby' satisfies Competitive.Stage
+				)
 			}
 			throw error
+		}
+
+		for (const party of parties) {
+			party.status = 'found'
+			for (const profile of party.profiles) profile.status = 'in_game'
+			Parties.refreshPartyProfiles(party)
 		}
 
 		this.matches.add(match)
@@ -156,6 +161,12 @@ export abstract class Matches extends MatchRegistry {
 					'lobby' satisfies Competitive.Stage
 				)
 			}
+		}
+
+		for (const party of match.parties) {
+			party.status = 'idle'
+			for (const profile of party.profiles) profile.status = profile.lastStatus
+			Parties.refreshPartyProfiles(party)
 		}
 	}
 
@@ -183,7 +194,7 @@ export abstract class Matches extends MatchRegistry {
 		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
 	}
 
-	static playerDied(client: number, killer?: number) {
+	static async playerDied(client: number, killer?: number) {
 		const match = this.getClientMatch(client, true)
 		if (!match) return
 
@@ -206,13 +217,9 @@ export abstract class Matches extends MatchRegistry {
 
 			winnerTeam.roundsWon++
 
-			if (gameMode.rounds === match.currentRound) {
-				this.stop(match)
-				return
-			}
-			setTimeout(() => {
-				this.startRound(match)
-			}, gameMode.pre_and_post_round_time * 1000)
+			await sleep(gameMode.pre_and_post_round_time * 1000)
+
+			gameMode.rounds === match.currentRound ? this.stop(match) : this.startRound(match)
 		}
 	}
 

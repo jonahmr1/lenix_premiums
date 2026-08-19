@@ -99,8 +99,8 @@ export namespace Competitive {
 	}
 
 	export type Party = {
-		profiles: Competitive.GamerProfile[]
-		leader: Competitive.GamerProfile['sessionId']
+		profiles: GamerProfile[]
+		leader: GamerProfile['sessionId']
 		roomAvailable: number
 		status: 'searching' | 'idle' | 'found'
 		gameMode: Match['mode']
@@ -108,8 +108,8 @@ export namespace Competitive {
 
 	export type Match = {
 		bucket: number
-		mode: Competitive.GameMode
-		map: Competitive.GameMap
+		mode: GameMode
+		map: GameMap
 		playedAt: number
 		currentRound: number
 		teams: {
@@ -120,7 +120,7 @@ export namespace Competitive {
 				sessionId: number
 			}[]
 		}[]
-		parties: Competitive.Party[]
+		parties: (Omit<Party, 'profiles'> & { profiles: (GamerProfile & { lastStatus: GamerProfile['status'] })[] })[]
 	}
 
 	export type Leaderboard = {
