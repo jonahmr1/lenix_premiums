@@ -274,6 +274,10 @@ export abstract class Matches extends MatchRegistry {
 		const team = this.getClientTeam(client, match.teams)
 		team.players = team.players.filter(player => player.sessionId !== client)
 
+		SetPlayerRoutingBucket(
+			client.toString(),
+			0
+		)
 
 		this.refreshTeams(match.teams)
 

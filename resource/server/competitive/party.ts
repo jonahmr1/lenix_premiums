@@ -244,7 +244,7 @@ export abstract class Parties extends FriendShip {
 		this.refreshPartyProfiles(party)
 	}
 
-	static updateMatchmaking(client: number, status: Party['status']) {
+	static async updateMatchmaking(client: number, status: Party['status']) {
 		asserts(status !== 'found')
 
 		const party = this.getPartyByClient(client)
@@ -278,7 +278,7 @@ export abstract class Parties extends FriendShip {
 
 		const parties = [partyInQueue, party]
 
-		Matches.new(partyInQueue.gameMode, map, parties)
+		await Matches.new(partyInQueue.gameMode, map, parties)
 	}
 
 	static updateGameMode(client: number, mode: Party['gameMode']) {
