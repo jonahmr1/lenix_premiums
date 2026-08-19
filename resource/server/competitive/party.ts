@@ -78,9 +78,7 @@ abstract class PartyRegistry {
 	}
 }
 
-export abstract class Parties extends PartyRegistry {
-	private static partiesInQueue = new Map<Competitive.Party['gameMode'], Party | null>()
-
+abstract class FriendShip extends PartyRegistry {
 	static invite(client: number, invited: number, recursive?: true): void {
 		try {
 			if (!recursive) {
@@ -168,6 +166,18 @@ export abstract class Parties extends PartyRegistry {
 			this.playersIgnoringInvites.delete(client)
 		}, Config.ignore_invites_period * 60_000)
 	}
+}
+
+export abstract class Parties extends FriendShip {
+	private static partiesInQueue = new Map<Competitive.Party['gameMode'], Party | null>()
+	
+	static async getParty(client: number) {
+		try {
+			return this.getPartyByClient(client)
+		} catch (e) {
+			return await Parties.new(client)
+		}
+	}
 
 	static setSize(client: number, size: number) {
 		const party = this.getPartyByClient(client)
@@ -183,14 +193,6 @@ export abstract class Parties extends PartyRegistry {
 		this.refreshPartyProfiles(party)
 	}
 
-	static async getParty(client: number) {
-		try {
-			return this.getPartyByClient(client)
-		} catch (e) {
-			return await Parties.new(client)
-		}
-	}
-
 	static async leaveParty(client: number) {
 		const party = this.getPartyByClient(client)
 		asserts(party.status === 'idle', `client<${client}> tried to leave a party while not in idle mode`)
@@ -200,18 +202,6 @@ export abstract class Parties extends PartyRegistry {
 
 		this.refreshPartyProfiles(newParty)
 		if (partyLeft) this.refreshPartyProfiles(partyLeft)
-	}
-
-	static async updateReadiness(client: number, status: boolean) {
-		const party = this.getPartyByClient(client)
-		asserts(party.status !== 'found', `client<${client}> tried to update readiness while a match was found`)
-		const profile = this.getProfileFromParties(client)
-
-		if (!status) this.updateGameSearch(party.leader, 'idle')
-
-		profile.ready = status
-
-		this.refreshPartyProfiles(party)
 	}
 
 	static async kick(client: number, kicked: number) {
@@ -229,6 +219,30 @@ export abstract class Parties extends PartyRegistry {
 		await this.leaveParty(kicked)
 	}
 
+	static async transferLeadership(client: number, leader: number) {
+		const party = this.getPartyByClient(client)
+		asserts(party.status === 'idle', `client<${client}> tried to transfer leadership while not in idle mode`)
+
+		const profile = this.getProfileFromParties(client, party)
+		asserts(party.leader === profile.sessionId, `client<${client}> to transfer leadership while he wasn't the leader`)
+		asserts(client !== leader, `client<${client}> tried to give himself leadership while he already was`)
+		asserts(this.getProfileFromParties(leader, party), `client<${client}> tried to give leadership to client<${leader}> that wasn't in the same party`)
+
+		party.leader = leader
+		this.refreshPartyProfiles(party)
+	}
+
+	static async updateReadiness(client: number, status: boolean) {
+		const party = this.getPartyByClient(client)
+		asserts(party.status !== 'found', `client<${client}> tried to update readiness while a match was found`)
+		const profile = this.getProfileFromParties(client)
+
+		if (!status) this.updateGameSearch(party.leader, 'idle')
+
+		profile.ready = status
+
+		this.refreshPartyProfiles(party)
+	}
 
 	static updateGameSearch(client: number, status: Party['status']) {
 		asserts(status !== 'found')
@@ -265,19 +279,6 @@ export abstract class Parties extends PartyRegistry {
 		const parties = [partyInQueue, party]
 
 		Matches.new(partyInQueue.gameMode, map, parties)
-	}
-
-	static async transferLeadership(client: number, leader: number) {
-		const party = this.getPartyByClient(client)
-		asserts(party.status === 'idle', `client<${client}> tried to transfer leadership while not in idle mode`)
-
-		const profile = this.getProfileFromParties(client, party)
-		asserts(party.leader === profile.sessionId, `client<${client}> to transfer leadership while he wasn't the leader`)
-		asserts(client !== leader, `client<${client}> tried to give himself leadership while he already was`)
-		asserts(this.getProfileFromParties(leader, party), `client<${client}> tried to give leadership to client<${leader}> that wasn't in the same party`)
-
-		party.leader = leader
-		this.refreshPartyProfiles(party)
 	}
 
 	static updateGameMode(client: number, mode: Party['gameMode']) {
