@@ -67,8 +67,8 @@ onNuiServer<Competitive.Requests['kickProfile']>('competitive:kickProfile', asyn
 	return await Parties.kick(client, profile), null
 })
 
-onNuiServer<Competitive.Requests['updateMatchmaking']>('competitive:updateMatchmaking', (client, { status }) => {
-	return Parties.updateMatchmaking(client, status), null
+onNuiServer<Competitive.Requests['updateMatchmaking']>('competitive:updateMatchmaking', async (client, { status }) => {
+	return await Parties.updateMatchmaking(client, status), null
 })
 
 onNuiServer<Competitive.Requests['transferLeadership']>('competitive:transferPartyLeadership', (client, { leader }) => {
