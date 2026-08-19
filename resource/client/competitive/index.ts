@@ -61,7 +61,7 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 			}
 
 			return false
-		}, true, 2000)
+		}, true, 500)
 	} finally {
 		ClearFocus()
 	}
@@ -94,7 +94,12 @@ onNet('lenix:server:competitive:newRound', async (
 
 	await createPreRoundStagingArea(walls, mode)
 
-	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
+	const weaponHash = GetHashKey('WEAPON_PISTOL')
+
+  GiveWeaponToPed(ped, weaponHash, 9999, false, true)
+  SetCurrentPedWeapon(ped, weaponHash, true)
+  SetPedInfiniteAmmo(ped, true, weaponHash)
+
 	client.player.teleport(...coords)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })

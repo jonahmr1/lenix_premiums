@@ -240,7 +240,6 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static async playerDied(client: number, killer?: number) {
-		console.log(client, killer)
 
 		const match = this.getClientMatch(client, true)
 		if (!match) return
@@ -258,7 +257,6 @@ export abstract class Matches extends MatchRegistry {
 
 		this.refreshTeams(match.teams)
 
-		console.log(victimTeam.players)
 		if (victimTeam.players.every(player => player.isDead)) {
 			const winnerTeam = match.teams.find(team => team.players.every(player => player.sessionId !== client))
 			asserts(winnerTeam)
