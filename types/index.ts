@@ -31,7 +31,7 @@ export namespace Competitive {
 		updateReadiness: Request<null, 'competitive:updateReadiness', { status: boolean }>
 		leaveParty: Request<null, 'competitive:leaveParty'>
 		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
-		updateGameSearch: Request<null, 'competitive:updateGameSearch', { status: Party['status'] }>
+		updateMatchmaking: Request<null, 'competitive:updateMatchmaking', { status: Party['status'] }>
 		transferLeadership: Request<null, 'competitive:transferPartyLeadership', { leader: number }>
 		updatePartyGameMode: Request<null, 'competitive:updatePartyGameMode', { mode: Party['gameMode'] }>
 	}

@@ -299,7 +299,7 @@ export const Play = ({
 							)
 							return
 						}
-						fetchNuiServer<Competitive.Requests['updateGameSearch']>('competitive:updateGameSearch', { status: party.status === 'searching' ? 'idle' : 'searching' })
+						fetchNuiServer<Competitive.Requests['updateMatchmaking']>('competitive:updateMatchmaking', { status: party.status === 'searching' ? 'idle' : 'searching' })
 					}}
 				>
 					<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel}${searchTimer}s` : playLabel}</span>

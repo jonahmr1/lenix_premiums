@@ -170,7 +170,7 @@ abstract class FriendShip extends PartyRegistry {
 
 export abstract class Parties extends FriendShip {
 	private static partiesInQueue = new Map<Competitive.Party['gameMode'], Party | null>()
-	
+
 	static async getParty(client: number) {
 		try {
 			return this.getPartyByClient(client)
@@ -237,14 +237,14 @@ export abstract class Parties extends FriendShip {
 		asserts(party.status !== 'found', `client<${client}> tried to update readiness while a match was found`)
 		const profile = this.getProfileFromParties(client)
 
-		if (!status) this.updateGameSearch(party.leader, 'idle')
+		if (!status) this.updateMatchmaking(party.leader, 'idle')
 
 		profile.ready = status
 
 		this.refreshPartyProfiles(party)
 	}
 
-	static updateGameSearch(client: number, status: Party['status']) {
+	static updateMatchmaking(client: number, status: Party['status']) {
 		asserts(status !== 'found')
 
 		const party = this.getPartyByClient(client)
@@ -300,7 +300,7 @@ export abstract class Parties extends FriendShip {
 		const partyMode = party.gameMode
 		const partyLeft = this.remove(client, party)
 		if (partyLeft) {
-			this.updateGameSearch(partyLeft.leader, 'idle')
+			this.updateMatchmaking(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
 		} else if (this.partiesInQueue.get(partyMode) === party) this.partiesInQueue.set(partyMode, null)
 	}
