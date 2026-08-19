@@ -74,14 +74,14 @@ const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match[
 
 	for (const coords of walls) {
 		for (let level = 0; level < levels; level++) {
-			const [x, y, z, heading] = coords
+			const [x, y, z, h] = coords
 
 			const obj = await createObject(
 				'prop_ld_dstsign_01',
 				x,
 				y,
 				z + level * WALL_HEIGHT,
-				heading,
+				h,
 			)
 
 			SetEntityVisible(obj.handle, Config.wall_debug, false)
@@ -91,19 +91,6 @@ const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match[
 				DeleteEntity(obj.handle)
 			}, Config.game_modes[mode].pre_and_post_round_time * 1000)
 		}
-	}
-	for (const coords of walls) {
-		const obj = await createObject(
-			'prop_ld_dstsign_01',
-			...coords,
-		)
-
-		SetEntityVisible(obj.handle, Config.wall_debug, false)
-		SetEntityCollision(obj.handle, true, true)
-
-		setTimeout(() => {
-			DeleteEntity(obj.handle)
-		}, Config.game_modes[mode].pre_and_post_round_time * 1000)
 	}
 }
 
