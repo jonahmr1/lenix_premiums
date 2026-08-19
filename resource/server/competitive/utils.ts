@@ -5,7 +5,7 @@ export const getProfileId = (client: number) => GetPlayerIdentifierByType(client
 
 export const fullName = (table: string) => `lenix_competitive_${table}` as const
 
-const WALL_OBJECT_LENGTH = 1.78
+const WALL_OBJECT_LENGTH = 2.5
 
 const getWallMidpoint = (start: Vec3, end: Vec3): Vec3 => [
 	(start[0] + end[0]) / 2,
