@@ -3,3 +3,4 @@ node_modules
 /fxmanifest.lua
 /.yarn.installed
 .DS_Store
+*.d.ts

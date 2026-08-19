@@ -22,7 +22,6 @@ const defaultStats = {
 onNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', async (client) => {
 	return {
 		...await fetchProfile(client),
-		ready: false,
 		sessionId: client
 	}
 })
@@ -35,8 +34,8 @@ onNuiServer<Competitive.Requests['getParty']>('competitive:getParty', async (cli
 	return Parties.getParty(client)
 })
 
-onNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', (client) => {
-	return Parties.getProfileFromParties(client)
+onNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', async (client) => {
+	return Parties.getProfileFromParties(client, undefined, true) ?? { ...await fetchProfile(client), sessionId: client }
 })
 
 onNuiServer<Competitive.Requests['acceptInvite']>('competitive:acceptInvite', (client, { inviter }) => {

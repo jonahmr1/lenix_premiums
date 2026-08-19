@@ -14,19 +14,25 @@ abstract class PartyRegistry {
 	protected static readonly playersIgnoringInvites = new Map<number, Set<number>>()
 	protected static readonly pendingInvites = new Map<number, Set<number>>()
 
-	static getProfileFromParties(client: number, from?: Party) {
-		const party = from ?? this.getPartyByClient(client)
+	static getProfileFromParties(client: number, from?: Party): Party['profiles'][number]
+	static getProfileFromParties(client: number, from: Party | undefined, silent: true): Party['profiles'][number] | undefined
+	static getProfileFromParties(client: number, from?: Party, silent?: true) {
+		const party = from ?? (silent ? this.getPartyByClient(client, silent) : this.getPartyByClient(client))
+		if (!party && silent) return
+		asserts(party)
 		const profile = party.profiles.find(profile => profile.sessionId === client)
 		asserts(profile, `Failed to get client<${client}> profile`)
 
 		return profile
 	}
 
-	protected static getPartyByClient(client: number) {
+	protected static getPartyByClient(client: number): Party
+	protected static getPartyByClient(client: number, silent: true): Party | undefined
+	protected static getPartyByClient(client: number, silent?: true) {
 		const party = [...this.parties.values()].find(party =>
 			party.profiles.some(profile => profile.sessionId === client)
 		)
-		asserts(party, `Failed to get client<${client}> party`)
+		asserts(silent ?? party, `Failed to get client<${client}> party`)
 
 		return party
 	}
