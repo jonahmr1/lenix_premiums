@@ -300,7 +300,7 @@ export abstract class Parties extends FriendShip {
 		const partyMode = party.gameMode
 		const partyLeft = this.remove(client, party)
 		if (partyLeft) {
-			this.updateMatchmaking(partyLeft.leader, 'idle')
+			if (party.status === 'searching') this.updateMatchmaking(partyLeft.leader, 'idle')
 			this.refreshPartyProfiles(partyLeft)
 		} else if (this.partiesInQueue.get(partyMode) === party) this.partiesInQueue.set(partyMode, null)
 	}

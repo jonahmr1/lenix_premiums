@@ -1,5 +1,5 @@
 import { notify, onServerCallback } from '@overextended/ox_lib/client'
-import { repeat, type Vec3 } from 'lenix'
+import { repeat, type Vec3, type Vec4 } from 'lenix'
 import { client, control, emitNui as emitEvent, emitNui, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
@@ -46,7 +46,6 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	const ped = client.player.entity()
 
 	SetFocusPosAndVel(...coords, 0, 0, 0)
-	// SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
 
 	try {
 		return await repeat(() => {
@@ -66,9 +65,14 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-onNet('lenix:server:competitive:newRound', (mode: Competitive.Match['mode'], round: Competitive.CasualMatch) => {
+onNet('lenix:server:competitive:newRound', (
+	mode: Competitive.Match['mode'],
+	round: Competitive.CasualMatch,
+	coords: Vec4
+) => {
 	// spawn wall
 	// SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
+	// SetEntityCoordsNoOffset(ped, ...coords, false, false, false)
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
