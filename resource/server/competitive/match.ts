@@ -79,12 +79,12 @@ export abstract class MatchRegistry {
 
 			if (playerIndex === -1) continue
 
-			const teamSpawnPoints =
-				Config.game_maps[match.map].team_spawn_points[i]
+			const teamStagingArea =
+				Config.game_maps[match.map].pre_round_staging_area[i]
 
-			asserts(teamSpawnPoints, `Failed to find team spawn side points`)
+			asserts(teamStagingArea, `Failed to find team spawn side points`)
 
-			const spawnPoint = teamSpawnPoints[playerIndex]
+			const spawnPoint = teamStagingArea[playerIndex]
 
 			asserts(
 				spawnPoint?.length === 4,

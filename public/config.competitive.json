@@ -3,7 +3,7 @@
 	"game_maps": {
 		"italien_street": {
 			"label": "Italien Street",
-			"team_spawn_points": [
+			"pre_round_staging_area": [
 				[
 					[1, 2, 3],
 					[1, 2, 3],
@@ -20,7 +20,7 @@
 		},
 		"cinema_studio": {
 			"label": "Cinema Studio",
-			"team_spawn_points": [
+			"pre_round_staging_area": [
 				[
 					[1, 2, 3],
 					[1, 2, 3],
@@ -58,6 +58,7 @@
 	},
 	"ignore_invites_period": 15,
 	"invites_spam_period": 5,
+	"wall_debug": true,
 	"rank_tiers": [
 		{
 			"label": "Champion",

@@ -22,14 +22,14 @@
 				"additionalProperties": false,
 				"required": [
 					"label",
-					"team_spawn_points"
+					"pre_round_staging_area"
 				],
 				"properties": {
 					"label": {
 						"type": "string",
 						"minLength": 1
 					},
-					"team_spawn_points": {
+					"pre_round_staging_area": {
 						"type": "array",
 						"minItems": 2,
 						"items": {
@@ -129,6 +129,9 @@
 		"invites_spam_period": {
 			"type": "number",
 			"minimum": 0
+		},
+		"wall_debug": {
+			"type": "boolean"
 		},
 		"rank_tiers": {
 			"type": "array",
