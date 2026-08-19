@@ -1,11 +1,10 @@
-import { asserts, random } from "@lenix/lenix";
-import { createObject, sleep, triggerClientCallback } from "@overextended/ox_lib/server";
+import { asserts } from "@lenix/lenix";
+import { sleep, triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
 import type { Vec3, Vec4 } from "lenix";
-import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 import { Parties } from "./party";
-import { getSpawnPoints } from "./utils";
+import { getSpawnPoints, getWallPoints } from "./utils";
 
 export abstract class MatchRegistry {
 	protected static readonly matches = new Set<Competitive.Match>()
@@ -80,12 +79,12 @@ export abstract class MatchRegistry {
 
 			if (playerIndex === -1) continue
 
-			const teamStagingArea =
+			const teamStagingAreaSides =
 				Config.game_maps[match.map].pre_round_staging_area[i]
 
-			asserts(teamStagingArea?.length === 3, `Failed to find team spawn side points`)
+			asserts(teamStagingAreaSides?.length === 4, `Failed to find team staging area`)
 
-			const spawnPoint = getSpawnPoints(teamStagingArea as Vec3[], team.players.length)[playerIndex]
+			const spawnPoint = getSpawnPoints(teamStagingAreaSides as Vec3[], team.players.length)[playerIndex]
 
 			asserts(
 				spawnPoint?.length === 4,
@@ -212,16 +211,23 @@ export abstract class Matches extends MatchRegistry {
 		const round = ++match.currentRound
 		const gameMode = Config.game_modes[match.mode]
 
-		for (const team of match.teams) for (const player of team.players) {
-			const coords = this.getPlayerSpawnPoint(player, match)
-			player.isDead = false
-			emitNet(
-				'lenix:server:competitive:newRound',
-				player.sessionId,
-				match.mode satisfies Competitive.Match['mode'],
-				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch,
-				coords satisfies Vec4,
-			)
+		for (const [teamIndex, team] of match.teams.entries()) {
+			const teamStagingArea = Config.game_maps[match.map].pre_round_staging_area[teamIndex]
+			asserts(teamStagingArea?.length === 4, `Failed to find team staging area`)
+			const walls = getWallPoints(teamStagingArea as Vec3[])
+
+			for (const player of team.players) {
+				const coords = this.getPlayerSpawnPoint(player, match)
+				player.isDead = false
+				emitNet(
+					'lenix:server:competitive:newRound',
+					player.sessionId,
+					match.mode satisfies Competitive.Match['mode'],
+					this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch,
+					coords satisfies Vec4,
+					walls satisfies Vec4[]
+				)
+			}
 		}
 
 		setTimeout(() => {
