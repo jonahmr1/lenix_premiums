@@ -1,7 +1,7 @@
 import { asserts, random } from "@lenix/lenix";
 import { createObject, sleep, triggerClientCallback } from "@overextended/ox_lib/server";
 import { Config } from "common/config/competitive";
-import type { Vec3 } from "lenix";
+import type { Vec3, Vec4 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 import { Parties } from "./party";
@@ -67,6 +67,35 @@ export abstract class MatchRegistry {
 			if (match.bucket === bucket) return match
 		}
 	}
+
+	protected static getPlayerSpawnPoint(
+		player: Competitive.Match['teams'][number]['players'][number],
+		match: Competitive.Match,
+	): Vec4 {
+		for (const [i, team] of match.teams.entries()) {
+			const playerIndex = team.players.findIndex(
+				self => self.sessionId === player.sessionId
+			)
+
+			if (playerIndex === -1) continue
+
+			const teamSpawnPoints =
+				Config.game_maps[match.map].team_spawn_points[i]
+
+			asserts(teamSpawnPoints, `Failed to find team spawn side points`)
+
+			const spawnPoint = teamSpawnPoints[playerIndex]
+
+			asserts(
+				spawnPoint?.length === 4,
+				`Failed to find player<${player.sessionId}> spawn point`
+			)
+
+			return spawnPoint as Vec4
+		}
+
+		asserts(false, `Failed to get player<${player.sessionId}> spawn point`)
+	}
 }
 
 export abstract class Matches extends MatchRegistry {
@@ -109,27 +138,21 @@ export abstract class Matches extends MatchRegistry {
 		}
 
 		try {
-			for (const [iter, team] of match.teams.entries()) {
-				const teamSpawnSide = Config.game_maps[map].team_spawn_points[iter]
-				asserts(teamSpawnSide, `Failed to find team spawn side points`)
+			for (const team of match.teams) for (const player of team.players) {
+				const coords = this.getPlayerSpawnPoint(player, match)
 
-				for (const [iter, player] of team.players.entries()) {
-					const playerSpawnPoint = teamSpawnSide[iter]
-					asserts(playerSpawnPoint?.length === 4, `Failed to find player<${player.sessionId}> spawn point`)
+				const loaded = await triggerClientCallback<boolean>(
+					'lenix:server:competitive:getPrepared',
+					player.sessionId,
+					[coords[0], coords[1], coords[2]] satisfies Vec3
+				)
+				asserts(loaded, `client<${player.sessionId}> was not ready to play this match`)
 
-					const loaded = await triggerClientCallback<boolean>(
-						'lenix:server:competitive:getPrepared',
-						player.sessionId,
-						[playerSpawnPoint[0]!, playerSpawnPoint[1]!, playerSpawnPoint[2]!] satisfies Vec3
-					)
-					asserts(loaded, `client<${player.sessionId}> was not ready to play this match`)
-
-					emitNet(
-						'lenix:server:competitive:updateStage',
-						player.sessionId,
-						'in-game' satisfies Competitive.Stage
-					)
-				}
+				emitNet(
+					'lenix:server:competitive:updateStage',
+					player.sessionId,
+					'in-game' satisfies Competitive.Stage
+				)
 			}
 		} catch (error) {
 			for (const team of match.teams) for (const player of team.players) {
@@ -157,7 +180,7 @@ export abstract class Matches extends MatchRegistry {
 		this.startRound(match)
 	}
 
-	static stop(match: Competitive.Match) {
+	static abort(match: Competitive.Match) {
 		if (!this.matches.delete(match)) return
 
 		for (const team of match.teams) {
@@ -188,16 +211,16 @@ export abstract class Matches extends MatchRegistry {
 		const round = ++match.currentRound
 		const gameMode = Config.game_modes[match.mode]
 
-		for (const team of match.teams) {
-			for (const player of team.players) {
-				player.isDead = false
-				emitNet(
-					'lenix:server:competitive:newRound',
-					player.sessionId,
-					match.mode satisfies Competitive.Match['mode'],
-					this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
-				)
-			}
+		for (const team of match.teams) for (const player of team.players) {
+			const coords = this.getPlayerSpawnPoint(player, match)
+			player.isDead = false
+			emitNet(
+				'lenix:server:competitive:newRound',
+				player.sessionId,
+				match.mode satisfies Competitive.Match['mode'],
+				coords satisfies Vec4,
+				this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch
+			)
 		}
 
 		setTimeout(() => {
@@ -233,7 +256,7 @@ export abstract class Matches extends MatchRegistry {
 
 			await sleep(gameMode.pre_and_post_round_time * 1000)
 
-			gameMode.rounds === match.currentRound ? this.stop(match) : this.startRound(match)
+			gameMode.rounds === match.currentRound ? this.abort(match) : this.startRound(match)
 		}
 	}
 
@@ -248,7 +271,7 @@ export abstract class Matches extends MatchRegistry {
 		this.refreshTeams(match.teams)
 
 		if (!team.players.length) {
-			this.stop(match)
+			this.abort(match)
 		}
 	}
 }
