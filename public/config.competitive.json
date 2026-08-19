@@ -42,7 +42,7 @@
 			"min_players_per_team": 1,
 			"rounds": 3,
 			"round_time": 60,
-			"pre_and_post_round_time": 10,
+			"pre_and_post_round_time": 30,
 			"maps_allowed": [
 				"italien_street",
 				"cinema_studio"

@@ -228,6 +228,7 @@ export abstract class Matches extends MatchRegistry {
 					coords satisfies Vec4,
 					walls satisfies Vec4[]
 				)
+				emitNet('lenix:client:medical:heal', player.sessionId)
 			}
 		}
 
