@@ -92,7 +92,11 @@ export abstract class Matches extends MatchRegistry {
 					sessionId: profile.sessionId
 				}))
 			})),
-			parties: parties.map(party => party.profiles.map(profile => ({ ...profile, lastStatus: profile.status })))
+			parties: parties.map(party => ({
+				...party, profiles: party.profiles.map(profile => ({
+					...profile, lastStatus: profile.status
+				}))
+			}))
 		}
 
 		for (const team of match.teams) for (const player of team.players) {
