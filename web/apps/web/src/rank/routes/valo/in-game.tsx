@@ -38,26 +38,32 @@ export const InGame = () => {
 			setTimer(10)
 			setTeams({
 				own: {
+					roundsWon: 1,
 					players: [
 						{
 							isDead: true,
-							avatar
+							avatar,
+							sessionId: 1
 						},
 						{
 							isDead: false,
-							avatar
+							avatar,
+							sessionId: 1
 						},
 					]
 				},
 				opponent: {
+					roundsWon: 1,
 					players: [
 						{
 							isDead: false,
-							avatar
+							avatar,
+							sessionId: 1
 						},
 						{
 							isDead: false,
-							avatar
+							avatar,
+							sessionId: 1
 						},
 					]
 				},

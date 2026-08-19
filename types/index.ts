@@ -45,6 +45,9 @@ export namespace Competitive {
 	export interface Player {
 		Friend: GamerProfile['profile_id']
 		Match: {
+			match_id: number
+			playedAt: number
+			map: GameMap
 			result: Performance['result']
 			delta: number
 			stats: {
@@ -52,7 +55,7 @@ export namespace Competitive {
 				deaths: Stats['deaths']
 				assits: Stats['assists']
 			}
-		} & Match
+		}
 	}
 
 	export type Stats = {
@@ -141,10 +144,5 @@ export namespace Competitive {
 
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 
-	export type CasualMatch = Record<'own' | 'opponent', {
-		players: {
-			isDead: boolean,
-			avatar: Profile['avatar']
-		}[]
-	}>
+	export type CasualMatch = Record<'own' | 'opponent', Match['teams'][number]>
 }

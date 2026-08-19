@@ -14,14 +14,14 @@ const getInvited = (inviter: Competitive.GamerProfile) =>
 
 control.on({
 	event: 'press',
-	key: 'G',
+	key: 'K',
 	onEvent: () => {
 		emitEvent<Competitive.Events['open']>('competitive:open')
 		open = true
 		setTimeout(() => {
 			inviterWhileUnFocused.forEach(getInvited)
 			inviterWhileUnFocused = []
-		}, 1000);
+		}, 1000)
 	},
 })
 
