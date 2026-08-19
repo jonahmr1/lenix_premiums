@@ -302,7 +302,7 @@ export const Play = ({
 						fetchNuiServer<Competitive.Requests['updateMatchmaking']>('competitive:updateMatchmaking', { status: party.status === 'searching' ? 'idle' : 'searching' })
 					}}
 				>
-					<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel}${searchTimer}s` : playLabel}</span>
+					<span className='group-hover:hidden'>{playLabel === 'Searching...' ? `${playLabel}` : playLabel}</span> {/* ${searchTimer}s */}
 					<span className='hidden group-hover:inline'>{playHoverLabel}</span>
 				</Button>
 				<Separator orientation='vertical' hidden={isPartyLeader} />
