@@ -66,35 +66,32 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 	}
 })
 
-const createPreRoundStagingArea = async (area: Vec3[], mode: Competitive.Match['mode']) => {
-	const obj = await createObject(
-		'prop_ld_dstsign_01',
-		coords[0] + 1.0,
-		coords[1] + 1.0,
-		coords[2] - 1.0,
-		coords[3] - 90.0,
-		true,  // networked
-		true,  // mission entity
-		true   // dynamic/door flag
-	)
 
-	SetEntityVisible(obj.handle, Config.wall_debug, false)
-	SetEntityCollision(obj.handle, true, true)
-
-	setTimeout(() => {
-		DeleteEntity(obj.handle)
-	}, Config.game_modes[mode].pre_and_post_round_time * 1000)
+const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match['mode']) => {
+	for (const coords of walls) {
+		const obj = await createObject(
+			'prop_ld_dstsign_01',
+			...coords,
+		)
+	
+		SetEntityVisible(obj.handle, Config.wall_debug, false)
+		SetEntityCollision(obj.handle, true, true)
+	
+		setTimeout(() => {
+			DeleteEntity(obj.handle)
+		}, Config.game_modes[mode].pre_and_post_round_time * 1000)
+	}
 }
 
 onNet('lenix:server:competitive:newRound', async (
 	mode: Competitive.Match['mode'],
 	round: Competitive.CasualMatch,
 	coords: Vec4,
-	area: Vec3[]
+	walls: Vec4[]
 ) => {
 	const ped = client.player.entity()
 
-	await createPreRoundStagingArea(area, mode)
+	await createPreRoundStagingArea(walls, mode)
 
 	SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), false)
 	client.player.teleport(...coords)
