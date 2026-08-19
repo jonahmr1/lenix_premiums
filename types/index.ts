@@ -89,7 +89,6 @@ export namespace Competitive {
 	}
 
 	export type GamerProfile = Omit<Profile, 'status'> & {
-		ready: boolean
 		sessionId: number
 		status: Profile['status'] | 'in_game'
 	}
@@ -102,7 +101,9 @@ export namespace Competitive {
 	}
 
 	export type Party = {
-		profiles: GamerProfile[]
+		profiles: (GamerProfile & { 
+			ready: boolean
+		})[]
 		leader: GamerProfile['sessionId']
 		roomAvailable: number
 		status: 'searching' | 'idle' | 'found'
