@@ -218,7 +218,7 @@ export abstract class Matches extends MatchRegistry {
 
 			for (const player of team.players) {
 				const coords = this.getPlayerSpawnPoint(player, match)
-				console.log(coords)
+
 				player.isDead = false
 				emitNet(
 					'lenix:server:competitive:newRound',

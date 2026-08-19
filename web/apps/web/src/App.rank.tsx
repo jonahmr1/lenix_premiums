@@ -4,6 +4,7 @@ import { InGame as EliteInGame } from './rank/routes/elite/in-game'
 import { Lobby as EliteLobby } from './rank/routes/elite/lobby'
 import { InGame as ValoInGame } from './rank/routes/valo/in-game'
 import { Lobby as ValoLobby } from './rank/routes/valo/lobby'
+import { Loading as ValoLoading } from './rank/routes/valo/loading'
 
 import '@workspace/ui/globals.css'
 import '@workspace/elite/globals.css'
@@ -17,12 +18,14 @@ export const DEV = false
 const VARIANT: keyof typeof VARIANTS = 'valo'
 const VARIANTS = {
 	elite: {
-		home: <EliteLobby />,
-		lobby: <EliteInGame />,
+		lobby: <EliteLobby />,
+		in_game: <EliteInGame />,
+		loading: <ValoLoading />,
 	},
 	valo: {
-		home: <ValoLobby />,
-		lobby: <ValoInGame />,
+		lobby: <ValoLobby />,
+		in_game: <ValoInGame />,
+		loading: <ValoLoading />,
 	}
 }
 
@@ -49,8 +52,9 @@ const RankRoutes = () => {
 	return (
 		<div className={VARIANT}>
 			<Routes>
-				<Route path={'/*'} element={VARIANTS[VARIANT].home} />
-				<Route path={'/in-game'} element={VARIANTS[VARIANT].lobby} />
+				<Route path={'/*'} element={VARIANTS[VARIANT].lobby} />
+				<Route path={'/in-game'} element={VARIANTS[VARIANT].in_game} />
+				<Route path={'/loading'} element={VARIANTS[VARIANT].loading} />
 			</Routes>
 			<Toaster />
 		</div>

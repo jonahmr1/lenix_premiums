@@ -42,7 +42,7 @@ export const Play = ({
 	const [party, setParty] = useState<Competitive.Party>()
 	const [stats, setStats] = useState<Record<Competitive.Profile['profile_id'], Competitive.Stats>>()
 	const [invitedPlayer, setInvitedPlayer] = useState<number>()
-	const [searchTimer, setSeachTimer] = useState(0)
+	const [_searchTimer, setSeachTimer] = useState(0)
 
 	useEffect(() => {
 		if (DEV) {
