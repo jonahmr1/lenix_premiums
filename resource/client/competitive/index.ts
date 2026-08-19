@@ -69,7 +69,7 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 
 
 const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match['mode']) => {
-	const WALL_HEIGHT = 3.5
+	const WALL_HEIGHT = 3.0
 	const levels = 2
 
 	for (const coords of walls) {

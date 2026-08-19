@@ -42,7 +42,7 @@
 			"min_players_per_team": 1,
 			"rounds": 3,
 			"round_time": 60,
-			"pre_and_post_round_time": 30,
+			"pre_and_post_round_time": 10,
 			"maps_allowed": [
 				"italien_street",
 				"cinema_studio"
@@ -58,7 +58,7 @@
 	},
 	"ignore_invites_period": 15,
 	"invites_spam_period": 5,
-	"wall_debug": true,
+	"wall_debug": false,
 	"rank_tiers": [
 		{
 			"label": "Champion",
