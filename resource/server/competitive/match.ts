@@ -283,7 +283,3 @@ onNet('baseevents:onPlayerDied', () => {
 onNet('baseevents:onPlayerKilled', (killer: number) => {
 	Matches.playerDied(source, killer)
 })
-
-setTimeout(() => {
-	createObject('ap1_01_d_wall_cap', ...GetEntityCoords(server.entity.handleBySource(1)) as Vec3, 0, false, false, false)
-})

@@ -1,4 +1,4 @@
-import { notify, onServerCallback } from '@overextended/ox_lib/client'
+import { createObject, notify, onServerCallback } from '@overextended/ox_lib/client'
 import { repeat, type Vec3, type Vec4 } from 'lenix'
 import { client, control, emitNui as emitEvent, emitNui, onNui } from 'lenix/client'
 import type { Competitive } from 'types/index'
@@ -84,3 +84,26 @@ onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
 	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
 )
 
+
+
+// setTimeout(async () => {
+// 	const coords = client.player.coords()
+
+// 	const obj = await createObject(
+// 		'prop_ld_dstsign_01',
+// 		coords[0] + 1.0,
+// 		coords[1] + 1.0,
+// 		coords[2] - 1.0,
+// 		coords[3] - 90.0,
+// 		true,  // networked
+// 		true,  // mission entity
+// 		true   // dynamic/door flag
+// 	)
+
+// 	SetEntityVisible(obj.handle, false, false)
+// 	SetEntityCollision(obj.handle, true, true)
+
+// 	setTimeout(() => {
+// 		DeleteEntity(obj.handle)
+// 	}, 10_000)
+// })
