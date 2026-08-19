@@ -30,6 +30,7 @@
 						"minLength": 1
 					},
 					"pre_round_staging_area": {
+						"description": "Each team's corners must be ordered clockwise: top-left, top-right, bottom-right, bottom-left.",
 						"type": "array",
 						"minItems": 2,
 						"items": {

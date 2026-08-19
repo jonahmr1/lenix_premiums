@@ -5,6 +5,7 @@ import type { Vec3, Vec4 } from "lenix";
 import { server } from "lenix/server";
 import type { Competitive } from "types/index";
 import { Parties } from "./party";
+import { getSpawnPoints } from "./utils";
 
 export abstract class MatchRegistry {
 	protected static readonly matches = new Set<Competitive.Match>()
@@ -82,9 +83,9 @@ export abstract class MatchRegistry {
 			const teamStagingArea =
 				Config.game_maps[match.map].pre_round_staging_area[i]
 
-			asserts(teamStagingArea, `Failed to find team spawn side points`)
+			asserts(teamStagingArea?.length === 3, `Failed to find team spawn side points`)
 
-			const spawnPoint = teamStagingArea[playerIndex]
+			const spawnPoint = getSpawnPoints(teamStagingArea as Vec3[], team.players.length)[playerIndex]
 
 			asserts(
 				spawnPoint?.length === 4,
