@@ -241,7 +241,6 @@ export abstract class Matches extends MatchRegistry {
 	}
 
 	static async playerDied(client: number, killer?: number) {
-
 		const match = this.getClientMatch(client, true)
 		if (!match) return
 
