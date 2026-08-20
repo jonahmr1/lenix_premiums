@@ -33,7 +33,6 @@ export const InGame = () => {
 	const [timer, setTimer] = useState<number>(0)
 	const [teams, setTeams] = useState<Competitive.CasualMatch>()
 
-	console.log(teams)
 	useEffect(() => {
 		if (DEV) {
 			setTimer(10)
