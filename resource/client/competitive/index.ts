@@ -100,18 +100,18 @@ onNet('lenix:server:competitive:newRound', async (
 	coords: Vec4,
 	walls: Vec4[]
 ) => {
-	const ped = client.player.entity()
-
 	await createPreRoundStagingArea(walls, mode)
 
+	const ped = client.player.entity()
 	const weaponHash = GetHashKey('WEAPON_PISTOL')
+
+	client.player.teleport(...coords)
 
 	GiveWeaponToPed(ped, weaponHash, 9999, false, true)
 	SetCurrentPedWeapon(ped, weaponHash, true)
 	SetPedInfiniteAmmo(ped, true, weaponHash)
-
-	client.player.teleport(...coords)
 	SetEntityHealth(ped, GetEntityMaxHealth(ped))
+
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
