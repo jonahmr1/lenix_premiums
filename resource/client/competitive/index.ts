@@ -111,6 +111,7 @@ onNet('lenix:server:competitive:newRound', async (
 	SetPedInfiniteAmmo(ped, true, weaponHash)
 
 	client.player.teleport(...coords)
+	SetEntityHealth(ped, GetEntityMaxHealth(ped))
 	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
 })
 
