@@ -47,9 +47,9 @@ const tables = [
 	})
 ]
 
-;(async () => {
+setImmediate(async () => {
 	for (const table of tables) {
 		const result = await oxmysql.query(table.toQuery())
 		if (!result) throw `Failed to create a table`
 	}
-})()
+})

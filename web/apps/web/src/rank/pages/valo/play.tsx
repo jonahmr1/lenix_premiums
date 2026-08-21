@@ -55,14 +55,14 @@ export const Play = ({
 			})
 			return
 		}
-		(async () => {
+		setTimeout(async () => {
 			try {
 				const party = await fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {})
 				setParty(party)
 			} catch (e) {
 				toast(e as string)
 			}
-		})()
+		})
 
 		const disposes = [
 			onNuiEmit<Competitive.Events['playerInvited']>('competitive:playerInvited', (inviter) => {

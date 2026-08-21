@@ -24,7 +24,7 @@ const ENVIRONMENT: Environment = 'production'
 const SERVER_NAME = GetConvar('sv_hostname', GetConvar('sv_projectName', 'Unknown Name'))
 const VALIDATION_INTERVAL = 15
 
-;(async () => {
+setImmediate(async () => {
 	try {
 		const {
 			customerPortal: {
@@ -89,4 +89,4 @@ const VALIDATION_INTERVAL = 15
 		console.log(palette('wine', String(e)))
 		ExecuteCommand('stop lenix_premiums')
 	}
-})()
+})
