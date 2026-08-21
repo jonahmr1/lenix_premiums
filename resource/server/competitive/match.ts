@@ -177,10 +177,10 @@ export abstract class Matches extends MatchRegistry {
 		}
 
 		this.matches.add(match)
-		this.startRound(match)
+		this.nextRound(match)
 	}
 
-	static abort(match: Competitive.Match) {
+	private static abort(match: Competitive.Match) {
 		if (!this.matches.delete(match)) return
 
 		for (const team of match.teams) {
@@ -207,7 +207,7 @@ export abstract class Matches extends MatchRegistry {
 		}
 	}
 
-	static startRound(match: Competitive.Match) {
+	private static startRound(match: Competitive.Match) {
 		const round = ++match.currentRound
 		const gameMode = Config.game_modes[match.mode]
 
@@ -233,11 +233,31 @@ export abstract class Matches extends MatchRegistry {
 		}
 
 		setTimeout(() => {
-			const latestMatch = this.getMatchByBucketId(match.bucket)
-			if (latestMatch?.currentRound !== round) return
-
-			this.startRound(latestMatch)
+			this.nextRound(match, round)
 		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
+	}
+
+	private static nextRound(match: Competitive.Match, lastRound?: number) {
+		const currentMatch = lastRound
+			? this.getMatchByBucketId(match.bucket)
+			: match
+		asserts(currentMatch)
+
+		if (lastRound && currentMatch.currentRound !== lastRound) return
+
+		const roundsToWin = Math.ceil(
+			Config.game_modes[currentMatch.mode].rounds / 2
+		)
+
+		const winner = currentMatch.teams.some(
+			team => team.roundsWon >= roundsToWin
+		)
+
+		if (winner) {
+			this.abort(currentMatch)
+			return
+		}
+		this.startRound(currentMatch)
 	}
 
 	static async playerDied(client: number, killer?: number) {
@@ -265,7 +285,7 @@ export abstract class Matches extends MatchRegistry {
 
 			await sleep(gameMode.pre_and_post_round_time * 1000)
 
-			gameMode.rounds === match.currentRound ? this.abort(match) : this.startRound(match)
+			this.nextRound(match)
 		}
 	}
 
