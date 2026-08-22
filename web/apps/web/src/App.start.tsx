@@ -7,6 +7,8 @@ import { random } from "@lenix/lenix"
 import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
 import { onKeyDown } from "lenix/nui"
+import { toast } from "@workspace/ui/lib/utils"
+import { Toaster } from "@workspace/ui/components/sonner"
 	
 const backgrounds = [bg1, bg2, bg3, bg4]
 const buttons = ['Outlaw', 'Competitive', 'Compaign', 'Options', 'Credit']
@@ -41,10 +43,12 @@ export const StartingMenu = () => {
 						key={i}
 						disabled={false}
 						variant='default'
+						onClick={() => toast.info('WinkyQx')}
 						className={`bg-transparent hover:bg-transparent drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${selected === i && 'text-white'}`}
 					>{btn}</Button>
 				))}
 			</div>
+			<Toaster />
 		</Layout>
 	)
 }
