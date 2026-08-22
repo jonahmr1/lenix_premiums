@@ -31,7 +31,7 @@ export const Main = () => {
 	const [selected, setSelected] = useState(0)
 	const nav = useNavigate()
 	
-	const buttons = [
+	const modes = [
 		{
 			label: 'Competitive',
 			onClick: () => toast.info('WinkyQx')
@@ -52,6 +52,11 @@ export const Main = () => {
 			label: 'Credit',
 			onClick: () => nav('/credit')
 		},
+		{
+			label: 'Exit',
+			onClick: () => toast.info('WinkyQx'),
+			styles: 'text-red-700 hover:text-red-500'
+		},
 	]
 
 	const handleSelection = (index?: number) => {
@@ -59,11 +64,11 @@ export const Main = () => {
 
 		setSelected(selectedIndex)
 		playAudio('click')
-		buttons[selectedIndex].onClick()
+		modes[selectedIndex].onClick()
 	}
 
 	const handleNav = (key: typeof keys[number]) => {
-		setSelected(prev => key === 'ArrowDown' ? prev === (buttons.length - 1) ? 0 : prev + 1 : prev === 0 ? buttons.length - 1 : prev - 1)
+		setSelected(prev => key === 'ArrowDown' ? prev === (modes.length - 1) ? 0 : prev + 1 : prev === 0 ? modes.length - 1 : prev - 1)
 		playAudio('hover')
 	}
 
@@ -88,14 +93,14 @@ export const Main = () => {
 				className="absolute -z-1 size-full object-cover"
 			/>
 			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
-				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-1">
-					{buttons.map((button, i) => (
+				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-2">
+					{modes.map((button, i) => (
 						<Button
 							key={i}
 							variant='default'
 							onClick={() => handleSelection(i)}
 							onMouseEnter={() => playAudio('hover')}
-							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer outline- ${selected === i && 'text-white'}`}
+							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white'}`}
 						>{button.label}</Button>
 					))}
 				</div>

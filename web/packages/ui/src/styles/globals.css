@@ -9,27 +9,27 @@
 @source "../**/*.{ts,tsx}";
 
 @utility perspective-1 {
-	transform: perspective(75px) rotateY(1deg);
+	transform: perspective(175px) rotateY(1deg);
 	transform-origin: left center;
 }
 
 @utility perspective-2 {
-	transform: perspective(75px) rotateY(2deg);
+	transform: perspective(175px) rotateY(2deg);
 	transform-origin: left center;
 }
 
 @utility perspective-3 {
-	transform: perspective(75px) rotateY(3deg);
+	transform: perspective(175px) rotateY(3deg);
 	transform-origin: left center;
 }
 
 @utility perspective-4 {
-	transform: perspective(75px) rotateY(4deg);
+	transform: perspective(175px) rotateY(4deg);
 	transform-origin: left center;
 }
 
 @utility perspective-5 {
-	transform: perspective(75px) rotateY(5deg);
+	transform: perspective(175px) rotateY(5deg);
 	transform-origin: left center;
 }
 

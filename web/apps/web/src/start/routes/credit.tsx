@@ -37,7 +37,10 @@ export const Credit = () => {
 		<Layout className="h-screen bg-background gap-20 justify-between py-10">
 			<div className="flex flex-col items-center gap-10 w-full">
 				<p>Designed, Developed, Maintained by</p>
-				<img src={'https://business.lenix.dev/lenixm.png'} className="w-1/9 rounded" />
+				<img
+					src='https://business.lenix.dev/lenixm.png'
+					className="w-1/9 rounded"
+				/>
 				<p className="text-3xl font-bold text-shadow-sm italic text-shadow-white">LenixM</p>
 			</div>
 			<div className="flex flex-col gap-5 w-full">
