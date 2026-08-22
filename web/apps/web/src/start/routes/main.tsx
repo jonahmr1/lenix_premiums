@@ -23,13 +23,12 @@ const image = backgrounds[random(0, backgrounds.length - 1)]
 const playAudio = (src: 'hover' | 'click') => {
 	const audio = new Audio(src === 'hover' ? hover : click)
 	audio.volume = src === 'hover' ? 0.1 : 1.0
-	void audio.play()
+	 audio.play()
 }
 
 export const Main = () => {
 	/* TODO: based on last used */
 	const [selected, setSelected] = useState(0)
-	const [disabled, setDisabled] = useState(false)
 	const nav = useNavigate()
 	
 	const buttons = [
@@ -56,9 +55,11 @@ export const Main = () => {
 	]
 
 	const handleSelection = (index?: number) => {
-		index !== undefined && setSelected(index)
+		const selectedIndex = index ?? selected
+
+		setSelected(selectedIndex)
 		playAudio('click')
-		setDisabled(true)
+		buttons[selectedIndex].onClick()
 	}
 
 	const handleNav = (key: typeof keys[number]) => {
@@ -78,7 +79,7 @@ export const Main = () => {
 		))
 
 		return () => disposes.forEach(dispose => dispose())
-	}, [])
+	}, [selected])
 	
 	return (
 		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
@@ -90,18 +91,14 @@ export const Main = () => {
 				{buttons.map((button, i) => (
 					<Button
 						key={i}
-						disabled={disabled}
 						variant='default'
-						onClick={() => {
-							handleSelection(i)
-							button.onClick()
-						}}
+						onClick={() => handleSelection(i)}
 						onMouseEnter={() => playAudio('hover')}
 						className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-lg hover:text-white/66 cursor-pointer outline- ${selected === i && 'text-white'}`}
 					>{button.label}</Button>
 				))}
 			</div>
-			<KbdGroup className="flex size-full items-end justify-end px-30 py-10 text-sm gap-5">
+			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-5">
 				<NavKbd
 					onClick={() => handleNav('ArrowUp')}
 					icon={<ArrowUp />}>

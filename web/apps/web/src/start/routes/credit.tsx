@@ -16,17 +16,20 @@ export const Credit = () => {
 
 	const credits = [
 		{
-			name: 'Lenix',
+			names: ['Lenix'],
 			roles: [
-				'Front End Director',
-			]
+				'Lead Developer',
+				'Lead Developer',
+				'Lead Developer',
+				'Lead Developer',
+			],
 		},
 		{
-			name: 'WinkyQx',
+			names: ['WinkyQx'],
 			roles: [
-				'UI/UX Designer',
-				'Front End Director'
-			]
+				'UI/UX Consultant',
+				'Game Tester',
+			],
 		},
 	]
 
@@ -37,19 +40,23 @@ export const Credit = () => {
 				<img src={'https://business.lenix.dev/lenixm.png'} className="w-1/9 rounded" />
 				<p className="text-3xl font-bold text-shadow-sm italic text-shadow-white">LenixM</p>
 			</div>
-			<div className="flex flex-col gap-10 w-full">
-				{credits.map(({ name, roles }) => (
-				<div key={name} className="flex gap-5">
-					<div className="flex flex-col items-end flex-1">
-						{roles.map(role => (
-							<div key={role} className="flex flex-wrap justify-end gap-x-2 font-light text-white/80 tracking-widest uppercase">
-								{role.split(' ').map((word, index) => (
-									<span key={`${role}-${index}`}>{word}</span>
-								))}
-							</div>
-						))}
-					</div>
-						<p className="flex-1">{name}</p>
+			<div className="flex flex-col gap-5 w-full">
+				{credits.map(({ names, roles }, i) => (
+					<div key={i} className="flex gap-5">
+						<div className="flex flex-col items-end flex-1">
+							{roles.map(role => (
+								<div key={role} className="flex flex-wrap justify-end gap-x-2 text-sm font-light text-white/80 tracking-widest uppercase">
+									{role.split(' ').map((word, index) => (
+										<span key={`${role}-${index}`}>{word}</span>
+									))}
+								</div>
+							))}
+						</div>
+						<div className="flex-1">
+							{names.map(name => (
+								<p key={name}>{name}</p>
+							))}
+						</div>
 					</div>
 				))}
 			</div>
