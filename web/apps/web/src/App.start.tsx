@@ -1,9 +1,9 @@
 import { Toaster } from "@workspace/ui/components/sonner"
 import { MemoryRouter, Route, Routes } from "react-router"
-import { Credit } from "./start/routes/credit"
-import { Main } from "./start/routes/main"
+import { Credit } from "./starting/routes/credit"
+import { Main } from "./starting/routes/main"
 
-export const StartingMenu = () => (
+export const Starting = () => (
 	<MemoryRouter>
 		<Routes>
 			<Route path={'/*'} element={<Main />} />

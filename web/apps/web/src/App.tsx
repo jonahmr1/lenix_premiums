@@ -1,6 +1,6 @@
 import { toggleTheme } from '@workspace/ui/hooks/theme'
 import { storage } from '@lenix/lenix'
-import { StartingMenu } from './App.start'
+import { Starting } from './App.start'
 
 import '@workspace/ui/globals.css'
 
@@ -15,7 +15,7 @@ export function App() {
 			/> */}
 			{/* <Ipad /> */}
 			{/* <Rank /> */}
-			<StartingMenu />
+			<Starting />
 		</>
 	)
 }
