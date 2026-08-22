@@ -11,11 +11,22 @@ import { toast } from "@workspace/ui/lib/utils"
 import { Toaster } from "@workspace/ui/components/sonner"
 import { Kbd, KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
-	
+import click from '@workspace/ui/assets/start/click.mp3'
+import hover from '@workspace/ui/assets/start/hover.mp3'
+
 const backgrounds = [bg1, bg2, bg3, bg4]
 const buttons = ['Outlaw', 'Competitive', 'Compaign', 'Options', 'Credit']
 const keys = ['ArrowUp', 'ArrowDown', 'Enter'] as const
 const image = backgrounds[random(0, backgrounds.length - 1)]
+
+const clickAudio = new Audio(click)
+const hoverAudio = new Audio(hover)
+
+const playAudio = (audio: HTMLAudioElement, volume = 1.0) => {
+	audio.volume = volume
+	audio.currentTime = 0
+	audio.play()
+}
 
 export const StartingMenu = () => {
 	/* TODO: based on last used */
@@ -24,6 +35,7 @@ export const StartingMenu = () => {
 	const handleSelection = (index?: number) => {
 		index !== undefined && setSelected(index)
 		toast.info(`WinkyQx ${index}`)
+		playAudio(clickAudio)
 	}
 
 	useEffect(() => {
@@ -33,15 +45,13 @@ export const StartingMenu = () => {
 					handleSelection()
 					return
 				}
-				const nextKey = key === 'ArrowDown' ? selected === (buttons.length - 1) ? 0 : selected + 1 : selected === 0 ? buttons.length - 1 : selected - 1
-				console.log(true)
-			
-				setSelected(nextKey)
+				setSelected(prev => key === 'ArrowDown' ? prev === (buttons.length - 1) ? 0 : prev + 1 : prev === 0 ? buttons.length - 1 : prev - 1)
+				playAudio(hoverAudio, 0.1)
 			})
 		))
 
 		return () => disposes.forEach(dispose => dispose())
-	}, [selected])
+	}, [])
 
 	return (
 		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
@@ -56,6 +66,7 @@ export const StartingMenu = () => {
 						disabled={false}
 						variant='default'
 						onClick={() => handleSelection(i)}
+						onMouseEnter={() => playAudio(hoverAudio, 0.1)}
 						className={`bg-transparent hover:bg-transparent drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${selected === i && 'text-white'}`}
 					>{btn}</Button>
 				))}
@@ -63,7 +74,7 @@ export const StartingMenu = () => {
 			<KbdGroup className="flex size-full items-end justify-end px-30 py-10 text-sm">
 				<Kbd className="bg-white text-muted"><ArrowUp /></Kbd>
 				<span className="font-sans">Previous</span>
-				<Kbd className="bg-white text-muted"><ArrowUp /></Kbd>
+				<Kbd className="bg-white text-muted"><ArrowDown /></Kbd>
 				<span>Next</span>
 				</KbdGroup>
 			<Toaster />
