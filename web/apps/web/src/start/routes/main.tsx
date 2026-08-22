@@ -34,20 +34,20 @@ export const Main = () => {
 	const modes = [
 		{
 			label: 'Competitive',
-			onClick: () => toast.info('WinkyQx')
+			onClick: () => toast.info('Not available')
 		},
 		{
 			label: 'Outlaw',
-			onClick: () => toast.info('WinkyQx')
+			onClick: () => toast.info('In Developement')
 		},
 		{
 			label: 'Campaign',
-			onClick: () => toast.info('WinkyQx'),
+			onClick: () => {},
 			disabled: true
 		},
 		{
 			label: 'Options',
-			onClick: () => toast.info('WinkyQx')
+			onClick: () => toast.info('Coming soon')
 		},
 		{
 			label: 'Credit',
@@ -55,7 +55,7 @@ export const Main = () => {
 		},
 		{
 			label: 'Exit Game',
-			onClick: () => toast.info('WinkyQx'),
+			onClick: () => toast.info('In Developement'),
 			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700'
 		},
 	]
