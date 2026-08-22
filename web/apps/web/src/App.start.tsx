@@ -9,6 +9,8 @@ import { useEffect, useState } from "react"
 import { onKeyDown } from "lenix/nui"
 import { toast } from "@workspace/ui/lib/utils"
 import { Toaster } from "@workspace/ui/components/sonner"
+import { Kbd, KbdGroup } from "@workspace/ui/components/kbd"
+import { ArrowDown, ArrowUp } from "lucide-react"
 	
 const backgrounds = [bg1, bg2, bg3, bg4]
 const buttons = ['Outlaw', 'Competitive', 'Compaign', 'Options', 'Credit']
@@ -42,12 +44,12 @@ export const StartingMenu = () => {
 	}, [selected])
 
 	return (
-		<Layout className="relative h-screen overflow-hidden justify-start flex-row">
+		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
 			<img
 				src={image}
 				className="absolute -z-1 size-full object-cover"
 			/>
-			<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center bg-linear-to-r from-black/75 to-transparent">
+			<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center bg-linear-to-r from-black/50 to-transparent">
 				{buttons.map((btn, i) => (
 					<Button
 						key={i}
@@ -58,9 +60,12 @@ export const StartingMenu = () => {
 					>{btn}</Button>
 				))}
 			</div>
-			<div className="flex items-end size-full justify-end px-30 py-10">
-				
-			</div>
+			<KbdGroup className="flex size-full items-end justify-end px-30 py-10 text-sm">
+				<Kbd><ArrowUp /></Kbd>
+				<span>Previous</span>
+				<Kbd><ArrowDown /></Kbd>
+				<span>Next</span>
+				</KbdGroup>
 			<Toaster />
 		</Layout>
 	)
