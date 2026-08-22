@@ -28,11 +28,13 @@ const playAudio = (src: 'hover' | 'click') => {
 export const StartingMenu = () => {
 	/* TODO: based on last used */
 	const [selected, setSelected] = useState(0)
+	const [disabled, setDisabled] = useState(false)
 
 	const handleSelection = (index?: number) => {
 		index !== undefined && setSelected(index)
 		toast.info(`WinkyQx ${index}`)
 		playAudio('click')
+		setDisabled(true)
 	}
 
 	useEffect(() => {
@@ -68,11 +70,11 @@ export const StartingMenu = () => {
 				{buttons.map((btn, i) => (
 					<Button
 						key={i}
-						disabled={false}
+						disabled={disabled}
 						variant='default'
 						onClick={() => handleSelection(i)}
 						onMouseEnter={() => playAudio('hover')}
-						className={`bg-transparent hover:bg-transparent drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer outline-none ${selected === i && 'text-white'}`}
+						className={`bg-transparent hover:bg-transparent drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer outline- ${selected === i && 'text-white'}`}
 					>{btn}</Button>
 				))}
 			</div>
