@@ -232,9 +232,7 @@ export abstract class Matches extends MatchRegistry {
 			}
 		}
 
-		setTimeout(() => {
-			this.nextRound(match, round)
-		}, (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
+		setTimeout(() => this.nextRound(match, round), (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000)
 	}
 
 	private static nextRound(match: Competitive.Match, lastRound?: number) {

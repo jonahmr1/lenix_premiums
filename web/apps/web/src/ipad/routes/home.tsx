@@ -1,4 +1,4 @@
-import type { AppIcon } from '@/ipad/types'
+import type { AppIcon, Storage } from '@/ipad/types'
 import { Button } from '@workspace/ui/components/button'
 import { cn } from '@workspace/ui/lib/utils'
 import { Settings } from 'lucide-react'
@@ -11,7 +11,7 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 	return (
 		<div className='text-center'>
 			<Button
-				className='size-13 p-0 bg-background hover:bg-background rounded-xl cursor-pointer'
+				className='size-15 p-0 bg-background hover:bg-background rounded-xl cursor-pointer'
 				onClick={() => nav(`/${name}`)}
 			>
 				<div className={cn('size-full p-2 rounded-xl', styles)}>
@@ -23,9 +23,9 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 	)
 }
 
-export const Home = () => {
+export const Home = ({ orientation }: { orientation: Storage['orientation'] }) => {
 	return (
-		<div className='relative grid size-full grid-cols-5 content-start gap-4 p-4'>
+		<div className={`relative grid size-full ${orientation === 'portrait' ? 'grid-cols-4' : 'grid-cols-6'} content-start gap-4 p-4`}>
 			<App
 				name='Settings'
 				styles='bg-muted'
