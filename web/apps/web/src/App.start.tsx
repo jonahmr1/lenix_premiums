@@ -61,9 +61,9 @@ export const StartingMenu = () => {
 				))}
 			</div>
 			<KbdGroup className="flex size-full items-end justify-end px-30 py-10 text-sm">
-				<Kbd><ArrowUp /></Kbd>
-				<span>Previous</span>
-				<Kbd><ArrowDown /></Kbd>
+				<Kbd className="bg-white text-muted"><ArrowUp /></Kbd>
+				<span className="font-sans">Previous</span>
+				<Kbd className="bg-white text-muted"><ArrowUp /></Kbd>
 				<span>Next</span>
 				</KbdGroup>
 			<Toaster />
