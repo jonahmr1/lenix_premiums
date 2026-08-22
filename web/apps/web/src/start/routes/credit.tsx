@@ -1,11 +1,18 @@
 import { NavKbd } from "@workspace/ui/elements/kbd"
 import { Layout } from "@workspace/ui/elements/layout"
+import { onKeyDown } from "lenix/nui"
+import { useEffect } from "react"
 import { useNavigate } from "react-router"
 
 
 /* TODO: audio, scrollup */
 export const Credit = () => {
 	const nav = useNavigate()
+
+	useEffect(() => {
+		const dispose = onKeyDown('Escape', () => nav('/'))
+		return dispose
+	}, [])
 
 	const credits = [
 		{
