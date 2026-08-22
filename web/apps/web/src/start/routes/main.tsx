@@ -8,11 +8,12 @@ import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
 import { onKeyDown } from "lenix/nui"
 import { toast } from "@workspace/ui/lib/utils"
-import { Kbd, KbdGroup } from "@workspace/ui/components/kbd"
-import { ArrowDown, ArrowUp, type LucideIcon } from "lucide-react"
+import { KbdGroup } from "@workspace/ui/components/kbd"
+import { ArrowDown, ArrowUp } from "lucide-react"
 import click from '@workspace/ui/assets/start/click.mp3'
 import hover from '@workspace/ui/assets/start/hover.mp3'
 import { useNavigate } from "react-router"
+import { NavKbd } from '@workspace/ui/elements/kbd'
 
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -60,6 +61,11 @@ export const Main = () => {
 		setDisabled(true)
 	}
 
+	const handleNav = (key: typeof keys[number]) => {
+		setSelected(prev => key === 'ArrowDown' ? prev === (buttons.length - 1) ? 0 : prev + 1 : prev === 0 ? buttons.length - 1 : prev - 1)
+		playAudio('hover')
+	}
+
 	useEffect(() => {
 		const disposes = keys.map(key => (
 			onKeyDown(key, () => {
@@ -67,20 +73,12 @@ export const Main = () => {
 					handleSelection()
 					return
 				}
-				setSelected(prev => key === 'ArrowDown' ? prev === (buttons.length - 1) ? 0 : prev + 1 : prev === 0 ? buttons.length - 1 : prev - 1)
-				playAudio('hover')
+				handleNav(key)
 			})
 		))
 
 		return () => disposes.forEach(dispose => dispose())
 	}, [])
-
-	const NavKbd = ({ text, icon: Icon }: { text: React.ReactNode, icon: LucideIcon }) => (
-		<div className="space-x-2">
-			<Kbd className="bg-white text-muted"><Icon /></Kbd>
-			<span className="font-sans">{text}</span>
-		</div>
-	)
 	
 	return (
 		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
@@ -104,8 +102,16 @@ export const Main = () => {
 				))}
 			</div>
 			<KbdGroup className="flex size-full items-end justify-end px-30 py-10 text-sm gap-5">
-				<NavKbd text='Previous' icon={ArrowUp} />
-				<NavKbd text='Next' icon={ArrowDown} />
+				<NavKbd
+					onClick={() => handleNav('ArrowUp')}
+					icon={<ArrowUp />}>
+					Previous
+				</NavKbd>
+				<NavKbd
+					onClick={() => handleNav('ArrowDown')}
+					icon={<ArrowDown />}>
+					Next
+				</NavKbd>
 			</KbdGroup>
 		</Layout>
 	)
