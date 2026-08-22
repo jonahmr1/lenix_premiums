@@ -32,12 +32,16 @@ export const Credit = () => {
 			</div>
 			<div className="flex flex-col gap-10 w-full">
 				{credits.map(({ name, roles }) => (
-					<div key={name} className="flex gap-5">
-						<div className="flex flex-col items-end flex-1">
-							{roles.map(role => (
-								<p className="justify-self-end flex font-light text-white/80 tracking-widest [word-spacing:0.3em] uppercase">{role}</p>
-							))}
-						</div>
+				<div key={name} className="flex gap-5">
+					<div className="flex flex-col items-end flex-1">
+						{roles.map(role => (
+							<div key={role} className="flex flex-wrap justify-end gap-x-2 font-light text-white/80 tracking-widest uppercase">
+								{role.split(' ').map((word, index) => (
+									<span key={`${role}-${index}`}>{word}</span>
+								))}
+							</div>
+						))}
+					</div>
 						<p className="flex-1">{name}</p>
 					</div>
 				))}
