@@ -1,6 +1,5 @@
 import { NavKbd } from "@workspace/ui/elements/kbd"
 import { Layout } from "@workspace/ui/elements/layout"
-import { ArrowBigLeft } from "lucide-react"
 import { useNavigate } from "react-router"
 
 
@@ -25,7 +24,7 @@ export const Credit = () => {
 	]
 
 	return (
-		<Layout className="h-screen bg-background gap-20">
+		<Layout className="h-screen bg-background gap-20 justify-between py-10">
 			<div className="flex flex-col items-center gap-10 w-full">
 				<p>Designed, Developed, Maintained by</p>
 				<img src={'https://business.lenix.dev/lenixm.png'} className="w-1/9 rounded" />
@@ -43,12 +42,14 @@ export const Credit = () => {
 					</div>
 				))}
 			</div>
-			<NavKbd
-				onClick={() => nav('/')}
-				icon='Esc'
-			>
-				back
-			</NavKbd>
+			<div className="w-full flex justify-end px-20">
+				<NavKbd
+					onClick={() => nav('/')}
+					icon='Esc'
+				>
+					Back
+				</NavKbd>
+			</div>
 		</Layout>
 	)
 }
