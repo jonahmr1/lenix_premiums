@@ -20,7 +20,7 @@ export const StartingMenu = () => {
 	const [selected, setSelected] = useState(0)
 
 	const handleSelection = (index?: number) => {
-		index && setSelected(index)
+		index !== undefined && setSelected(index)
 		toast.info(`WinkyQx ${index}`)
 	}
 
