@@ -32,7 +32,7 @@ export const StartingMenu = () => {
 	return (
 		<Layout className="relative h-screen overflow-hidden items-start">
 			<img
-				src={backgrounds[random(0, backgrounds.length - 1)]}
+				src={backgrounds[2]}
 				className="absolute -z-1 object-cover"
 			/>
 			<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center bg-linear-to-r from-black/75 to-transparent">
@@ -41,7 +41,7 @@ export const StartingMenu = () => {
 						key={i}
 						disabled={false}
 						variant='default'
-						className={`bg-transparent hover:bg-transparent text-white/33 text-xl hover:text-white/66 cursor-pointer ${selected === i && 'text-white'}`}
+						className={`bg-transparent hover:bg-transparent drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${selected === i && 'text-white'}`}
 					>{btn}</Button>
 				))}
 			</div>
