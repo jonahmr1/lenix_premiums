@@ -1,4 +1,4 @@
-import { Archive, HatGlasses, Skull, SprayCan, Trophy } from 'lucide-react'
+import { SprayCan, Trophy } from 'lucide-react'
 import { Spray } from './routes/spray'
 import type { AppIcon } from './types'
 
