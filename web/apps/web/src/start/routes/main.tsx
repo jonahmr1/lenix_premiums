@@ -87,16 +87,18 @@ export const Main = () => {
 				src={image}
 				className="absolute -z-1 size-full object-cover"
 			/>
-			<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center bg-linear-to-r from-black/50 to-transparent">
-				{buttons.map((button, i) => (
-					<Button
-						key={i}
-						variant='default'
-						onClick={() => handleSelection(i)}
-						onMouseEnter={() => playAudio('hover')}
-						className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-lg hover:text-white/66 cursor-pointer outline- ${selected === i && 'text-white'}`}
-					>{button.label}</Button>
-				))}
+			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
+				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-1">
+					{buttons.map((button, i) => (
+						<Button
+							key={i}
+							variant='default'
+							onClick={() => handleSelection(i)}
+							onMouseEnter={() => playAudio('hover')}
+							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer outline- ${selected === i && 'text-white'}`}
+						>{button.label}</Button>
+					))}
+				</div>
 			</div>
 			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-5">
 				<NavKbd
