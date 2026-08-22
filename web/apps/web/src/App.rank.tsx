@@ -6,7 +6,6 @@ import { InGame as ValoInGame } from './rank/routes/valo/in-game'
 import { Lobby as ValoLobby } from './rank/routes/valo/lobby'
 import { Loading as ValoLoading } from './rank/routes/valo/loading'
 
-import '@workspace/ui/globals.css'
 import '@workspace/elite/globals.css'
 import '@workspace/valo/globals.css'
 import { useEffect } from 'react'
