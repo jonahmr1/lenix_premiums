@@ -1,6 +1,5 @@
 import type { Event, Request } from 'lenix'
 import type { Public } from './public'
-import type { Character } from '@overextended/ox_core'
 
 export namespace Competitive {
 	export interface Events {
