@@ -11,8 +11,14 @@ const create = (
 
 const tables = [
 	create('characters', table => {
-		table.string('charId', 64).primary()
+		table.integer('charId').unsigned().primary()
 		table.enum('type', ['competitive', 'outlaw']).notNullable()
+
+		table
+			.foreign('charId')
+			.references('charId')
+			.inTable('characters')
+			.onDelete('CASCADE')
 	}),
 ]
 
