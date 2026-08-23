@@ -25,9 +25,9 @@ onNui<Starting.Requests['exitGame']>('starting:exitGame', () => {
 	return null
 })
 
-exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
+globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	characters = chars
 	emitNui<Starting.Events['modeSelection']>('starting:modeSelection')
 	
-	return await repeat(() => character, undefined, 1000)
+	return repeat(() => character, character => character !== null, 1000)
 })
