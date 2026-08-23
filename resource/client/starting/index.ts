@@ -1,25 +1,20 @@
 import type { Character } from "@overextended/ox_core";
 import { repeat } from "lenix";
-import { api, emitNui, onNui } from "lenix/client";
+import { emitNui, onNui } from "lenix/client";
 import type { Starting } from "types/index";
 
-let character: Character | undefined | null = null
+let character: Character | undefined
 let characters: Character[]
 
 onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) => {
 	switch (mode) {
 		case 'competitive': {
-			try {
-				character = await api.lenix?.charselect?.<
-					Promise<Character | undefined>, [Character[], 'menu' | 'native']
-				>(characters, 'menu')
-				return true
-			} catch (e) {
-				return false
-			}
+			character = characters[0]
+			return null
 		}
 		case 'outlaw': {
-			return true
+			character = characters[1]
+			return null
 		}
 		default: throw `Wrong selection mode: ${mode}`
 	}
@@ -28,5 +23,6 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	characters = chars
 	emitNui<Starting.Events['modeSelection']>('starting:modeSelection')
-	return repeat(() => character, undefined, 1000)
+	
+	return await repeat(() => character, undefined, 1000)
 })

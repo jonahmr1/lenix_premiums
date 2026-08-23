@@ -50,8 +50,7 @@ export const Main = () => {
 		{
 			label: 'Competitive',
 			onClick: async () => {
-				const re = await fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
-				if (!re) toast.error('')
+				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
 			}
 		},
 		{
