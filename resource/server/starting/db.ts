@@ -14,11 +14,11 @@ const tables = [
 		table.integer('charId').unsigned().primary()
 		table.enum('type', ['competitive', 'outlaw']).notNullable()
 
-		table
-			.foreign('charId')
-			.references('charId')
-			.inTable('characters')
-			.onDelete('CASCADE')
+		// table
+		// 	.foreign('charId')
+		// 	.references('charId')
+		// 	.inTable('characters')
+		// 	.onDelete('CASCADE')
 	}),
 ]
 
