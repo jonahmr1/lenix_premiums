@@ -3,7 +3,7 @@ import bg1 from '@workspace/ui/assets/start/ls-1.png'
 import bg2 from '@workspace/ui/assets/start/ls-2.png'
 import bg3 from '@workspace/ui/assets/start/ls-3.png'
 import bg4 from '@workspace/ui/assets/start/ls-4.png'
-import { random } from "@lenix/lenix"
+import { random, type S } from "@lenix/lenix"
 import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
 import { fetchNui, focus, onKeyDown, onNuiEmit, unFocus } from "lenix/nui"
@@ -15,7 +15,6 @@ import hover from '@workspace/ui/assets/start/hover.mp3'
 import { useNavigate } from "react-router"
 import { NavKbd } from '@workspace/ui/elements/kbd'
 import type { Starting } from "types"
-import { DEV } from "@/App"
 
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -28,10 +27,9 @@ const playAudio = (src: 'hover' | 'click') => {
 	audio.play()
 }
 
-export const Main = () => {
+export const Main = ({ display, setDisplay }: { display: boolean, setDisplay: S<boolean> }) => {
 	/* TODO: based on last used */
 	const [selected, setSelected] = useState(0)
-	const [display, setDisplay] = useState(DEV)
 	const nav = useNavigate()
 
 	useEffect(() => {
