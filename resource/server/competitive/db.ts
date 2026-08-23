@@ -1,15 +1,7 @@
 import { oxmysql } from '@overextended/oxmysql'
-import knex from 'knex'
 import { fullName } from './utils'
+import { database, db } from '../db'
 
-
-const db = knex({ client: 'mysql' })
-
-const mySqlConnectionString = GetConvar('mysql_connection_string', '')
-if (!mySqlConnectionString.length) throw 'Could not get database name'
-
-const database = new URL(mySqlConnectionString).pathname.slice(1)
-if (!database.length) throw 'Could not get database name'
 
 const create = (
 	table: string,
