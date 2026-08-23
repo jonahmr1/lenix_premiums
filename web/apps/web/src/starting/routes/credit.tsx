@@ -3,6 +3,7 @@ import { Layout } from "@workspace/ui/elements/layout"
 import { onKeyDown } from "lenix/nui"
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
+import lenixm from '@workspace/ui/assets/start/lenixm.png'
 
 
 /* TODO: audio, scrollup */
@@ -40,7 +41,7 @@ export const Credit = () => {
 			<div className="flex flex-col items-center gap-10 w-full">
 				<p>Designed, Developed, Maintained by</p>
 				<img
-					src='https://business.lenix.dev/lenixm.png'
+					src={lenixm}
 					className="w-1/9 rounded"
 				/>
 				<p className="text-3xl font-bold text-shadow-sm italic text-shadow-white">LenixM</p>

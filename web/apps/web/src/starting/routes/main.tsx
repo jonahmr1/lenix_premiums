@@ -25,7 +25,7 @@ const image = backgrounds[random(0, backgrounds.length - 1)]
 const playAudio = (src: 'hover' | 'click') => {
 	const audio = new Audio(src === 'hover' ? hover : click)
 	audio.volume = src === 'hover' ? 0.03 : 1.0
-	 audio.play()
+	audio.play()
 }
 
 export const Main = () => {
