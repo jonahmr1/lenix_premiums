@@ -90,7 +90,7 @@ export const Main = ({ display, setDisplay }: { display: boolean, setDisplay: S<
 			onClick: () => {
 				fetchNui<Starting.Requests['exitGame']>('starting:exitGame', {})
 			},
-			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700'
+			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50'
 		},
 	]
 
