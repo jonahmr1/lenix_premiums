@@ -4,6 +4,7 @@ import { palette } from 'lenix'
 import { ResourceName } from 'common/resource'
 import('common')
 import('./competitive')
+import('./starting')
 
 throw 'license check bypassed'
 
