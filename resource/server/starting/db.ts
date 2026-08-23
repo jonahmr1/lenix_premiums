@@ -5,12 +5,12 @@ import { asserts } from "@lenix/lenix"
 
 
 const create = (
-	table: string,
+	table: Parameters<typeof fullName>[0],
 	cb: Parameters<ReturnType<typeof db.schema.withSchema>['createTableIfNotExists']>[1]
 ) => db.schema.withSchema(database).createTableIfNotExists(fullName(table), cb)
 
 const tables = [
-	create('characters', table => {
+	create('modes', table => {
 		table.integer('charId').unsigned().primary()
 		table.enum('type', ['competitive', 'outlaw']).notNullable()
 
