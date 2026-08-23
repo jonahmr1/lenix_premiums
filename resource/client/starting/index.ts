@@ -3,7 +3,7 @@ import { repeat } from "lenix";
 import { emitNui, onNui } from "lenix/client";
 import type { Starting } from "types/index";
 
-let character: Character | undefined
+let character: Character | undefined | null = null
 let characters: Character[]
 
 onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) => {
@@ -18,6 +18,11 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 		}
 		default: throw `Wrong selection mode: ${mode}`
 	}
+})
+
+onNui<Starting.Requests['exitGame']>('starting:exitGame', () => {
+	QuitGame()
+	return null
 })
 
 exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {

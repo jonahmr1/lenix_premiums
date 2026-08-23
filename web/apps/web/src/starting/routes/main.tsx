@@ -49,13 +49,15 @@ export const Main = () => {
 	const modes = [
 		{
 			label: 'Competitive',
-			onClick: async () => {
+			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
 			}
 		},
 		{
 			label: 'Outlaw',
-			onClick: () => toast.info('In Developement')
+			onClick: () => {
+				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'outlaw' })
+			}
 		},
 		{
 			label: 'Campaign',
@@ -72,7 +74,9 @@ export const Main = () => {
 		},
 		{
 			label: 'Exit Game',
-			onClick: () => toast.info('In Developement'),
+			onClick: () => {
+				fetchNui<Starting.Requests['exitGame']>('starting:exitGame', {})
+			},
 			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700'
 		},
 	]
