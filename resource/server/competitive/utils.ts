@@ -3,7 +3,7 @@ import type { Vec3, Vec4 } from "lenix"
 
 export const getProfileId = (client: number) => GetPlayerIdentifierByType(client.toString(), 'license')
 
-export const fullName = (table: string) => `lenix_competitive_${table}` as const
+export const fullName = (table: 'profiles' | 'friends' | 'matches' | 'performances') => `lenix_competitive_${table}` as const
 
 const WALL_OBJECT_LENGTH = 2.0
 
