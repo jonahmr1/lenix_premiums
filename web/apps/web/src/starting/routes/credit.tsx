@@ -25,6 +25,11 @@ export const Credit = () => {
 			names: ['WinkyQx'],
 			roles: [
 				'UI/UX Consultant',
+			],
+		},
+		{
+			names: ['WinkyQx', '3mr'],
+			roles: [
 				'Game Tester',
 			],
 		},
@@ -43,7 +48,7 @@ export const Credit = () => {
 			<div className="flex flex-col gap-5 w-full">
 				{credits.map(({ names, roles }, i) => (
 					<div key={i} className="flex gap-5">
-						<div className="flex flex-col items-end justify-center flex-1">
+						<div className="flex flex-col items-end justify-start flex-1">
 							{roles.map(role => (
 								<div key={role} className="flex flex-wrap justify-end gap-x-3 text-white/80 tracking-widest uppercase">
 									{role.split(' ').map((word, index) => (
@@ -54,7 +59,7 @@ export const Credit = () => {
 						</div>
 						<div className="flex-1">
 							{names.map(name => (
-								<span key={name}>{name}</span>
+								<p key={name}>{name}</p>
 							))}
 						</div>
 					</div>
