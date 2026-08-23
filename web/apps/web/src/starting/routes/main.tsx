@@ -6,7 +6,7 @@ import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
 import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
-import { onKeyDown } from "lenix/nui"
+import { fetchNui, onKeyDown } from "lenix/nui"
 import { toast } from "@workspace/ui/lib/utils"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
@@ -14,6 +14,7 @@ import click from '@workspace/ui/assets/start/click.mp3'
 import hover from '@workspace/ui/assets/start/hover.mp3'
 import { useNavigate } from "react-router"
 import { NavKbd } from '@workspace/ui/elements/kbd'
+import type { Starting } from "types"
 
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -30,11 +31,28 @@ export const Main = () => {
 	/* TODO: based on last used */
 	const [selected, setSelected] = useState(0)
 	const nav = useNavigate()
+
+	useEffect(() => {
+		const disposes = keys.map(key => (
+			onKeyDown(key, () => {
+				if (key === 'Enter') {
+					handleSubmit()
+					return
+				}
+				handleNav(key)
+			})
+		))
+
+		return () => disposes.forEach(dispose => dispose())
+	}, [selected])
 	
 	const modes = [
 		{
 			label: 'Competitive',
-			onClick: () => toast.info('Not available')
+			onClick: async () => {
+				const re = await fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
+				if (!re) toast.error('')
+			}
 		},
 		{
 			label: 'Outlaw',
@@ -62,7 +80,7 @@ export const Main = () => {
 
 	const disabledIndex = modes.findIndex(mod => mod.disabled)
 
-	const handleSelection = (index?: number) => {
+	const handleSubmit = (index?: number) => {
 		const selectedIndex = index ?? selected
 
 		setSelected(selectedIndex)
@@ -85,20 +103,6 @@ export const Main = () => {
 		)
 		playAudio('hover')
 	}
-
-	useEffect(() => {
-		const disposes = keys.map(key => (
-			onKeyDown(key, () => {
-				if (key === 'Enter') {
-					handleSelection()
-					return
-				}
-				handleNav(key)
-			})
-		))
-
-		return () => disposes.forEach(dispose => dispose())
-	}, [selected])
 	
 	return (
 		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
@@ -112,7 +116,7 @@ export const Main = () => {
 						<Button
 							key={i}
 							variant='default'
-							onClick={() => handleSelection(i)}
+							onClick={() => handleSubmit(i)}
 							onMouseEnter={() => playAudio('hover')}
 							disabled={i === disabledIndex}
 							className={`bg-transparent hover:bg-transparent text-shadow-xs text-shadow-white/50 uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white text-shadow-current'}`}

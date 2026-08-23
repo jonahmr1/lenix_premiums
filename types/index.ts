@@ -1,5 +1,6 @@
 import type { Event, Request } from 'lenix'
 import type { Public } from './public'
+import type { Character } from '@overextended/ox_core'
 
 export namespace Competitive {
 	export interface Events {
@@ -146,4 +147,13 @@ export namespace Competitive {
 	export type Stage = 'lobby' | 'loading' | 'in-game'
 
 	export type CasualMatch = Record<'own' | 'opponent', Match['teams'][number]>
+}
+
+export namespace Starting {
+	export interface Events {
+		modeSelection: Event<'starting:modeSelection', []>
+	}
+	export interface Requests {
+		selectMode: Request<boolean, 'starting:selectMode', { mode: 'competitive' | 'outlaw' }>
+	}
 }

@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@lenix/lenix": "npm:@jsr/lenix__lenix",
 		"@overextended/core": "^0.3.1",
+		"@overextended/ox_core": "^1.5.14",
 		"@overextended/ox_lib": "^3.35.0",
 		"@overextended/oxmysql": "^2.14.1",
 		"@polar-sh/sdk": "^1.0.0-alpha.16",
