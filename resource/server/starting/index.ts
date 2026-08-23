@@ -25,11 +25,9 @@ onClientCallback('lenix:server:starting:modeSelected', async (client, characters
 		return
 	}
 
-	const charIds = characters.map(char => char.charId)
-	
 	const re = await oxmysql.single<{ charId: number }>(
 		`SELECT charId FROM ${fullName('modes')} WHERE type = ? AND charId IN (?)`,
-		[mode, charIds]
+		[mode, characters.map(char => char.charId)]
 	)
 
 	if (!re) {
@@ -37,5 +35,7 @@ onClientCallback('lenix:server:starting:modeSelected', async (client, characters
 		return
 	}
 	
-	return characters.find(character => character.charId === re.charId)
+	const character = characters.find(character => character.charId === re.charId)
+	asserts(character, `Couldn't find client<${client}>'s character<${re.charId}>`)
+	return character
 })
