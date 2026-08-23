@@ -154,7 +154,8 @@ export namespace Starting {
 		modeSelection: Event<'starting:modeSelection', []>
 	}
 	export interface Requests {
-		selectMode: Request<null, 'starting:selectMode', { mode: 'competitive' | 'outlaw' }>
+		selectMode: Request<null, 'starting:selectMode', { mode: Mode }>
 		exitGame: Request<null, 'starting:exitGame'>
 	}
+	export type Mode = 'competitive' | 'outlaw'
 }
