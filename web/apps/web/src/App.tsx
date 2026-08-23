@@ -6,6 +6,8 @@ import '@workspace/ui/globals.css'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
+export const DEV = false
+
 export function App() {
 	return (
 		<>

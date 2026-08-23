@@ -18,7 +18,7 @@ import { config } from '@/rank/lib'
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@workspace/ui/components/context-menu'
 import { FAKE_PROFILE } from '@/rank/routes/valo/lobby'
 import { entries } from '@lenix/lenix'
-import { DEV } from '@/App.rank'
+import { DEV } from '@/App'
 
 const getRenderOrder = (count: number) => {
 	const order: number[] = []

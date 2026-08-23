@@ -6,7 +6,7 @@ import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
 import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
-import { fetchNui, onKeyDown, onNuiEmit } from "lenix/nui"
+import { fetchNui, focus, onKeyDown, onNuiEmit, unFocus } from "lenix/nui"
 import { toast } from "@workspace/ui/lib/utils"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
@@ -15,7 +15,7 @@ import hover from '@workspace/ui/assets/start/hover.mp3'
 import { useNavigate } from "react-router"
 import { NavKbd } from '@workspace/ui/elements/kbd'
 import type { Starting } from "types"
-import { DEV } from "@/App.rank"
+import { DEV } from "@/App"
 
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -38,6 +38,7 @@ export const Main = () => {
 		const disposes = [
 			...keys.map(key => (
 				onKeyDown(key, () => {
+					console.debug(key)
 					if (key === 'Enter') {
 						handleSubmit()
 						return
@@ -47,6 +48,7 @@ export const Main = () => {
 			)),
 			onNuiEmit<Starting.Events['modeSelection']>('starting:modeSelection', () => {
 				setDisplay(true)
+				focus()
 			})
 		]
 
@@ -61,6 +63,7 @@ export const Main = () => {
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
 				setDisplay(false)
+				unFocus()
 			}
 		},
 		{
@@ -68,6 +71,7 @@ export const Main = () => {
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'outlaw' })
 				setDisplay(false)
+				unFocus()
 			}
 		},
 		{
@@ -100,7 +104,6 @@ export const Main = () => {
 		setSelected(selectedIndex)
 		playAudio('click')
 		modes[selectedIndex].onClick()
-
 	}
 
 	const handleNav = (key: typeof keys[number]) => {
@@ -118,7 +121,7 @@ export const Main = () => {
 		)
 		playAudio('hover')
 	}
-	
+
 	return (
 		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
 			<img

@@ -14,4 +14,7 @@ export default defineConfig({
 			config: path.resolve(__dirname, '../../../public/config.competitive.json'),
 		},
 	},
+	build: {
+		minify: false
+	}
 })

@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
-import { DEV } from '@/App.rank'
+import { DEV } from '@/App'
 
 export const FAKE_PROFILE = {
 	name: 'Lenix',

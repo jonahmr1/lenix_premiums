@@ -3,10 +3,10 @@ import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { Separator } from "@workspace/ui/components/separator"
 import { Users } from "lucide-react"
 import { useEffect, useState } from "react"
-import { DEV } from "@/App.rank"
 import type { Competitive } from "types"
 import { config, showTimer } from "@/rank/lib"
 import { onNuiEmit } from "lenix/nui"
+import { DEV } from "@/App"
 
 type TeamType = 'own' | 'opponent'
 
