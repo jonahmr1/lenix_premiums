@@ -6,7 +6,7 @@ import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
 import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
-import { fetchNui, onKeyDown } from "lenix/nui"
+import { fetchNui, onKeyDown, onNuiEmit } from "lenix/nui"
 import { toast } from "@workspace/ui/lib/utils"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
@@ -15,6 +15,7 @@ import hover from '@workspace/ui/assets/start/hover.mp3'
 import { useNavigate } from "react-router"
 import { NavKbd } from '@workspace/ui/elements/kbd'
 import type { Starting } from "types"
+import { DEV } from "@/App.rank"
 
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -30,33 +31,43 @@ const playAudio = (src: 'hover' | 'click') => {
 export const Main = () => {
 	/* TODO: based on last used */
 	const [selected, setSelected] = useState(0)
+	const [display, setDisplay] = useState(DEV)
 	const nav = useNavigate()
 
 	useEffect(() => {
-		const disposes = keys.map(key => (
-			onKeyDown(key, () => {
-				if (key === 'Enter') {
-					handleSubmit()
-					return
-				}
-				handleNav(key)
+		const disposes = [
+			...keys.map(key => (
+				onKeyDown(key, () => {
+					if (key === 'Enter') {
+						handleSubmit()
+						return
+					}
+					handleNav(key)
+				})
+			)),
+			onNuiEmit<Starting.Events['modeSelection']>('starting:modeSelection', () => {
+				setDisplay(true)
 			})
-		))
+		]
 
 		return () => disposes.forEach(dispose => dispose())
 	}, [selected])
+
+	if (!display) return
 	
 	const modes = [
 		{
 			label: 'Competitive',
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
+				setDisplay(false)
 			}
 		},
 		{
 			label: 'Outlaw',
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'outlaw' })
+				setDisplay(false)
 			}
 		},
 		{
@@ -89,6 +100,7 @@ export const Main = () => {
 		setSelected(selectedIndex)
 		playAudio('click')
 		modes[selectedIndex].onClick()
+
 	}
 
 	const handleNav = (key: typeof keys[number]) => {
