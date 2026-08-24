@@ -4,7 +4,7 @@ import type { Competitive } from 'types/index'
 import './game'
 
 let open: boolean = false
-let inviterWhileUnFocused: Competitive.GamerProfile[] = []
+let invitersWhileUnFocused: Competitive.GamerProfile[] = []
 
 
 const getInvited = (inviter: Competitive.GamerProfile) =>
@@ -18,8 +18,8 @@ control.on({
 		emitEvent<Competitive.Events['open']>('competitive:open')
 		open = true
 		setTimeout(() => {
-			inviterWhileUnFocused.forEach(getInvited)
-			inviterWhileUnFocused = []
+			invitersWhileUnFocused.forEach(getInvited)
+			invitersWhileUnFocused = []
 		}, 1000)
 	},
 })
@@ -35,7 +35,7 @@ onNet('lenix:server:competitive:getInvited', async (inviter: Competitive.GamerPr
 		return
 	}
 	notify({ title: 'You have received a new invite' })
-	inviterWhileUnFocused.push(inviter)
+	invitersWhileUnFocused.push(inviter)
 })
 
 onNet('lenix:server:competitive:updateParty', (party: Competitive.Party) => {

@@ -1,4 +1,4 @@
 import 'common'
-import './competitive'
 import './starting'
+import './competitive'
 import './outlaw'
