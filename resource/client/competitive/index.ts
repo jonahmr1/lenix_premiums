@@ -32,6 +32,18 @@ onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
 	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
 )
 
+addEventListener('testm', (arg) => {
+	console.log(arg)
+})
+
+addEventListener('testit', (arg) => {
+	console.log(arg)
+}, true)
+
+RegisterCommand('hh', () => {
+	emitNet('testserver')
+	emit('testm', 'Hello')
+}, false)
 
 export const login = (logout: () => void) => {
 	logout()
