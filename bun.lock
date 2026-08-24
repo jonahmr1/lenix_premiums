@@ -12,7 +12,7 @@
         "@overextended/oxmysql": "^2.14.1",
         "@polar-sh/sdk": "^1.0.0-alpha.16",
         "knex": "^3.3.0",
-        "lenix": "^1.8.7",
+        "lenix": "^1.8.8",
       },
       "devDependencies": {
         "@citizenfx/client": "latest",
@@ -491,7 +491,7 @@
 
     "knex": ["knex@3.3.0", "", { "dependencies": { "colorette": "2.0.19", "commander": "^10.0.0", "debug": "4.3.4", "escalade": "^3.1.1", "esm": "^3.2.25", "get-package-type": "^0.1.0", "getopts": "2.3.0", "interpret": "^2.2.0", "lodash": "^4.18.1", "pg-connection-string": "2.6.2", "rechoir": "^0.8.0", "resolve-from": "^5.0.0", "tarn": "^3.1.0", "tildify": "2.0.0" }, "peerDependencies": { "better-sqlite3": "*", "mariadb": "*", "mysql": "*", "mysql2": "*", "pg": "*", "pg-native": "*", "pg-query-stream": "^4.14.0", "sqlite3": "*", "tedious": "*" }, "optionalPeers": ["better-sqlite3", "mariadb", "mysql", "mysql2", "pg", "pg-native", "pg-query-stream", "sqlite3", "tedious"], "bin": { "knex": "bin/cli.js" } }, "sha512-LgWl031hNuLv9Lhxdd9093zULa2aNcoP04Bk29e5NidgRcEr/T0rAr2WYi4BhjTiCDoQiRU56meUE5rppLKZzQ=="],
 
-    "lenix": ["lenix@1.8.7", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.16" }, "peerDependencies": { "typescript": "^5" } }, "sha512-cezi6jXeu6S6J8pFtyKVpvx/ZQss06F0sL2MZ2w3LYUsngHkrZeNvi+VwKjrpbOB+YxrvKI31tuWaN1y5JdBwQ=="],
+    "lenix": ["lenix@1.8.8", "", { "dependencies": { "@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.16" }, "peerDependencies": { "typescript": "^5" } }, "sha512-7qSmDRAjEt7VbS6tJ2msV0NAuF4JGHG0MrSmKI/fkQUYGh3lMiSnBglDJSSzOEaUzNPoZqYBmdl0tya/OFqD7g=="],
 
     "levn": ["levn@0.3.0", "", { "dependencies": { "prelude-ls": "~1.1.2", "type-check": "~0.3.2" } }, "sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA=="],
 

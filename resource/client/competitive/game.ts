@@ -1,7 +1,7 @@
-import { createObject, notify, onServerCallback } from '@overextended/ox_lib/client'
+import { createObject, onServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
 import { repeat, type Vec3, type Vec4 } from 'lenix'
-import { client, emitNui } from 'lenix/client'
+import { client } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 
@@ -30,7 +30,7 @@ onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): P
 })
 
 
-const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match['mode']) => {
+export const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match['mode']) => {
 	const WALL_HEIGHT = 3.0
 	const levels = 2
 
@@ -55,28 +55,3 @@ const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive.Match[
 		}
 	}
 }
-
-onNet('lenix:server:competitive:newRound', async (
-	mode: Competitive.Match['mode'],
-	round: Competitive.CasualMatch,
-	coords: Vec4,
-	walls: Vec4[]
-) => {
-	await createPreRoundStagingArea(walls, mode)
-
-	const ped = client.player.entity()
-	const weaponHash = GetHashKey('WEAPON_PISTOL')
-
-	client.player.teleport(...coords)
-
-	GiveWeaponToPed(ped, weaponHash, 9999, false, true)
-	SetCurrentPedWeapon(ped, weaponHash, true)
-	SetPedInfiniteAmmo(ped, true, weaponHash)
-	SetEntityHealth(ped, GetEntityMaxHealth(ped))
-
-	emitNui<Competitive.Events['newRound']>('competitive:newRound', mode, round)
-})
-
-onNet('lenix:server:competitive:updateRound', (teams: Competitive.CasualMatch) => {
-	emitNui<Competitive.Events['updateRound']>('competitive:updateRound', teams)
-})
