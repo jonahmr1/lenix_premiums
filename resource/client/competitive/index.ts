@@ -14,7 +14,7 @@ const getInvited = (inviter: Competitive.GamerProfile) =>
 
 control.on({
 	event: 'press',
-	key: 'K',
+	key: 'M',
 	onEvent: () => {
 		emitEvent<Competitive.Events['open']>('competitive:open')
 		open = true
