@@ -9,6 +9,7 @@ export default defineConfig({
 	base: './',
 	plugins: [react(), tailwindcss(), fivemTailwindFallback()],
 	resolve: {
+		dedupe: ['react', 'react-dom'],
 		alias: {
 			'@': path.resolve(__dirname, './src'),
 			config: path.resolve(__dirname, '../../../public/config.competitive.json'),
