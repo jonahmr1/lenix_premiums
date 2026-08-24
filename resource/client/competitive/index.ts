@@ -10,20 +10,6 @@ let invitersWhileUnFocused: Competitive.GamerProfile[] = []
 const getInvited = (inviter: Competitive.GamerProfile) =>
 	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
 
-
-control.on({
-	event: 'press',
-	key: 'M',
-	onEvent: () => {
-		emitEvent<Competitive.Events['open']>('competitive:open')
-		open = true
-		setTimeout(() => {
-			invitersWhileUnFocused.forEach(getInvited)
-			invitersWhileUnFocused = []
-		}, 1000)
-	},
-})
-
 onNui('competitive:unFocus', () => {
 	open = false
 	return null
@@ -45,3 +31,21 @@ onNet('lenix:server:competitive:updateParty', (party: Competitive.Party) => {
 onNet('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>
 	emitNui<Competitive.Events['updateStage']>('competitive:updateStage', stage)
 )
+
+
+export const login = (logout: () => void) => {
+	logout()
+	const remove = control.on({
+		event: 'press',
+		key: 'M',
+		onEvent: () => {
+			emitEvent<Competitive.Events['open']>('competitive:open')
+			open = true
+			setTimeout(() => {
+				invitersWhileUnFocused.forEach(getInvited)
+				invitersWhileUnFocused = []
+			}, 1000)
+		},
+	})
+	return remove
+}
