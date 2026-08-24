@@ -2,10 +2,8 @@ import { asserts } from '@lenix/lenix'
 import { createPolar, type Environment } from '@polar-sh/sdk/2026-04'
 import { palette } from 'lenix'
 import { ResourceName } from 'common/resource'
-import('common')
-import('./competitive')
-import('./starting')
 
+import './init'
 throw 'license check bypassed'
 
 const LICENSE = GetConvar('lenix:license_key', '')
@@ -84,8 +82,7 @@ setImmediate(async () => {
 
 		console.log(palette('green', 'License validated successfully'))
 
-		import('common')
-		import('./competitive')
+		import('./init')
 	} catch(e) {
 		console.log(palette('wine', String(e)))
 		ExecuteCommand('stop lenix_premiums')
