@@ -4,6 +4,9 @@ const PREVIEW_DISTANCE = 10.0
 const PREVIEW_WIDTH = 1.0
 const PREVIEW_HEIGHT = 1.0
 const PREVIEW_OFFSET = 0.005
+const PREVIEW_IMAGE = 'https://lenix.dev/icon.png'
+const PREVIEW_TEXTURE_DICTIONARY = 'lenix_outlaw_preview_d'
+const PREVIEW_TEXTURE_NAME = 'lenix_outlaw_preview'
 
 type WallCorners = {
 	topLeft: Vec3
@@ -124,11 +127,61 @@ const drawOutline = (corners: WallCorners) => {
 	}
 }
 
+const drawImage = (corners: WallCorners) => {
+	DrawSpritePoly(
+		corners.topLeft[0], corners.topLeft[1], corners.topLeft[2],
+		corners.topRight[0], corners.topRight[1], corners.topRight[2],
+		corners.bottomRight[0], corners.bottomRight[1], corners.bottomRight[2],
+		255, 255, 255, 255,
+		PREVIEW_TEXTURE_DICTIONARY,
+		PREVIEW_TEXTURE_NAME,
+		0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+	)
+
+	DrawSpritePoly(
+		corners.topLeft[0], corners.topLeft[1], corners.topLeft[2],
+		corners.bottomRight[0], corners.bottomRight[1], corners.bottomRight[2],
+		corners.bottomLeft[0], corners.bottomLeft[1], corners.bottomLeft[2],
+		255, 255, 255, 255,
+		PREVIEW_TEXTURE_DICTIONARY,
+		PREVIEW_TEXTURE_NAME,
+		0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+	)
+}
+
 let previewEnabled = false
 let previewTick: number | undefined
+let previewDui: any
+let previewTextureReady = false
+
+const createPreviewTexture = () => {
+	previewDui = CreateDui(PREVIEW_IMAGE, 512, 512)
+	previewTextureReady = false
+}
+
+const destroyPreviewTexture = () => {
+	if (previewDui) {
+		DestroyDui(previewDui)
+		previewDui = undefined
+	}
+
+	previewTextureReady = false
+}
+
+const ensurePreviewTexture = () => {
+	if (previewTextureReady || !previewDui || !IsDuiAvailable(previewDui)) return
+
+	const duiHandle = GetDuiHandle(previewDui)
+	if (!duiHandle) return
+
+	const txd = CreateRuntimeTxd(PREVIEW_TEXTURE_DICTIONARY)
+	CreateRuntimeTextureFromDuiHandle(txd, PREVIEW_TEXTURE_NAME, duiHandle)
+	previewTextureReady = true
+}
 
 const stopPreview = () => {
 	previewEnabled = false
+	destroyPreviewTexture()
 
 	if (previewTick !== undefined) {
 		clearTick(previewTick)
@@ -143,9 +196,14 @@ const togglePreview = () => {
 	}
 
 	previewEnabled = true
+	createPreviewTexture()
 	previewTick = setTick(() => {
+		ensurePreviewTexture()
 		const corners = getWallCorners()
-		if (corners) drawOutline(corners)
+		if (!corners) return
+
+		if (previewTextureReady) drawImage(corners)
+		drawOutline(corners)
 	})
 }
 
