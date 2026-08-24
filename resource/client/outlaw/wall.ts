@@ -153,6 +153,7 @@ let previewEnabled = false
 let previewTick: number | undefined
 let previewDui: any
 let previewTextureReady = false
+const sprayedWalls: WallCorners[] = []
 
 const createPreviewTexture = () => {
 	previewDui = CreateDui(PREVIEW_IMAGE, 512, 512)
@@ -199,10 +200,19 @@ const togglePreview = () => {
 	createPreviewTexture()
 	previewTick = setTick(() => {
 		ensurePreviewTexture()
+
+		if (previewTextureReady) {
+			for (const wall of sprayedWalls) drawImage(wall)
+		}
+
 		const corners = getWallCorners()
 		if (!corners) return
 
-		if (previewTextureReady) drawImage(corners)
+		if (previewTextureReady) {
+			if (IsControlJustPressed(0, 24)) sprayedWalls.push(corners)
+			drawImage(corners)
+		}
+
 		drawOutline(corners)
 	})
 }
