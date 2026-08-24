@@ -39,3 +39,7 @@ onClientCallback('lenix:server:starting:modeSelected', async (client, characters
 	asserts(character, `Couldn't find client<${client}>'s character<${re.charId}>`)
 	return character
 })
+
+onNet('lenix:server:starting:exitGame', () => {
+	DropPlayer(String(source), 'You exited the game')
+})

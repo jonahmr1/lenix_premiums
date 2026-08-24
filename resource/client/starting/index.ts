@@ -16,7 +16,7 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 })
 
 onNui<Starting.Requests['exitGame']>('starting:exitGame', () => {
-	ExecuteCommand('disconnect')
+	emitNet('lenix:server:starting:exitGame')
 	return null
 })
 
