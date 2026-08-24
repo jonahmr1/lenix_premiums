@@ -52,7 +52,7 @@ export const Main = ({ display, setDisplay }: { display: boolean, setDisplay: S<
 		return () => disposes.forEach(dispose => dispose())
 	}, [selected])
 
-	if (!display) return
+	if (!display) return null
 	
 	const buttons = [
 		{

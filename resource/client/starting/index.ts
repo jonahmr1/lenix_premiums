@@ -16,7 +16,7 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 })
 
 onNui<Starting.Requests['exitGame']>('starting:exitGame', () => {
-	QuitGame()
+	ExecuteCommand('disconnect')
 	return null
 })
 
