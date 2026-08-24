@@ -44,7 +44,7 @@
 		"@overextended/oxmysql": "^2.14.1",
 		"@polar-sh/sdk": "^1.0.0-alpha.16",
 		"knex": "^3.3.0",
-		"lenix": "^1.8.6"
+		"lenix": "^1.8.7"
 	},
 	"devDependencies": {
 		"@citizenfx/client": "latest",
