@@ -119,7 +119,7 @@ const drawOutline = (corners: WallCorners) => {
 		DrawLine(
 			from[0], from[1], from[2],
 			to[0], to[1], to[2],
-			255, 255, 255, 220,
+			0, 255, 0, 255,
 		)
 	}
 }
@@ -149,7 +149,7 @@ const togglePreview = () => {
 	})
 }
 
-RegisterCommand('outlaw_wall_preview', togglePreview, false)
+RegisterCommand('spray', togglePreview, false)
 
 on('onResourceStop', (resourceName: string) => {
 	if (resourceName === GetCurrentResourceName()) stopPreview()
