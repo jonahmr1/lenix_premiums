@@ -1,4 +1,4 @@
-import digitalMap from '@workspace/ui/assets/ipad/map-digital.png'
+import atlasMap from '@workspace/ui/assets/ipad/map-atlas.png'
 import satelliteMap from '@workspace/ui/assets/ipad/map-satellite.png'
 import {
 	TransformComponent,
@@ -6,7 +6,7 @@ import {
 } from 'react-zoom-pan-pinch'
 
 export const Spray = () => {
-	const map = [digitalMap, satelliteMap]
+	const map = [atlasMap, satelliteMap]
 	const zones: readonly {
 		styles: React.ComponentProps<'div'>['className']
 		zone: [number, number]
@@ -30,7 +30,7 @@ export const Spray = () => {
 					contentClass='relative !size-full'
 				>
 					<img
-						src={map[1]}
+						src={map[0]}
 						className='size-full object-cover rounded-b-2xl'
 					/>
 					{zones.map(({ styles, zone }, i) => (
