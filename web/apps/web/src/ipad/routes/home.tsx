@@ -11,7 +11,7 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 	return (
 		<div className='text-center'>
 			<Button
-				className='size-3xl! p-0 bg-background hover:bg-background rounded-xl cursor-pointer'
+				className='size-3xl! p-0 bg-transparent hover:bg-transparent rounded-xl cursor-pointer'
 				onClick={() => nav(`/${name}`)}
 			>
 				<div className={cn('size-full p-2 rounded-xl', styles)}>

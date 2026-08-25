@@ -5,7 +5,7 @@ import type { AppIcon } from './types'
 export const apps: AppIcon[] = [
 	{
 		name: 'Sprays War',
-		styles: 'bg-muted',
+		styles: 'bg-red-950',
 		icon: {
 			element: SprayCan,
 			styles: 'text-red-500',
@@ -14,7 +14,7 @@ export const apps: AppIcon[] = [
 	},
 	{
 		name: 'Leaderboard',
-		styles: 'bg-muted',
+		styles: 'bg-orange-950',
 		icon: {
 			element: Trophy,
 			styles: 'text-orange-500',
