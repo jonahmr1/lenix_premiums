@@ -29,7 +29,7 @@ export const Ipad = () => {
 	return (
 		<Layout className='relative h-screen'>
 			<div
-				className={`rounded-xl ring-20 ring-black ${orientation === 'portrait' ? 'h-9/10 aspect-3/4' : 'w-8/10 h-9/10'}`}
+				className={`rounded-xl ring-20 ring-black h-9/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
 			>
 				<div className='relative size-full overflow-hidden'>
 					<img src={tabletBg} className='absolute size-full' alt='' />
