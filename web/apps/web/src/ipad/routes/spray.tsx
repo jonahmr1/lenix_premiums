@@ -29,20 +29,22 @@ export const Spray = () => {
 					wrapperClass='!size-full'
 					contentClass='relative !size-full'
 				>
-					<img
-						src={map[0]}
-						className='size-full object-cover rounded-b-2xl'
-					/>
-					{zones.map(({ styles, zone }, i) => (
-						<div
-							key={i}
-							className={`absolute size-3 rounded-full ${styles} opacity-80`}
-							style={{
-								top: `${zone[0]}%`,
-								left: `${zone[1]}%`,
-							}}
+					<div className='absolute left-1/2 top-1/2 h-[100vw] w-[100vh] -translate-x-1/2 -translate-y-1/2 landscape:-rotate-90 active:cursor-grabbing'>
+						<img
+							src={map[0]}
+							className='size-full rounded-b-2xl object-contain'
 						/>
-					))}
+						{zones.map(({ styles, zone }, i) => (
+							<div
+								key={i}
+								className={`absolute size-3 rounded-full ${styles} opacity-80`}
+								style={{
+									top: `${zone[0]}%`,
+									left: `${zone[1]}%`,
+								}}
+							/>
+						))}
+					</div>
 				</TransformComponent>
 			</TransformWrapper>
 		</div>
