@@ -9,6 +9,7 @@ import { apps } from './ipad/constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
 import { Layout } from '@workspace/ui/elements/layout'
+import { DEV } from './App'
 
 const AppFragment = ({ appName, children }: { appName: string; children: React.ReactNode }) => (
 	<div className='relative z-10 flex size-full bg-background rounded-xl overflow-hidden'>
@@ -17,7 +18,7 @@ const AppFragment = ({ appName, children }: { appName: string; children: React.R
 )
 
 export const Ipad = () => {
-	const [display, _setDisplay] = useState(false)
+	const [display, _setDisplay] = useState(DEV)
 	const [orientation, setOrientation] = useState<Orientation>(
 		storage.get<Storage, 'orientation'>('orientation') || 'portrait',
 	)

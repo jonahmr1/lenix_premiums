@@ -62,7 +62,7 @@ export const Main = ({ display, setDisplay }: { display: boolean, setDisplay: S<
 				setDisplay(false)
 				unFocus()
 			},
-			// disabled: true
+			disabled: true
 		},
 		{
 			label: 'Outlaw',
