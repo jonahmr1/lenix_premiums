@@ -11,14 +11,14 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 	return (
 		<div className='text-center'>
 			<Button
-				className='size-15 p-0 bg-background hover:bg-background rounded-xl cursor-pointer'
+				className='size-[7vmin] p-0 bg-background hover:bg-background rounded-xl cursor-pointer'
 				onClick={() => nav(`/${name}`)}
 			>
 				<div className={cn('size-full p-2 rounded-xl', styles)}>
 					<Element className={cn('size-full', iconStyles)} />
 				</div>
 			</Button>
-			<p className='text-white text-xs font-bold drop-shadow-lg drop-shadow-black'>{name}</p>
+			<p className='text-white text-fluid-2 font-bold drop-shadow-lg drop-shadow-black'>{name}</p>
 		</div>
 	)
 }
