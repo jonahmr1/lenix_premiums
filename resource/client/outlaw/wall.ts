@@ -156,6 +156,7 @@ let previewTextureReady = false
 const sprayedWalls: WallCorners[] = []
 
 const createPreviewTexture = () => {
+	console.log(`[outlaw:spray] creating DUI: ${PREVIEW_IMAGE}`)
 	previewDui = CreateDui(PREVIEW_IMAGE, 512, 512)
 	previewTextureReady = false
 }
@@ -178,6 +179,7 @@ const ensurePreviewTexture = () => {
 	const txd = CreateRuntimeTxd(PREVIEW_TEXTURE_DICTIONARY)
 	CreateRuntimeTextureFromDuiHandle(txd, PREVIEW_TEXTURE_NAME, duiHandle)
 	previewTextureReady = true
+	console.log(`[outlaw:spray] texture ready: ${PREVIEW_TEXTURE_DICTIONARY}/${PREVIEW_TEXTURE_NAME}`)
 }
 
 const stopPreview = () => {
@@ -193,10 +195,12 @@ const stopPreview = () => {
 const togglePreview = () => {
 	if (previewEnabled) {
 		stopPreview()
+		console.log('[outlaw:spray] stopped')
 		return
 	}
 
 	previewEnabled = true
+	console.log('[outlaw:spray] started')
 	createPreviewTexture()
 	previewTick = setTick(() => {
 		ensurePreviewTexture()
@@ -205,13 +209,17 @@ const togglePreview = () => {
 			for (const wall of sprayedWalls) drawImage(wall)
 		}
 
+		const clicked = IsControlJustPressed(0, 24)
 		const corners = getWallCorners()
+
+		if (clicked) {
+			console.log(`[outlaw:spray] click | wall=${Boolean(corners)} | texture=${previewTextureReady}`)
+			if (corners) sprayedWalls.push(corners)
+		}
+
 		if (!corners) return
 
-		if (previewTextureReady) {
-			if (IsControlJustPressed(0, 24)) sprayedWalls.push(corners)
-			drawImage(corners)
-		}
+		if (previewTextureReady) drawImage(corners)
 
 		drawOutline(corners)
 	})
