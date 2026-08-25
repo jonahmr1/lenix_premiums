@@ -11,20 +11,20 @@ export const Index = ({ appName, children }: { appName: string; children: React.
 		<div className='size-full flex overflow-hidden flex-col'>
 			<div className='bg-card h-6/100 w-full overflow-hidden px-2 items-center justify-between flex'>
 				<div className='flex items-center gap-2'>
-					<Button variant='destructive' className='px-1 rounded-full' size='xs' onClick={() => nav('/')}>
+					<Button variant='destructive' className='px-1 rounded-full size-md!' onClick={() => nav('/')}>
 						<X />
 					</Button>
 					<ButtonGroup>
-						<Button variant='secondary' className='h-full' onClick={() => nav(-1)}>
+						<Button variant='secondary' className='h-full size-lg' onClick={() => nav(-1)}>
 							<ArrowLeft />
 						</Button>
-						<Button variant='secondary' className='h-full' disabled>
+						<Button variant='secondary' className='h-full size-lg' disabled>
 							<ArrowRight />
 						</Button>
 					</ButtonGroup>
 				</div>
 				<div>
-					<p className='text-muted-foreground'>{appName}</p>
+					<p className='text-muted-foreground text-fluid-2'>{appName}</p>
 				</div>
 			</div>
 			<Separator className='bg-muted-foreground' />
