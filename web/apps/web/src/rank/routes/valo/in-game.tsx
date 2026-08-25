@@ -96,7 +96,7 @@ export const InGame = () => {
 		}
 	}, [])
 
-	if (!teams) return
+	if (!teams) return null
 
 	const ownPlayersLeft = teams.own.players.filter(player => !player.isDead).length
 	const opponentPlayersLeft = teams.opponent.players.filter(player => !player.isDead).length

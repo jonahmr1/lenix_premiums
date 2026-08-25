@@ -17,6 +17,7 @@ const AppFragment = ({ appName, children }: { appName: string; children: React.R
 )
 
 export const Ipad = () => {
+	const [display, _setDisplay] = useState(false)
 	const [orientation, setOrientation] = useState<Orientation>(
 		storage.get<Storage, 'orientation'>('orientation') || 'portrait',
 	)
@@ -25,6 +26,8 @@ export const Ipad = () => {
 	useEffect(() => {
 		storage.set<Storage>('orientation', orientation)
 	}, [orientation])
+
+	if (!display) return null
 
 	return (
 		<Layout className='relative h-screen'>

@@ -59,7 +59,7 @@ export const Lobby = () => {
 		})
 	}, [display])
 
-	if (!display) return
+	if (!display) return null
 
 	const pages: Pick<Route, 'to' | 'label' | 'element'>[] = [
 		{
