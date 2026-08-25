@@ -19,7 +19,7 @@ export const toggleTheme = (theme: Storage['theme'] = getTheme() === 'dark' ? 'l
 }
 
 export const useTheme = () => {
-	const [theme, setTheme] = useState(getTheme)
+	const [theme, setTheme] = useState<Storage['theme']>(getTheme)
 
 	const toggle = () => {
 		const nextTheme = theme === 'dark' ? 'light' : 'dark'
