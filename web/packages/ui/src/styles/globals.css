@@ -14,7 +14,7 @@
 }
 
 @utility text-fluid-* {
-	font-size: calc(--value(integer) * 1vmin);
+	font-size: calc(--value(number) * 1vmin);
 }
 
 @theme inline {
