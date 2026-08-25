@@ -8,7 +8,7 @@ import { Rank } from './App.rank'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-export const DEV = true
+export const DEV = false
 
 export function App() {
 	return (
