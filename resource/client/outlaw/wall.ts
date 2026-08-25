@@ -84,8 +84,11 @@ const getWallCorners = (): WallCorners | undefined => {
 
 	if (!hit || !hitCoords || !surfaceNormal) return
 
-	const normal = normalize(surfaceNormal)
+	let normal = normalize(surfaceNormal)
 	if (normal[0] === 0 && normal[1] === 0 && normal[2] === 0) return
+
+	const toCamera = normalize(subtract(camera, hitCoords))
+	if (dot(normal, toCamera) < 0) normal = multiply(normal, -1)
 
 	const worldUp: Vec3 = [0, 0, 1]
 	let up = normalize(subtract(worldUp, multiply(normal, dot(worldUp, normal))))
@@ -94,7 +97,7 @@ const getWallCorners = (): WallCorners | undefined => {
 		up = normalize(subtract([1, 0, 0], multiply(normal, normal[0])))
 	}
 
-	const right = normalize(cross(up, normal))
+	const right = normalize(cross(normal, up))
 	const center = add(hitCoords, multiply(normal, PREVIEW_OFFSET))
 	const halfWidth = PREVIEW_WIDTH / 2
 	const halfHeight = PREVIEW_HEIGHT / 2
@@ -135,7 +138,7 @@ const drawImage = (corners: WallCorners) => {
 		255, 255, 255, 255,
 		PREVIEW_TEXTURE_DICTIONARY,
 		PREVIEW_TEXTURE_NAME,
-		0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+		0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0,
 	)
 
 	DrawSpritePoly(
