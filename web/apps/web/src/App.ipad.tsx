@@ -8,6 +8,7 @@ import type { Orientation, Storage } from '@/ipad/types'
 import { apps } from './ipad/constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
+import { Layout } from '@workspace/ui/elements/layout'
 
 const AppFragment = ({ appName, children }: { appName: string; children: React.ReactNode }) => (
 	<div className='relative z-10 flex size-full bg-background rounded-xl overflow-hidden'>
@@ -26,7 +27,7 @@ export const Ipad = () => {
 	}, [orientation])
 
 	return (
-		<div className='relative flex h-screen w-full items-center justify-center'>
+		<Layout className='relative h-screen'>
 			<div
 				className={`rounded-xl ring-20 ring-black ${orientation === 'portrait' ? 'h-9/10 aspect-3/4' : 'w-8/10 h-9/10'}`}
 			>
@@ -58,6 +59,6 @@ export const Ipad = () => {
 					</MemoryRouter>
 				</div>
 			</div>
-		</div>
+		</Layout>
 	)
 }
