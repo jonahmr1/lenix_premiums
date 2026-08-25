@@ -80,7 +80,7 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 					wrapperClass='!size-full'
 					contentClass='!size-full'
 				>
-					<div className='relative size-full rounded-b-2xl overflow-hidden @container-size'>
+					<div className='relative size-full rounded-b-2xl overflow-hidden @container-size active:cursor-grabbing'>
 						<div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${orientation === 'portrait' ? 'h-[100cqh] w-[100cqw] rotate-0' : 'h-[100cqw] w-[100cqh] -rotate-90'}`}>
 							<img
 								src={map}

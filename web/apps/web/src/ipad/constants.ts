@@ -4,7 +4,7 @@ import type { AppIcon } from './types'
 
 export const apps: AppIcon[] = [
 	{
-		name: 'Gang Management',
+		name: 'Gang',
 		styles: 'bg-blue-950',
 		icon: {
 			element: Skull,
