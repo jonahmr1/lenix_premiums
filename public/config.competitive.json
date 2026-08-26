@@ -40,7 +40,7 @@
 		"casual": {
 			"label": "Casual",
 			"min_players_per_team": 1,
-			"rounds": 3,
+			"rounds": 5,
 			"round_time": 60,
 			"pre_and_post_round_time": 10,
 			"maps_allowed": [

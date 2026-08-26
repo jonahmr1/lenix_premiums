@@ -1,6 +1,6 @@
 import './wall'
 import { notify } from '@overextended/ox_lib/client'
-import { client, control, emitNui as emitEvent, emitNui, onNetEvent, onNui } from 'lenix/client'
+import { control, emitNui as emitEvent, emitNui, entity, onNetEvent, onNui, player } from 'lenix/client'
 import type { Competitive } from 'types/index'
 import type { Vec4 } from 'lenix'
 import { createPreRoundStagingArea } from './game'
@@ -58,10 +58,10 @@ export const login = (logout: () => void) => {
 		) => {
 			await createPreRoundStagingArea(walls, mode)
 		
-			const ped = client.player.entity()
+			const ped = player.entity()
 			const weaponHash = GetHashKey('WEAPON_PISTOL')
 		
-			client.player.teleport(...coords)
+			entity.teleport(...coords)
 		
 			GiveWeaponToPed(ped, weaponHash, 9999, false, true)
 			SetCurrentPedWeapon(ped, weaponHash, true)

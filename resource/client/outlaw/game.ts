@@ -1,15 +1,16 @@
+import { repeat } from '@lenix/lenix'
 import { createObject, onServerCallback } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/competitive'
-import { repeat, type Vec3, type Vec4 } from 'lenix'
-import { client } from 'lenix/client'
+import { type Vec3, type Vec4 } from 'lenix'
+import { entity, player } from 'lenix/client'
 import type { Competitive } from 'types/index'
 
 
 onServerCallback('lenix:server:competitive:getPrepared', async (coords: Vec3): Promise<Competitive.APIs['prepareForMatch']> => {
-	const ped = client.player.entity()
+	const ped = player.entity()
 
 	SetFocusPosAndVel(...coords, 0, 0, 0)
-	client.player.teleport(...coords)
+	entity.teleport(...coords)
 
 	try {
 		return await repeat(() => {
