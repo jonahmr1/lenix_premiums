@@ -3,7 +3,9 @@ import fg from 'fast-glob'
 import { dirname, extname } from 'node:path'
 import type Package from '../package.json'
 import { generateInterface } from './typegen.ts'
-import { sleep, waitFor } from '@overextended/core/utils'
+import { waitFor } from '@overextended/core/utils'
+
+generateInterface('public')
 
 function reduceArray(name: string, files?: string[]): string {
 	return files?.[0]
@@ -99,8 +101,6 @@ ${web ? `ui_page 'dist/web/index.html'` : ``}
 ${reduceArray('files', files)}`
 
 	if (body === fxmanifest) return
-
-	generateInterface('public')
 
 	console.log(`Generated new fxmanifest.lua`)
 	fxmanifest = body
