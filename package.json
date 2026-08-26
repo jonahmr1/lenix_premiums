@@ -37,14 +37,14 @@
 		"i": "bun i && cd web && bun run i"
 	},
 	"dependencies": {
-		"@lenix/lenix": "npm:@jsr/lenix__lenix",
+		"@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.20",
 		"@overextended/core": "^0.3.1",
 		"@overextended/ox_core": "^1.5.14",
 		"@overextended/ox_lib": "^3.35.0",
 		"@overextended/oxmysql": "^2.14.1",
 		"@polar-sh/sdk": "^1.0.0-alpha.16",
 		"knex": "^3.3.0",
-		"lenix": "^1.8.8"
+		"lenix": "^1.8.10"
 	},
 	"devDependencies": {
 		"@citizenfx/client": "latest",
