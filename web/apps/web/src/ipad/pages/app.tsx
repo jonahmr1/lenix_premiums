@@ -12,14 +12,14 @@ export const Index = ({ appName, children }: { appName: string; children: React.
 			<div className='bg-card h-6/100 w-full overflow-hidden px-2 items-center justify-between flex'>
 				<div className='flex items-center gap-2'>
 					<Button variant='destructive' className='px-1 rounded-full size-md!' onClick={() => nav('/')}>
-						<X />
+						<X className='size-sm'/>
 					</Button>
 					<ButtonGroup>
 						<Button variant='secondary' className='h-full size-lg' onClick={() => nav(-1)}>
-							<ArrowLeft />
+							<ArrowLeft className='size-sm' />
 						</Button>
 						<Button variant='secondary' className='h-full size-lg' disabled>
-							<ArrowRight />
+							<ArrowRight className='size-sm' />
 						</Button>
 					</ButtonGroup>
 				</div>
