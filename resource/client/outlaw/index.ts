@@ -1,6 +1,6 @@
 import './wall'
 import { notify } from '@overextended/ox_lib/client'
-import { control, emitNui as emitEvent, emitNui, entity, onNetEvent, onNui, player } from 'lenix/client'
+import { control, emitNui, entity, onNetEvent, onNui, player } from 'lenix/client'
 import type { Competitive } from 'types/index'
 import type { Vec4 } from 'lenix'
 import { createPreRoundStagingArea } from './game'
@@ -10,7 +10,7 @@ let invitersWhileUnFocused: Competitive.GamerProfile[] = []
 
 
 const getInvited = (inviter: Competitive.GamerProfile) =>
-	emitEvent<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
+	emitNui<Competitive.Events['playerInvited']>('competitive:playerInvited', inviter)
 
 onNui('competitive:unFocus', () => {
 	open = false
@@ -24,7 +24,7 @@ export const login = (logout: () => void) => {
 			event: 'press',
 			key: 'M',
 			onEvent: () => {
-				emitEvent<Competitive.Events['open']>('competitive:open')
+				emitNui<Competitive.Events['open']>('competitive:open')
 				open = true
 				setTimeout(() => {
 					invitersWhileUnFocused.forEach(getInvited)
@@ -43,7 +43,7 @@ export const login = (logout: () => void) => {
 		}),
 		
 		onNetEvent('lenix:server:competitive:updateParty', (party: Competitive.Party) => {
-			emitEvent<Competitive.Events['updateParty']>('competitive:updateParty', party)
+			emitNui<Competitive.Events['updateParty']>('competitive:updateParty', party)
 		}),
 		
 		onNetEvent('lenix:server:competitive:updateStage', (stage: Competitive.Stage) =>

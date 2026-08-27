@@ -9,6 +9,9 @@
 
 
 ## Installation
+# add_ace resource.lenix_premiums command.stop allow
+set lenix:license_key ....
+
 - paste in workspace dir
 
 ```json
