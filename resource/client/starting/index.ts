@@ -30,11 +30,6 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 	return null
 })
 
-onNui<Starting.Requests['exitGame']>('starting:exitGame', () => {
-	emitNet('lenix:server:starting:exitGame')
-	return null
-})
-
 globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	character = null
 	characters = chars

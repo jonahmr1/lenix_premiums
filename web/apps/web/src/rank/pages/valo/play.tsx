@@ -50,7 +50,7 @@ export const Play = ({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
 				roomAvailable: 3,
-				status: 'searching',
+				status: 'idle',
 				gameMode: 'casual'
 			})
 			return

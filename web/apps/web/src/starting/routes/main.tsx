@@ -9,7 +9,7 @@ export const Main = () => {
 
 	useEffect(() => {
 		if (DEV) {
-			nav('/menu')
+			nav('/pause')
 			return
 		}
 		const disposes = [

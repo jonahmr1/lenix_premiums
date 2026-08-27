@@ -155,6 +155,7 @@ export namespace Starting {
 	export interface Requests {
 		selectMode: Request<null, 'starting:selectMode', { mode: Mode }>
 		exitGame: Request<null, 'starting:exitGame'>
+		logout: Request<null, 'starting:logout'>
 	}
 	export type Mode = 'competitive' | 'outlaw'
 }

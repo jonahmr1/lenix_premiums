@@ -24,7 +24,7 @@ const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
 	return (
 		<div className="flex items-center gap-0.5">
 			<Users size={8} strokeWidth={3} />
-			<p className="text-fluid-xs pt-0.5">{playersLeft}</p>
+			<p className="text-fluid-2 pt-0.5">{playersLeft}</p>
 		</div>
 	)
 }
