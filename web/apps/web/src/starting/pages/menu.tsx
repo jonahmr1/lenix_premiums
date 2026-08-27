@@ -34,7 +34,6 @@ export const Menu = () => {
 					handleNav(key)
 				})
 			)),
-			
 		]
 
 		return () => disposes.forEach(dispose => dispose())
@@ -45,6 +44,7 @@ export const Menu = () => {
 			label: 'Competitive',
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
+				nav('/')
 				unFocus()
 			},
 			disabled: true
@@ -53,6 +53,7 @@ export const Menu = () => {
 			label: 'Outlaw',
 			onClick: () => {
 				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'outlaw' })
+				nav('/')
 				unFocus()
 			}
 		},

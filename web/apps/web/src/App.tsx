@@ -10,18 +10,15 @@ toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
 export const DEV = false
 
-export function App() {
-	return (
-		<>
-			{DEV && (
-				<img
-					src="/ped.png"
-					className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
-				/>
-			)}
-			<Ipad />
-			<Rank />
-			<Starting />
-		</>
-	)
-}
+export const App = () => (
+	<>
+		{DEV && (
+			<img
+				src="/ped.png"
+				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
+		)}
+		<Ipad />
+		<Rank />
+		<Starting />
+	</>
+)
