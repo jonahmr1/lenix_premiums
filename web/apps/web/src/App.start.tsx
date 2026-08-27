@@ -1,6 +1,6 @@
 import { Toaster } from "@workspace/ui/components/sonner"
 import { MemoryRouter, Route, Routes } from "react-router"
-import { Credit } from "./starting/routes/credit"
+import { Credit } from "./starting/pages/credit"
 import { Main } from "./starting/routes/main"
 import { Menu } from "./starting/pages/menu"
 import { Pause } from "./starting/pages/pause"
