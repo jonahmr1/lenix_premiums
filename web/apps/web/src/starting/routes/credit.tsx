@@ -11,7 +11,7 @@ export const Credit = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		const dispose = onKeyDown('Escape', () => nav('/'))
+		const dispose = onKeyDown('Escape', () => nav(-1))
 		return dispose
 	}, [])
 
@@ -68,7 +68,7 @@ export const Credit = () => {
 			</div>
 			<div className="w-full flex justify-end px-20">
 				<NavKbd
-					onClick={() => nav('/')}
+					onClick={() => nav(-1)}
 					icon='Esc'
 				>
 					Back
