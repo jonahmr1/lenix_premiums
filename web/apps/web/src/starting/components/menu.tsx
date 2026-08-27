@@ -8,12 +8,18 @@ import { audiobility } from "@workspace/ui/lib/utils"
 
 const keys = ['ArrowUp', 'ArrowDown', 'Enter'] as const
 
-export const Menu = ({ buttons }: {
+export const Menu = ({ buttons, kbds }: {
 	buttons: {
 		label: string
 		onClick: () => void
 		disabled?: boolean
 		styles?: React.ComponentProps<'button'>['className']
+	}[]
+	kbds: {
+		onClick: () => void
+		label: string
+		disable: 'hover' | 'click'
+		icon: React.ReactNode
 	}[]
 }) => {
 	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
@@ -24,11 +30,18 @@ export const Menu = ({ buttons }: {
 		const disposes = [
 			...keys.map(key => (
 				onKeyDown(key, () => {
-					if (key === 'Enter') {
-						handleSubmit()
-						return
+					switch(key) {
+						case 'Enter': handleSubmit()
+						break
+
+						case 'ArrowDown': handleNav(key)
+						break
+
+						case 'ArrowUp': handleNav(key)
+						break
+
+						default:
 					}
-					handleNav(key)
 				})
 			)),
 		]
@@ -40,7 +53,7 @@ export const Menu = ({ buttons }: {
 		const selectedIndex = index ?? selected
 
 		setSelected(selectedIndex)
-		audiobility.onMouseDown()
+		index === undefined && audiobility.onMouseDown()
 		buttons[selectedIndex].onClick()
 	}
 
@@ -51,11 +64,11 @@ export const Menu = ({ buttons }: {
 		setSelected(key === 'ArrowUp' ? previousSelection : nextSelection)
 		audiobility.onMouseEnter()
 	}
-	
+
 	return (
 		<div className="flex size-full">
 			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
-				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-2">
+				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-2 -rotate-1">
 					{buttons.map((button, i) => (
 						<Button
 							key={i}
@@ -68,7 +81,7 @@ export const Menu = ({ buttons }: {
 					))}
 				</div>
 			</div>
-			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-5">
+			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-3">
 				<NavKbd
 					onClick={() => handleNav('ArrowUp')}
 					icon={<ArrowUp />}
@@ -83,6 +96,16 @@ export const Menu = ({ buttons }: {
 				>
 					Next
 				</NavKbd>
+				{kbds.map((kbd, i) => (
+					<NavKbd
+						key={i}
+						onClick={kbd.onClick}
+						icon={kbd.icon}
+						disable={kbd.disable}
+					>
+						{kbd.label}
+					</NavKbd>
+				))}
 			</KbdGroup>
 		</div>
 	)

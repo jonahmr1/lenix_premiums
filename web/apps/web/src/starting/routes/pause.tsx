@@ -1,14 +1,31 @@
 import { Layout } from "@workspace/ui/elements/layout"
 import { Menu } from "../components/menu"
-import { toast } from "@workspace/ui/lib/utils"
-import { fetchNuiServer } from "lenix/nui"
+import { audiobility, toast } from "@workspace/ui/lib/utils"
+import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
 import type { Starting } from "types"
 import { useNavigate } from "react-router"
+import { useEffect } from "react"
 
 export const Pause = () => {
 	const nav = useNavigate()
 
+	useEffect(() => {
+		const dispose = onKeyDown('Escape', handleEscape)
+
+		return dispose
+	}, [])
+
+	const handleEscape = (disableClickAudio?: true) => {
+		disableClickAudio !== true && audiobility.onMouseDown()
+		unFocus()
+		nav('/')
+	}
+
 	const buttons = [
+		{
+			label: 'Resume',
+			onClick: () => handleEscape(true)
+		},
 		{
 			label: 'Options',
 			onClick: () => toast.info('Coming soon')
@@ -21,9 +38,17 @@ export const Pause = () => {
 			}
 		},
 	]
+	
 	return (
 		<Layout className='h-screen backdrop-blur-xs'>
-			<Menu buttons={buttons} />
+			<Menu buttons={buttons} kbds={[
+				{
+					label: 'Resume',
+					icon: 'Esc',
+					disable: 'click',
+					onClick: handleEscape
+				}
+			]} />
 		</Layout>
 	)
 }
