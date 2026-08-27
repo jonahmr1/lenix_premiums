@@ -68,7 +68,7 @@ export const Menu = ({ buttons, kbds }: {
 	return (
 		<div className="flex size-full">
 			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
-				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-2 -rotate-1">
+				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center">
 					{buttons.map((button, i) => (
 						<Button
 							key={i}
