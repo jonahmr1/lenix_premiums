@@ -1,27 +1,24 @@
-import { Layout } from "@workspace/ui/elements/layout"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { NavKbd } from '@workspace/ui/elements/kbd'
-import bg1 from '@workspace/ui/assets/start/ls-1.png'
-import bg2 from '@workspace/ui/assets/start/ls-2.png'
-import bg3 from '@workspace/ui/assets/start/ls-3.png'
-import bg4 from '@workspace/ui/assets/start/ls-4.png'
-import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
-import { fetchNui, onKeyDown, unFocus } from "lenix/nui"
-import { audiobility, toast } from "@workspace/ui/lib/utils"
-import { useNavigate } from "react-router"
-import type { Starting } from "types"
+import { onKeyDown } from "lenix/nui"
+import { audiobility } from "@workspace/ui/lib/utils"
 
-const backgrounds = [bg1, bg2, bg3, bg4]
-const image = backgrounds[random(0, backgrounds.length - 1)]
 const keys = ['ArrowUp', 'ArrowDown', 'Enter'] as const
 
-export const Menu = () => {
+export const Menu = ({ buttons }: {
+	buttons: {
+		label: string
+		onClick: () => void
+		disabled?: boolean
+		styles?: React.ComponentProps<'button'>['className']
+	}[]
+}) => {
+	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
 	/* TODO: based on last used */
-	const [selected, setSelected] = useState(1)
-	const nav = useNavigate()
+	const [selected, setSelected] = useState(filteredIndexes[0])
 
 	useEffect(() => {
 		const disposes = [
@@ -38,48 +35,6 @@ export const Menu = () => {
 
 		return () => disposes.forEach(dispose => dispose())
 	}, [selected])
-	
-	const buttons = [
-		{
-			label: 'Competitive',
-			onClick: () => {
-				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'competitive' })
-				nav('/')
-				unFocus()
-			},
-			disabled: true
-		},
-		{
-			label: 'Outlaw',
-			onClick: () => {
-				fetchNui<Starting.Requests['selectMode']>('starting:selectMode', { mode: 'outlaw' })
-				nav('/')
-				unFocus()
-			}
-		},
-		{
-			label: 'Campaign',
-			onClick: () => {},
-			disabled: true
-		},
-		{
-			label: 'Options',
-			onClick: () => toast.info('Coming soon')
-		},
-		{
-			label: 'Credit',
-			onClick: () => nav('/credit')
-		},
-		{
-			label: 'Exit Game',
-			onClick: () => {
-				fetchNui<Starting.Requests['exitGame']>('starting:exitGame', {})
-			},
-			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50'
-		},
-	]
-
-	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
 	
 	const handleSubmit = (index?: number) => {
 		const selectedIndex = index ?? selected
@@ -98,11 +53,7 @@ export const Menu = () => {
 	}
 	
 	return (
-		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
-			<img
-				src={image}
-				className="absolute -z-1 size-full object-cover"
-			/>
+		<div className="flex size-full">
 			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
 				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center perspective-2">
 					{buttons.map((button, i) => (
@@ -133,6 +84,6 @@ export const Menu = () => {
 					Next
 				</NavKbd>
 			</KbdGroup>
-		</Layout>
+		</div>
 	)
 }
