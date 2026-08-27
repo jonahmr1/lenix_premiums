@@ -10,21 +10,13 @@ import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
 import { fetchNui, onKeyDown, unFocus } from "lenix/nui"
-import { toast } from "@workspace/ui/lib/utils"
+import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { useNavigate } from "react-router"
 import type { Starting } from "types"
-import click from '@workspace/ui/assets/start/click.mp3'
-import hover from '@workspace/ui/assets/start/hover.mp3'
 
 const backgrounds = [bg1, bg2, bg3, bg4]
 const image = backgrounds[random(0, backgrounds.length - 1)]
 const keys = ['ArrowUp', 'ArrowDown', 'Enter'] as const
-
-const playAudio = (src: 'hover' | 'click') => {
-	const audio = new Audio(src === 'hover' ? hover : click)
-	audio.volume = src === 'hover' ? 0.03 : 1.0
-	audio.play()
-}
 
 export const Menu = () => {
 	/* TODO: based on last used */
@@ -92,7 +84,7 @@ export const Menu = () => {
 		const selectedIndex = index ?? selected
 
 		setSelected(selectedIndex)
-		playAudio('click')
+		audiobility.onMouseDown()
 		buttons[selectedIndex].onClick()
 	}
 
@@ -101,7 +93,7 @@ export const Menu = () => {
 		const nextSelection = filteredIndexes[filteredIndexes.indexOf(selected) + 1] ?? filteredIndexes[0]
 
 		setSelected(key === 'ArrowUp' ? previousSelection : nextSelection)
-		playAudio('hover')
+		audiobility.onMouseEnter()
 	}
 	
 	return (
@@ -117,9 +109,9 @@ export const Menu = () => {
 							key={i}
 							variant='default'
 							onClick={() => handleSubmit(i)}
-							onMouseEnter={() => playAudio('hover')}
 							disabled={!filteredIndexes.includes(i)}
 							className={`bg-transparent hover:bg-transparent text-shadow-xs text-shadow-white/50 uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white text-shadow-current'}`}
+							{...audiobility}
 						>{button.label}</Button>
 					))}
 				</div>
@@ -127,12 +119,16 @@ export const Menu = () => {
 			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-5">
 				<NavKbd
 					onClick={() => handleNav('ArrowUp')}
-					icon={<ArrowUp />}>
+					icon={<ArrowUp />}
+					disable='click'
+				>
 					Previous
 				</NavKbd>
 				<NavKbd
 					onClick={() => handleNav('ArrowDown')}
-					icon={<ArrowDown />}>
+					icon={<ArrowDown />}
+					disable='click'
+				>
 					Next
 				</NavKbd>
 			</KbdGroup>
