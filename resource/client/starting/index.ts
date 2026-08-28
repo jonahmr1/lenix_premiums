@@ -1,7 +1,7 @@
 import type { Character } from "@overextended/ox_core";
 import { triggerServerCallback } from "@overextended/ox_lib/client";
 import { repeat } from "@lenix/lenix";
-import { control, emitNui, isNuiReady, onNui } from "lenix/client";
+import { control, emitNui, isNuiReady, onNui, pool } from "lenix/client";
 import type { Starting } from "types/index";
 import { login as competitive } from "../competitive";
 import { login as outlaw } from "../outlaw";
@@ -47,3 +47,5 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 
 	return repeat(() => character, character => character !== null, 500)
 })
+
+pool(DisableFrontendThisFrame)
