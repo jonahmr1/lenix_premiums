@@ -17,6 +17,10 @@ export const Main = () => {
 				nav('/start')
 				focus()
 			}),
+			onNuiEmit<Starting.Events['pause']>('starting:pause', () => {
+				nav('/pause')
+				focus()
+			})
 		]
 
 		return () => {

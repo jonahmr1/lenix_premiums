@@ -1,7 +1,7 @@
 import './wall'
 import { notify } from '@overextended/ox_lib/client'
 import { control, emitNui, entity, onNetEvent, onNui, player } from 'lenix/client'
-import type { Competitive } from 'types/index'
+import type { Competitive, Starting } from 'types/index'
 import type { Vec4 } from 'lenix'
 import { createPreRoundStagingArea } from './game'
 
@@ -31,6 +31,12 @@ export const login = (logout: () => void) => {
 					invitersWhileUnFocused = []
 				}, 1000)
 			},
+		}),
+
+		control.on({
+			event: 'press',
+			key: 'ESCAPE',
+			onEvent: () => emitNui<Starting.Events['pause']>('starting:pause')
 		}),
 	
 		onNetEvent('lenix:server:competitive:getInvited', async (inviter: Competitive.GamerProfile) => {

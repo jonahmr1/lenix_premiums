@@ -151,6 +151,7 @@ export namespace Competitive {
 export namespace Starting {
 	export interface Events {
 		modeSelection: Event<'starting:modeSelection', []>
+		pause: Event<'starting:pause', []>
 	}
 	export interface Requests {
 		selectMode: Request<null, 'starting:selectMode', { mode: Mode }>
