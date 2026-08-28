@@ -1,5 +1,5 @@
 {
-	"$schema": "./config.competitive.schema.json",
+	"$schema": "./config.outlaw.schema.json",
 	"game_maps": {
 		"italien_street": {
 			"label": "Italien Street",

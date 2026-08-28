@@ -12,7 +12,7 @@ export default defineConfig({
 		dedupe: ['react', 'react-dom'],
 		alias: {
 			'@': path.resolve(__dirname, './src'),
-			config: path.resolve(__dirname, '../../../public/config.competitive.json'),
+			config: path.resolve(__dirname, '../../../public/config.outlaw.json'),
 		},
 	},
 	build: {

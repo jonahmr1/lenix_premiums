@@ -25,7 +25,7 @@
 			"@workspace/elite/*": ["../../packages/elite/src/*"],
 			"@workspace/valo/*": ["../../packages/valo/src/*"],
 			"types": ["../../../types/index"],
-			"config": ["../../../public/config.competitive.json"]
+			"config": ["../../../public/config.outlaw.json"]
 		}
 	},
 	"include": ["src", "../../packages/elite/src/elements/loading.tsx"]

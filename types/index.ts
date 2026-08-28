@@ -138,8 +138,8 @@ export namespace Competitive {
 		avatar: GamerProfile['avatar']
 	}[]
 
-	export type GameModes = Public['public/config.competitive.json']['game_modes']
-	export type GameMaps = Public['public/config.competitive.json']['game_maps']
+	export type GameModes = Public['public/config.outlaw.json']['game_modes']
+	export type GameMaps = Public['public/config.outlaw.json']['game_maps']
 	export type GameMode = keyof GameModes
 	export type GameMap = keyof GameMaps
 
