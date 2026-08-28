@@ -107,7 +107,7 @@ setImmediate(() => {
 })
 
 const load = async () => {
-	const targets = await Promise.all(PEDS.map(async ({ coords, spawn, menu }, i) => {
+	const disposes = await Promise.all(PEDS.map(async ({ coords, spawn, menu }, i) => {
 		const name = `rental_${i}`
 		const entity = await createPed('a_m_m_prolhost_01', ...coords, true)
 
@@ -141,13 +141,11 @@ const load = async () => {
 			},
 		})
 
-		return [name, entity.handle] as const
+		return () => api.ox_target?.removeLocalEntity?.(entity.handle, name)
 	}))
 
 	return () => {
-		for (const [name, handle] of targets) {
-			api.ox_target?.removeLocalEntity?.(handle, name)
-		}
+		for (const dispose of disposes) dispose()
 	}
 }
 

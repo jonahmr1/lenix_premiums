@@ -302,7 +302,7 @@ const crash = () => {
 }
 
 const load = async () => {
-	const entities = await Promise.all([...config.peds].map(async (ped, i) => {
+	const disposes = await Promise.all([...config.peds].map(async (ped, i) => {
 		const takeName = `take_task_${i}`
 		const abortName = `abort_task_${i}`
 
@@ -327,13 +327,11 @@ const load = async () => {
 			},
 		])
 
-		return [takeName, abortName, entity.handle] as const
+		return () => api.ox_target?.removeLocalEntity?.(entity.handle, [takeName, abortName])
 	}))
 
 	return () => {
-		for (const [takeName, abortName, target] of entities) {
-			api.ox_target?.removeLocalEntity?.(target, [takeName, abortName])
-		}
+		for (const dispose of disposes) dispose()
 		crash()
 	}
 }
