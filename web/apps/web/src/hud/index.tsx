@@ -19,7 +19,7 @@ export const Hud = () => {
 
 	useEffect(() => {
 		if (DEV) {
-			setState({ clip: 100, reserve: 0 })
+			setState({ clip: 40, reserve: 85 })
 			return
 		}
 		const disposes = [
@@ -37,7 +37,7 @@ export const Hud = () => {
 	return (
 		<div className='absolute w-full flex justify-end p-5 bg-muted'>
 			<div className='flex gap-1 items-end'>
-				<div className='font-number text-3xl'>
+				<div className='font-number text-3xl text-foreground/75'>
 					{zeroed(clip, 2)}
 				</div>
 				<div className='font-number text-xl font-thin opacity-66'>
