@@ -14,7 +14,7 @@ export const Main = () => {
 		}
 		const disposes = [
 			onNuiEmit<Starting.Events['modeSelection']>('starting:modeSelection', () => {
-				nav('/menu')
+				nav('/start')
 				focus()
 			}),
 		]
