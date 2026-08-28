@@ -46,12 +46,12 @@ export const createPreRoundStagingArea = async (walls: Vec4[], mode: Competitive
 				h,
 			)
 
-			SetEntityVisible(obj.handle, Config.wall_debug, false)
+			SetEntityVisible(obj.handle, Config.rank.wall_debug, false)
 			SetEntityCollision(obj.handle, true, true)
 
 			setTimeout(() => {
 				DeleteEntity(obj.handle)
-			}, Config.game_modes[mode].pre_and_post_round_time * 1000)
+			}, Config.rank.game_modes[mode].pre_and_post_round_time * 1000)
 		}
 	}
 }
