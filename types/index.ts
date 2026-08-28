@@ -160,3 +160,10 @@ export namespace Starting {
 	}
 	export type Mode = 'competitive' | 'outlaw'
 }
+
+export namespace Outlaw {
+	export interface Events {
+		displayHud: Event<'hud:display', [boolean]>
+		updateHud: Event<'hud:update', [{ clip: number | string, reserve: number | string }]>
+	}
+}

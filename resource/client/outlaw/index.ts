@@ -1,6 +1,6 @@
 import './wall'
 import emotes from './emotes'
-import rank from './rank.lobby'
+import rank from './rank.interface'
 
 export const login = (logout: () => void) => {
 	logout()
