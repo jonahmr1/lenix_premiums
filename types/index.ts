@@ -191,8 +191,8 @@ export namespace Outlaw {
 }
 
 export namespace Roster {
-	type DutyState = 'on' | 'off' | 'break'
-	type TalkState = 'on' | 'off'
+	export type DutyState = 'on' | 'off' | 'break'
+	export type TalkState = 'on' | 'off'
 
 	export interface Officer {
 		playerId: number
@@ -207,7 +207,7 @@ export namespace Roster {
 		[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
 	}[keyof T]
 
-	type OfficerUpdates = AtLeastOne<Omit<Officer, 'playerId'>>
+	export type OfficerUpdates = AtLeastOne<Omit<Officer, 'playerId'>>
 
 	export type PartialOfficer = {
 		playerId: Officer['playerId']
