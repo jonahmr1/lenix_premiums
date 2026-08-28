@@ -1,6 +1,6 @@
 import './wall'
 import emotes from './emotes'
-import rank from './rank.interface'
+import rank from './rank'
 import identities from './identities'
 import radialmenu from './radialmenu'
 import criminaltask from './criminaltask'
