@@ -15,7 +15,7 @@ export const Menu = ({ buttons, kbds }: {
 		disabled?: boolean
 		styles?: React.ComponentProps<'button'>['className']
 	}[]
-	kbds: {
+	kbds?: {
 		onClick: () => void
 		label: string
 		disable: 'hover' | 'click'
@@ -96,7 +96,7 @@ export const Menu = ({ buttons, kbds }: {
 				>
 					Next
 				</NavKbd>
-				{kbds.map((kbd, i) => (
+				{kbds?.map((kbd, i) => (
 					<NavKbd
 						key={i}
 						onClick={kbd.onClick}
