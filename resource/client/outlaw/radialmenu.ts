@@ -64,11 +64,9 @@ onCache('vehicle', vehicle => {
 	removeRadialItem('vehicle-menu')
 })
 
-
-
 export default [
 	addRadialItem(radiaItems),
-	
+
 	() => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id)),
 
 	onNetEvent('ox:setGroup', (groupName: string, _grade: number) => {

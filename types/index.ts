@@ -166,4 +166,12 @@ export namespace Outlaw {
 		displayHud: Event<'hud:display', [boolean]>
 		updateHud: Event<'hud:update', [{ clip: number | string, reserve: number | string }]>
 	}
+	
+	export interface Criminial {
+		success: boolean
+		error?: string
+		item?: string
+		amount?: number
+		response?: string
+	}
 }
