@@ -302,13 +302,13 @@ const crash = () => {
 }
 
 const load = async () => {
-	const entities = await Promise.all([...config.peds].map(async ped => {
+	const entities = await Promise.all([...config.peds].map(async (ped, i) => {
 		const entity = await createPed(ped.model, [...ped.coords], ped.scenario)
 
 		api.ox_target?.addLocalEntity?.(entity.handle, [
 			{
 				label: config.settings.ped.take.targetLabel,
-				name: 'take_task',
+				name: `take_task_${i}`,
 				icon: config.settings.ped.take.targetIcon,
 				onSelect: takeTask,
 				canInteract: () => isPlayerFree,
@@ -316,7 +316,7 @@ const load = async () => {
 			},
 			{
 				label: config.settings.ped.abort.targetLabel,
-				name: 'abort_task',
+				name: `abort_task_${i}`,
 				icon: config.settings.ped.abort.targetIcon,
 				onSelect: abortTask,
 				canInteract: () => !isPlayerFree,
@@ -324,11 +324,13 @@ const load = async () => {
 			},
 		])
 
-		return entity.handle
+		return [i, entity.handle] as const
 	}))
 
 	return () => {
-		for (const target of entities) api.ox_target?.removeLocalEntity?.(target, ['take_task', 'abort_task'])
+		for (const [i, target] of entities) {
+			api.ox_target?.removeLocalEntity?.(target, [`take_task_${i}`, `abort_task_${i}`])
+		}
 		crash()
 	}
 }
