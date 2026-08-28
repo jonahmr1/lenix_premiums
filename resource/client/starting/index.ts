@@ -1,7 +1,7 @@
 import type { Character } from "@overextended/ox_core";
 import { triggerServerCallback } from "@overextended/ox_lib/client";
 import { repeat } from "@lenix/lenix";
-import { emitNui, isNuiReady, onNui } from "lenix/client";
+import { control, emitNui, isNuiReady, onNui } from "lenix/client";
 import type { Starting } from "types/index";
 import { login as competitive } from "../competitive";
 import { login as outlaw } from "../outlaw";
@@ -29,6 +29,14 @@ onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) =
 
 	return null
 })
+
+control.on({
+	event: 'press',
+	key: 'ESCAPE',
+	onEvent: () => {
+		emitNui<Starting.Events['pause']>('starting:pause')
+	}
+}),
 
 globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	character = null

@@ -32,12 +32,6 @@ export const login = (logout: () => void) => {
 				}, 1000)
 			},
 		}),
-
-		control.on({
-			event: 'press',
-			key: 'ESCAPE',
-			onEvent: () => emitNui<Starting.Events['pause']>('starting:pause')
-		}),
 	
 		onNetEvent('lenix:server:competitive:getInvited', async (inviter: Competitive.GamerProfile) => {
 			if (open) {

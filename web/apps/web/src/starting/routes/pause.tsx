@@ -1,7 +1,7 @@
 import { Layout } from "@workspace/ui/elements/layout"
 import { Menu } from "../components/menu"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
-import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
+import { fetchNui, fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
 import type { Starting } from "types"
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
@@ -40,7 +40,7 @@ export const Pause = () => {
 	]
 	
 	return (
-		<Layout className='h-screen backdrop-blur-xs'>
+		<Layout className='h-screen bg-black/50'>
 			<Menu buttons={buttons} kbds={[
 				{
 					label: 'Resume',
