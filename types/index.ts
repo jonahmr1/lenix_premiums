@@ -174,4 +174,9 @@ export namespace Outlaw {
 		amount?: number
 		response?: string
 	}
+
+	export interface Robbery {
+		leader: number
+		members: number[]
+	}
 }
