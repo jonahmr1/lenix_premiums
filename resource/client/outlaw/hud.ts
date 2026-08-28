@@ -1,6 +1,6 @@
 import { State } from '@lenix/lenix'
 import { cache, checkDependency } from '@overextended/ox_lib'
-import { emitNui, pool } from 'lenix/client'
+import { emitNui, onEvent, pool } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 
@@ -40,18 +40,20 @@ const updateReserve = (reserve: number) => {
 	emitNui<Outlaw.Events['updateHud']>('hud:update', { clip: state.clip, reserve })
 }
 
-on('ox_inventory:currentWeapon', (weapon: OxWeapon) => {
-	if (!weapon) return
-
-	const reserve = api.ox_inventory?.GetItemCount?.<number, [unknown]>(weapon.ammo) ?? 0
-	updateReserve(reserve)
-})
-
-on('ox_inventory:itemCount', (itemName: string, totalCount: number) => {
-	const weapon = api.ox_inventory?.getCurrentWeapon<OxWeapon>?.()
-	if (!weapon || weapon.ammo !== itemName) return
-
-	updateReserve(totalCount)
-})
-
-pool(setHudState)
+export default [
+	onEvent('ox_inventory:currentWeapon', (weapon: OxWeapon) => {
+		if (!weapon) return
+	
+		const reserve = api.ox_inventory?.GetItemCount?.<number, [unknown]>(weapon.ammo) ?? 0
+		updateReserve(reserve)
+	}),
+	
+	onEvent('ox_inventory:itemCount', (itemName: string, totalCount: number) => {
+		const weapon = api.ox_inventory?.getCurrentWeapon<OxWeapon>?.()
+		if (!weapon || weapon.ammo !== itemName) return
+	
+		updateReserve(totalCount)
+	}),
+	
+	pool(setHudState)
+]
