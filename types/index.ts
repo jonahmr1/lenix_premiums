@@ -101,7 +101,7 @@ export namespace Competitive {
 	}
 
 	export type Party = {
-		profiles: (GamerProfile & { 
+		profiles: (GamerProfile & {
 			ready: boolean
 		})[]
 		leader: GamerProfile['sessionId']
@@ -126,7 +126,7 @@ export namespace Competitive {
 		}[]
 		parties: {
 			party: Party
-			lastStatus: Record<string,GamerProfile['status'] >
+			lastStatus: Record<string, GamerProfile['status']>
 		}[]
 	}
 
@@ -168,13 +168,14 @@ export namespace Outlaw {
 		addOfficer: Event<'roster:addOfficer', [Roster.Officer]>
 		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
 		displayRoster: Event<'roster:display', [boolean, number]>
+		updateTopscoreData: Event<'topscore:updateData', [Topscore.Data]>
 	}
 
 	export interface Requests {
 		updateOfficer: Request<null, 'roster:updateOfficer', Roster.PartialOfficer>
 		triggerCallsign: Request<null, 'roster:callsign'>
 	}
-	
+
 	export interface Criminial {
 		success: boolean
 		error?: string
@@ -211,4 +212,26 @@ export namespace Roster {
 	export type PartialOfficer = {
 		playerId: Officer['playerId']
 	} & OfficerUpdates
+}
+
+export namespace Topscore {
+	export type Data = Record<
+		1 | 2 | 3,
+		{
+			scale: number
+			bottom: number
+			left: number
+			visible: boolean
+			name: string
+			avatar: string
+			stats: {
+				kills: number
+				deaths: number
+				wins: number
+				kd: number
+			}
+		}
+	>
+	
+	export type ContextData = Record<1 | 2 | 3, Omit<Data[1], 'scale' | 'bottom' | 'left' | 'visible'>>
 }
