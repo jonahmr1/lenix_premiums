@@ -1,6 +1,6 @@
 import { cache, checkDependency, inputDialog, notify } from '@overextended/ox_lib/client'
 import { GetPlayer } from '@overextended/ox_core/client'
-import { control, emitNui, onNui } from 'lenix/client'
+import { control, emitNui, onEvent, onNetEvent, onNui } from 'lenix/client'
 import { State } from '@lenix/lenix'
 import { Config } from 'common/config/outlaw'
 import type { Outlaw, Roster } from 'types/index'
@@ -49,27 +49,28 @@ onNui<Outlaw.Requests['triggerCallsign']>('roster:callsign', () => {
 	return null
 })
 
-onNet('lenix:client:roster:refreshOfficers', (officers: Roster.Officers) => {
-	emitNui<Outlaw.Events['refreshOfficers']>('roster:refreshOfficers', officers)
-})
-
-on('lenix:client:roster:toggleDisplay', () => {
-	const player = GetPlayer()
-	if (typeof player.getGroup('police') !== 'number') return
-
-	emitNui<Outlaw.Events['displayRoster']>('roster:display', state.display, cache.serverId)
-	state.display = !state.display
-})
-
-control.on({
-	event: 'press',
-	key: 'U',
-	onEvent: () => emit('lenix:client:roster:toggleDisplay')
-})
-
-control.on({
-	event: 'press',
-	key: 'F11',
-	onEvent: () => SetNuiFocus(true, true)
-})
-
+export default [
+	onNetEvent('lenix:client:roster:refreshOfficers', (officers: Roster.Officers) => {
+		emitNui<Outlaw.Events['refreshOfficers']>('roster:refreshOfficers', officers)
+	}),
+	
+	onEvent('lenix:client:roster:toggleDisplay', () => {
+		const player = GetPlayer()
+		if (typeof player.getGroup('police') !== 'number') return
+	
+		emitNui<Outlaw.Events['displayRoster']>('roster:display', state.display, cache.serverId)
+		state.display = !state.display
+	}),
+	
+	control.on({
+		event: 'press',
+		key: 'U',
+		onEvent: () => emit('lenix:client:roster:toggleDisplay')
+	}),
+	
+	control.on({
+		event: 'press',
+		key: 'F11',
+		onEvent: () => SetNuiFocus(true, true)
+	})
+]
