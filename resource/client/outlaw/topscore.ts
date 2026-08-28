@@ -29,7 +29,7 @@ let players: Topscore.ContextData | undefined
 const getData = async () => {
 	const data = await triggerServerCallback<Topscore.ContextData>('lenix:server:topscore:getData', refreshInterval)
 	players = data ?? {
-		'1': {
+		1: {
 			name: 'Lenix',
 			avatar: 'https://lenix.dev/icon.png',
 			stats: {
@@ -39,7 +39,7 @@ const getData = async () => {
 				kd: 2,
 			},
 		},
-		'2': {
+		2: {
 			name: 'Lenix',
 			avatar: 'https://lenix.dev/icon.png',
 			stats: {
@@ -49,7 +49,7 @@ const getData = async () => {
 				kd: 2,
 			},
 		},
-		'3': {
+		3: {
 			name: 'Lenix',
 			avatar: 'https://lenix.dev/icon.png',
 			stats: {
