@@ -14,7 +14,7 @@ import {
 } from '@overextended/ox_lib/client'
 import { Config } from 'common/config/outlaw'
 import type { Vec3, Vec4 } from 'lenix'
-import { useTimer, getNearest, entity } from 'lenix/client'
+import { useTimer, getNearest, entity, onNetEvent } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 
@@ -110,196 +110,6 @@ const refreshContext = async () => {
 	})
 }
 
-onNet('lenix:client:robbery:receiveInvite', (inviter: number) => {
-	if (inviteTick) return
-
-	const stop = useTimer({
-		duration: 10000,
-		updateInterval: 1000,
-		onTick: timeLeft => {
-			showTextUI(`E - Show robbery invite - ${Math.ceil(timeLeft / 1000)}s`, {
-				position: 'bottom-center',
-			})
-		},
-		onEnd: () => {
-			hideTextUI()
-			clearTick(inviteTick)
-			inviteTick = 0
-		},
-	})
-
-	inviteTick = setTick(async () => {
-		if (IsControlJustPressed(0, 38)) {
-			stop()
-			hideTextUI()
-			clearTick(inviteTick)
-			inviteTick = 0
-			const res = await alertDialog({
-				header: 'Robbery Invite',
-				content: `The player #${inviter} is inviting you to join his to a robbery mission`,
-				centered: true,
-				cancel: true,
-			})
-			emitNet('lenix:server:robbery:inviteDone', inviter, res satisfies 'cancel' | 'confirm')
-		}
-	})
-})
-
-onNet('lenix:client:robbery:updatePlayer', (updatedTeam: Outlaw.Robbery | undefined) => {
-	if (!team) {
-		clearTick(blipTick)
-	}
-	team = updatedTeam
-	refreshContext()
-})
-
-onNet('lenix:client:robbery:startrobbery', async (netId: number) => {
-	const vehicle = await new Promise<number>(resolve => {
-		const interval = setInterval(() => {
-			const entity = NetworkGetEntityFromNetworkId(netId)
-			if (entity > 0 && DoesEntityExist(entity)) {
-				clearInterval(interval)
-				resolve(entity)
-			}
-		}, 100)
-	})
-
-	if (!vehicle) return
-
-	const seats = GetVehicleModelNumberOfSeats(GetHashKey(Config.robbery.vehicle_model))
-	const hash = await requestModel(PEDS_MODEL)
-	const peds: number[] = []
-	let guardsFedUp = false
-
-	for (let seat = -1; seat < seats - 1; seat++) {
-		const ped = CreatePedInsideVehicle(vehicle, 26, hash, seat, true, false)
-		SetBlockingOfNonTemporaryEvents(ped, true)
-		SetPedFleeAttributes(ped, 0, false)
-		GiveWeaponToPed(ped, GetHashKey('weapon_pistol'), 9999, false, true)
-		SetPedInfiniteAmmo(ped, true, GetHashKey('weapon_pistol'))
-		SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), true)
-		SetPedCombatAttributes(ped, 0, true)
-		SetPedCombatAttributes(ped, 46, true)
-		SetPedCombatAttributes(ped, 5, true)
-		SetPedCombatRange(ped, 2)
-		SetPedCombatAbility(ped, 2)
-		SetPedCombatMovement(ped, 3)
-		SetPedConfigFlag(ped, 183, true)
-		SetPedConfigFlag(ped, 4, true)
-		SetPedShootRate(ped, 50)
-		if (seat === -1) TaskVehicleDriveWander(ped, vehicle, 20.0, 786468)
-		peds.push(ped)
-	}
-
-	blipTick = setTick(() => {
-		if (NetworkGetEntityOwner(vehicle) !== PlayerId()) return
-
-		if (guardsFedUp) {
-			peds.forEach(ped => {
-				if (IsEntityDead(ped)) return
-				if (IsPedInAnyVehicle(ped, false)) return
-				if (IsPedInCombat(ped, 0)) return
-				const pedCoords = GetEntityCoords(ped, true) as Vec3
-				const { playerPed } = getNearest.player(pedCoords, 100.0, true)
-				if (playerPed) TaskCombatPed(ped, playerPed, 0, 16)
-			})
-		} else if (GetVehicleDoorAngleRatio(vehicle, 1) > 0.1 || GetVehicleDoorAngleRatio(vehicle, 3) > 0.1) {
-			guardsFedUp = true
-			peds.forEach(ped => {
-				SetBlockingOfNonTemporaryEvents(ped, false)
-				SetPedFleeAttributes(ped, 0, false)
-				TaskLeaveVehicle(ped, vehicle, 0)
-			})
-		}
-	})
-
-	const breakDoor = async (side: 'left' | 'right') => {
-		const drillAmount = api.ox_inventory?.GetItemCount?.<number, [unknown]>(DRILL_ITEM) ?? 0
-		if (drillAmount < 1) {
-			notify({
-				title: "You're missing a drill",
-			})
-			return
-		}
-		const success = await api['glitch-minigames']?.StartPlasmaDrilling?.(5)
-		if (!success) return notify({
-			title: 'Failed to drill the door'
-		})
-
-		vehicleDoorsBroken[side] = true
-
-		if (!vehicleDoorsBroken['left'] || !vehicleDoorsBroken['right']) return
-
-		const veh = entity.handle(netId)
-		SetVehicleDoorOpen(veh, 2, false, false)
-		SetVehicleDoorOpen(veh, 3, false, false)
-
-		api.ox_target?.removeEntity?.(netId, `${side}-door`)
-	}
-
-	api.ox_target?.addEntity?.(netId, [
-		{
-			name: 'left-door',
-			label: 'Break Left Door',
-			bones: 'door_dside_r',
-			canInteract: () => team,
-			onSelect: async () => {
-				breakDoor('left')
-			},
-		},
-		{
-			name: 'right-door',
-			label: 'Break Right Door',
-			bones: 'door_pside_r',
-			canInteract: () => team,
-			onSelect: async () => breakDoor('right'),
-		},
-		{
-			name: 'take-money',
-			label: 'Take Money',
-			bones: ['door_pside_r', 'door_dside_r'],
-			canInteract: () => team && vehicleDoorsBroken['left'] && vehicleDoorsBroken['right'],
-			onSelect: async () => {
-				const res = await progressBar({
-					label: 'Taking money',
-					duration: 10000,
-					canCancel: false,
-					disable: {
-						combat: true,
-						move: true,
-					},
-					anim: {
-						dict: 'anim@scripted@heist@ig1_table_grab@gold@male@',
-						clip: 'grab',
-					},
-					prop: {
-						model: 'hei_p_m_bag_var22_arm_s',
-						bone: 24818,
-						pos: {
-							x: -0.31,
-							y: 0.0,
-							z: 0.0,
-						},
-						rot: {
-							x: 160.0,
-							y: -85.0,
-							z: 10.0,
-						},
-					},
-				})
-				if (!res) return
-
-				vehicleDoorsBroken['left'] = false
-				vehicleDoorsBroken['right'] = false
-				clearTick(blipTick)
-				api.ox_target?.removeEntity?.(netId, 'take-money')
-
-				emitNet('lenix:server:robbery:takemoney')
-			},
-		},
-	])
-})
-
 AddStateBagChangeHandler('robberyVehicleCoords', null, (_bag: string, key: string, coords: Vec3) => {
 	if (!coords || key !== 'robberyVehicleCoords') {
 		RemoveBlip(blip)
@@ -329,3 +139,196 @@ setImmediate(async () => {
 		},
 	})
 })
+
+/* TODO: handle logout mid robbery */
+export default [
+	onNetEvent('lenix:client:robbery:receiveInvite', (inviter: number) => {
+		if (inviteTick) return
+	
+		const stop = useTimer({
+			duration: 10000,
+			updateInterval: 1000,
+			onTick: timeLeft => {
+				showTextUI(`E - Show robbery invite - ${Math.ceil(timeLeft / 1000)}s`, {
+					position: 'bottom-center',
+				})
+			},
+			onEnd: () => {
+				hideTextUI()
+				clearTick(inviteTick)
+				inviteTick = 0
+			},
+		})
+	
+		inviteTick = setTick(async () => {
+			if (IsControlJustPressed(0, 38)) {
+				stop()
+				hideTextUI()
+				clearTick(inviteTick)
+				inviteTick = 0
+				const res = await alertDialog({
+					header: 'Robbery Invite',
+					content: `The player #${inviter} is inviting you to join his to a robbery mission`,
+					centered: true,
+					cancel: true,
+				})
+				emitNet('lenix:server:robbery:inviteDone', inviter, res satisfies 'cancel' | 'confirm')
+			}
+		})
+	}),
+	
+	onNetEvent('lenix:client:robbery:updatePlayer', (updatedTeam: Outlaw.Robbery | undefined) => {
+		if (!team) {
+			clearTick(blipTick)
+		}
+		team = updatedTeam
+		refreshContext()
+	}),
+	
+	onNetEvent('lenix:client:robbery:startrobbery', async (netId: number) => {
+		const vehicle = await new Promise<number>(resolve => {
+			const interval = setInterval(() => {
+				const entity = NetworkGetEntityFromNetworkId(netId)
+				if (entity > 0 && DoesEntityExist(entity)) {
+					clearInterval(interval)
+					resolve(entity)
+				}
+			}, 100)
+		})
+	
+		if (!vehicle) return
+	
+		const seats = GetVehicleModelNumberOfSeats(GetHashKey(Config.robbery.vehicle_model))
+		const hash = await requestModel(PEDS_MODEL)
+		const peds: number[] = []
+		let guardsFedUp = false
+	
+		for (let seat = -1; seat < seats - 1; seat++) {
+			const ped = CreatePedInsideVehicle(vehicle, 26, hash, seat, true, false)
+			SetBlockingOfNonTemporaryEvents(ped, true)
+			SetPedFleeAttributes(ped, 0, false)
+			GiveWeaponToPed(ped, GetHashKey('weapon_pistol'), 9999, false, true)
+			SetPedInfiniteAmmo(ped, true, GetHashKey('weapon_pistol'))
+			SetCurrentPedWeapon(ped, GetHashKey('weapon_pistol'), true)
+			SetPedCombatAttributes(ped, 0, true)
+			SetPedCombatAttributes(ped, 46, true)
+			SetPedCombatAttributes(ped, 5, true)
+			SetPedCombatRange(ped, 2)
+			SetPedCombatAbility(ped, 2)
+			SetPedCombatMovement(ped, 3)
+			SetPedConfigFlag(ped, 183, true)
+			SetPedConfigFlag(ped, 4, true)
+			SetPedShootRate(ped, 50)
+			if (seat === -1) TaskVehicleDriveWander(ped, vehicle, 20.0, 786468)
+			peds.push(ped)
+		}
+	
+		blipTick = setTick(() => {
+			if (NetworkGetEntityOwner(vehicle) !== PlayerId()) return
+	
+			if (guardsFedUp) {
+				peds.forEach(ped => {
+					if (IsEntityDead(ped)) return
+					if (IsPedInAnyVehicle(ped, false)) return
+					if (IsPedInCombat(ped, 0)) return
+					const pedCoords = GetEntityCoords(ped, true) as Vec3
+					const { playerPed } = getNearest.player(pedCoords, 100.0, true)
+					if (playerPed) TaskCombatPed(ped, playerPed, 0, 16)
+				})
+			} else if (GetVehicleDoorAngleRatio(vehicle, 1) > 0.1 || GetVehicleDoorAngleRatio(vehicle, 3) > 0.1) {
+				guardsFedUp = true
+				peds.forEach(ped => {
+					SetBlockingOfNonTemporaryEvents(ped, false)
+					SetPedFleeAttributes(ped, 0, false)
+					TaskLeaveVehicle(ped, vehicle, 0)
+				})
+			}
+		})
+	
+		const breakDoor = async (side: 'left' | 'right') => {
+			const drillAmount = api.ox_inventory?.GetItemCount?.<number, [unknown]>(DRILL_ITEM) ?? 0
+			if (drillAmount < 1) {
+				notify({
+					title: "You're missing a drill",
+				})
+				return
+			}
+			const success = await api['glitch-minigames']?.StartPlasmaDrilling?.(5)
+			if (!success) return notify({
+				title: 'Failed to drill the door'
+			})
+	
+			vehicleDoorsBroken[side] = true
+	
+			if (!vehicleDoorsBroken['left'] || !vehicleDoorsBroken['right']) return
+	
+			const veh = entity.handle(netId)
+			SetVehicleDoorOpen(veh, 2, false, false)
+			SetVehicleDoorOpen(veh, 3, false, false)
+	
+			api.ox_target?.removeEntity?.(netId, `${side}-door`)
+		}
+	
+		api.ox_target?.addEntity?.(netId, [
+			{
+				name: 'left-door',
+				label: 'Break Left Door',
+				bones: 'door_dside_r',
+				canInteract: () => team,
+				onSelect: async () => {
+					breakDoor('left')
+				},
+			},
+			{
+				name: 'right-door',
+				label: 'Break Right Door',
+				bones: 'door_pside_r',
+				canInteract: () => team,
+				onSelect: async () => breakDoor('right'),
+			},
+			{
+				name: 'take-money',
+				label: 'Take Money',
+				bones: ['door_pside_r', 'door_dside_r'],
+				canInteract: () => team && vehicleDoorsBroken['left'] && vehicleDoorsBroken['right'],
+				onSelect: async () => {
+					const res = await progressBar({
+						label: 'Taking money',
+						duration: 10000,
+						canCancel: false,
+						disable: {
+							combat: true,
+							move: true,
+						},
+						anim: {
+							dict: 'anim@scripted@heist@ig1_table_grab@gold@male@',
+							clip: 'grab',
+						},
+						prop: {
+							model: 'hei_p_m_bag_var22_arm_s',
+							bone: 24818,
+							pos: {
+								x: -0.31,
+								y: 0.0,
+								z: 0.0,
+							},
+							rot: {
+								x: 160.0,
+								y: -85.0,
+								z: 10.0,
+							},
+						},
+					})
+					if (!res) return
+	
+					vehicleDoorsBroken['left'] = false
+					vehicleDoorsBroken['right'] = false
+					clearTick(blipTick)
+					api.ox_target?.removeEntity?.(netId, 'take-money')
+	
+					emitNet('lenix:server:robbery:takemoney')
+				},
+			},
+		])
+	})
+]
