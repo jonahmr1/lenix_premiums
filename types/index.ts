@@ -138,8 +138,8 @@ export namespace Competitive {
 		avatar: GamerProfile['avatar']
 	}[]
 
-	export type GameModes = Public['public/config.outlaw.json']['game_modes']
-	export type GameMaps = Public['public/config.outlaw.json']['game_maps']
+	export type GameModes = Public['public/config.outlaw.json']['rank']['game_modes']
+	export type GameMaps = Public['public/config.outlaw.json']['rank']['game_maps']
 	export type GameMode = keyof GameModes
 	export type GameMap = keyof GameMaps
 
@@ -165,6 +165,14 @@ export namespace Outlaw {
 	export interface Events {
 		displayHud: Event<'hud:display', [boolean]>
 		updateHud: Event<'hud:update', [{ clip: number | string, reserve: number | string }]>
+		addOfficer: Event<'roster:addOfficer', [Roster.Officer]>
+		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
+		displayRoster: Event<'roster:display', [boolean, number]>
+	}
+
+	export interface Requests {
+		updateOfficer: Request<null, 'roster:updateOfficer', Roster.PartialOfficer>
+		triggerCallsign: Request<null, 'roster:callsign'>
 	}
 	
 	export interface Criminial {
@@ -179,4 +187,28 @@ export namespace Outlaw {
 		leader: number
 		members: number[]
 	}
+}
+
+export namespace Roster {
+	type DutyState = 'on' | 'off' | 'break'
+	type TalkState = 'on' | 'off'
+
+	export interface Officer {
+		playerId: number
+		callsign: string
+		name: string
+		duty_state: DutyState
+		talk_state: TalkState
+	}
+	export type Officers = Record<number, Officer>
+
+	type AtLeastOne<T> = {
+		[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
+	}[keyof T]
+
+	type OfficerUpdates = AtLeastOne<Omit<Officer, 'playerId'>>
+
+	export type PartialOfficer = {
+		playerId: Officer['playerId']
+	} & OfficerUpdates
 }
