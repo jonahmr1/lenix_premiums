@@ -45,7 +45,6 @@ const drawText3D = ({
 }
 
 const displayIdentities = () => {
-	if (!shown) return
 	const players = GetActivePlayers()
 
 	for (const player of players) {
@@ -91,6 +90,8 @@ export default [
 		},
 	}),
 	pool(() => {
+		if (!shown) return
+		
 		displayIdentities()
 	})
 ]
