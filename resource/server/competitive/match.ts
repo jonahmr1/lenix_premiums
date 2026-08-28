@@ -1,6 +1,6 @@
 import { asserts } from "@lenix/lenix";
 import { sleep, triggerClientCallback } from "@overextended/ox_lib/server";
-import { Config } from "common/config/competitive";
+import { Config } from "common/config/outlaw";
 import type { Vec3, Vec4 } from "lenix";
 import type { Competitive } from "types/index";
 import { Parties } from "./party";

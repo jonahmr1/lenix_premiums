@@ -1,7 +1,7 @@
 import { asserts, random } from "@lenix/lenix"
 import type { Competitive } from "types/index"
 import { fetchProfile } from "./modules"
-import { Config } from "common/config/competitive"
+import { Config } from "common/config/outlaw"
 import { palette } from "lenix"
 import { Matches } from "./match"
 

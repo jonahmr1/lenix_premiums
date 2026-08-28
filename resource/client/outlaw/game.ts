@@ -1,6 +1,6 @@
 import { repeat } from '@lenix/lenix'
 import { createObject, onServerCallback } from '@overextended/ox_lib/client'
-import { Config } from 'common/config/competitive'
+import { Config } from 'common/config/outlaw'
 import { type Vec3, type Vec4 } from 'lenix'
 import { entity, player } from 'lenix/client'
 import type { Competitive } from 'types/index'

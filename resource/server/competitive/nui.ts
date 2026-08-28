@@ -5,7 +5,7 @@ import { palette } from "lenix"
 import { fullName, getProfileId } from "./utils"
 import { fetchProfile, getBucketProfiles as getProfilesBucket, getProfiles, getStatsDetails, profileCols } from "./modules"
 import { asserts, entries } from "@lenix/lenix"
-import { Config } from "common/config/competitive"
+import { Config } from "common/config/outlaw"
 import { onNuiServer } from "lenix/server"
 
 
