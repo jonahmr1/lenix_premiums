@@ -9,9 +9,13 @@
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
-@utility perspective-* {
+@utility perspective-left-* {
 	transform: perspective(175px) rotateY(calc(--value(integer) * 1deg));
 	transform-origin: left center;
+}
+@utility perspective-right-* {
+	transform: perspective(175px) rotateY(calc(--value(integer) * -1deg));
+	transform-origin: right center;
 }
 
 @utility text-fluid-* {

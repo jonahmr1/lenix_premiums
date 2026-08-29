@@ -1,5 +1,6 @@
 import { DEV } from '@/App'
 import { Separator } from '@workspace/ui/components/separator'
+import { cn } from '@workspace/ui/lib/utils'
 import { onNuiEmit } from 'lenix/nui'
 import { Heart, Shield } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -9,6 +10,16 @@ import type { Outlaw } from 'types'
 	@param length length of numbers to stop applying to; e.g. tens? hundreds? thousands? written as 1, 2, 3 ...
  */
 const zeroed = (value: string | number, length: number) => String(value).padStart(length, '0')
+
+const Framed = ({ children, className }: { children: React.ReactNode, className?: React.ComponentProps<'div'>['className'] }) => (
+	<div className={cn('relative', className)}>
+		<span className="absolute left-0 top-0 size-1 border-l-2 border-t-2 border-foreground/80" />
+		<span className="absolute right-0 top-0 size-1 border-r-2 border-t-2 border-foreground/80" />
+		<span className="absolute bottom-0 left-0 size-1 border-b-2 border-l-2 border-foreground/80" />
+		<span className="absolute bottom-0 right-0 size-1 border-b-2 border-r-2 border-foreground/80" />
+		{children}
+	</div>
+)
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
@@ -45,18 +56,23 @@ export const Hud = () => {
 
 	const Bar = ({ variant }: { variant: 'health' | 'armor' }) => (
 		<div
-			className='bg-foreground/20 w-full p-xs rounded flex items-center gap-2.5'
+			className='size-full rounded flex items-end gap-2.5'
 		>
-			<div className={`text-foreground p-2xs rounded ${variant === 'health' ? 'bg-red-500' : 'bg-blue-950/90'}`}>
-				{variant === 'health' ? <Heart className='text-ring' /> : <Shield className='text-blue-600' />}
+			<div className={`text-foreground p-2xs rounded ${variant === 'health' ? 'bg-rose-950/50 border border-rose-500' : 'bg-sky-950/50 border border-sky-500'}`}>
+				{variant === 'health' ? <Heart className='text-red-300' /> : <Shield className='text-sky-400' />}
 			</div>
-			<div className='w-full h-1/2 bg-foreground/30 rounded relative overflow-hidden'>
-				<div
-					className={`filled h-full transition-all rounded w-0 ${variant === 'health' ? 'bg-red-500' : 'bg-blue-600'}`}
-					style={{
-						width: `${variant === 'health' ? state.health : state.armor}%`
-					}}
-				>
+			<div className='size-full flex flex-col justify-end'>
+				<p className='text-fluid-1.5 leading-2'>{state[variant]}%</p>
+				<div className='w-full h-2/3 border border-ring/50 rounded items-center justify-center flex'>
+					<div className='w-96/100 h-2/3 bg-foreground/30 rounded-xs relative overflow-hidden'>
+						<div
+							className={`filled h-full transition-all rounded-xs w-0 ${variant === 'health' ? 'bg-rose-400' : 'bg-sky-400'}`}
+							style={{
+								width: `${variant === 'health' ? state.health : state.armor}%`
+							}}
+						>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -64,14 +80,14 @@ export const Hud = () => {
 
 	return (
 		<div className='absolute size-full flex flex-col justify-end'>
-			<div className='flex justify-between items-end'>
-				<div className='p-5 flex gap-2.5 w-1/3'>
+			<div className='flex justify-between items-end h-1/9 mb-10'>
+				<div className='flex pl-10 gap-2.5 w-1/3 h-1/3 perspective-left-2 -rotate-1'>
 					<Bar variant='health' />
 					<Bar variant='armor' />
 				</div>
-				<div className='flex justify-between bg-radial-[at_66%] from-muted/50 to-transparent to-66% p-10'>
-					<img src={state.weapon.image} className='size-1/3 -scale-x-100 brightness-200' />
-					<div className='flex flex-col gap-2 items-end text-foreground/75'>
+				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10'>
+					<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
+					<div className='flex flex-col gap-2 items-end justify-between size-full text-foreground/75'>
 						<div className='flex justify-between'>
 							<div className='flex gap-1 items-start'>
 								<p
