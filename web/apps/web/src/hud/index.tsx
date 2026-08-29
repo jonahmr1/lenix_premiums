@@ -33,7 +33,7 @@ export const Hud = () => {
 				weapon: {
 					name: 'Glock 17',
 					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-					clipAmmo: 54,
+					clipAmmo: 9,
 					clipSize: 17,
 					reserveAmmo: 50
 				}
@@ -58,12 +58,12 @@ export const Hud = () => {
 		<div
 			className='size-full rounded flex items-end gap-2.5'
 		>
-			<div className={`text-foreground p-2xs rounded ${variant === 'health' ? 'bg-rose-950/50 border border-rose-500' : 'bg-sky-950/50 border border-sky-500'}`}>
+			<div className={`text-foreground p-2xs rounded ${variant === 'health' ? 'bg-rose-950/50 border border-rose-500' : 'bg-sky-950/50 border border-sky-500 px-1.25'}`}>
 				{variant === 'health' ? <Heart className='text-red-300' /> : <Shield className='text-sky-400' />}
 			</div>
 			<div className='size-full flex flex-col justify-end'>
-				<p className='text-fluid-1.5 leading-2'>{state[variant]}%</p>
-				<div className='w-full h-2/3 border border-ring/50 rounded items-center justify-center flex'>
+				<p className='text-fluid-1.5 leading-3'>{state[variant]}%</p>
+				<div className='w-full h-2/3 border border-foreground/50 rounded items-center justify-center flex bg-foreground/20'>
 					<div className='w-96/100 h-2/3 bg-foreground/30 rounded-xs relative overflow-hidden'>
 						<div
 							className={`filled h-full transition-all rounded-xs w-0 ${variant === 'health' ? 'bg-rose-400' : 'bg-sky-400'}`}
@@ -85,13 +85,13 @@ export const Hud = () => {
 					<Bar variant='health' />
 					<Bar variant='armor' />
 				</div>
-				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-4'>
+				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-3'>
 					<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200 rotate-1' />
 					<div className='flex flex-col gap-2 items-end justify-between size-full text-foreground/75 rotate-1'>
 						<div className='flex justify-between'>
 							<div className='flex gap-1 items-start'>
 								<p
-									className={`text-fluid-7 inline-block leading-none text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? 'text-foreground' : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
+									className={`text-fluid-7 inline-block leading-none text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
 									{zeroed(state.weapon.clipAmmo, 2)}
 								</p>
 								<Separator orientation='vertical' className='bg-foreground/50 h-9/10' />

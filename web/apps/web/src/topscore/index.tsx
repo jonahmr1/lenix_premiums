@@ -6,7 +6,7 @@ import { DEV } from '@/App'
 import type { Outlaw, Topscore } from 'types'
 
 export const TopScore = () => {
-	const [scores, setScores] = useState<Topscore.Data>()
+	const [scores, setScores] = useState<Topscore.Data | null>(null)
 
 	const stats = {
 		ranks: {

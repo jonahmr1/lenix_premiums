@@ -168,7 +168,7 @@ export namespace Outlaw {
 		addOfficer: Event<'roster:addOfficer', [Roster.Officer]>
 		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
 		displayRoster: Event<'roster:display', [boolean, number]>
-		updateTopscoreData: Event<'topscore:updateData', [Topscore.Data]>
+		updateTopscoreData: Event<'topscore:updateData', [Topscore.Data | null]>
 	}
 
 	export interface Requests {

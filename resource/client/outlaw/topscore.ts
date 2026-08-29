@@ -81,10 +81,17 @@ const load = async () => {
 export default [
 	load(),
 	pool(() => {
-		/* TODO: also check distance */
 		if (!players) return
-	
+
 		const playerCoords = entity.coords(player.entity(), true)
+		const nearby = Object.values(coords).some(([x, y, z]) =>
+			GetDistanceBetweenCoords(...playerCoords, x, y, z, true) <= maxDistance,
+		)
+
+		if (!nearby) {
+			emitNui<Outlaw.Events['updateTopscoreData']>('topscore:updateData', null)
+			return
+		}
 	
 		emitNui<Outlaw.Events['updateTopscoreData']>(
 			'topscore:updateData',
