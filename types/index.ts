@@ -163,8 +163,8 @@ export namespace Starting {
 
 export namespace Outlaw {
 	export interface Events {
-		displayHud: Event<'hud:display', [boolean]>
-		updateHud: Event<'hud:update', [{ clip: number | string, reserve: number | string }]>
+		displayHud: Event<'hud:display', [{ vitals: boolean, weaponary: boolean }]>
+		updateHud: Event<'hud:update', [Hud]>
 		addOfficer: Event<'roster:addOfficer', [Roster.Officer]>
 		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
 		displayRoster: Event<'roster:display', [boolean, number]>
@@ -187,6 +187,18 @@ export namespace Outlaw {
 	export interface Robbery {
 		leader: number
 		members: number[]
+	}
+
+	export type Hud = {
+		health: number
+		armor: number
+		weapon: {
+			name: string,
+			image: string,
+			clipAmmo:  number,
+			clipSize: number,
+			reserveAmmo: number
+		}
 	}
 }
 

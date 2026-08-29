@@ -10,50 +10,112 @@ checkDependency('ox_core', '1.5.14', true)
 
 type OxWeapon = {
 	ammo: string
+	label: string
+	name: string
 	metadata: { ammo: number }
 } | undefined
 
-const state = new State({
-	turnedOff: false as boolean,
-	clip: 0,
-	reserve: 0
+const nativeImage = (name: string) => `https://docs-backend.fivem.net/weapons/${name}.png`
+
+const state = new State<Outlaw.Hud & {
+	display: {
+		vitals: boolean,
+		weaponary: boolean
+	}
+}>({
+	display: {
+		vitals: false,
+		weaponary: false
+	},
+	health: 0,
+	armor: 0,
+	weapon: {
+		image: nativeImage('WEAPON_UNARMED'),
+		name: 'Unknown',
+		clipAmmo: 0,
+		clipSize: 0,
+		reserveAmmo: 0,
+	}
 })
 
-const setHudState = () => {
-	const weapon = GetSelectedPedWeapon(cache.ped)
-	const hasWeapon = GetMaxAmmo(cache.ped, weapon)[1] > 0
-
-	if (hasWeapon === state.turnedOff) {
-		emitNui<Outlaw.Events['displayHud']>('hud:display', hasWeapon)
-		state.turnedOff = !hasWeapon
-	}
-
-	if (!IsPedShooting(cache.ped)) return
-
-	emitNui<Outlaw.Events['updateHud']>('hud:update', {
-		reserve: state.reserve,
-		clip: GetAmmoInClip(cache.ped, weapon)[1]
-	})
+const updateDisplay = (newState: typeof state.display) => {
+	emitNui<Outlaw.Events['displayHud']>('hud:display', newState)
 }
 
-const updateReserve = (reserve: number) => {
-	emitNui<Outlaw.Events['updateHud']>('hud:update', { clip: state.clip, reserve })
+const updateValues = (values: Omit<typeof state, 'display'>) => {
+	emitNui<Outlaw.Events['updateHud']>('hud:update', values)
+
+	state.armor = values.armor
+	state.health = values.health
+	state.weapon = values.weapon
+}
+
+const updateThisFrame = () => {
+	const weaponHash = GetSelectedPedWeapon(cache.ped)
+	const hasWeapon = GetMaxAmmo(cache.ped, weaponHash)[1] > 0
+
+	if (hasWeapon === state.display.weaponary) {
+		updateDisplay({ ...state.display, weaponary: hasWeapon })
+		updateValues({
+			...state,
+			weapon: {
+				...state.weapon,
+				clipSize: GetWeaponClipSize(weaponHash),
+			}
+		})
+		state.display.weaponary = !hasWeapon
+	}
+
+	if (IsPedShooting(cache.ped)) {
+		updateValues({
+			...state,
+			weapon: {
+				...state.weapon,
+				clipAmmo: GetAmmoInClip(cache.ped, weaponHash)[1],
+			}
+		})
+	}
+}
+
+const load = () => {
+	updateDisplay({ vitals: true, weaponary: true })
+
+	return () => updateDisplay({ vitals: false, weaponary: false })
 }
 
 export default [
 	onEvent('ox_inventory:currentWeapon', (weapon: OxWeapon) => {
 		if (!weapon) return
 	
-		const reserve = api.ox_inventory?.GetItemCount?.<number, [unknown]>(weapon.ammo) ?? 0
-		updateReserve(reserve)
+		const reserveAmmo = api.ox_inventory?.GetItemCount?.<number, [unknown]>(weapon.ammo) ?? 0
+		updateValues({
+			...state,
+			weapon: {
+				...state.weapon,
+				reserveAmmo,
+				name: weapon.label,
+				image: nativeImage(weapon.name)
+			}
+		})
 	}),
 	
-	onEvent('ox_inventory:itemCount', (itemName: string, totalCount: number) => {
+	onEvent('ox_inventory:itemCount', (itemName: string, reserveAmmo: number) => {
 		const weapon = api.ox_inventory?.getCurrentWeapon<OxWeapon>?.()
 		if (!weapon || weapon.ammo !== itemName) return
 	
-		updateReserve(totalCount)
+		updateValues({ ...state, weapon: { ...state.weapon, reserveAmmo } })
+	}),
+
+	onEvent('entityDamaged', (victim: number) => {
+		if (victim !== cache.ped) return
+
+		const health = GetEntityHealth(cache.ped) / 2
+		const armor = GetPedArmour(cache.ped)
+
+		updateValues({ ...state, health, armor })
 	}),
 	
-	pool(setHudState)
+	load(),
+
+	pool(updateThisFrame)
 ]
