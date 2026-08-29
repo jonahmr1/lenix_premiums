@@ -1,6 +1,6 @@
 import { Dot, LogOut, Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { game_modes } from 'config'
+import { rank } from 'config'
 import { Layout } from '@workspace/ui/elements/layout'
 import { Button } from '@workspace/valo/components/button'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
@@ -14,7 +14,6 @@ import { toast } from '@workspace/ui/lib/utils'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@workspace/ui/components/dialog'
 import { Input } from '@workspace/ui/components/input'
 import { Loading } from '@workspace/elite/elements/loading'
-import { config } from '@/rank/lib'
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@workspace/ui/components/context-menu'
 import { FAKE_PROFILE } from '@/rank/routes/valo/lobby'
 import { entries } from '@lenix/lenix'
@@ -75,12 +74,12 @@ export const Play = ({
 						},
 					},
 					cancel: {
-						label: `Ignore for ${config.ignore_invites_period} minutes`,
+						label: `Ignore for ${rank.ignore_invites_period} minutes`,
 						onClick: () => {
 							fetchNuiServer<Competitive.Requests['ignoreInvites']>('competitive:ignoreInvites', { inviter: inviter.sessionId })
 						},
 					},
-					duration: config.invites_spam_period * 1000,
+					duration: rank.invites_spam_period * 1000,
 				})
 			}),
 			onNuiEmit<Competitive.Events['updateParty']>('competitive:updateParty', setParty)
@@ -143,7 +142,7 @@ export const Play = ({
 		<Layout className='h-full w-full justify-between pt-2'>
 			<div className='flex flex-col items-center justify-center'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
-					{entries(game_modes).map(([mode]) => (
+					{entries(rank.game_modes).map(([mode]) => (
 						<Button
 							key={mode}
 							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${party.gameMode === mode ? 'border-primary' : ''}`}
@@ -176,7 +175,7 @@ export const Play = ({
 					}}
 				>
 					{Array.from(
-						{ length: game_modes[party.gameMode].min_players_per_team || 1 },
+						{ length: rank.game_modes[party.gameMode].min_players_per_team || 1 },
 						(_, amountOfPlayers) => (
 							<ToggleGroupItem
 								key={amountOfPlayers}

@@ -4,9 +4,10 @@ import { Separator } from "@workspace/ui/components/separator"
 import { Users } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { Competitive } from "types"
-import { config, showTimer } from "@/rank/lib"
+import { showTimer } from "@/rank/lib"
 import { onNuiEmit } from "lenix/nui"
 import { DEV } from "@/App"
+import { rank } from 'config'
 
 type TeamType = 'own' | 'opponent'
 
@@ -74,7 +75,7 @@ export const InGame = () => {
 		const disposes = [
 			onNuiEmit<Competitive.Events['newRound']>(
 				'competitive:newRound', (mode, teams) => {
-					const gameMode = config.game_modes[mode]
+					const gameMode = rank.game_modes[mode]
 					const delay = gameMode.pre_and_post_round_time
 					setTeams(teams)
 					setTimer(delay)

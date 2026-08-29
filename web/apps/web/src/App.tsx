@@ -5,10 +5,14 @@ import { Starting } from './App.start'
 import '@workspace/ui/globals.css'
 import { Ipad } from './App.ipad'
 import { Rank } from './App.rank'
+import { Hud } from './hud'
+import { TopScore } from './topscore'
+import { Roster } from './roster'
+import { Extras } from './extra'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-export const DEV = false
+export const DEV = true
 
 export const App = () => (
 	<>
@@ -17,8 +21,12 @@ export const App = () => (
 				src="/ped.png"
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
 		)}
+		<Hud />
 		<Ipad />
-		<Rank />
 		<Starting />
+		<Rank />
+		<TopScore />
+		<Roster />
+		<Extras />
 	</>
 )
