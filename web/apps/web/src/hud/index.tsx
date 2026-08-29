@@ -33,7 +33,7 @@ export const Hud = () => {
 				weapon: {
 					name: 'Glock 17',
 					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-					clipAmmo: 10,
+					clipAmmo: 54,
 					clipSize: 17,
 					reserveAmmo: 50
 				}
@@ -85,16 +85,16 @@ export const Hud = () => {
 					<Bar variant='health' />
 					<Bar variant='armor' />
 				</div>
-				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10'>
-					<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
-					<div className='flex flex-col gap-2 items-end justify-between size-full text-foreground/75'>
+				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-4'>
+					<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200 rotate-1' />
+					<div className='flex flex-col gap-2 items-end justify-between size-full text-foreground/75 rotate-1'>
 						<div className='flex justify-between'>
 							<div className='flex gap-1 items-start'>
 								<p
-									className={`text-fluid-7 leading-10 text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? 'text-foreground' : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
+									className={`text-fluid-7 inline-block leading-none text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? 'text-foreground' : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
 									{zeroed(state.weapon.clipAmmo, 2)}
 								</p>
-								<Separator orientation='vertical' className='bg-foreground/50' />
+								<Separator orientation='vertical' className='bg-foreground/50 h-9/10' />
 								<p className='brightness-75'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 							</div>
 						</div>

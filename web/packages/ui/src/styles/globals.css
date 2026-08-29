@@ -10,11 +10,11 @@
 @source "../**/*.{ts,tsx}";
 
 @utility perspective-left-* {
-	transform: perspective(175px) rotateY(calc(--value(integer) * 1deg));
+	transform: perspective(200px) rotateY(calc(--value(integer) * 1deg)) rotateX(calc(--value(integer) * -1deg));
 	transform-origin: left center;
 }
 @utility perspective-right-* {
-	transform: perspective(175px) rotateY(calc(--value(integer) * -1deg));
+	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(calc(--value(integer) * -1deg));
 	transform-origin: right center;
 }
 
