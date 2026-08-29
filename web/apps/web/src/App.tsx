@@ -17,7 +17,7 @@ export const App = () => (
 	<>
 		{DEV && (
 			<img
-				src="/ped.png"
+				src="/ped.webp"
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
 		)}
 		<Hud />

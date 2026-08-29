@@ -62,6 +62,7 @@
 	--font-sans: 'Oxanium Variable', sans-serif;
 	
 
+	--spacing-2xs: 0.5vmin;
 	--spacing-xs: 1vmin;
 	--spacing-sm: 2vmin;
 	--spacing-md: 3vmin;
