@@ -75,7 +75,7 @@ export const Hud = () => {
 						<div className='flex justify-between'>
 							<div className='flex gap-1 items-start'>
 								<p
-									className={`text-fluid-7 leading-11 text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? 'text-foreground' : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
+									className={`text-fluid-7 leading-10 text-shadow-md ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? 'text-foreground' : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
 									{zeroed(state.weapon.clipAmmo, 2)}
 								</p>
 								<Separator orientation='vertical' className='bg-foreground/50' />
