@@ -8,7 +8,6 @@ import { Rank } from './App.rank'
 import { Hud } from './hud'
 import { TopScore } from './topscore'
 import { Roster } from './roster'
-import { Extras } from './extra'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
@@ -22,11 +21,10 @@ export const App = () => (
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
 		)}
 		<Hud />
-		<Ipad />
+		{/* <Ipad />
 		<Starting />
 		<Rank />
 		<TopScore />
-		<Roster />
-		<Extras />
+		<Roster /> */}
 	</>
 )
