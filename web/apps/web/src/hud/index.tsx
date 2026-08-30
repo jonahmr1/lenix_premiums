@@ -85,9 +85,9 @@ export const Hud = () => {
 					<Bar variant='health' />
 					<Bar variant='armor' />
 				</div>
-				<div className='flex items-center just h-full bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-3'>
+				<div className='flex items-start justify-end h-full gap-md bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-3'>
 					<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200 rotate-1' />
-					<div className='flex flex-col gap-2 items-end justify-between size-full text-foreground/75 rotate-1'>
+					<div className='flex flex-col gap-2 items-end justify-between h-full w-1/2 text-foreground/75 rotate-1'>
 						<div className='flex justify-between'>
 							<div className='flex gap-1 items-start'>
 								<p
