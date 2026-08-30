@@ -1,16 +1,16 @@
-import { MISSION_PRICE } from 'common/config'
-import type { Team, Vector4 } from 'types/index'
-import { VEHICLE_MODEL } from 'common/config'
 import { CreateVehicle, type OxVehicle } from '@overextended/ox_core/server'
 import { random } from '@lenix/lenix'
 import { api, entity } from 'lenix/server'
 import { checkDependency } from '@overextended/ox_lib'
+import type { Vec4 } from 'lenix'
+import type { Outlaw } from 'types/index'
+import { Constants } from 'common/config/outlaw'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_core', '1.5.14', true)
 checkDependency('ox_inventory', '2.47.9', true)
 
-const VEHICLE_COORDS: Vector4[] = [
+const VEHICLE_COORDS: Vec4[] = [
 	[-1209.2249, -1162.83, 7.6913, 13.5316],
 	[1070.0637, -233.9568, 69.6071, 253.4912],
 	[691.7452, -1726.9247, 29.278, 83.3026],
@@ -28,23 +28,23 @@ const notify = (
 ) => emitNet('ox_lib:notify', source, data)
 
 abstract class Teams {
-	private static readonly teams = new Map<number, Team>()
+	private static readonly teams = new Map<number, Outlaw.Robbery>()
 	private static robberyActive = false
 	private static robberyVeh: OxVehicle
 	private static interval: CitizenTimer
 
 	static create(leader: number) {
 		const moneyAmount = api.ox_inventory?.GetItemCount?.<number, [...unknown[]]>(leader, 'money') ?? 0
-		if (moneyAmount < MISSION_PRICE) {
+		if (moneyAmount < Constants.robbery.mission_price) {
 			notify(leader, {
 				type: 'error',
 				title: 'Not enough money!',
-				description: `You need ${MISSION_PRICE - moneyAmount} more`,
+				description: `You need ${Constants.robbery.mission_price - moneyAmount} more`,
 			})
 			return
 		}
 
-		const result = api.ox_inventory?.RemoveItem?.(leader, 'money', MISSION_PRICE)
+		const result = api.ox_inventory?.RemoveItem?.(leader, 'money', Constants.robbery.mission_price)
 		const [success, response] = Array.isArray(result) ? result : [result, undefined]
 		if (!success) throw new Error(`Could not create team for player<${leader}>, reason: ${response}`)
 
@@ -126,9 +126,9 @@ abstract class Teams {
 		this.updatePlayer(playerId, undefined)
 	}
 
-	private static updatePlayer(playerId: number, team: Team | undefined): void
-	private static updatePlayer(playerIds: number[], team: Team | undefined): void
-	private static updatePlayer(target: number | number[], team: Team | undefined) {
+	private static updatePlayer(playerId: number, team: Outlaw.Robbery | undefined): void
+	private static updatePlayer(playerIds: number[], team: Outlaw.Robbery | undefined): void
+	private static updatePlayer(target: number | number[], team: Outlaw.Robbery | undefined) {
 		const ids = Array.isArray(target) ? target : [target]
 
 		for (const id of ids) emitNet('lenix:client:robbery:updatePlayer', id, team)
@@ -154,7 +154,7 @@ abstract class Teams {
 		})
 	}
 
-	private static forEachMember(cb: (member: Team['members'][number]) => void) {
+	private static forEachMember(cb: (member: Outlaw.Robbery['members'][number]) => void) {
 		this.teams.forEach(team => team.members.forEach(member => cb(member)))
 	}
 
@@ -163,7 +163,7 @@ abstract class Teams {
 		const coords = VEHICLE_COORDS[randomIndex]
 		if (!coords) throw new Error(`Failed to get the coords at #${randomIndex} from VEHICLE_COORDS`)
 
-		const vehicle = await CreateVehicle(VEHICLE_MODEL, [coords[0], coords[1], coords[2]], coords[3])
+		const vehicle = await CreateVehicle(Constants.robbery.vehicle_model, [coords[0], coords[1], coords[2]], coords[3])
 		if (!vehicle) throw new Error(`Failed to create the vehicle`)
 
 		this.robberyVeh = vehicle

@@ -2,24 +2,24 @@ import { GetPlayer } from '@overextended/ox_core/server'
 import { notify } from '@overextended/ox_lib/client'
 import { checkDependency } from '@overextended/ox_lib'
 import { oxmysql } from '@overextended/oxmysql'
-import type { Officer, PartialOfficer, Officers as IOfficers } from 'types/index'
+import type { Roster } from 'types/index'
 
 checkDependency('oxmysql', '2.14.1', true)
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_core', '1.5.14', true)
 
 abstract class Officers {
-	private static readonly officers: IOfficers = {}
+	private static readonly officers: Roster.Officers = {}
 
-	public static set add(officer: Officer) {
+	public static set add(officer: Roster.Officer) {
 		this.officers[officer.playerId] = officer
 	}
 
-	public static get all(): IOfficers {
+	public static get all(): Roster.Officers {
 		return this.officers
 	}
 
-	public static forEach = (cb: (officer: Officer) => void) => {
+	public static forEach = (cb: (officer: Roster.Officer) => void) => {
 		Object.entries(this.officers).forEach(([, officer]) => cb(officer))
 	}
 
@@ -29,7 +29,7 @@ abstract class Officers {
 		})
 	}
 
-	public static updateOfficer = async ({ playerId, ...props }: PartialOfficer) => {
+	public static updateOfficer = async ({ playerId, ...props }: Roster.PartialOfficer) => {
 		const officer = this.officers[playerId]
 		if (!officer) throw new Error(`Could not find the officer<${playerId}>`)
 

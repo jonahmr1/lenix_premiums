@@ -2,8 +2,8 @@ import { cache, checkDependency, inputDialog, notify } from '@overextended/ox_li
 import { GetPlayer } from '@overextended/ox_core/client'
 import { control, emitNui, onEvent, onNetEvent, onNui } from 'lenix/client'
 import { State } from '@lenix/lenix'
-import { Config } from 'common/config/outlaw'
 import type { Outlaw, Roster } from 'types/index'
+import { Constants } from 'common/config/outlaw'
 
 checkDependency('ox_lib', '3.39.0', true)
 
@@ -24,10 +24,10 @@ const changeCallsign = async () => {
 	const callsign = input[0]?.toString()
 	if (!callsign?.length) return
 
-	if (callsign.length > Config.roster.max_callsign_length) {
+	if (callsign.length > Constants.roster.max_callsign_length) {
 		notify({
 			title: 'Failed!',
-			description: `Callsign can not be longer than ${Config.roster.max_callsign_length} characters`,
+			description: `Callsign can not be longer than ${Constants.roster.max_callsign_length} characters`,
 			type: 'error',
 		})
 		return

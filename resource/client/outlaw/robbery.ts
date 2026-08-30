@@ -12,7 +12,7 @@ import {
 	progressBar,
 	requestModel,
 } from '@overextended/ox_lib/client'
-import { Config } from 'common/config/outlaw'
+import { Constants } from 'common/config/outlaw'
 import type { Vec3, Vec4 } from 'lenix'
 import { useTimer, getNearest, entity, onNetEvent } from 'lenix/client'
 import { api } from 'lenix/client'
@@ -46,7 +46,7 @@ const refreshContext = async () => {
 		title: 'Robbery Mission',
 		options: [
 			{
-				title: `Create team ($${Config.robbery.mission_price})`,
+				title: `Create team ($${Constants.robbery.mission_price})`,
 				disabled: isLeader() || isInTeam(),
 				onSelect: async () => {
 					emitNet('lenix:server:robbery:createTeam')
@@ -198,7 +198,7 @@ export default [
 	
 		if (!vehicle) return
 	
-		const seats = GetVehicleModelNumberOfSeats(GetHashKey(Config.robbery.vehicle_model))
+		const seats = GetVehicleModelNumberOfSeats(GetHashKey(Constants.robbery.vehicle_model))
 		const hash = await requestModel(PEDS_MODEL)
 		const peds: number[] = []
 		let guardsFedUp = false

@@ -3,8 +3,7 @@
 	"type": "object",
 	"additionalProperties": false,
 	"required": [
-		"rank",
-		"robbery"
+		"rank"
 	],
 	"properties": {
 		"$schema": {
@@ -167,24 +166,6 @@
 							}
 						}
 					}
-				}
-			}
-		},
-		"robbery": {
-			"type": "object",
-			"additionalProperties": false,
-			"required": [
-				"vehicle_model",
-				"mission_price"
-			],
-			"properties": {
-				"vehicle_model": {
-					"type": "string",
-					"minLength": 1
-				},
-				"mission_price": {
-					"type": "number",
-					"minimum": 0
 				}
 			}
 		}
