@@ -3,9 +3,19 @@ import { cache, checkDependency } from '@overextended/ox_lib'
 import { notify, createVehicle, registerContext, showContext, createPed } from '@overextended/ox_lib/client'
 import type { Vec4 } from 'lenix'
 import { api, useTimer } from 'lenix/client'
+import type { AtLeastOne } from 'types/index'
+import { behavior } from '../lib'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_target', '1.18.1', true)
+
+interface Membership {
+	charId: string
+	group: {
+		name: string
+		grade?: string
+	}
+}
 
 const deleteAfter = 15 * 60_000
 const warnAt = deleteAfter * 0.1
@@ -40,11 +50,21 @@ const locations = [
 		ped: [418.6655, -991.6953, 21.3117, 90.1289],
 		vehicle: [429.1385, -986.8941, 21.3117, 91.0006],
 		menu: 'std',
+    allowed: {
+			charId: ''
+		},
+    disallowed: {
+			group: {
+				name: 'police'
+			}
+		},
 	},
 ] as const satisfies {
 	ped: Vec4
 	vehicle: Vec4
 	menu: keyof typeof variants
+	allowed?: AtLeastOne<Membership>
+	disallowed?: AtLeastOne<Membership>
 }[]
 
 const despawnLastVehicle = () => {
@@ -123,6 +143,7 @@ const load = async () => {
 	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, menu }, i) => {
 		const name = [`vehicles_${menu}_menu_${i}`, `vehicles_${menu}_return_${i}`] as const
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
+		behavior(entity.handle, 'WORLD_HUMAN_CLIPBOARD')
 
 		api.ox_target?.addLocalEntity?.(entity.handle, [
 			{
@@ -144,9 +165,9 @@ const load = async () => {
 			{
 				name: name[1],
 				icon: 'fas fa-trash-arrow-up',
-				label: 'Return Vehicle',
+				label: 'Return The Vehicle',
 				onSelect: async () => {
-					
+					despawnLastVehicle()
 				},
 			},
 		])

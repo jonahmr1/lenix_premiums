@@ -1,6 +1,10 @@
 import type { Event, Request } from 'lenix'
 import type { Public } from './public'
 
+export type AtLeastOne<T> = {
+	[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
+}[keyof T]
+
 export namespace Competitive {
 	export interface Events {
 		open: Event<'competitive:open', []>
@@ -214,10 +218,6 @@ export namespace Roster {
 		talk_state: TalkState
 	}
 	export type Officers = Record<number, Officer>
-
-	type AtLeastOne<T> = {
-		[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
-	}[keyof T]
 
 	export type OfficerUpdates = AtLeastOne<Omit<Officer, 'playerId'>>
 
