@@ -15,46 +15,6 @@ import type { Outlaw } from 'types/index'
 checkDependency('ox_lib', '3.39.0', true)
 
 const config = {
-	settings: {
-		ped: {
-			take: {
-				targetLabel: 'Take a task',
-				targetIcon: 'fa-solid fa-circle',
-				distance: 1.0,
-			},
-			abort: {
-				targetLabel: 'Abort the task',
-				targetIcon: 'fa-solid fa-xmark',
-				distance: 1.0,
-			},
-		},
-		task: {
-			notify: {
-				take: 'I have setted a waypoint for you in the map',
-				abort: 'Task Aborted',
-				progressBar: 'Picking up package...',
-				title: 'Delivery',
-				success: 'You picked up the package!',
-				canceled: 'Canceled',
-				description: 'You canceled picking up the package.',
-			},
-			target: {
-				label: 'Open the box',
-				icon: 'fa-solid fa-box',
-				distance: 1.5,
-			},
-			propModel: 'prop_cs_package_01',
-		},
-		blipWaypoint: {
-			sprite: 543,
-			color: {
-				route: 1,
-				blip: 1,
-			},
-			scale: 0.9,
-			label: 'Anonymous',
-		},
-	},
 	taskCoords: [
 		[522.43, 198.49, 107.31],
 		[584.08, 138.19, 98.47],
@@ -135,12 +95,6 @@ const config = {
 			coords: [445.96, 6463.31, 28.78, 54.34],
 		},
 	],
-	items: {
-		['money']: {
-			percentage: 100,
-			amount: 1000,
-		},
-	},
 } as const
 
 let isPlayerFree = true
@@ -160,23 +114,21 @@ const createWayPoint = () => {
 
 	waypoint = blip.create({
 		coords,
-		icon: config.settings.blipWaypoint.sprite,
+		icon: 543,
 	})
-	SetBlipColour(waypoint, config.settings.blipWaypoint.color.blip)
-	SetBlipScale(waypoint, config.settings.blipWaypoint.scale)
+	SetBlipColour(waypoint, 1)
+	SetBlipScale(waypoint, 0.9)
 	BeginTextCommandSetBlipName('STRING')
-	AddTextComponentString(config.settings.blipWaypoint.label)
+	AddTextComponentString('Anonymous')
 	EndTextCommandSetBlipName(waypoint)
 
 	SetBlipRoute(waypoint, true)
-	SetBlipRouteColour(waypoint, config.settings.blipWaypoint.color.route)
+	SetBlipRouteColour(waypoint, 1)
 	return coords
 }
 
 const createPackage = async (coords: Vec3) => {
-	const task = config.settings.task
-	const model = task.propModel
-	const target = task.target
+	const model = 'prop_cs_package_01'
 	await requestModel(model)
 
 	prop = CreateObject(GetHashKey(model), coords[0], coords[1], coords[2], true, true, false)
@@ -187,9 +139,9 @@ const createPackage = async (coords: Vec3) => {
 	api.ox_target?.addLocalEntity?.(prop, [
 		{
 			name: prop,
-			icon: target.icon,
-			label: target.label,
-			distance: target.distance,
+			icon: 'fa-solid fa-box',
+			label: 'Open the box',
+			distance: 1.5,
 			onSelect: takeThePackage,
 		},
 	])
@@ -202,7 +154,7 @@ const takeTask = async () => {
 	prop = await createPackage(coords)
 	notify({
 		title: 'Success',
-		description: config.settings.task.notify.take,
+		description: 'I have setted a waypoint for you in the map',
 		type: 'success',
 	})
 }
@@ -212,7 +164,7 @@ const abortTask = () => {
 	if (waypoint) RemoveBlip(waypoint)
 	notify({
 		title: 'Error',
-		description: config.settings.task.notify.abort,
+		description: 'Task Aborted',
 		type: 'error',
 	})
 	if (prop) {
@@ -223,7 +175,6 @@ const abortTask = () => {
 }
 
 const takeThePackage = async () => {
-	const locale = config.settings.task.notify
 	const playerPed = PlayerPedId()
 	const dict = 'pickup_object'
 
@@ -233,7 +184,7 @@ const takeThePackage = async () => {
 
 	if (await progressBar({
 		duration: 1000,
-		label: locale.progressBar,
+		label: 'Picking up package...',
 		useWhileDead: false,
 		canCancel: true,
 		disable: {
@@ -261,8 +212,8 @@ const takeThePackage = async () => {
 
 		DeleteEntity(prop)
 		notify({
-			title: locale.title,
-			description: locale.success,
+			title: 'Delivery',
+			description: 'You picked up the package!',
 			type: 'success',
 		})
 		isPlayerFree = true
@@ -270,8 +221,8 @@ const takeThePackage = async () => {
 	} else {
 		entity.stopAnim(playerPed, dict)
 		notify({
-			title: locale.canceled,
-			description: locale.description,
+			title: 'Canceled',
+			description: 'You canceled picking up the package.',
 			type: 'error',
 		})
 	}
@@ -310,20 +261,20 @@ const load = async () => {
 
 		api.ox_target?.addLocalEntity?.(entity.handle, [
 			{
-				label: config.settings.ped.take.targetLabel,
+				label: 'Take a task',
 				name: takeName,
-				icon: config.settings.ped.take.targetIcon,
+				icon: 'fa-solid fa-circle',
 				onSelect: takeTask,
 				canInteract: () => isPlayerFree,
-				distance: config.settings.ped.take.distance,
+				distance: 1.0,
 			},
 			{
-				label: config.settings.ped.abort.targetLabel,
+				label: 'Abort the task',
 				name: abortName,
-				icon: config.settings.ped.abort.targetIcon,
+				icon: 'fa-solid fa-xmark',
 				onSelect: abortTask,
 				canInteract: () => !isPlayerFree,
-				distance: config.settings.ped.abort.distance,
+				distance: 1.0,
 			},
 		])
 

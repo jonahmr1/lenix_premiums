@@ -1,20 +1,24 @@
 import { asserts, entries, random } from '@lenix/lenix'
 import { checkDependency, onClientCallback } from '@overextended/ox_lib/server'
-import { CRIMINIL_TASK } from 'common/config'
 import { api } from 'lenix/server'
-import type { CriminialApi } from 'types/index'
+import type { Outlaw } from 'types/index'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_inventory', '2.47.9', true)
 
-const config = CRIMINIL_TASK
+const items = {
+	['money']: {
+		percentage: 100,
+		amount: 1000,
+	},
+}
 
-onClientCallback('lenix_criminiltasks:server:receiveItem', (source): CriminialApi => {
+onClientCallback('lenix_criminiltasks:server:receiveItem', (source): Outlaw.Criminial => {
 	const roll = random(1, 100)
 	let cumulative = 0
 	let selectedItem, selectedAmount
 
-	for (const [itemName, data] of entries(config.items)) {
+	for (const [itemName, data] of entries(items)) {
 		cumulative = cumulative + data.percentage
 		if (roll <= cumulative) {
 			selectedItem = itemName
