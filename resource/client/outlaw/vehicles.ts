@@ -9,37 +9,41 @@ checkDependency('ox_target', '1.18.1', true)
 let lastVehicle: number
 let vehicleInterval: ReturnType<typeof setInterval>
 
-const MENUS = {
-	police: ['police', 'police2'],
-}
+const variants = {
+	std: ['cypher'],
+} as const satisfies Record<string, string[]>
 
-const PEDS: {
-	coords: Vec4
-	spawn: Vec4
-	menu?: string[]
+const locations: {
+	ped: Vec4
+	vehicle: Vec4
+	menu: keyof typeof variants
 }[] = [
 	{
-		coords: [-252.2817, -297.2987, 21.6264, 69.0925],
-		spawn: [-256.1688, -333.2883, 29.1064, 9.207],
+		ped: [-252.2817, -297.2987, 21.6264, 69.0925],
+		vehicle: [-256.1688, -333.2883, 29.1064, 9.207],
+		menu: 'std',
 	},
 	{
-		coords: [-295.1785, -622.0973, 32.7741, 175.3196],
-		spawn: [-301.8, -626.566, 32.1928, 271.8865],
+		ped: [-295.1785, -622.0973, 32.7741, 175.3196],
+		vehicle: [-301.8, -626.566, 32.1928, 271.8865],
+		menu: 'std',
 	},
 	{
-		coords: [1851.5194, 2583.6697, 45.6639, 357.8237],
-		spawn: [1855.4651, 2578.8855, 45.4116, 271.0542],
+		ped: [1851.5194, 2583.6697, 45.6639, 357.8237],
+		vehicle: [1855.4651, 2578.8855, 45.4116, 271.0542],
+		menu: 'std',
 	},
 	{
-		coords: [-292.8378, -985.7634, 31.0969, 41.8034],
-		spawn: [-301.6614, -990.4818, 31.0812, 343.2394],
+		ped: [-292.8378, -985.7634, 31.0969, 41.8034],
+		vehicle: [-301.6614, -990.4818, 31.0812, 343.2394],
+		menu: 'std',
 	},
 	{
-		coords: [418.6655, -991.6953, 21.3117, 90.1289],
-		spawn: [429.1385, -986.8941, 21.3117, 91.0006],
-		menu: MENUS.police,
+		ped: [418.6655, -991.6953, 21.3117, 90.1289],
+		vehicle: [429.1385, -986.8941, 21.3117, 91.0006],
+		menu: 'std',
 	},
-]
+] as const
 
 const handleVehicleDeletion = (vehicle: number) => {
 	clearInterval(vehicleInterval)
@@ -80,26 +84,24 @@ const handleVehicleDeletion = (vehicle: number) => {
 	}, pollInterval)
 }
 
-const spawnVehicle = async (model: string, spawn: Vec4) => {
-	if (lastVehicle && DoesEntityExist(lastVehicle)) {
-		DeleteEntity(lastVehicle)
-	}
-
-	const vehicle = await createVehicle(model, ...spawn)
-	TaskWarpPedIntoVehicle(cache.ped, vehicle.handle, -1)
-	lastVehicle = vehicle.handle
-	handleVehicleDeletion(vehicle.handle)
-}
-
 setImmediate(() => {
-	for (const { spawn, menu } of PEDS) {
-		if (menu) registerContext({
+	for (const { vehicle, menu } of locations) {
+		registerContext({
 			id: 'rent_menu',
 			title: 'Car List',
 			options: [
-				...menu.map(model => ({
+				...variants[menu].map(model => ({
 					title: model,
-					onSelect: () => spawnVehicle(model, spawn),
+					onSelect: async () => {
+						if (lastVehicle && DoesEntityExist(lastVehicle)) {
+							DeleteEntity(lastVehicle)
+						}
+					
+						const veh = await createVehicle(model, ...vehicle)
+						TaskWarpPedIntoVehicle(cache.ped, veh.handle, -1)
+						lastVehicle = veh.handle
+						handleVehicleDeletion(veh.handle)
+					},
 				})),
 			],
 		})
@@ -107,28 +109,16 @@ setImmediate(() => {
 })
 
 const load = async () => {
-	const disposes = await Promise.all(PEDS.map(async ({ coords, spawn, menu }, i) => {
+	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, menu }, i) => {
 		const name = `rental_${i}`
-		const entity = await createPed('a_m_m_prolhost_01', ...coords, true)
+		const entity = await createPed('a_m_m_prolhost_01', ...ped)
 
 		api.ox_target?.addLocalEntity?.(entity.handle, {
 			name,
 			icon: 'fas fa-car',
 			label: 'Take a car',
 			onSelect: async () => {
-				const occupied = IsPositionOccupied(
-					spawn[0],
-					spawn[1],
-					spawn[2],
-					3.0,
-					false,
-					true,
-					true,
-					false,
-					false,
-					0,
-					false,
-				)
+				const occupied = IsPositionOccupied(vehicle[0], vehicle[1], vehicle[2], 3.0, false, true, true, false, false, 0, false,)
 
 				if (occupied) {
 					notify({
@@ -136,8 +126,7 @@ const load = async () => {
 					})
 					return
 				}
-				if (menu) showContext('rent_menu')
-				else spawnVehicle('cypher', spawn)
+				showContext('rent_menu')
 			},
 		})
 
