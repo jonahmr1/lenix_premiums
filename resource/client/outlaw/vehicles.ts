@@ -52,7 +52,7 @@ const variants = {
 	plate?: string
 	image?: string
 }[]>
-// 'https://docs-backend.fivem.net/vehicles/asbo.webp'
+
 const locations = [
 	{
 		ped: [-252.2817, -297.2987, 21.6264, 69.0925],
@@ -167,6 +167,7 @@ setImmediate(() => {
 				...variants[menu].map(({ model, plate, color }) => ({
 					title: model,
 					onSelect: () => spawnVehicle(model, vehicle, plate, color),
+					image: `https://docs-backend.fivem.net/vehicles/${model}.webp`
 				})),
 			],
 		})
