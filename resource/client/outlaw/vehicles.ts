@@ -57,32 +57,32 @@ const locations = [
 	{
 		ped: [-252.2817, -297.2987, 21.6264, 69.0925],
 		vehicle: [-256.1688, -333.2883, 29.1064, 9.207],
-		menu: 'std',
+		variant: 'std',
 	},
 	{
 		ped: [-295.1785, -622.0973, 32.7741, 175.3196],
 		vehicle: [-301.8, -626.566, 32.1928, 271.8865],
-		menu: 'std',
+		variant: 'std',
 	},
 	{
 		ped: [1851.5194, 2583.6697, 45.6639, 357.8237],
 		vehicle: [1855.4651, 2578.8855, 45.4116, 271.0542],
-		menu: 'std',
+		variant: 'std',
 	},
 	{
 		ped: [-292.8378, -985.7634, 31.0969, 41.8034],
 		vehicle: [-301.6614, -990.4818, 31.0812, 343.2394],
-		menu: 'std',
+		variant: 'std',
 	},
 	{
 		ped: [418.6655, -991.6953, 21.3117, 90.1289],
 		vehicle: [429.1385, -986.8941, 21.3117, 91.0006],
-		menu: 'std',
+		variant: 'std',
 	},
 ] as const satisfies {
 	ped: Vec4
 	vehicle: Vec4
-	menu: keyof typeof variants
+	variant: keyof typeof variants
 }[]
 
 const despawnLastVehicle = () => {
@@ -158,16 +158,22 @@ const spawnVehicle = async (model: Model, spawn: Vec4, plate = 'LENIX', rgb: Vec
 	handleDeletionSchedule(handle)
 }
 
+const isEligible = (variant: keyof typeof variants) => {
+
+	return true
+}
+
 setImmediate(() => {
-	for (const [i, { vehicle, menu }] of locations.entries()) {
+	for (const [i, { vehicle, variant }] of locations.entries()) {
 		registerContext({
-			id: `vehicles_${menu}_menu_${i}`,
+			id: `vehicles_${variant}_menu_${i}`,
 			title: 'Vehicles Available',
 			options: [
-				...variants[menu].map(({ model, plate, color }) => ({
+				...variants[variant].map(({ model, plate, color }) => ({
 					title: model,
 					onSelect: () => spawnVehicle(model, vehicle, plate, color),
-					image: `https://docs-backend.fivem.net/vehicles/${model}.webp`
+					image: `https://docs-backend.fivem.net/vehicles/${model}.webp`,
+					disabled: isEligible(variant)
 				})),
 			],
 		})
@@ -175,7 +181,7 @@ setImmediate(() => {
 })
 
 const load = async () => {
-	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, menu }, i) => {
+	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, variant: menu }, i) => {
 		const name = [`vehicles_${menu}_menu_${i}`, `vehicles_${menu}_return_${i}`] as const
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
 		behavior(entity.handle, 'WORLD_HUMAN_CLIPBOARD')
