@@ -70,8 +70,8 @@ export const Lobby = () => {
 	]
 
 	return (
-		<Layout className='h-screen bg-black/50'>
-			<Layout className='bg-muted w-8/10 rounded-md overflow-hidden justify-between'>
+		<Layout className='absolute left-1/2 top-1/2 -translate-1/2 w-9/10'>
+			<Layout className='bg-muted size-full rounded-md overflow-hidden justify-between'>
 				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
