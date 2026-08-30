@@ -1,7 +1,7 @@
 import { random, State } from '@lenix/lenix'
 import { cache, checkDependency, sleep } from '@overextended/ox_lib'
 import { notify, createVehicle, registerContext, showContext, createPed } from '@overextended/ox_lib/client'
-import type { Vec4 } from 'lenix'
+import type { Vec3, Vec4 } from 'lenix'
 import { api, useTimer } from 'lenix/client'
 import type { AtLeastOne } from 'types/index'
 import { behavior } from '../lib'
@@ -131,7 +131,7 @@ const handleDeletionSchedule = (vehicleHandle: number) => {
 	})
 }
 
-const spawnVehicle = async (model: Model, spawn: Vec4, plate = 'LENIX', rgb = [255, 255, 255] as const) => {
+const spawnVehicle = async (model: Model, spawn: Vec4, plate = 'LENIX', rgb: Vec3 = [255, 255, 255]) => {
 	despawnLastVehicle()
 
 	const { handle } = await createVehicle(model, ...spawn, true)
@@ -164,9 +164,9 @@ setImmediate(() => {
 			id: `vehicles_${menu}_menu_${i}`,
 			title: 'Vehicles Available',
 			options: [
-				...variants[menu].map(({ model }) => ({
+				...variants[menu].map(({ model, plate, color }) => ({
 					title: model,
-					onSelect: () => spawnVehicle(model, vehicle),
+					onSelect: () => spawnVehicle(model, vehicle, plate, color),
 				})),
 			],
 		})
