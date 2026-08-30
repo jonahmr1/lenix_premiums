@@ -15,11 +15,7 @@ const variants = {
 	std: ['cypher'],
 } as const satisfies Record<string, string[]>
 
-const locations: {
-	ped: Vec4
-	vehicle: Vec4
-	menu: keyof typeof variants
-}[] = [
+const locations = [
 	{
 		ped: [-252.2817, -297.2987, 21.6264, 69.0925],
 		vehicle: [-256.1688, -333.2883, 29.1064, 9.207],
@@ -45,7 +41,11 @@ const locations: {
 		vehicle: [429.1385, -986.8941, 21.3117, 91.0006],
 		menu: 'std',
 	},
-] as const
+] as const satisfies {
+	ped: Vec4
+	vehicle: Vec4
+	menu: keyof typeof variants
+}[]
 
 const despawnLastVehicle = () => {
 	if (!state.lastVehicle) return 
@@ -105,10 +105,10 @@ const spawnVehicle = async (model: typeof variants[keyof typeof variants][number
 }
 
 setImmediate(() => {
-	for (const { vehicle, menu } of locations) {
+	for (const [i, { vehicle, menu }] of locations.entries()) {
 		registerContext({
-			id: 'rent_menu',
-			title: 'Car List',
+			id: `vehicles_${menu}_menu_${i}`,
+			title: 'Vehicles Available',
 			options: [
 				...variants[menu].map(model => ({
 					title: model,
@@ -120,9 +120,9 @@ setImmediate(() => {
 })
 
 const load = async () => {
-	const disposes = await Promise.all(locations.map(async ({ ped, vehicle }, i) => {
-		const name = [`rental_menu_${i}`, `rental_return_${i}`]
-		const entity = await createPed('a_m_m_prolhost_01', ...ped)
+	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, menu }, i) => {
+		const name = [`vehicles_${menu}_menu_${i}`, `vehicles_${menu}_return_${i}`] as const
+		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
 
 		api.ox_target?.addLocalEntity?.(entity.handle, [
 			{
@@ -138,7 +138,7 @@ const load = async () => {
 						})
 						return
 					}
-					showContext('rent_menu')
+					showContext(name[0])
 				},
 			},
 			{
