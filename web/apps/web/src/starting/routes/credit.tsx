@@ -1,5 +1,5 @@
-import { NavKbd } from "@workspace/ui/elements/kbd"
-import { Layout } from "@workspace/ui/elements/layout"
+import { NavKbd } from "@/components/kbd"
+import { Layout } from "@/components/layout"
 import { onKeyDown } from "lenix/nui"
 import { useEffect } from "react"
 import { useNavigate } from "react-router"

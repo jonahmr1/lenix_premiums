@@ -1,6 +1,6 @@
-import { Kbd } from "../components/kbd";
-import { Button } from "../components/button";
-import { audiobility } from "../lib/utils";
+import { Kbd } from "../../../../packages/ui/src/components/kbd";
+import { Button } from "../../../../packages/ui/src/components/button";
+import { audiobility } from "../../../../packages/ui/src/lib/utils";
 
 export const NavKbd = ({ children, icon: Icon, onClick, disable }: {
 	children: React.ReactNode

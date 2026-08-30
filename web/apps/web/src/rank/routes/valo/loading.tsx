@@ -1,5 +1,5 @@
 import { Spinner } from "@workspace/ui/components/spinner";
-import { Layout } from "@workspace/ui/elements/layout";
+import { Layout } from "@/components/layout";
 
 export const Loading = () => (
 	<Layout className="h-screen">

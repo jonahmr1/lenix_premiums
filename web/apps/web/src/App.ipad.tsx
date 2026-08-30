@@ -8,7 +8,7 @@ import type { Orientation, Storage } from '@/ipad/types'
 import { apps } from './ipad/constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
-import { Layout } from '@workspace/ui/elements/layout'
+import { Layout } from '@/components/layout'
 import { DEV } from './App'
 
 const AppFragment = ({ appName, children }: { appName: string; children: React.ReactNode }) => (

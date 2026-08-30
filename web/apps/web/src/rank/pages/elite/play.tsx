@@ -23,7 +23,7 @@ import {
 import { useNavigate } from 'react-router'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
-import { Loading } from '@workspace/elite/elements/loading.js'
+import { Loading } from '@/rank/components/loading.js'
 import { fetchNuiServer } from 'lenix/nui'
 import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { type S } from '@lenix/lenix'

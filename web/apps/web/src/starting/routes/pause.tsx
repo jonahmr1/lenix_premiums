@@ -1,4 +1,4 @@
-import { Layout } from "@workspace/ui/elements/layout"
+import { Layout } from "@/components/layout"
 import { Menu } from "../components/menu"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
@@ -38,7 +38,7 @@ export const Pause = () => {
 			}
 		},
 	]
-	
+
 	return (
 		<Layout className='h-screen bg-black/50'>
 			<Menu buttons={buttons} kbds={[

@@ -1,4 +1,4 @@
-import { Layout } from "@workspace/ui/elements/layout"
+import { Layout } from "@/components/layout"
 import { Menu } from "../components/menu"
 import bg1 from '@workspace/ui/assets/start/ls-1.png'
 import bg2 from '@workspace/ui/assets/start/ls-2.png'
@@ -15,7 +15,7 @@ const image = backgrounds[random(0, backgrounds.length - 1)]
 
 export const Start = () => {
 	const nav = useNavigate()
-	
+
 	const buttons = [
 		{
 			label: 'Competitive',
@@ -36,7 +36,7 @@ export const Start = () => {
 		},
 		{
 			label: 'Campaign',
-			onClick: () => {},
+			onClick: () => { },
 			disabled: true
 		},
 		{
@@ -61,7 +61,7 @@ export const Start = () => {
 			<img
 				src={image}
 				className="absolute -z-1 size-full object-cover"
-				/>
+			/>
 			<Menu buttons={buttons} />
 		</Layout>
 	)

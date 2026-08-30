@@ -4,7 +4,7 @@ import { calculatePlayerScore, getRankTier } from '@/rank/lib'
 import { Activity, BarChart3, Clock, Crosshair, History, Shield, Skull, Sparkles, Trophy } from 'lucide-react'
 import type { Competitive } from 'types'
 import { useEffect, useState } from 'react'
-import { Loading } from '@workspace/elite/elements/loading.js'
+import { Loading } from '@/rank/components/loading.js'
 import { fetchNuiServer } from 'lenix/nui'
 
 const copy = {

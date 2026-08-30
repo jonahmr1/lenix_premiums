@@ -1,7 +1,7 @@
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { ArrowDown, ArrowUp } from "lucide-react"
-import { NavKbd } from '@workspace/ui/elements/kbd'
+import { NavKbd } from '@/components/kbd'
 import { useEffect, useState } from "react"
 import { onKeyDown } from "lenix/nui"
 import { audiobility } from "@workspace/ui/lib/utils"
@@ -30,15 +30,15 @@ export const Menu = ({ buttons, kbds }: {
 		const disposes = [
 			...keys.map(key => (
 				onKeyDown(key, () => {
-					switch(key) {
+					switch (key) {
 						case 'Enter': handleSubmit()
-						break
+							break
 
 						case 'ArrowDown': handleNav(key)
-						break
+							break
 
 						case 'ArrowUp': handleNav(key)
-						break
+							break
 
 						default:
 					}
@@ -48,7 +48,7 @@ export const Menu = ({ buttons, kbds }: {
 
 		return () => disposes.forEach(dispose => dispose())
 	}, [selected])
-	
+
 	const handleSubmit = (index?: number) => {
 		const selectedIndex = index ?? selected
 

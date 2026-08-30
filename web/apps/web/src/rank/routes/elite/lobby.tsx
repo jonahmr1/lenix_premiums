@@ -1,4 +1,4 @@
-import { Layout } from '@workspace/ui/elements/layout'
+import { Layout } from '@/components/layout'
 import { useLocation, useNavigate } from 'react-router'
 import {
 	DropdownMenu,
@@ -29,7 +29,7 @@ import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
 import { fetchNuiServer, focus, onNuiEmit } from 'lenix/nui'
 import type { Competitive } from 'types'
-import { Loading } from '@workspace/elite/elements/loading'
+import { Loading } from '@/rank/components/loading'
 import { Spinner } from '@workspace/ui/components/spinner'
 import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { entries } from '@lenix/lenix'

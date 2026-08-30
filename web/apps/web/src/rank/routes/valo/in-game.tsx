@@ -1,4 +1,4 @@
-import { Layout } from "@workspace/ui/elements/layout"
+import { Layout } from "@/components/layout"
 import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { Separator } from "@workspace/ui/components/separator"
 import { Users } from "lucide-react"
@@ -111,7 +111,7 @@ export const InGame = () => {
 							key={i}
 							type='own'
 							avatar={player.avatar ?? avatar}
-							dead= {player.isDead}
+							dead={player.isDead}
 						/>
 					))}
 				</div>
@@ -140,7 +140,7 @@ export const InGame = () => {
 							key={i}
 							type='opponent'
 							avatar={player.avatar ?? avatar}
-							dead= {player.isDead}
+							dead={player.isDead}
 						/>
 					))}
 				</div>

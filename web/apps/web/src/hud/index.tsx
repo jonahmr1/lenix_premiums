@@ -1,6 +1,6 @@
 import { DEV } from '@/App'
 import { Separator } from '@workspace/ui/components/separator'
-import { Layout } from '@workspace/ui/elements/layout'
+import { Layout } from '@/components/layout'
 import { cn } from '@workspace/ui/lib/utils'
 import { onNuiEmit } from 'lenix/nui'
 import { Heart, Shield } from 'lucide-react'

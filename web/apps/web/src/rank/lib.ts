@@ -1,5 +1,5 @@
 import type { Competitive } from 'types'
-import rankConfig, { rank } from 'config' with { type: 'json' }
+import { rank } from 'config' with { type: 'json' }
 import { entries } from '@lenix/lenix'
 
 const { score_weights, rank_tiers } = rank
