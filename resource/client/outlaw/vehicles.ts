@@ -13,7 +13,7 @@ interface Membership {
 	charId: string
 	group: {
 		name: string
-		grade?: string
+		grade?: number
 	}
 }
 
@@ -33,11 +33,16 @@ const variants = {
 		{
 			model: 'cypher',
 			allowed: {
-				charId: ''
+				charId: 'test',
+				group: {
+					name: 'police',
+					grade: 2
+				}
 			},
 			disallowed: {
 				group: {
-					name: 'police'
+					name: 'cartel',
+					grade: 1
 				}
 			},
 			plate: `LENIX${random(100, 999)}`,
@@ -85,81 +90,83 @@ const locations = [
 	variant: keyof typeof variants
 }[]
 
-const despawnLastVehicle = () => {
-	if (!state.lastVehicle) return 
-
-	DeleteEntity(state.lastVehicle)
-	state.lastVehicle = null
-
-	notify({
-		title: 'Your vehicle have been removed.',
-		type: 'success',
-	})
-}
-
-const handleDeletionSchedule = (vehicleHandle: number) => {
-	const clearTimer = useTimer({
-		duration: deleteAfter,
-		updateInterval: warnAt,
-		onTick: timeLeft => {
-			if (vehicleHandle !== state.lastVehicle) {
+const game = {
+	despawnLastVehicle: () => {
+		if (!state.lastVehicle) return 
+	
+		DeleteEntity(state.lastVehicle)
+		state.lastVehicle = null
+	
+		notify({
+			title: 'Your vehicle have been removed.',
+			type: 'success',
+		})
+	},
+	
+	handleDeletionSchedule(vehicleHandle: number) {
+		const clearTimer = useTimer({
+			duration: deleteAfter,
+			updateInterval: warnAt,
+			onTick: timeLeft => {
+				if (vehicleHandle !== state.lastVehicle) {
+					clearTimer()
+					return
+				}
+	
+				const occupied = GetVehicleNumberOfPassengers(vehicleHandle) > 0 || !IsVehicleSeatFree(vehicleHandle, -1)
+				if (occupied) {
+					this.handleDeletionSchedule(vehicleHandle)
+					clearTimer()
+					return
+				}
+	
+				if (timeLeft <= warnAt) {
+					notify({
+						title: `Your unattended vehicle will be removed in ${Math.ceil(warnAt / 1000)} seconds.`,
+						type: 'warning',
+					})
+					return
+				}
+			},
+			onEnd: () => {
+				if (vehicleHandle !== state.lastVehicle) return
+	
+				this.despawnLastVehicle()
 				clearTimer()
-				return
 			}
-
-			const occupied = GetVehicleNumberOfPassengers(vehicleHandle) > 0 || !IsVehicleSeatFree(vehicleHandle, -1)
-			if (occupied) {
-				handleDeletionSchedule(vehicleHandle)
-				clearTimer()
-				return
-			}
-
-			if (timeLeft <= warnAt) {
-				notify({
-					title: `Your unattended vehicle will be removed in ${Math.ceil(warnAt / 1000)} seconds.`,
-					type: 'warning',
-				})
-				return
-			}
-		},
-		onEnd: () => {
-			if (vehicleHandle !== state.lastVehicle) return
-
-			despawnLastVehicle()
-			clearTimer()
+		})
+	},
+	
+	async spawnVehicle(model: Model, spawn: Vec4, plate = 'LENIX', rgb: Vec3 = [255, 255, 255]) {
+		this.despawnLastVehicle()
+	
+		const { handle } = await createVehicle(model, ...spawn, true)
+	
+		for (const i of Array(sets).keys()) {
+			setTimeout(() => {
+				SetEntityAlpha(handle, 51, false)
+				setTimeout(() => SetEntityAlpha(handle, 102, false), 100)
+			}, i * interval)
 		}
-	})
-}
-
-const spawnVehicle = async (model: Model, spawn: Vec4, plate = 'LENIX', rgb: Vec3 = [255, 255, 255]) => {
-	despawnLastVehicle()
-
-	const { handle } = await createVehicle(model, ...spawn, true)
-
-	for (const i of Array(sets).keys()) {
-		setTimeout(() => {
-			SetEntityAlpha(handle, 51, false)
-			setTimeout(() => SetEntityAlpha(handle, 102, false), 100)
-		}, i * interval)
+		await sleep(sets * interval)
+		ResetEntityAlpha(handle)
+	
+		plate && SetVehicleNumberPlateText(handle, plate)
+	
+		SetVehicleEngineOn(handle, true, false, true)
+		// @ts-expect-error double check the args
+		TaskEnterVehicle(cache.ped, handle, 1000, -1, 1.0, 0, 0)
+	
+		SetVehicleCustomPrimaryColour(handle, ...rgb)
+		SetVehicleCustomSecondaryColour(handle, ...rgb)
+	
+		state.lastVehicle = handle
+		this.handleDeletionSchedule(handle)
 	}
-	await sleep(sets * interval)
-	ResetEntityAlpha(handle)
-
-	plate && SetVehicleNumberPlateText(handle, plate)
-
-	SetVehicleEngineOn(handle, true, false, true)
-	// @ts-expect-error double check the args
-	TaskEnterVehicle(cache.ped, handle, 1000, -1, 1.0, 0, 0)
-
-	SetVehicleCustomPrimaryColour(handle, ...rgb)
-	SetVehicleCustomSecondaryColour(handle, ...rgb)
-
-	state.lastVehicle = handle
-	handleDeletionSchedule(handle)
 }
 
-const isEligible = (variant: keyof typeof variants) => {
-
+const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number]) => {
+	if (vehicleMenu)
 	return true
 }
 
@@ -169,11 +176,11 @@ setImmediate(() => {
 			id: `vehicles_${variant}_menu_${i}`,
 			title: 'Vehicles Available',
 			options: [
-				...variants[variant].map(({ model, plate, color }) => ({
-					title: model,
-					onSelect: () => spawnVehicle(model, vehicle, plate, color),
-					image: `https://docs-backend.fivem.net/vehicles/${model}.webp`,
-					disabled: isEligible(variant)
+				...variants[variant].map(vehicleMenu => ({
+					title: vehicleMenu.model,
+					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
+					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
+					disabled: isEligible(vehicleMenu)
 				})),
 			],
 		})
@@ -208,7 +215,7 @@ const load = async () => {
 				icon: 'fas fa-trash-arrow-up',
 				label: 'Return The Vehicle',
 				onSelect: async () => {
-					despawnLastVehicle()
+					game.despawnLastVehicle()
 				},
 			},
 		])
