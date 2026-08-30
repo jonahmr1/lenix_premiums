@@ -44,7 +44,7 @@ export const Play = ({
 	const [_searchTimer, setSeachTimer] = useState(0)
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('rank')) {
 			setParty({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
@@ -91,7 +91,7 @@ export const Play = ({
 	useEffect(() => {
 		if (!party) return
 
-		if (DEV) {
+		if (DEV('rank')) {
 			setStats({
 				1: {
 					assists: 67,

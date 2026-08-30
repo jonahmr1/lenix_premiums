@@ -35,7 +35,7 @@ export const InGame = () => {
 	const [teams, setTeams] = useState<Competitive.CasualMatch>()
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('rank')) {
 			setTimer(10)
 			setTeams({
 				own: {

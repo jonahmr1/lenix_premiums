@@ -18,7 +18,7 @@ const AppFragment = ({ appName, children }: { appName: string; children: React.R
 )
 
 export const Ipad = () => {
-	const [display, _setDisplay] = useState(DEV)
+	const [display, _setDisplay] = useState(DEV('ipad'))
 	const [orientation, setOrientation] = useState<Orientation>(
 		storage.get<Storage, 'orientation'>('orientation') || 'portrait',
 	)

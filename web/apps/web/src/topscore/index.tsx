@@ -57,7 +57,7 @@ export const TopScore = () => {
 	}
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('topscore')) {
 			setScores({
 				'1': {
 					scale: 1,

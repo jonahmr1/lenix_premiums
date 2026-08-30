@@ -13,10 +13,10 @@ const zeroed = (value: string | number, length: number) => String(value).padStar
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
-	const [display, setDisplay] = useState({ vitals: DEV, weaponary: DEV })
+	const [display, setDisplay] = useState({ vitals: DEV('hud'), weaponary: DEV('hud') })
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('hud')) {
 			setState({
 				health: 50,
 				armor: 50,

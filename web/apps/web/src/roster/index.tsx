@@ -41,12 +41,12 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 )
 
 export const Roster = () => {
-	const [display, setDisplay] = useState<boolean>(DEV)
+	const [display, setDisplay] = useState<boolean>(DEV('roster'))
 	const [officers, setOfficers] = useState<IRoster.Officers>({})
 	const [playerId, setPlayerId] = useState<number>(1)
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('roster')) {
 			setOfficers({
 				1: {
 					playerId: 1,

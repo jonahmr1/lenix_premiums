@@ -11,11 +11,12 @@ import { Starting } from './App.start'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-export const DEV = true
+const dev = 'hud'
+export const DEV = (module: typeof dev) => module === dev
 
 export const App = () => (
 	<>
-		{DEV && (
+		{DEV(dev) && (
 			<img
 				src="/ped.png"
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />

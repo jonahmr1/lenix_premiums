@@ -8,7 +8,7 @@ export const Main = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('starting')) {
 			nav('/pause')
 			return
 		}

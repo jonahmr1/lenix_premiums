@@ -26,7 +26,7 @@ export const Lobby = () => {
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [profile, setProfile] = useState<Competitive.GamerProfile>()
-	const [display, setDisplay] = useState(DEV)
+	const [display, setDisplay] = useState(DEV('rank'))
 
 	useEffect(() => {
 		const disposes = [
@@ -49,7 +49,7 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
-		if (DEV) {
+		if (DEV('rank')) {
 			setProfile(FAKE_PROFILE)
 			return
 		}

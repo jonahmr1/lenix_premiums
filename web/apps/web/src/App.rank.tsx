@@ -32,7 +32,7 @@ const RankRoutes = () => {
 	const navigate = useNavigate()
 	
 	useEffect(() => {
-		if (DEV) {
+		if (DEV('rank')) {
 			navigate('/')
 			return
 		}
