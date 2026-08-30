@@ -79,8 +79,8 @@ export const Hud = () => {
 	)
 
 	return (
-		<div className='absolute size-full flex flex-col justify-end'>
-			<div className='flex justify-between items-end h-1/9 mb-10'>
+		<div className='absolute bottom-md w-full flex flex-col justify-end h-[10vh]'>
+			<div className='flex justify-between items-end h-full'>
 				<div className='flex pl-10 gap-2.5 w-1/3 h-1/3 perspective-left-2 -rotate-1'>
 					<Bar variant='health' />
 					<Bar variant='armor' />
