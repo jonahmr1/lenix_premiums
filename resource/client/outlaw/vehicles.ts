@@ -45,7 +45,15 @@ const locations: {
 	},
 ] as const
 
-const handleVehicleDeletion = (vehicle: number) => {
+const spawnVehicle = async (model: typeof variants[keyof typeof variants][number], spawn: Vec4) => {
+	if (lastVehicle && DoesEntityExist(lastVehicle)) {
+		DeleteEntity(lastVehicle)
+	}
+
+	const vehicle = await createVehicle(model, ...spawn)
+	TaskWarpPedIntoVehicle(cache.ped, vehicle.handle, -1)
+	lastVehicle = vehicle.handle
+
 	clearInterval(vehicleInterval)
 
 	const deleteAfter = 15 * 60 * 1000
@@ -55,12 +63,12 @@ const handleVehicleDeletion = (vehicle: number) => {
 	let warned = false
 
 	vehicleInterval = setInterval(() => {
-		if (!DoesEntityExist(vehicle)) {
+		if (!DoesEntityExist(vehicle.handle)) {
 			clearInterval(vehicleInterval)
 			return
 		}
 
-		const occupied = GetVehicleNumberOfPassengers(vehicle) > 0 || !IsVehicleSeatFree(vehicle, -1)
+		const occupied = GetVehicleNumberOfPassengers(vehicle.handle) > 0 || !IsVehicleSeatFree(vehicle.handle, -1)
 		if (occupied) {
 			emptySince = GetGameTimer()
 			warned = false
@@ -78,7 +86,7 @@ const handleVehicleDeletion = (vehicle: number) => {
 		}
 
 		if (remaining <= 0) {
-			DeleteEntity(vehicle)
+			DeleteEntity(vehicle.handle)
 			clearInterval(vehicleInterval)
 		}
 	}, pollInterval)
@@ -92,16 +100,7 @@ setImmediate(() => {
 			options: [
 				...variants[menu].map(model => ({
 					title: model,
-					onSelect: async () => {
-						if (lastVehicle && DoesEntityExist(lastVehicle)) {
-							DeleteEntity(lastVehicle)
-						}
-					
-						const veh = await createVehicle(model, ...vehicle)
-						TaskWarpPedIntoVehicle(cache.ped, veh.handle, -1)
-						lastVehicle = veh.handle
-						handleVehicleDeletion(veh.handle)
-					},
+					onSelect: () => spawnVehicle(model, vehicle),
 				})),
 			],
 		})
