@@ -96,7 +96,7 @@ const handleDeletionSchedule = (vehicleHandle: number) => {
 const spawnVehicle = async (model: typeof variants[keyof typeof variants][number], spawn: Vec4) => {
 	despawnLastVehicle()
 
-	const vehicle = await createVehicle(model, ...spawn)
+	const vehicle = await createVehicle(model, ...spawn, true)
 	TaskWarpPedIntoVehicle(cache.ped, vehicle.handle, -1)
 
 	state.lastVehicle = vehicle.handle
