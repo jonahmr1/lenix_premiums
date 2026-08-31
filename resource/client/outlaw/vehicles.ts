@@ -194,7 +194,7 @@ const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number])
 		if (allowed.charIds) {
 			asserts(player.charId)
 
-			if (allowed.charIds.includes(player.charId)) true
+			if (allowed.charIds.includes(player.charId)) return true
 		}
 
 		if (allowed.groups) {
