@@ -222,26 +222,15 @@ const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number])
 	return eligible
 }
 
-setImmediate(() => {
-	for (const [i, { vehicle, variant }] of locations.entries()) {
-		registerContext({
-			id: `vehicles_${variant}_menu_${i}`,
-			title: 'Vehicles Available',
-			options: [
-				...variants[variant]!.map(vehicleMenu => ({
-					title: vehicleMenu.model,
-					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
-					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
-					disabled: !isEligible(vehicleMenu)
-				})),
-			],
-		})
-	}
-})
-
 const load = async () => {
 	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, variant: menu }, i) => {
-		const name = [`vehicles_${menu}_menu_${i}`, `vehicles_${menu}_return_${i}`] as const
+		const name = [
+			`vehicles_${menu}_menu_${i}`,
+			`vehicles_${menu}_list_${i}`,
+			`vehicles_${menu}_preview_${i}`,
+			`vehicles_${menu}_return_${i}`
+		] as const
+
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
 		behavior(entity.handle, 'WORLD_HUMAN_CLIPBOARD')
 
@@ -259,13 +248,53 @@ const load = async () => {
 						})
 						return
 					}
+					registerContext({
+						id: name[0],
+						title: 'Vehicles',
+						options: [
+							{
+								title: 'Vehicles Available',
+								menu: name[1]
+							},
+							{
+								title: 'Preview Vehicles',
+								menu: name[2]
+							},
+						],
+					})
+					registerContext({
+						menu: name[0],
+						id: name[1],
+						title: 'Vehicles Available',
+						options: [
+							...variants[menu]!.map(vehicleMenu => ({
+								title: vehicleMenu.model,
+								onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
+								image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
+								disabled: !isEligible(vehicleMenu)
+							})),
+						],
+					})
+					registerContext({
+						menu: name[0],
+						id: name[2],
+						title: 'Preview Vehicles',
+						options: [
+							...variants[menu]!.map(vehicleMenu => ({
+								title: vehicleMenu.model,
+								onSelect: () => {},
+								image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
+							})),
+						],
+					})
 					showContext(name[0])
 				},
 			},
 			{
-				name: name[1],
+				name: name[3],
 				icon: 'fas fa-trash-arrow-up',
 				label: 'Return The Vehicle',
+				canInteract: () => state.lastVehicle,
 				onSelect: async () => {
 					game.despawnLastVehicle()
 				},
