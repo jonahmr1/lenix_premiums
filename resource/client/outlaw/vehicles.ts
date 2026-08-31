@@ -234,6 +234,46 @@ const load = async () => {
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
 		behavior(entity.handle, 'WORLD_HUMAN_CLIPBOARD')
 
+		registerContext({
+			id: name[0],
+			title: 'Vehicles',
+			options: [
+				{
+					title: 'Vehicles Available',
+					menu: name[1]
+				},
+				{
+					title: 'Preview Vehicles',
+					menu: name[2]
+				},
+			],
+		})
+		registerContext({
+			menu: name[0],
+			id: name[1],
+			title: 'Vehicles Available',
+			options: [
+				...variants[menu]!.map(vehicleMenu => ({
+					title: vehicleMenu.model,
+					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
+					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
+					disabled: !isEligible(vehicleMenu)
+				})),
+			],
+		})
+		registerContext({
+			menu: name[0],
+			id: name[2],
+			title: 'Preview Vehicles',
+			options: [
+				...variants[menu]!.map(vehicleMenu => ({
+					title: vehicleMenu.model,
+					onSelect: () => {},
+					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
+				})),
+			],
+		})
+
 		api.ox_target?.addLocalEntity?.(entity.handle, [
 			{
 				name: name[0],
@@ -248,45 +288,7 @@ const load = async () => {
 						})
 						return
 					}
-					registerContext({
-						id: name[0],
-						title: 'Vehicles',
-						options: [
-							{
-								title: 'Vehicles Available',
-								menu: name[1]
-							},
-							{
-								title: 'Preview Vehicles',
-								menu: name[2]
-							},
-						],
-					})
-					registerContext({
-						menu: name[0],
-						id: name[1],
-						title: 'Vehicles Available',
-						options: [
-							...variants[menu]!.map(vehicleMenu => ({
-								title: vehicleMenu.model,
-								onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
-								image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
-								disabled: !isEligible(vehicleMenu)
-							})),
-						],
-					})
-					registerContext({
-						menu: name[0],
-						id: name[2],
-						title: 'Preview Vehicles',
-						options: [
-							...variants[menu]!.map(vehicleMenu => ({
-								title: vehicleMenu.model,
-								onSelect: () => {},
-								image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
-							})),
-						],
-					})
+
 					showContext(name[0])
 				},
 			},
