@@ -185,7 +185,7 @@ const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number])
 		if (disallowed.groups) {
 			for (const { name, grade } of disallowed.groups) {
 				const currentGrade: number | undefined = player.getGroup(name)
-				if (currentGrade && grade && grade > currentGrade) return
+				if (currentGrade && (!grade || grade > currentGrade)) return
 			}
 		}
 	}
@@ -202,7 +202,7 @@ const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number])
 				const currentGrade: number | undefined = player.getGroup(name)
 				if (!currentGrade || grade && grade > currentGrade) return
 			}
-		}
+		} else return
 	}
 	return true
 }
@@ -217,7 +217,7 @@ setImmediate(() => {
 					title: vehicleMenu.model,
 					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
 					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
-					disabled: isEligible(vehicleMenu)
+					disabled: !isEligible(vehicleMenu)
 				})),
 			],
 		})
