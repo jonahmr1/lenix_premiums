@@ -174,37 +174,52 @@ const game = {
 const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number]) => {
 	const player = GetPlayer()
 
-	const disallowed = vehicleMenu.disallowed
-	if (disallowed) {
-		if (disallowed.charIds) {
-			asserts(player.charId)
+	let eligible = true
 
-			if (disallowed.charIds.includes(player.charId)) return
-		}
-
-		if (disallowed.groups) {
-			for (const { name, grade } of disallowed.groups) {
-				const currentGrade: number | undefined = player.getGroup(name)
-				if (currentGrade && (!grade || grade > currentGrade)) return
-			}
-		}
-	}
 	const allowed = vehicleMenu.allowed
 	if (allowed) {
+		eligible = false
+
 		if (allowed.charIds) {
 			asserts(player.charId)
 
-			if (allowed.charIds.includes(player.charId)) return true
+			if (allowed.charIds.includes(player.charId)) eligible = true
 		}
 
 		if (allowed.groups) {
 			for (const { name, grade } of allowed.groups) {
 				const currentGrade: number | undefined = player.getGroup(name)
-				if (!currentGrade || grade && grade > currentGrade) return
+				if (currentGrade) {
+					if (grade) {
+						if (grade <= currentGrade) eligible = true
+					}
+					else eligible = true
+				}
 			}
-		} else return
+		}
 	}
-	return true
+
+	const disallowed = vehicleMenu.disallowed
+	if (disallowed) {
+		if (disallowed.charIds) {
+			asserts(player.charId)
+
+			if (disallowed.charIds.includes(player.charId)) eligible = false
+		}
+
+		if (disallowed.groups) {
+			for (const { name, grade } of disallowed.groups) {
+				const currentGrade: number | undefined = player.getGroup(name)
+				if (currentGrade) {
+					if (grade) {
+						if (grade > currentGrade) eligible = false
+					} else eligible = false
+				}
+			}
+		}
+	}
+
+	return eligible
 }
 
 setImmediate(() => {
