@@ -2,7 +2,7 @@ import { asserts, random, State } from '@lenix/lenix'
 import { cache, checkDependency, sleep } from '@overextended/ox_lib'
 import { notify, createVehicle, registerContext, showContext, createPed } from '@overextended/ox_lib/client'
 import type { Vec3, Vec4 } from 'lenix'
-import { api, useTimer } from 'lenix/client'
+import { api, cam, control, useTimer } from 'lenix/client'
 import type { AtLeastOne } from 'types/index'
 import { behavior } from '../lib'
 import { GetPlayer } from '@overextended/ox_core/client'
@@ -97,6 +97,16 @@ const locations = [
 }[]
 
 const game = {
+	isAreaBusy: (coords: Vec3) => {
+		const isOccupied = IsPositionOccupied(...coords, 3.0, false, true, true, false, false, 0, false)
+		if (isOccupied) notify({
+			title: 'Spawn point is occupied.',
+			type: 'error'
+		})
+
+		return isOccupied
+	},
+
 	despawnLastVehicle: () => {
 		if (!state.lastVehicle) return 
 	
@@ -144,6 +154,8 @@ const game = {
 	},
 	
 	async spawnVehicle(model: Model, spawn: Vec4, plate = 'LENIX', rgb: Vec3 = [255, 255, 255]) {
+		if (game.isAreaBusy([spawn[0], spawn[1], spawn[2]])) return
+
 		this.despawnLastVehicle()
 	
 		const { handle } = await createVehicle(model, ...spawn, true)
@@ -168,6 +180,28 @@ const game = {
 	
 		state.lastVehicle = handle
 		this.handleDeletionSchedule(handle)
+	},
+
+	async previewVehicle(model: Model, spawn: Vec4) {
+		if (this.isAreaBusy([spawn[0], spawn[1], spawn[2]])) return
+
+		const { handle } = await createVehicle(model, ...spawn, true)
+
+		const [destroy] = cam.create({
+			coords: spawn,
+			offset: [2.0, 5.0, 1.0, 180.0],
+			rotation: [0.0, -10.0],
+		})
+
+		const dispose = control.on({
+			event: 'press',
+			key: 'ESCAPE',
+			onEvent: () => {
+				DeleteVehicle(handle)
+				destroy()
+				dispose()
+			}
+		})
 	}
 }
 
@@ -223,12 +257,12 @@ const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number])
 }
 
 const load = async () => {
-	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, variant: menu }, i) => {
+	const disposes = await Promise.all(locations.map(async ({ ped, vehicle, variant }, i) => {
 		const name = [
-			`vehicles_${menu}_menu_${i}`,
-			`vehicles_${menu}_list_${i}`,
-			`vehicles_${menu}_preview_${i}`,
-			`vehicles_${menu}_return_${i}`
+			`vehicles_${variant}_menu_${i}`,
+			`vehicles_${variant}_list_${i}`,
+			`vehicles_${variant}_preview_${i}`,
+			`vehicles_${variant}_return_${i}`
 		] as const
 
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
@@ -253,7 +287,7 @@ const load = async () => {
 			id: name[1],
 			title: 'Vehicles Available',
 			options: [
-				...variants[menu]!.map(vehicleMenu => ({
+				...variants[variant]!.map(vehicleMenu => ({
 					title: vehicleMenu.model,
 					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
 					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
@@ -266,9 +300,9 @@ const load = async () => {
 			id: name[2],
 			title: 'Preview Vehicles',
 			options: [
-				...variants[menu]!.map(vehicleMenu => ({
+				...variants[variant]!.map(vehicleMenu => ({
 					title: vehicleMenu.model,
-					onSelect: () => {},
+					onSelect: () => game.previewVehicle(vehicleMenu.model, vehicle),
 					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
 				})),
 			],
@@ -280,14 +314,7 @@ const load = async () => {
 				icon: 'fas fa-bars',
 				label: 'Vehicles',
 				onSelect: async () => {
-					const occupied = IsPositionOccupied(vehicle[0], vehicle[1], vehicle[2], 3.0, false, true, true, false, false, 0, false,)
-	
-					if (occupied) {
-						notify({
-							title: 'Spawn point is occupied.',
-						})
-						return
-					}
+					if (game.isAreaBusy([vehicle[0], vehicle[1], vehicle[2]])) return
 
 					showContext(name[0])
 				},
