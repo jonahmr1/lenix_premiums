@@ -9,5 +9,9 @@ export const Constants = {
 	robbery: {
 		vehicle_model: 'stockade',
 		mission_price: 2000
+	},
+	locker: {
+		coords: [0, 0, 0],
+		name: 'pd_personal_locker'
 	}
-}
+} as const

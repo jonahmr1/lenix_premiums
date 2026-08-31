@@ -11,10 +11,11 @@ import elevators from './elevators'
 import hud from './hud'
 import safezones from './safezones'
 import topscore from './topscore'
+import locker from './locker'
 
 export const login = (logout: () => void) => {
 	logout()
-	const modules = [emotes, rank, identities, radialmenu, criminaltask, vehicles, robbery, roster, elevators, hud, safezones, topscore]
+	const modules = [emotes, rank, identities, radialmenu, criminaltask, vehicles, robbery, roster, elevators, hud, safezones, topscore, locker]
 	
 	return () => {
 		for (const disposes of modules) for (const dispose of disposes) dispose()
