@@ -1,7 +1,6 @@
 import { oxmysql } from "@overextended/oxmysql"
 import { fullName, getProfileId } from "./utils"
 import type { Competitive } from "types/index"
-import { palette } from "lenix"
 import { asserts } from "@lenix/lenix"
 
 

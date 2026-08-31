@@ -4,7 +4,7 @@ export const behavior = (pedHandle: number, scenario: Scenario, freeze = true, o
 	oblivious && SetBlockingOfNonTemporaryEvents(pedHandle, true)
 }
 
-type Scenario = 
+export type Scenario = 
 	| 'WORLD_HUMAN_AA_COFFEE'
 	| 'WORLD_HUMAN_AA_SMOKE'
 	| 'WORLD_HUMAN_BINOCULARS'

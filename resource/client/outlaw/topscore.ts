@@ -3,6 +3,7 @@ import { checkDependency, createPed, triggerServerCallback } from '@overextended
 import type { Vec3, Vec4 } from 'lenix'
 import { emitNui, entity, player, pool } from 'lenix/client'
 import type { Outlaw, Topscore } from 'types/index'
+import { behavior } from '../lib'
 
 checkDependency('ox_lib', '3.39.0', true)
 
@@ -65,9 +66,10 @@ const getData = async () => {
 const load = async () => {
 	await getData()
 	const disposes = await Promise.all(pedCoords.map(async coords => {
-		const ped = await createPed('a_m_m_prolhost_01', ...coords as Vec4)
+		const { handle } = await createPed('a_m_m_prolhost_01', ...coords as Vec4)
+		behavior(handle, 'WORLD_HUMAN_COP_IDLES')
 
-		return () => DeletePed(ped.handle)
+		return () => DeletePed(handle)
 	}))
 
 	const interval = setInterval(getData, refreshInterval)

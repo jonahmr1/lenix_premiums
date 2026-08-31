@@ -17,6 +17,7 @@ import type { Vec3, Vec4 } from 'lenix'
 import { timer, nearest, entity, onNetEvent, player } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
+import { behavior } from '../lib'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_inventory', '2.47.9', true)
@@ -127,12 +128,12 @@ AddStateBagChangeHandler('robberyVehicleCoords', null, (_bag: string, key: strin
 })
 
 setImmediate(async () => {
-	const entity = await createPed('a_m_m_prolhost_01', ...PED_COORDS, true)
-	if (!entity) return
+	const { handle } = await createPed('a_m_m_prolhost_01', ...PED_COORDS, true)
+	behavior(handle, 'WORLD_HUMAN_CLIPBOARD')
 
 	refreshContext()
 
-	api.ox_target?.addLocalEntity?.(entity.handle, {
+	api.ox_target?.addLocalEntity?.(handle, {
 		label: 'Robbery Mission',
 		onSelect: () => {
 			showContext('robbery-mission')

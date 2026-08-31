@@ -7,10 +7,12 @@ import {
 	triggerServerCallback,
 	checkDependency,
 	progressBar,
+	createPed,
 } from '@overextended/ox_lib/client'
 import type { Vec3, Vec4 } from 'lenix'
 import { api, blip, entity } from 'lenix/client'
 import type { Outlaw } from 'types/index'
+import { behavior, type Scenario } from '../lib'
 
 checkDependency('ox_lib', '3.39.0', true)
 
@@ -228,23 +230,6 @@ const takeThePackage = async () => {
 	}
 }
 
-const createPed = async (pedModel: string, pedCoords: Vec4, pedScenario: unknown) => {
-	await requestModel(pedModel)
-
-	const entity = oxCreatePed(pedModel, pedCoords[0], pedCoords[1], pedCoords[2] - 0.85, pedCoords[3])
-	// behavior = {
-	//   freeze = true,
-	//   oblivious = true
-	// },
-	// scenario = {
-	//   name = pedScenario,
-	//   timeToLeave = 0,
-	//   playIntroClip = true
-	// }
-
-	return entity
-}
-
 const crash = () => {
 	if (isPlayerFree) return
 
@@ -253,13 +238,14 @@ const crash = () => {
 }
 
 const load = async () => {
-	const disposes = await Promise.all([...config.peds].map(async (ped, i) => {
+	const disposes = await Promise.all([...config.peds].map(async ({ model, coords }, i) => {
 		const takeName = `take_task_${i}`
 		const abortName = `abort_task_${i}`
 
-		const entity = await createPed(ped.model, [...ped.coords], ped.scenario)
+		const { handle } = await createPed(model, coords[0], coords[1], coords[2] - 0.85, coords[3])
+		behavior(handle, 'WORLD_HUMAN_CLIPBOARD')
 
-		api.ox_target?.addLocalEntity?.(entity.handle, [
+		api.ox_target?.addLocalEntity?.(handle, [
 			{
 				label: 'Take a task',
 				name: takeName,
@@ -278,7 +264,7 @@ const load = async () => {
 			},
 		])
 
-		return () => api.ox_target?.removeLocalEntity?.(entity.handle, [takeName, abortName])
+		return () => api.ox_target?.removeLocalEntity?.(handle, [takeName, abortName])
 	}))
 
 	return () => {
