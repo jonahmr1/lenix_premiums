@@ -2,7 +2,7 @@ import { asserts, random, State } from '@lenix/lenix'
 import { cache, checkDependency, sleep } from '@overextended/ox_lib'
 import { notify, createVehicle, registerContext, showContext, createPed } from '@overextended/ox_lib/client'
 import type { Vec3, Vec4 } from 'lenix'
-import { api, cam, control, useTimer } from 'lenix/client'
+import { api, cam, control, timer } from 'lenix/client'
 import type { AtLeastOne } from 'types/index'
 import { behavior } from '../lib'
 import { GetPlayer } from '@overextended/ox_core/client'
@@ -120,10 +120,10 @@ const game = {
 	},
 	
 	handleDeletionSchedule(vehicleHandle: number) {
-		const clearTimer = useTimer({
+		const clearTimer = timer({
 			duration: deleteAfter,
 			updateInterval: warnAt,
-			onTick: timeLeft => {
+			onInterval: timeLeft => {
 				if (vehicleHandle !== state.lastVehicle) {
 					clearTimer()
 					return
