@@ -1,20 +1,21 @@
-import { random, State } from '@lenix/lenix'
+import { asserts, random, State } from '@lenix/lenix'
 import { cache, checkDependency, sleep } from '@overextended/ox_lib'
 import { notify, createVehicle, registerContext, showContext, createPed } from '@overextended/ox_lib/client'
 import type { Vec3, Vec4 } from 'lenix'
 import { api, useTimer } from 'lenix/client'
 import type { AtLeastOne } from 'types/index'
 import { behavior } from '../lib'
+import { GetPlayer } from '@overextended/ox_core/client'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_target', '1.18.1', true)
 
 interface Membership {
-	charId: string
-	group: {
+	charIds: number[]
+	groups: {
 		name: string
 		grade?: number
-	}
+	}[]
 }
 
 type Model = {
@@ -28,35 +29,40 @@ const interval = 200
 
 const state = new State({ lastVehicle: null as number | null })
 
-const variants = {
-	std: [
-		{
-			model: 'cypher',
-			allowed: {
-				charId: 'test',
-				group: {
-					name: 'police',
-					grade: 2
-				}
-			},
-			disallowed: {
-				group: {
-					name: 'cartel',
-					grade: 1
-				}
-			},
-			plate: `LENIX${random(100, 999)}`,
-			color: [0, 255, 206],
-		}
-	],
-} as const satisfies Record<string, {
+const variants: Record<string, {
 	model: Model
 	allowed?: AtLeastOne<Membership>
 	disallowed?: AtLeastOne<Membership>
 	color?: [number, number, number]
 	plate?: string
 	image?: string
-}[]>
+}[]> = {
+	std: [
+		{
+			model: 'cypher',
+			allowed: {
+				charIds: [1],
+				groups: [
+					{
+						name: 'police',
+						grade: 2
+					}
+				]
+			},
+			disallowed: {
+				charIds: [2],
+				groups: [
+					{
+						name: 'cartel',
+						grade: 1
+					}
+				]
+			},
+			plate: `LENIX${random(100, 999)}`,
+			color: [0, 255, 206],
+		}
+	],
+}
 
 const locations = [
 	{
@@ -166,7 +172,38 @@ const game = {
 }
 
 const isEligible = (vehicleMenu: typeof variants[keyof typeof variants][number]) => {
-	if (vehicleMenu)
+	const player = GetPlayer()
+
+	const disallowed = vehicleMenu.disallowed
+	if (disallowed) {
+		if (disallowed.charIds) {
+			asserts(player.charId)
+
+			if (disallowed.charIds.includes(player.charId)) return
+		}
+
+		if (disallowed.groups) {
+			for (const { name, grade } of disallowed.groups) {
+				const currentGrade: number | undefined = player.getGroup(name)
+				if (currentGrade && grade && grade > currentGrade) return
+			}
+		}
+	}
+	const allowed = vehicleMenu.allowed
+	if (allowed) {
+		if (allowed.charIds) {
+			asserts(player.charId)
+
+			if (allowed.charIds.includes(player.charId)) true
+		}
+
+		if (allowed.groups) {
+			for (const { name, grade } of allowed.groups) {
+				const currentGrade: number | undefined = player.getGroup(name)
+				if (!currentGrade || grade && grade > currentGrade) return
+			}
+		}
+	}
 	return true
 }
 
@@ -176,7 +213,7 @@ setImmediate(() => {
 			id: `vehicles_${variant}_menu_${i}`,
 			title: 'Vehicles Available',
 			options: [
-				...variants[variant].map(vehicleMenu => ({
+				...variants[variant]!.map(vehicleMenu => ({
 					title: vehicleMenu.model,
 					onSelect: () => game.spawnVehicle(vehicleMenu.model, vehicle, vehicleMenu.plate, vehicleMenu.color),
 					image: `https://docs-backend.fivem.net/vehicles/${vehicleMenu.model}.webp`,
