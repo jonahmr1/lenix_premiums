@@ -14,7 +14,7 @@ import {
 } from '@overextended/ox_lib/client'
 import { Constants } from 'common/config/outlaw'
 import type { Vec3, Vec4 } from 'lenix'
-import { useTimer, getNearest, entity, onNetEvent } from 'lenix/client'
+import { timer, nearest, entity, onNetEvent, player } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 
@@ -145,10 +145,10 @@ export default [
 	onNetEvent('lenix:client:robbery:receiveInvite', (inviter: number) => {
 		if (inviteTick) return
 	
-		const stop = useTimer({
+		const stop = timer({
 			duration: 10000,
 			updateInterval: 1000,
-			onTick: timeLeft => {
+			onInterval: timeLeft => {
 				showTextUI(`E - Show robbery invite - ${Math.ceil(timeLeft / 1000)}s`, {
 					position: 'bottom-center',
 				})
@@ -232,8 +232,8 @@ export default [
 					if (IsPedInAnyVehicle(ped, false)) return
 					if (IsPedInCombat(ped, 0)) return
 					const pedCoords = GetEntityCoords(ped, true) as Vec3
-					const { playerPed } = getNearest.player(pedCoords, 100.0, true)
-					if (playerPed) TaskCombatPed(ped, playerPed, 0, 16)
+					const playerId = nearest.player(pedCoords, 100.0, true)
+					if (playerId) TaskCombatPed(ped, player.entity(playerId), 0, 16)
 				})
 			} else if (GetVehicleDoorAngleRatio(vehicle, 1) > 0.1 || GetVehicleDoorAngleRatio(vehicle, 3) > 0.1) {
 				guardsFedUp = true

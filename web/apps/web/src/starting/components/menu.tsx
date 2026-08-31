@@ -23,7 +23,6 @@ export const Menu = ({ buttons, kbds }: {
 	}[]
 }) => {
 	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
-	/* TODO: based on last used */
 	const [selected, setSelected] = useState(filteredIndexes[0])
 
 	useEffect(() => {
