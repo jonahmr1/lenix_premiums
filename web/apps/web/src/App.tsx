@@ -12,7 +12,7 @@ import { Starting } from './App.start'
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
 const dev = 'ipad'
-export const DEV = (module: typeof dev) => module === dev
+export const DEV = (module: typeof dev) => import.meta.env.DEV && module === dev
 
 export const App = () => {
 	const { theme } = useTheme()
