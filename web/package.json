@@ -15,8 +15,7 @@
 		"i": "cd packages/ui && bun i && cd ../elite && bun i && cd ../../apps/web && bun i"
 	},
 	"dependencies": {
-		"lenix": "^1.8.5",
-		"react-zoom-pan-pinch": "^4.0.4"
+		"lenix": "^1.8.16"
 	},
 	"devDependencies": {
 		"prettier": "^3.8.3",

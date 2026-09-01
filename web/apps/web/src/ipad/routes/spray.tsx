@@ -1,9 +1,5 @@
 import atlasMap from '@workspace/ui/assets/ipad/map-atlas.jpeg'
 import satelliteMap from '@workspace/ui/assets/ipad/map-satellite.png'
-import {
-	TransformComponent,
-	TransformWrapper,
-} from 'react-zoom-pan-pinch'
 import type { Orientation } from '@/ipad/types'
 import { useTheme } from '@workspace/ui/hooks/theme'
 import type { Vec2 } from 'lenix'
@@ -48,29 +44,17 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 
 	return (
 		<div className='size-full overflow-hidden'>
-			<TransformWrapper
-				initialScale={1}
-				minScale={1}
-				maxScale={10}
-				wheel={{ step: 0.01 }}
-			>
-				<TransformComponent
-					wrapperClass='!size-full'
-					contentClass='!size-full'
-				>
-					<img
-						src={map}
-						className='size-full object-cover'
-					/>
-					{zones.map(({ styles, radius, zone }, i) => (
-						<div
-							key={i}
-							className={`absolute aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
-							style={{}}
-						/>
-					))}
-				</TransformComponent>
-			</TransformWrapper>
+			<img
+				src={map}
+				className='size-full object-cover'
+			/>
+			{zones.map(({ styles, radius, zone }, i) => (
+				<div
+					key={i}
+					className={`absolute aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
+					style={{}}
+				/>
+			))}
 		</div>
 	)
 }
