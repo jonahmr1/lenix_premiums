@@ -1,15 +1,9 @@
-import atlasMap from '@workspace/ui/assets/ipad/map-atlas.jpeg'
-import satelliteMap from '@workspace/ui/assets/ipad/map-satellite.png'
+import map from '@workspace/ui/assets/ipad/map.jpeg'
 import type { Orientation } from '@/ipad/types'
-import { useTheme } from '@workspace/ui/hooks/theme'
 import type { Vec2 } from 'lenix'
 
 
 export const Spray = ({ orientation }: { orientation: Orientation }) => {
-	const { theme } = useTheme()
-	const preset = theme === 'dark' ? 'satellite' : 'atlas'
-	const map = preset === 'satellite' ? satelliteMap : atlasMap
-	
 	const zones: readonly {
 		styles: React.ComponentProps<'div'>['className']
 		zone: Vec2
@@ -44,10 +38,6 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 
 	return (
 		<div className='size-full overflow-hidden'>
-			<img
-				src={map}
-				className='size-full object-cover'
-			/>
 			{zones.map(({ styles, radius, zone }, i) => (
 				<div
 					key={i}

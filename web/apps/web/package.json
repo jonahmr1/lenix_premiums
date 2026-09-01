@@ -22,12 +22,14 @@
 		"lucide-react": "^1.28.0",
 		"react": "^19.2.6",
 		"react-dom": "^19.2.6",
+		"react-leaflet": "^5.0.0",
 		"react-router": "^8.3.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10",
 		"@tailwindcss/vite": "^4",
 		"@types/howler": "^2.2.13",
+		"@types/leaflet": "^1.9.22",
 		"@types/node": "^24",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
