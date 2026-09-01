@@ -60,7 +60,7 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 				>
 					<img
 						src={map}
-						className='object-cover'
+						className='size-full object-cover'
 					/>
 					{zones.map(({ styles, radius, zone }, i) => (
 						<div
