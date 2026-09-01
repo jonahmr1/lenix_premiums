@@ -1,4 +1,4 @@
-import atlasMap from '@workspace/ui/assets/ipad/map-atlas.png'
+import atlasMap from '@workspace/ui/assets/ipad/map-atlas.jpeg'
 import satelliteMap from '@workspace/ui/assets/ipad/map-satellite.png'
 import {
 	TransformComponent,

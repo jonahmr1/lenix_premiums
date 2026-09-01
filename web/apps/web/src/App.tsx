@@ -18,7 +18,7 @@ export const App = () => (
 	<>
 		{DEV(dev) && (
 			<img
-				src="/ped.png"
+				src="/night.png"
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
 		)}
 		<Hud />
