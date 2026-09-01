@@ -1,4 +1,4 @@
-import { Skull, SprayCan, Trophy } from 'lucide-react'
+import { HandFist, Skull, SprayCan, Trophy } from 'lucide-react'
 import { Spray } from './routes/spray'
 import type { AppIcon } from './types'
 
@@ -27,6 +27,15 @@ export const apps: AppIcon[] = [
 		icon: {
 			element: SprayCan,
 			styles: 'text-red-500',
+		},
+		element: Spray,
+	},
+	{
+		name: 'Gang War',
+		styles: 'bg-green-950',
+		icon: {
+			element: HandFist,
+			styles: 'text-green-500',
 		},
 		element: Spray,
 	},

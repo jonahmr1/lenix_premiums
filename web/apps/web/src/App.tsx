@@ -1,4 +1,4 @@
-import { toggleTheme } from '@workspace/ui/hooks/theme'
+import { toggleTheme, useTheme } from '@workspace/ui/hooks/theme'
 import { storage } from '@lenix/lenix'
 
 import '@workspace/ui/globals.css'
@@ -11,21 +11,25 @@ import { Starting } from './App.start'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'hud'
+const dev = 'ipad'
 export const DEV = (module: typeof dev) => module === dev
 
-export const App = () => (
-	<>
-		{DEV(dev) && (
-			<img
-				src="/night.png"
-				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
-		)}
-		<Hud />
-		<Ipad />
-		<Starting />
-		<Rank />
-		<TopScore />
-		<Roster />
-	</>
-)
+export const App = () => {
+	const { theme } = useTheme()
+	
+	return (
+		<>
+			{DEV(dev) && (
+				<img
+					src={`${theme}.png`}
+					className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
+			)}
+			<Hud />
+			<Ipad />
+			<Starting />
+			<Rank />
+			<TopScore />
+			<Roster />
+		</>
+	)
+}
