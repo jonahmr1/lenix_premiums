@@ -2,7 +2,6 @@ import map from '@workspace/ui/assets/ipad/map.jpeg'
 import type { Orientation } from '@/ipad/types'
 import type { Vec2 } from 'lenix'
 
-
 export const Spray = ({ orientation }: { orientation: Orientation }) => {
 	const zones: readonly {
 		styles: React.ComponentProps<'div'>['className']
@@ -38,6 +37,7 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 
 	return (
 		<div className='size-full overflow-hidden'>
+			<img src={map} className='h-full object-contain' />
 			{zones.map(({ styles, radius, zone }, i) => (
 				<div
 					key={i}
