@@ -39,12 +39,14 @@ export const Credit = () => {
 	return (
 		<Layout className="h-screen bg-background gap-20 justify-evenly py-10">
 			<div className="flex flex-col items-center gap-10 w-full">
-				<p>Designed, Developed, Maintained by</p>
-				<img
-					src={lenixm}
-					className="w-1/9 rounded"
-				/>
-				<p className="text-3xl font-bold text-shadow-sm italic text-shadow-white">LenixM</p>
+				<p>Designed, Developed and Innovated by</p>
+				<div className="w-1/9 flex flex-col items-center gap-2">
+					<img
+						src={lenixm}
+						className="rounded"
+					/>
+					<p className="text-3xl text-red-600">LenixM</p>
+				</div>
 			</div>
 			<div className="flex flex-col gap-5 w-full">
 				{credits.map(({ names, roles }, i) => (
