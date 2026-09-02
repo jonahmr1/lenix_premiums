@@ -71,7 +71,7 @@ export const Lobby = () => {
 
 	return (
 		<Layout className='absolute left-1/2 top-1/2 -translate-1/2 w-9/10'>
-			<Layout className='bg-muted size-full rounded-md overflow-hidden justify-between'>
+			<Layout className='bg-cover size-full rounded overflow-hidden justify-between'>
 				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
@@ -106,7 +106,11 @@ export const Lobby = () => {
 						) : (
 							<Skeleton className='w-full h-1/2 rounded' />
 						)}
-						<Button variant='ghost' onClick={toggle}>
+						<Button
+							variant='ghost'
+							className='rounded'
+							onClick={toggle}
+						>
 							{theme === 'dark' ? <Sun /> : <Moon />}
 						</Button>
 					</div>

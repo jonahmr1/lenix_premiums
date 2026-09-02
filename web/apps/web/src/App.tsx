@@ -11,7 +11,7 @@ import { Starting } from './App.start'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'start'
+const dev = 'rank'
 export const DEV = (module: typeof dev) => import.meta.env.DEV && module === dev
 
 export const App = () => {
