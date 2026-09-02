@@ -1,4 +1,4 @@
-import { Dot, LogOut, Plus } from 'lucide-react'
+import { Dot, LogOut, Plus, Target, Trophy } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { rank } from 'config'
 import { Layout } from '@/components/layout'
@@ -202,26 +202,32 @@ export const Play = ({
 									style={{ height: `${h}%` }}
 								>
 									<>
-										<div className='flex flex-4 items-center w-full'>
+										<div className='flex flex-7 items-center w-full'>
 											<img src={partyProfile.avatar ?? avatar} alt='' className='h-full object-cover' />
 										</div>
-										<div className='flex flex-2 flex-col justify-center w-full items-center gap-2'>
-											<div className={`w-full flex justify-center items-center pt-0.5 text-xl tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
-											<Badge variant={partyProfile.ready ? 'default' : 'destructive'} className={`${partyProfile.ready && 'bg-green-700'} text-[0.5rem]`}>
-												{partyProfile.ready ? 'Ready' : 'Not Ready'}
+										<div className='flex flex-3 flex-col justify-center w-full items-center gap-2'>
+											<div className={`w-full flex justify-center items-center pt-0.5 leading-tight text-fluid-4 tracking-tighter normal-case font-bold ${partyProfile.profile_id === profile?.profile_id ? 'bg-primary' : 'bg-muted'}`}>{partyProfile.name}</div>
+											<Badge
+												variant={partyProfile.ready ? 'default' : 'destructive'}
+												className={`${partyProfile.ready && 'text-green-700 bg-green-950'} items-center`}
+											>
+												<Dot className={`stroke-[2vmin] drop-shadow-[0_0_2px_currentColor] ${partyProfile.ready ? 'text-green-400' : 'text-red-400'}`} />
+												<span className='pt-0.5'>{partyProfile.ready ? 'Ready' : 'Not Ready'}</span>
 											</Badge>
 										</div>
-										<div className='flex flex-1 flex-col w-full justify-around h-full'>
+										<div className='flex flex-3 flex-col w-full justify-around h-full'>
 											<Separator />
 											<div className='flex flex-1 justify-around items-center'>
-												<div className='flex-1 flex items-center flex-col'>
-													{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
-													<p className='text-[0.475rem]'>K/D Ratio</p>
+												<div className='flex-1 flex items-center justify-between h-2/3 flex-col'>
+													<Target />
+													{stats?.[partyProfile.profile_id] ? <p className='text-fluid-2'>{stats[partyProfile.profile_id].killsDeathsRatio}</p> : <Skeleton className='w-10 h-5 rounded' />}
+													<p className='text-fluid-1'>K/D Ratio</p>
 												</div>
 												<Separator orientation='vertical' />
-												<div className='flex-1 flex items-center flex-col'>
-													{stats?.[partyProfile.profile_id] ? <p>{stats[partyProfile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
-													<p className='text-[0.475rem]'>Win Ratio</p>
+												<div className='flex-1 flex items-center justify-between h-2/3 flex-col'>
+													<Trophy />
+													{stats?.[partyProfile.profile_id] ? <p className='text-fluid-2'>{stats[partyProfile.profile_id].winRate}</p> : <Skeleton className='w-10 h-5 rounded' />}
+													<p className='text-fluid-1'>K/D Ratio</p>
 												</div>
 											</div>
 										</div>

@@ -11,6 +11,7 @@ import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 import { DEV } from '@/App'
+import { Separator } from '@workspace/ui/components/separator'
 
 export const FAKE_PROFILE = {
 	name: 'Lenix',
@@ -82,7 +83,7 @@ export const Lobby = () => {
 									return (
 										<Button
 											key={page.to}
-											className={`relative border-0 h-full w-full text-foreground flex tracking-widest px-15 flex-col ${isInCurrentRoute ? 'bg-gradient-to-t from-primary to-transparent border-b-2 border-foreground text-2xl' : 'text-sm'}`}
+											className={`relative border-0 h-full w-full rounded-none text-foreground flex tracking-widest px-15 flex-col ${isInCurrentRoute ? 'bg-linear-to-t from-primary to-cover border-b-2 border-foreground text-2xl' : 'text-sm'}`}
 											style={isInCurrentRoute ? {
 												backgroundImage: 'linear-gradient(to top, rgba(var(--primary-rgb), 1), transparent)',
 											} : undefined}
@@ -106,6 +107,7 @@ export const Lobby = () => {
 						) : (
 							<Skeleton className='w-full h-1/2 rounded' />
 						)}
+						<Separator orientation='vertical' className='py-1' />
 						<Button
 							variant='ghost'
 							className='rounded'
