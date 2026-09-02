@@ -5,13 +5,13 @@ import type { Route } from '@/rank/types'
 import { Button } from '@workspace/valo/components/button'
 import { Layout } from '@/components/layout'
 import { useTheme } from '@workspace/ui/hooks/theme'
-import { DiamondIcon } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
 import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
 import { DEV } from '@/App'
 import { Separator } from '@workspace/ui/components/separator'
+import bg from '@workspace/valo/assets/bg.svg'
 
 export const FAKE_PROFILE = {
 	name: 'Lenix',
@@ -72,7 +72,25 @@ export const Lobby = () => {
 
 	return (
 		<Layout className='absolute left-1/2 top-1/2 -translate-1/2 w-9/10'>
-			<Layout className='bg-cover size-full rounded overflow-hidden justify-between'>
+			<Layout
+				className='
+					relative
+					isolate
+					size-full
+					rounded
+					overflow-hidden
+					justify-between
+					[&>div]:relative
+					[&>div]:z-10
+					bg-cover
+				'
+			>
+				<img
+					src={bg}
+					alt=''
+					aria-hidden='true'
+					className='pointer-events-none absolute inset-0 z-0 size-full object-cover dark:opacity-5'
+				/>
 				<div className='flex justify-between min-h-1/15 w-full px-20 border-b'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
