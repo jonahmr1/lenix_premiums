@@ -73,7 +73,7 @@ export const Lobby = () => {
 	return (
 		<Layout className='absolute left-1/2 top-1/2 -translate-1/2 w-9/10'>
 			<Layout className='bg-cover size-full rounded overflow-hidden justify-between'>
-				<div className='flex justify-between min-h-[5vh] w-full px-20 border-b'>
+				<div className='flex justify-between min-h-1/15 w-full px-20 border-b'>
 					<div className='flex items-center cursor-default select-none w-1/10 font-extrabold'>RANKZONE</div>
 					<div>
 						<div className='h-full'>
@@ -83,18 +83,11 @@ export const Lobby = () => {
 									return (
 										<Button
 											key={page.to}
-											className={`relative border-0 h-full w-full rounded-none text-foreground flex tracking-widest px-15 flex-col ${isInCurrentRoute ? 'bg-linear-to-t from-primary to-cover border-b-2 border-foreground text-2xl' : 'text-sm'}`}
-											style={isInCurrentRoute ? {
-												backgroundImage: 'linear-gradient(to top, rgba(var(--primary-rgb), 1), transparent)',
-											} : undefined}
+											className={`relative h-full ring-0 w-full rounded-none text-foreground border-none flex tracking-widest px-15 flex-col ${isInCurrentRoute ? 'bg-radial-[at_50%_100%] from-primary to-cover to-75% text-2xl' : 'text-sm'}`}
 											variant={isInCurrentRoute ? 'default' : 'ghost'}
 											onClick={() => nav(page.to)}
 										>
 											{page.label}
-											<DiamondIcon
-												weight='fill'
-												className={`absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-foreground ${isInCurrentRoute ? 'size-3' : 'size-2'}`}
-											/>
 										</Button>
 									)
 								})}

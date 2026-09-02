@@ -145,7 +145,7 @@ export const Play = ({
 					{entries(rank.game_modes).map(([mode]) => (
 						<Button
 							key={mode}
-							className={`relative hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${party.gameMode === mode ? 'border-primary' : ''}`}
+							className={`relative rounded-none hover:no-underline border-0 flex flex-col px-0 text-xs text-foreground w-full border-b hover:border-primary ${party.gameMode === mode ? 'border-primary' : ''}`}
 							variant='link'
 							onClick={() => {
 								if (party.gameMode === mode) return
@@ -252,7 +252,7 @@ export const Play = ({
 							key={i}
 						>
 							<DialogTrigger
-								className='flex-none w-1/6 bg-foreground/5 border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
+								className='flex-none w-1/6 bg-foreground/5 rounded border-foreground/10 border hover:bg-foreground/10 flex justify-center items-center'
 								style={{ height: `${h}%` }}
 							>
 								<Plus />
