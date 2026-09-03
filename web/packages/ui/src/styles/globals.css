@@ -22,6 +22,20 @@
 	font-size: calc(--value(number) * 1vmin);
 }
 
+@utility absolute-center {
+	@apply absolute left-1/2 top-1/2 -translate-1/2;
+}
+
+@utility glow-sm {
+	@apply text-shadow-current text-shadow-[0_0_8px_blue]
+}
+@utility glow-md {
+	@apply text-shadow-current text-shadow-[0_0_16px_blue]
+}
+@utility glow-lg {
+	@apply text-shadow-current text-shadow-[0_0_24px_blue]
+}
+
 @theme inline {
 	--font-heading: var(--font-sans);
 	--font-number: 'Martian Mono Variable', sans-serif;
