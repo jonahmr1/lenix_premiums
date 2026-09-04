@@ -18,6 +18,7 @@ import { timer, nearest, entity, onNetEvent, player } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 import { behavior } from '../lib'
+import { State } from '@lenix/lenix'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_inventory', '2.47.9', true)
@@ -28,18 +29,20 @@ const PEDS_MODEL = 'mp_s_m_armoured_01'
 const DRILL_ITEM = 'drill'
 const PED_COORDS: Vec4 = [16.1564, -615.8132, 31.7635, 260.847]
 
-let blip: number
-let inviteTick: number
-let blipTick: number
-let team: Outlaw.Robbery | undefined
+const state = new State({
+	blip: 0,
+	inviteTick: 0,
+	blipTick: 0,
+	team: null as Outlaw.Robbery | null
+})
 
 const vehicleDoorsBroken = {
 	left: false,
 	right: false,
 }
 
-const isInTeam = () => !!team?.members.find(member => member === cache.serverId)
-const isLeader = () => team?.leader === cache.serverId
+const isInTeam = () => !!state.team?.members.find(member => member === cache.serverId)
+const isLeader = () => state.team?.leader === cache.serverId
 
 const refreshContext = async () => {
 	registerContext({
@@ -100,7 +103,7 @@ const refreshContext = async () => {
 		id: 'robbery-mission-kick',
 		title: 'Kick a teammate',
 		options: (() => {
-			const teammates = team?.members.filter(member => member !== team?.leader) ?? []
+			const teammates = state.team?.members.filter(member => member !== state.team?.leader) ?? []
 			return teammates.length > 0
 				? teammates.map(teammate => ({
 						title: `${teammate}`,
@@ -113,18 +116,18 @@ const refreshContext = async () => {
 
 AddStateBagChangeHandler('robberyVehicleCoords', null, (_bag: string, key: string, coords: Vec3) => {
 	if (!coords || key !== 'robberyVehicleCoords') {
-		RemoveBlip(blip)
-		blip = -1
+		RemoveBlip(state.blip)
+		state.blip = -1
 		return
 	}
-	if (DoesBlipExist(blip)) {
-		SetBlipCoords(blip, ...coords)
+	if (DoesBlipExist(state.blip)) {
+		SetBlipCoords(state.blip, ...coords)
 		return
 	}
-	blip = AddBlipForCoord(...coords)
-	SetBlipSprite(blip, 67)
-	SetBlipColour(blip, 27)
-	SetBlipAsShortRange(blip, false)
+	state.blip = AddBlipForCoord(...coords)
+	SetBlipSprite(state.blip, 67)
+	SetBlipColour(state.blip, 27)
+	SetBlipAsShortRange(state.blip, false)
 })
 
 const load = async () => {
@@ -151,7 +154,7 @@ export default [
 	load(),
 
 	onNetEvent('lenix:client:robbery:receiveInvite', (inviter: number) => {
-		if (inviteTick) return
+		if (state.inviteTick) return
 	
 		const stop = timer({
 			duration: 10000,
@@ -163,17 +166,17 @@ export default [
 			},
 			onEnd: () => {
 				hideTextUI()
-				clearTick(inviteTick)
-				inviteTick = 0
+				clearTick(state.inviteTick)
+				state.inviteTick = 0
 			},
 		})
 	
-		inviteTick = setTick(async () => {
+		state.inviteTick = setTick(async () => {
 			if (IsControlJustPressed(0, 38)) {
 				stop()
 				hideTextUI()
-				clearTick(inviteTick)
-				inviteTick = 0
+				clearTick(state.inviteTick)
+				state.inviteTick = 0
 				const res = await alertDialog({
 					header: 'Robbery Invite',
 					content: `The player #${inviter} is inviting you to join his to a robbery mission`,
@@ -186,10 +189,10 @@ export default [
 	}),
 	
 	onNetEvent('lenix:client:robbery:updatePlayer', (updatedTeam: Outlaw.Robbery | undefined) => {
-		if (!team) {
-			clearTick(blipTick)
+		if (!state.team) {
+			clearTick(state.blipTick)
 		}
-		team = updatedTeam
+		state.team = updatedTeam ?? null
 		refreshContext()
 	}),
 	
@@ -231,7 +234,7 @@ export default [
 			peds.push(ped)
 		}
 	
-		blipTick = setTick(() => {
+		state.blipTick = setTick(() => {
 			if (NetworkGetEntityOwner(vehicle) !== PlayerId()) return
 	
 			if (guardsFedUp) {
@@ -282,7 +285,7 @@ export default [
 				name: 'left-door',
 				label: 'Break Left Door',
 				bones: 'door_dside_r',
-				canInteract: () => team,
+				canInteract: () => state.team,
 				onSelect: async () => {
 					breakDoor('left')
 				},
@@ -291,14 +294,14 @@ export default [
 				name: 'right-door',
 				label: 'Break Right Door',
 				bones: 'door_pside_r',
-				canInteract: () => team,
+				canInteract: () => state.team,
 				onSelect: async () => breakDoor('right'),
 			},
 			{
 				name: 'take-money',
 				label: 'Take Money',
 				bones: ['door_pside_r', 'door_dside_r'],
-				canInteract: () => team && vehicleDoorsBroken['left'] && vehicleDoorsBroken['right'],
+				canInteract: () => state.team && vehicleDoorsBroken['left'] && vehicleDoorsBroken['right'],
 				onSelect: async () => {
 					const res = await progressBar({
 						label: 'Taking money',
@@ -331,7 +334,7 @@ export default [
 	
 					vehicleDoorsBroken['left'] = false
 					vehicleDoorsBroken['right'] = false
-					clearTick(blipTick)
+					clearTick(state.blipTick)
 					api.ox_target?.removeEntity?.(netId, 'take-money')
 	
 					emitNet('lenix:server:robbery:takemoney')

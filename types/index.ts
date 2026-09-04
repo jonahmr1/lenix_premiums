@@ -188,7 +188,7 @@ export namespace Outlaw {
 		response?: string
 	}
 
-	export interface Robbery {
+	export type Robbery = {
 		leader: number
 		members: number[]
 	}
