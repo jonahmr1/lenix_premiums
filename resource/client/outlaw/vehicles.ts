@@ -262,7 +262,7 @@ const load = async () => {
 			`vehicles_${variant}_menu_${i}`,
 			`vehicles_${variant}_list_${i}`,
 			`vehicles_${variant}_preview_${i}`,
-			`vehicles_${variant}_return_${i}`
+			
 		] as const
 
 		const entity = await createPed('a_m_m_prolhost_01', ...(ped satisfies Vec4 as Vec4))
@@ -320,7 +320,7 @@ const load = async () => {
 				},
 			},
 			{
-				name: name[3],
+				name: `vehicles_${variant}_return_${i}`,
 				icon: 'fas fa-trash-arrow-up',
 				label: 'Return The Vehicle',
 				canInteract: () => state.lastVehicle,
@@ -330,7 +330,7 @@ const load = async () => {
 			},
 		])
 
-		return () => api.ox_target?.removeLocalEntity?.(entity.handle, [...name])
+		return () => api.ox_target?.removeLocalEntity?.(entity.handle)
 	}))
 
 	return () => {

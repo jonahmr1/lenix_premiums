@@ -171,7 +171,7 @@ const abortTask = () => {
 	})
 	if (prop) {
 		DeleteEntity(prop)
-		api.ox_target?.removeLocalEntity?.(prop, prop)
+		api.ox_target?.removeLocalEntity?.(prop)
 	}
 	prop = null
 }
@@ -239,8 +239,6 @@ const crash = () => {
 
 const load = async () => {
 	const disposes = await Promise.all([...config.peds].map(async ({ model, coords }, i) => {
-		const takeName = `take_task_${i}`
-		const abortName = `abort_task_${i}`
 
 		const { handle } = await createPed(model, coords[0], coords[1], coords[2] - 0.85, coords[3])
 		behavior(handle, 'WORLD_HUMAN_CLIPBOARD')
@@ -248,7 +246,6 @@ const load = async () => {
 		api.ox_target?.addLocalEntity?.(handle, [
 			{
 				label: 'Take a task',
-				name: takeName,
 				icon: 'fa-solid fa-circle',
 				onSelect: takeTask,
 				canInteract: () => isPlayerFree,
@@ -256,7 +253,6 @@ const load = async () => {
 			},
 			{
 				label: 'Abort the task',
-				name: abortName,
 				icon: 'fa-solid fa-xmark',
 				onSelect: abortTask,
 				canInteract: () => !isPlayerFree,
@@ -264,7 +260,7 @@ const load = async () => {
 			},
 		])
 
-		return () => api.ox_target?.removeLocalEntity?.(handle, [takeName, abortName])
+		return () => api.ox_target?.removeLocalEntity?.(handle)
 	}))
 
 	return () => {

@@ -127,7 +127,7 @@ AddStateBagChangeHandler('robberyVehicleCoords', null, (_bag: string, key: strin
 	SetBlipAsShortRange(blip, false)
 })
 
-setImmediate(async () => {
+const load = async () => {
 	const { handle } = await createPed('a_m_m_prolhost_01', ...PED_COORDS, true)
 	behavior(handle, 'WORLD_HUMAN_CLIPBOARD')
 
@@ -139,10 +139,17 @@ setImmediate(async () => {
 			showContext('robbery-mission')
 		},
 	})
-})
+
+	return () => {
+		DeletePed(handle)
+		api.ox_target?.removeLocalEntity?.(handle)
+	}
+}
 
 /* TODO: handle logout mid robbery */
 export default [
+	load(),
+
 	onNetEvent('lenix:client:robbery:receiveInvite', (inviter: number) => {
 		if (inviteTick) return
 	
