@@ -83,7 +83,7 @@ export const InGame = () => {
 							setResult('loss')
 						} else setResult('win')
 					}
-					
+
 					setTeams(newTeams)
 					setTimer(delay)
 					setTimeout(() => {
@@ -158,7 +158,7 @@ export const InGame = () => {
 
 	const Result = ({ result }: { result: Competitive.Performance['result'] }) => (
 		<div className={`absolute-center w-2/3 h-1/5 flex items-center justify-center ${result === 'win' ? 'bg-deep-emerald-950/80 deep-50' : 'bg-deep-red-950/80 deep-50'}`}>
-			<span className={`text-fluid-10 uppercase ${result === 'win' ? 'text-emerald-400' : 'text-red-500'}`}>{result === 'win' ? 'Victory' : 'Loss'}</span>
+			<span className={`text-fluid-10 uppercase ${result === 'win' ? 'text-emerald-400' : 'text-red-500'}`}>{result === 'win' ? 'Victory' : 'Defeat'}</span>
 		</div>
 	)
 
