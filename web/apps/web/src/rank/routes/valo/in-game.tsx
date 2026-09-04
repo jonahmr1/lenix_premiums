@@ -1,7 +1,6 @@
-import { Layout } from "@/components/layout"
 import avatar from '@workspace/ui/assets/rank/avatar.png'
 import { Separator } from "@workspace/ui/components/separator"
-import { Users } from "lucide-react"
+import { User } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { Competitive } from "types"
 import { showTimer } from "@/rank/lib"
@@ -24,7 +23,7 @@ const Player = ({
 const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
 	return (
 		<div className="flex items-center gap-0.5">
-			<Users size={8} strokeWidth={3} />
+			<User size={8} strokeWidth={3} />
 			<p className="text-fluid-2 pt-0.5">{playersLeft}</p>
 		</div>
 	)
@@ -33,6 +32,7 @@ const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
 export const InGame = () => {
 	const [timer, setTimer] = useState<number>(0)
 	const [teams, setTeams] = useState<Competitive.CasualMatch>()
+	const [result, setResult] = useState<'win' | 'loss' | null>(null)
 
 	useEffect(() => {
 		if (DEV('rank')) {
@@ -74,12 +74,22 @@ export const InGame = () => {
 
 		const disposes = [
 			onNuiEmit<Competitive.Events['newRound']>(
-				'competitive:newRound', (mode, teams) => {
+				'competitive:newRound', (mode, newTeams) => {
 					const gameMode = rank.game_modes[mode]
 					const delay = gameMode.pre_and_post_round_time
-					setTeams(teams)
+					
+					if (teams) {
+						if (teams.own.roundsWon === newTeams.own.roundsWon) {
+							setResult('loss')
+						} else setResult('win')
+					}
+					
+					setTeams(newTeams)
 					setTimer(delay)
-					setTimeout(() => setTimer(gameMode.round_time), delay * 1000)
+					setTimeout(() => {
+						setTimer(gameMode.round_time)
+						setResult(null)
+					}, delay * 1000)
 				}
 			),
 			onNuiEmit<Competitive.Events['updateRound']>(
@@ -104,7 +114,7 @@ export const InGame = () => {
 
 	const Roundboard = () => (
 		<div className="w-full h-xl flex justify-center">
-			<div className="flex gap-xs">
+			<div className="flex gap-0.5">
 				{teams.own.players.map((player, i) => (
 					<Player
 						key={i}
@@ -133,7 +143,7 @@ export const InGame = () => {
 					</div>
 				</div>
 			</div>
-			<div className="flex gap-xs">
+			<div className="flex gap-0.5">
 				{teams.opponent.players.map((player, i) => (
 					<Player
 						key={i}
@@ -155,7 +165,7 @@ export const InGame = () => {
 	return (
 		<>
 			<Roundboard />
-			<Result result="loss" />
+			{result && <Result result="win" />}
 		</>
 	)
 }

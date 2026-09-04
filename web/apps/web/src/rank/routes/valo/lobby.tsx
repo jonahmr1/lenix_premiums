@@ -50,6 +50,7 @@ export const Lobby = () => {
 
 	useEffect(() => {
 		if (!display) return
+
 		if (DEV('rank')) {
 			setProfile(FAKE_PROFILE)
 			return
