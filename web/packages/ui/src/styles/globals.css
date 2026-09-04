@@ -22,18 +22,16 @@
 	font-size: calc(--value(number) * 1vmin);
 }
 
-@utility absolute-center {
-	@apply absolute left-1/2 top-1/2 -translate-1/2;
+@utility deep-* {
+	--deep-amount: calc(--value(integer) * 1%);
 }
 
-@utility glow-sm {
-	@apply text-shadow-current text-shadow-[0_0_8px_blue]
-}
-@utility glow-md {
-	@apply text-shadow-current text-shadow-[0_0_16px_blue]
-}
-@utility glow-lg {
-	@apply text-shadow-current text-shadow-[0_0_24px_blue]
+@utility bg-deep-* {
+	background-color: color-mix(
+		in oklab,
+		color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 20%)), black) calc(--modifier(integer, --default(100)) * 1%),
+		transparent
+	);
 }
 
 @theme inline {
@@ -168,5 +166,21 @@
 
 	body {
 		@apply text-foreground;
+	}
+}
+
+@layer components {
+	.absolute-center {
+		@apply absolute left-1/2 top-1/2 -translate-1/2;
+	}
+	
+	.glow-sm {
+		@apply text-shadow-current text-shadow-[0_0_8px_blue]
+	}
+	.glow-md {
+		@apply text-shadow-current text-shadow-[0_0_16px_blue]
+	}
+	.glow-lg {
+		@apply text-shadow-current text-shadow-[0_0_24px_blue]
 	}
 }

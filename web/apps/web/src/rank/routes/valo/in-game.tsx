@@ -18,7 +18,7 @@ const Player = ({
 	avatar: string
 	dead: boolean
 }) => (
-	<img className={`h-2/3 border ${dead && 'opacity-10'} ${type === 'own' ? 'border-blue-400' : 'border-red-400'}`} src={avatar} />
+	<img className={`h-full border ${dead && 'opacity-30'} ${type === 'own' ? 'border-blue-400' : 'border-red-400'}`} src={avatar} />
 )
 
 const PlayersLeft = ({ playersLeft }: { playersLeft: number }) => {
@@ -102,49 +102,60 @@ export const InGame = () => {
 	const ownPlayersLeft = teams.own.players.filter(player => !player.isDead).length
 	const opponentPlayersLeft = teams.opponent.players.filter(player => !player.isDead).length
 
-	return (
-		<Layout className="h-screen justify-start font-medium">
-			<div className="w-full h-1/13 flex justify-center">
-				<div className="flex gap-xs">
-					{teams.own.players.map((player, i) => (
-						<Player
-							key={i}
-							type='own'
-							avatar={player.avatar ?? avatar}
-							dead={player.isDead}
-						/>
-					))}
-				</div>
-				<div
-					className="flex flex-col justify-between text-fluid-lg h-fit bg-linear-to-b from-background to-transparent"
-				>
-					<p className="px-4">
-						{showTimer(timer)}
-					</p>
-					<Separator />
-					<div className="flex w-full justify-evenly">
-						<div className="flex flex-col items-center justify-center text-blue-500 -space-y-0.5">
-							<p>{teams.own.roundsWon}</p>
-							<PlayersLeft playersLeft={ownPlayersLeft} />
-						</div>
-						<Separator orientation='vertical' />
-						<div className="flex flex-col items-center justify-center text-red-500 -space-y-0.5">
-							<p>{teams.opponent.roundsWon}</p>
-							<PlayersLeft playersLeft={opponentPlayersLeft} />
-						</div>
+	const Roundboard = () => (
+		<div className="w-full h-xl flex justify-center">
+			<div className="flex gap-xs">
+				{teams.own.players.map((player, i) => (
+					<Player
+						key={i}
+						type='own'
+						avatar={player.avatar ?? avatar}
+						dead={player.isDead}
+					/>
+				))}
+			</div>
+			<div
+				className="flex flex-col justify-between text-fluid-lg h-fit bg-linear-to-b from-background to-transparent"
+			>
+				<p className="px-4">
+					{showTimer(timer)}
+				</p>
+				<Separator />
+				<div className="flex w-full justify-evenly">
+					<div className="flex flex-col items-center justify-center text-blue-500 -space-y-0.5">
+						<p>{teams.own.roundsWon}</p>
+						<PlayersLeft playersLeft={ownPlayersLeft} />
+					</div>
+					<Separator orientation='vertical' />
+					<div className="flex flex-col items-center justify-center text-red-500 -space-y-0.5">
+						<p>{teams.opponent.roundsWon}</p>
+						<PlayersLeft playersLeft={opponentPlayersLeft} />
 					</div>
 				</div>
-				<div className="flex gap-xs">
-					{teams.opponent.players.map((player, i) => (
-						<Player
-							key={i}
-							type='opponent'
-							avatar={player.avatar ?? avatar}
-							dead={player.isDead}
-						/>
-					))}
-				</div>
 			</div>
-		</Layout>
+			<div className="flex gap-xs">
+				{teams.opponent.players.map((player, i) => (
+					<Player
+						key={i}
+						type='opponent'
+						avatar={player.avatar ?? avatar}
+						dead={player.isDead}
+					/>
+				))}
+			</div>
+		</div>
+	)
+
+	const Result = ({ result }: { result: Competitive.Performance['result'] }) => (
+		<div className={`absolute-center w-2/3 h-1/5 flex items-center justify-center ${result === 'win' ? 'bg-deep-emerald-950/80 deep-50' : 'bg-deep-red-950/80 deep-50'}`}>
+			<span className={`text-fluid-10 uppercase ${result === 'win' ? 'text-emerald-400' : 'text-red-500'}`}>{result === 'win' ? 'Victory' : 'Loss'}</span>
+		</div>
+	)
+
+	return (
+		<>
+			<Roundboard />
+			<Result result="loss" />
+		</>
 	)
 }
