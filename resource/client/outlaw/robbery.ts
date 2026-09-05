@@ -250,7 +250,7 @@ export default [
 				})
 			}
 		})
-	
+
 		const breakDoor = async (side: 'left' | 'right') => {
 			const drillAmount = api.ox_inventory?.GetItemCount?.<number, [unknown]>(DRILL_ITEM) ?? 0
 			if (drillAmount < 1) {

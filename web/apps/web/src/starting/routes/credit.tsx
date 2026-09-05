@@ -29,6 +29,12 @@ export const Credit = () => {
 			],
 		},
 		{
+			names: ['Mazen'],
+			roles: [
+				'Gameplay Consultant',
+			],
+		},
+		{
 			names: ['WinkyQx', '3mr'],
 			roles: [
 				'Game Tester',
