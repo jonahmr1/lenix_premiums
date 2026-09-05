@@ -18,7 +18,7 @@ import { timer, nearest, entity, onNetEvent, player } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 import { behavior } from '../lib'
-import { State } from '@lenix/lenix'
+import { repeat, State } from '@lenix/lenix'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_inventory', '2.47.9', true)
@@ -197,17 +197,12 @@ export default [
 	}),
 	
 	onNetEvent('lenix:client:robbery:startrobbery', async (netId: number) => {
-		const vehicle = await new Promise<number>(resolve => {
-			const interval = setInterval(() => {
-				const entity = NetworkGetEntityFromNetworkId(netId)
-				if (entity > 0 && DoesEntityExist(entity)) {
-					clearInterval(interval)
-					resolve(entity)
-				}
-			}, 100)
-		})
-	
-		if (!vehicle) return
+		const vehicle = await repeat(() => {
+			const handle = NetworkGetEntityFromNetworkId(netId)
+			if (!DoesEntityExist(handle)) return
+
+			return handle
+		}, checked => typeof checked === 'number', 100)
 	
 		const seats = GetVehicleModelNumberOfSeats(GetHashKey(Constants.robbery.vehicle_model))
 		const hash = await requestModel(PEDS_MODEL)
