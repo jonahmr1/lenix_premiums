@@ -12,7 +12,7 @@ import { Competitive } from './App.competitive'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'start'
+const dev = 'competitive'
 export const DEV = (module: typeof dev) => import.meta.env.DEV && module === dev
 
 export const App = () => {
