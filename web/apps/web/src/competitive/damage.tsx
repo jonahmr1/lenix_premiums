@@ -44,13 +44,11 @@ export const DamageEffect = () => {
 
 	return (
 		<>
-			<img
-				src={low}
-				className={`absolute size-full object-cover transition-opacity duration-400 ${strength < 50 ? 'opacity-100' : 'opacity-0'}`}
-			/>
+			<img src={low} className="absolute size-full object-cover" style={{ opacity: strength / 100 }} />
 			<img
 				src={high}
-				className={`absolute size-full object-cover transition-opacity duration-2000 ${strength < 50 ? 'opacity-0' : 'opacity-100'}`}
+				className="absolute size-full object-cover transition-opacity duration-2000"
+				style={{ opacity: strength < 50 ? 0 : (strength - 50) / 50 }}
 			/>
 		</>
 	)
