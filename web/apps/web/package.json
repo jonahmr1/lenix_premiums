@@ -12,7 +12,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@lenix/lenix": "npm:@jsr/lenix__lenix",
+		"@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.21",
 		"@phosphor-icons/react": "^2.1.10",
 		"@workspace/elite": "workspace:*",
 		"@workspace/ui": "workspace:*",

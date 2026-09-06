@@ -5,9 +5,9 @@ import { twMerge } from 'tailwind-merge'
 import click from '../assets/start/click.mp3'
 import hover from '../assets/start/hover.mp3'
 
-const playAudio = (src: 'hover' | 'click') => {
-	const audio = new Audio(src === 'hover' ? hover : click)
-	audio.volume = src === 'hover' ? 0.03 : 1.0
+export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
+	const audio = new Audio(src === 'hover' ? hover : src === 'click' ? click : customAudio)
+	audio.volume = src === 'hover' ? 0.03 : src === 'click' ? 1.0 : customVolume
 	audio.play()
 }
 
