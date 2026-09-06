@@ -35,7 +35,7 @@ export const InGame = () => {
 	const [result, setResult] = useState<'win' | 'loss' | null>(null)
 
 	useEffect(() => {
-		if (DEV('rank')) {
+		DEV(() => {
 			setTimer(10)
 			setTeams({
 				own: {
@@ -69,8 +69,7 @@ export const InGame = () => {
 					]
 				},
 			})
-			return
-		}
+		}, 'rank')
 
 		const disposes = [
 			onNuiEmit<Competitive.Events['newRound']>(

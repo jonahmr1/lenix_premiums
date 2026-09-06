@@ -44,7 +44,7 @@ export const Play = ({
 	const [_searchTimer, setSeachTimer] = useState(0)
 
 	useEffect(() => {
-		if (DEV('rank')) {
+		DEV(() => {
 			setParty({
 				profiles: [FAKE_PROFILE],
 				leader: 1,
@@ -52,8 +52,7 @@ export const Play = ({
 				status: 'idle',
 				gameMode: 'casual'
 			})
-			return
-		}
+		}, 'rank')
 		setTimeout(async () => {
 			try {
 				const party = await fetchNuiServer<Competitive.Requests['getParty']>('competitive:getParty', {})
@@ -91,7 +90,7 @@ export const Play = ({
 	useEffect(() => {
 		if (!party) return
 
-		if (DEV('rank')) {
+		DEV(() => {
 			setStats({
 				1: {
 					assists: 67,
@@ -104,8 +103,7 @@ export const Play = ({
 					wins: 67,
 				}
 			})
-			return
-		}
+		}, 'rank')
 
 		const timeout = setTimeout(async () => {
 			const newStats = await fetchNuiServer<Competitive.Requests['party']['getStats']>(

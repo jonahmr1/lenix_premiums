@@ -8,10 +8,10 @@ export const Main = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		if (DEV('start')) {
+		DEV(() => {
 			nav('/start')
-			return
-		}
+		}, 'start')
+		
 		const disposes = [
 			onNuiEmit<Starting.Events['modeSelection']>('starting:modeSelection', () => {
 				nav('/start')

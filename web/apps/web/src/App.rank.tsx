@@ -32,10 +32,8 @@ const RankRoutes = () => {
 	const navigate = useNavigate()
 	
 	useEffect(() => {
-		if (DEV('rank')) {
-			navigate('/in-game')
-			return
-		}
+		DEV(() => navigate('/in-game'), 'rank')
+		
 		const dispose = onNuiEmit<Competitive.Events['updateStage']>('competitive:updateStage', stage => {
 			navigate(
 				stage === 'lobby' ? '/' :

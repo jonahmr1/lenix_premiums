@@ -13,6 +13,7 @@ export const HitMarker = () => {
 
 	useEffect(() => {
 		if (!DEV('competitive')) return
+		
 		const interval = setInterval(() => {
 			const variant = (['kill', 'hit'] as const)[random(0, 1)]
 			if (variant === 'kill') player.play()

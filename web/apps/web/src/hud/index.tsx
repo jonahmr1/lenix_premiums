@@ -15,11 +15,12 @@ const zeroed = (value: string | number, length: number) => String(value).padStar
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
-	const [display, setDisplay] = useState({ vitals: DEV('hud'), weaponary: DEV('hud') })
+	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>()
 	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 	useEffect(() => {
-		if (DEV('hud')) {
+		DEV(() => {
+			setDisplay({ vitals: true, weaponary: true })
 			setState({
 				health: 50,
 				armor: 50,
@@ -31,8 +32,8 @@ export const Hud = () => {
 					reserveAmmo: 50
 				}
 			})
-			return
-		}
+		}, 'hud')
+
 		const disposes = [
 			onNuiEmit<Outlaw.Events['displayHud']>('hud:display', state => {
 				setDisplay(state)

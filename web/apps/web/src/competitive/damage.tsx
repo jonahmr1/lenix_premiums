@@ -15,7 +15,7 @@ export const DamageEffect = () => {
 	const [strength, setStrength] = useState(0)
 
 	useEffect(() => {
-		if (DEV('competitive')) {
+		DEV(() => {
 			setTimeout(async () => {
 				for (const i of Array(100).keys()) {
 					await waste(50)
@@ -28,7 +28,7 @@ export const DamageEffect = () => {
 					setStrength(99 - i)
 				}
 			})
-		}
+		}, 'competitive')
 	}, [])
 
 	useEffect(() => {

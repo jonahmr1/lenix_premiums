@@ -9,9 +9,7 @@ export const Flashbang = () => {
 	const [opacity, setOpacity] = useState(0)
 
 	useEffect(() => {
-		if (DEV('competitive')) {
-			triggerFlashbang()
-		}
+		DEV(triggerFlashbang, 'competitive')
 	}, [])
 
 	const triggerFlashbang = async () => {

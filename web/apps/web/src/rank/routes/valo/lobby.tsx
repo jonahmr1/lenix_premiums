@@ -27,7 +27,7 @@ export const Lobby = () => {
 	const nav = useNavigate()
 	const { theme, toggle } = useTheme()
 	const [profile, setProfile] = useState<Competitive.GamerProfile>()
-	const [display, setDisplay] = useState(DEV('rank'))
+	const [display, setDisplay] = useState<boolean>()
 
 	useEffect(() => {
 		const disposes = [
@@ -51,10 +51,11 @@ export const Lobby = () => {
 	useEffect(() => {
 		if (!display) return
 
-		if (DEV('rank')) {
+		DEV(() => {
+			setDisplay(true)
 			setProfile(FAKE_PROFILE)
-			return
-		}
+		}, 'rank')
+
 		setTimeout(async () => {
 			const profile = await fetchNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', {})
 			setProfile(profile)

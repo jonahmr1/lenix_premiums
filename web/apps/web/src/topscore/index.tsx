@@ -57,7 +57,7 @@ export const TopScore = () => {
 	}
 
 	useEffect(() => {
-		if (DEV('topscore')) {
+		DEV(() => {
 			setScores({
 				'1': {
 					scale: 1,
@@ -102,8 +102,8 @@ export const TopScore = () => {
 					},
 				},
 			})
-			return
-		}
+		}, 'topscore')
+		
 		const off = onNuiEmit<Outlaw.Events['updateTopscoreData']>('topscore:updateData', setScores)
 
 		return off
