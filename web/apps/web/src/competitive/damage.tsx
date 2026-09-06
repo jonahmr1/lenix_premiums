@@ -13,7 +13,6 @@ const player = new Howl({
 
 export const DamageEffect = () => {
 	const [strength, setStrength] = useState(0)
-	const [effect, setEffect] = useState({ img: low })
 
 	useEffect(() => {
 		if (DEV('competitive')) {
@@ -23,7 +22,7 @@ export const DamageEffect = () => {
 					setStrength(i)
 				}
 				await waste(2000)
-	
+
 				for (const i of Array(100).keys()) {
 					await waste(50)
 					setStrength(99 - i)
@@ -33,8 +32,6 @@ export const DamageEffect = () => {
 	}, [])
 
 	useEffect(() => {
-		setEffect({ img: strength < 50 ? low : high })
-
 		player.rate(0.7 + strength * 0.011)
 		if (strength > 0) {
 			player.loop(true)
@@ -46,12 +43,15 @@ export const DamageEffect = () => {
 	}, [strength])
 
 	return (
-		<img
-			src={effect.img}
-			className="pointer-events-none absolute -z-1 size-full object-cover"
-			style={{
-				opacity: strength / 100
-			}}
-		/>
+		<>
+			<img
+				src={low}
+				className={`absolute size-full object-cover transition-opacity duration-400 ${strength < 50 ? 'opacity-100' : 'opacity-0'}`}
+			/>
+			<img
+				src={high}
+				className={`absolute size-full object-cover transition-opacity duration-2000 ${strength < 50 ? 'opacity-0' : 'opacity-100'}`}
+			/>
+		</>
 	)
 }
