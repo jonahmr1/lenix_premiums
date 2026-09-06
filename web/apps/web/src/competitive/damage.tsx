@@ -4,6 +4,7 @@ import low from '@workspace/ui/assets/competitive/damage/low.png'
 import high from '@workspace/ui/assets/competitive/damage/high.png'
 import heartbeat from '@workspace/ui/assets/competitive/damage/heartbeat.mp3'
 import { Howl } from 'howler'
+import { DEV } from '@/App'
 
 const player = new Howl({
 	src: heartbeat,
@@ -15,18 +16,20 @@ export const DamageEffect = () => {
 	const [effect, setEffect] = useState({ img: low })
 
 	useEffect(() => {
-		// setTimeout(async () => {
-		// 	for (const i of Array(100).keys()) {
-		// 		await waste(50)
-		// 		setStrength(i)
-		// 	}
-		// 	await waste(2000)
-
-		// 	for (const i of Array(100).keys()) {
-		// 		await waste(50)
-		// 		setStrength(99 - i)
-		// 	}
-		// })
+		if (DEV('competitive')) {
+			setTimeout(async () => {
+				for (const i of Array(100).keys()) {
+					await waste(50)
+					setStrength(i)
+				}
+				await waste(2000)
+	
+				for (const i of Array(100).keys()) {
+					await waste(50)
+					setStrength(99 - i)
+				}
+			})
+		}
 	}, [])
 
 	useEffect(() => {
