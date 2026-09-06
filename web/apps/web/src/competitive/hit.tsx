@@ -12,15 +12,15 @@ export const HitMarker = () => {
 	const [state, setVariant] = useState<{ id: number, variant: 'kill' | 'hit'}>()
 
 	useEffect(() => {
-		if (!DEV('competitive')) return
-		
-		const interval = setInterval(() => {
-			const variant = (['kill', 'hit'] as const)[random(0, 1)]
-			if (variant === 'kill') player.play()
-			setVariant(prev => ({ variant, id: (prev?.id ?? 1) + 1}))
-		}, 100)
-
-		return () => clearInterval(interval)
+		return DEV(() => {
+			const interval = setInterval(() => {
+				const variant = (['kill', 'hit'] as const)[random(0, 1)]
+				if (variant === 'kill') player.play()
+				setVariant(prev => ({ variant, id: (prev?.id ?? 1) + 1}))
+			}, 100)
+	
+			return () => clearInterval(interval)
+		}, 'competitive')
 	}, [])
 
 	if (!state) return

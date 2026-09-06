@@ -14,18 +14,19 @@ import type { Storage } from './ipad/types'
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
 const dev = 'competitive'
-export const DEV = (cb: () => void, module: typeof dev = dev) => import.meta.env.DEV && module !== dev && cb()
+export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module !== dev ? cb() : undefined
 
 export const App = () => {
 	const { theme } = useTheme()
 
 	return (
 		<>
-			{DEV(dev) && (
+			{DEV(() => (
 				<img
 					src={`${theme}.png`}
-					className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />
-			)}
+					className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
+				/>
+			))}
 			<Hud />
 			<Ipad />
 			<Starting />
