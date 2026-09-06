@@ -8,7 +8,7 @@ export const Flashbang = () => {
 	const [opacity, setOpacity] = useState(0)
 
 	useEffect(() => {
-		// triggerFlashbang()
+		triggerFlashbang()
 	}, [])
 
 	const triggerFlashbang = async () => {
@@ -19,7 +19,7 @@ export const Flashbang = () => {
 
 		for (const i of Array(100).keys()) {
 			await waste(25)
-			setOpacity(99 - i / 100)
+			setOpacity((99 - i) / 100)
 		}
 	}
 

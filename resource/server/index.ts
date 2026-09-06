@@ -4,7 +4,8 @@ import { palette } from 'lenix'
 import { ResourceName } from 'common/resource'
 
 import './init'
-throw 'license check bypassed'
+
+debugger
 
 const LICENSE = GetConvar('lenix:license_key', '')
 asserts(
