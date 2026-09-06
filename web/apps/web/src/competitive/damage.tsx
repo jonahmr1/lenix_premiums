@@ -5,6 +5,7 @@ import low from '@workspace/ui/assets/competitive/low.png'
 export const DamageEffect = () => {
 	const bgs = [high, low]
 	const effect = bgs[random(0, bgs.length - 1)]
+
 	return (
 		<img
 			src={effect}
