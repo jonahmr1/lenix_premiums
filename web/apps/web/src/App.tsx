@@ -14,7 +14,7 @@ import type { Storage } from './ipad/types'
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
 const dev = 'competitive'
-export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module !== dev ? cb() : undefined
+export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 export const App = () => {
 	const { theme } = useTheme()
