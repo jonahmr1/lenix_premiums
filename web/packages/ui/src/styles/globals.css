@@ -9,31 +9,6 @@
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
-@utility perspective-left-* {
-	transform: perspective(200px) rotateY(calc(--value(integer) * 1deg)) rotateX(-1deg);
-	transform-origin: left center;
-}
-@utility perspective-right-* {
-	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(-5deg);
-	transform-origin: right center;
-}
-
-@utility text-fluid-* {
-	font-size: calc(--value(number) * 1vmin);
-}
-
-@utility deep-* {
-	--deep-amount: calc(--value(integer) * 1%);
-}
-
-@utility bg-deep-* {
-	background-color: color-mix(
-		in oklab,
-		color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 20%)), black) calc(--modifier(integer, --default(100)) * 1%),
-		transparent
-	);
-}
-
 @theme inline {
 	--font-heading: var(--font-sans);
 	--font-number: 'Martian Mono Variable', sans-serif;
@@ -175,7 +150,7 @@
 	}
 	
 	.glow-sm {
-		@apply text-shadow-current text-shadow-[0_0_8px_blue]
+		@apply text-shadow-current text-shadow-[0_0_4px_blue]
 	}
 	.glow-md {
 		@apply text-shadow-current text-shadow-[0_0_16px_blue]
@@ -184,3 +159,57 @@
 		@apply text-shadow-current text-shadow-[0_0_24px_blue]
 	}
 }
+
+@utility perspective-left-* {
+	transform: perspective(200px) rotateY(calc(--value(integer) * 1deg)) rotateX(-1deg);
+	transform-origin: left center;
+}
+@utility perspective-right-* {
+	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(-5deg);
+	transform-origin: right center;
+}
+
+@utility text-fluid-* {
+	font-size: calc(--value(number) * 1vmin);
+}
+
+@utility deep-* {
+	--deep-amount: calc(--value(integer) * 1%);
+}
+
+@utility bg-deep-* {
+	background-color: color-mix(
+		in oklab,
+		color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 20%)), black) calc(--modifier(integer, --default(100)) * 1%),
+		transparent
+	);
+}
+
+@keyframes hit-tl {
+	0% { translate: 0 0; opacity: 1; }
+  50% { translate: -4px -4px; opacity: 1; }
+	100% { translate: -4px -4px; opacity: 0; }
+}
+
+@keyframes hit-tr {
+	0% { translate: 0 0; opacity: 1; }
+	50% { translate: 4px -4px; opacity: 1; }
+	100% { translate: 4px -4px; opacity: 0; }
+}
+
+@keyframes hit-br {
+	0% { translate: 0 0; opacity: 1; }
+	50% { translate: 4px 4px; opacity: 1; }
+	100% { translate: 4px 4px; opacity: 0; }
+}
+
+@keyframes hit-bl {
+	0% { translate: 0 0; opacity: 1; }
+	50% { translate: -4px 4px; opacity: 1; }
+	100% { translate: -4px 4px; opacity: 0; }
+}
+
+@utility animate-hit-tl { animation: hit-tl 400ms ease-out forwards; }
+@utility animate-hit-tr { animation: hit-tr 400ms ease-out forwards; }
+@utility animate-hit-br { animation: hit-br 400ms ease-out forwards; }
+@utility animate-hit-bl { animation: hit-bl 400ms ease-out forwards; }

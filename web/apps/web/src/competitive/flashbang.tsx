@@ -8,7 +8,7 @@ export const Flashbang = () => {
 	const [opacity, setOpacity] = useState(0)
 
 	useEffect(() => {
-		triggerFlashbang()
+		// triggerFlashbang()
 	}, [])
 
 	const triggerFlashbang = async () => {
