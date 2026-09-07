@@ -162,11 +162,11 @@
 
 @utility perspective-left-* {
 	transform: perspective(200px) rotateY(calc(--value(integer) * 1deg)) rotateX(-1deg);
-	transform-origin: left center;
+	transform-origin: left 100%;
 }
 @utility perspective-right-* {
 	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(1deg);
-	transform-origin: right center;
+	transform-origin: right 100%;
 }
 
 @utility text-fluid-* {
