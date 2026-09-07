@@ -6,29 +6,29 @@ import { waste } from "@lenix/lenix";
 import { DEV } from "@/App";
 
 export const Flashbang = () => {
-	const [opacity, setOpacity] = useState(0)
+	const [progress, setProgress] = useState(0)
 
 	useEffect(() => {
 		DEV(triggerFlashbang, 'competitive')
 	}, [])
 
 	const triggerFlashbang = async () => {
-		setOpacity(1)
+		setProgress(0)
 		playAudio('custom', flashbang, 0.01)
 		playAudio('custom', flashbangEffect, 0.1)
 		await waste(3000)
 
-		for (const i of Array(100).keys()) {
+		for (const i of Array(101).keys()) {
 			await waste(25)
-			setOpacity((99 - i) / 100)
+			setProgress(i)
 		}
 	}
 
 	return (
 		<div
-			className='absolute size-full bg-white'
+			className='absolute size-full'
 			style={{
-				opacity
+				backgroundImage: `radial-gradient(circle, transparent ${(progress * 2) - 100}%, white ${progress * 2}%)`,
 			}}
 		/>
 	);

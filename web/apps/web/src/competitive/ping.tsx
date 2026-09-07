@@ -10,7 +10,7 @@ export const Ping = () => {
 	} | null>(null)
 
 	useEffect(() => {
-		DEV(() => setState({ top: 20, left: 40, color: 'blue', meter: 459 }), 'competitive')
+		DEV(() => setState({ top: 40, left: 60, color: 'blue', meter: 459 }), 'competitive')
 	}, [])
 
 	if (!state) return null

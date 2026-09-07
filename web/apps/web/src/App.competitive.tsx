@@ -10,9 +10,9 @@ export const Competitive = () => {
 		<>
 			{/* <HitMarker /> */}
 			{/* <DamageEffect /> */}
-			{/* <Flashbang /> */}
+			<Flashbang />
 			{/* <Ping /> */}
-			<Lobby />
+			{/* <Lobby /> */}
 		</>
 	)
 }
