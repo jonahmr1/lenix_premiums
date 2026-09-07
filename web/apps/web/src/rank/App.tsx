@@ -1,17 +1,17 @@
 import { MemoryRouter, Routes, Route, useNavigate } from 'react-router'
 import { Toaster } from '@workspace/ui/components/sonner'
-import { InGame as EliteInGame } from './rank/routes/elite/in-game'
-import { Lobby as EliteLobby } from './rank/routes/elite/lobby'
-import { InGame as ValoInGame } from './rank/routes/valo/in-game'
-import { Lobby as ValoLobby } from './rank/routes/valo/lobby'
-import { Loading as ValoLoading } from './rank/routes/valo/loading'
+import { InGame as EliteInGame } from './routes/elite/in-game'
+import { Lobby as EliteLobby } from './routes/elite/lobby'
+import { InGame as ValoInGame } from './routes/valo/in-game'
+import { Lobby as ValoLobby } from './routes/valo/lobby'
+import { Loading as ValoLoading } from './routes/valo/loading'
 
 import '@workspace/elite/globals.css'
 import '@workspace/valo/globals.css'
 import { useEffect } from 'react'
 import type { Competitive } from 'types'
 import { onNuiEmit } from 'lenix/nui'
-import { DEV } from './App'
+import { DEV } from '@/App'
 
 
 const VARIANT: keyof typeof VARIANTS = 'valo'

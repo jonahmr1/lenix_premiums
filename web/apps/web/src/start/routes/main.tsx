@@ -2,7 +2,7 @@ import { DEV } from "@/App"
 import { focus, onNuiEmit } from "lenix/nui"
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
-import type { Starting } from "types"
+import type { Start } from "types"
 
 export const Main = () => {
 	const nav = useNavigate()
@@ -11,13 +11,13 @@ export const Main = () => {
 		DEV(() => {
 			nav('/pause')
 		}, 'start')
-		
+
 		const disposes = [
-			onNuiEmit<Starting.Events['modeSelection']>('starting:modeSelection', () => {
+			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
 				nav('/start')
 				focus()
 			}),
-			onNuiEmit<Starting.Events['pause']>('starting:pause', () => {
+			onNuiEmit<Start.Events['pause']>('start:pause', () => {
 				nav('/pause')
 				focus()
 			})

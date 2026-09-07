@@ -1,7 +1,7 @@
-import { Game } from "./competitive/routes/game"
+import { Game } from "./routes/game"
 import { Toaster } from "@workspace/ui/components/sonner"
 import { MemoryRouter, Route, Routes } from "react-router"
-import { Lobby } from "./competitive/routes/lobby"
+import { Lobby } from "./routes/lobby"
 
 export const Competitive = () => (
 	<MemoryRouter>

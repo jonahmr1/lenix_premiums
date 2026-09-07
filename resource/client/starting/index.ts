@@ -8,10 +8,10 @@ import { login as outlaw } from "../outlaw";
 
 let character: Character | undefined | null
 let characters: Character[]
-let logout: () => void = () => {}
+let logout: () => void = () => { }
 
-onNui<Starting.Requests['selectMode']>('starting:selectMode', async ({ mode }) => {
-	const characterSelected = await triggerServerCallback<Character | undefined>('lenix:server:starting:modeSelected', 5000, characters, mode)
+onNui<Starting.Requests['selectMode']>('start:selectMode', async ({ mode }) => {
+	const characterSelected = await triggerServerCallback<Character | undefined>('lenix:server:start:modeSelected', 5000, characters, mode)
 
 	character = characterSelected ?? undefined
 
@@ -34,18 +34,18 @@ control.on({
 	event: 'press',
 	key: 'ESCAPE',
 	onEvent: () => {
-		emitNui<Starting.Events['pause']>('starting:pause')
+		emitNui<Starting.Events['pause']>('start:pause')
 	}
 }),
 
-globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
-	character = null
-	characters = chars
+	globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
+		character = null
+		characters = chars
 
-	await repeat(() => isNuiReady(), true, 500)
-	emitNui<Starting.Events['modeSelection']>('starting:modeSelection')
+		await repeat(() => isNuiReady(), true, 500)
+		emitNui<Starting.Events['modeSelection']>('start:modeSelection')
 
-	return repeat(() => character, character => character !== null, 500)
-})
+		return repeat(() => character, character => character !== null, 500)
+	})
 
 pool(DisableFrontendThisFrame)

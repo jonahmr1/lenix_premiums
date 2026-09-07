@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout"
 import { Menu } from "../components/menu"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
-import type { Starting } from "types"
+import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
 
@@ -33,7 +33,7 @@ export const Pause = () => {
 		{
 			label: 'Main Menu',
 			onClick: async () => {
-				await fetchNuiServer<Starting.Requests['logout']>('starting:logout', {})
+				await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
 				nav('/start')
 			}
 		},

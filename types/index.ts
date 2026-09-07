@@ -152,15 +152,15 @@ export namespace Competitive {
 	export type CasualMatch = Record<'own' | 'opponent', Match['teams'][number]>
 }
 
-export namespace Starting {
+export namespace Start {
 	export interface Events {
-		modeSelection: Event<'starting:modeSelection', []>
-		pause: Event<'starting:pause', []>
+		modeSelection: Event<'start:modeSelection', []>
+		pause: Event<'start:pause', []>
 	}
 	export interface Requests {
-		selectMode: Request<null, 'starting:selectMode', { mode: Mode }>
-		exitGame: Request<null, 'starting:exitGame'>
-		logout: Request<null, 'starting:logout'>
+		selectMode: Request<null, 'start:selectMode', { mode: Mode }>
+		exitGame: Request<null, 'start:exitGame'>
+		logout: Request<null, 'start:logout'>
 	}
 	export type Mode = 'competitive' | 'outlaw'
 }
@@ -199,7 +199,7 @@ export namespace Outlaw {
 		weapon: {
 			name: string,
 			image: string,
-			clipAmmo:  number,
+			clipAmmo: number,
 			clipSize: number,
 			reserveAmmo: number
 		}
@@ -244,6 +244,6 @@ export namespace Topscore {
 			}
 		}
 	>
-	
+
 	export type ContextData = Record<1 | 2 | 3, Omit<Data[1], 'scale' | 'bottom' | 'left' | 'visible'>>
 }

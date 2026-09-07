@@ -1,15 +1,15 @@
 import { Toaster } from "@workspace/ui/components/sonner"
 import { MemoryRouter, Route, Routes } from "react-router"
-import { Credit } from "./starting/routes/credit"
-import { Main } from "./starting/routes/main"
-import { Pause } from "./starting/routes/pause"
-import { Start } from "./starting/routes/start"
+import { Main } from "./routes/main"
+import { Starting } from "./routes/starting"
+import { Credit } from "./routes/credit"
+import { Pause } from "./routes/pause"
 
-export const Starting = () => (
+export const Start = () => (
 	<MemoryRouter>
 		<Routes>
 			<Route path={'/*'} element={<Main />} />
-			<Route path={'/start'} element={<Start />} />
+			<Route path={'/start'} element={<Starting />} />
 			<Route path={'/credit'} element={<Credit />} />
 			<Route path={'/pause'} element={<Pause />} />
 		</Routes>

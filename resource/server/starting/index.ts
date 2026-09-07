@@ -21,7 +21,7 @@ on('ox:createdCharacter', async (playerId: number, _userId: number, charId: numb
 	clientsWithNoCharacters.delete(playerId)
 })
 
-onNuiServer<Starting.Requests['logout']>('starting:logout', (client) => {
+onNuiServer<Starting.Requests['logout']>('start:logout', (client) => {
 	const player = GetPlayer(client)
 	asserts(player, `Failed to get player<${client}> to logout`)
 
@@ -29,7 +29,7 @@ onNuiServer<Starting.Requests['logout']>('starting:logout', (client) => {
 	return null
 })
 
-onNuiServer<Starting.Requests['exitGame']>('starting:exitGame', (client) => {
+onNuiServer<Starting.Requests['exitGame']>('start:exitGame', (client) => {
 	const player = GetPlayer(client)
 	asserts(player, `Failed to get player<${client}> to disconnect`)
 
@@ -39,7 +39,7 @@ onNuiServer<Starting.Requests['exitGame']>('starting:exitGame', (client) => {
 	return null
 })
 
-onClientCallback('lenix:server:starting:modeSelected', async (client, characters: Character[], mode: Starting.Mode): Promise<Character | undefined> => {
+onClientCallback('lenix:server:start:modeSelected', async (client, characters: Character[], mode: Starting.Mode): Promise<Character | undefined> => {
 	if (!characters.length) {
 		clientsWithNoCharacters.set(client, mode)
 		return
@@ -54,7 +54,7 @@ onClientCallback('lenix:server:starting:modeSelected', async (client, characters
 		clientsWithNoCharacters.set(client, mode)
 		return
 	}
-	
+
 	const character = characters.find(character => character.charId === re.charId)
 	asserts(character, `Couldn't find client<${client}>'s character<${re.charId}>`)
 	return character

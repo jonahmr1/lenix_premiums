@@ -2,16 +2,16 @@ import { toggleTheme, useTheme } from '@workspace/ui/hooks/theme'
 import { storage } from '@lenix/lenix'
 
 import '@workspace/ui/globals.css'
-import { Ipad } from './App.ipad'
-import { Rank } from './App.rank'
 import { Hud } from './hud'
 import { TopScore } from './topscore'
 import { Roster } from './roster'
-import { Starting } from './App.start'
-import { Competitive } from './App.competitive'
+import { Competitive } from './competitive/App'
 import type { Storage } from './ipad/types'
 import { Button } from '@workspace/ui/components/button'
 import { Moon, Sun } from 'lucide-react'
+import { Ipad } from './ipad/App'
+import { Start } from './start/App'
+import { Rank } from './rank/App'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
@@ -39,7 +39,7 @@ export const App = () => {
 			))}
 			<Hud />
 			<Ipad />
-			<Starting />
+			<Start />
 			<Rank />
 			<TopScore />
 			<Roster />

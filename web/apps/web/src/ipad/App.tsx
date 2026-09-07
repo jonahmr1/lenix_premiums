@@ -5,11 +5,11 @@ import { Settings } from '@/ipad/routes/settings'
 import { Index } from '@/ipad/pages/app'
 import { storage } from '@lenix/lenix'
 import type { Orientation, Storage } from '@/ipad/types'
-import { apps } from './ipad/constants'
+import { apps } from './constants'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
 import { Layout } from '@/components/layout'
-import { DEV } from './App'
+import { DEV } from '@/App'
 
 const AppFragment = ({ appName, children }: { appName: string; children: React.ReactNode }) => (
 	<div className='relative z-10 flex size-full bg-background rounded-xl overflow-hidden'>
