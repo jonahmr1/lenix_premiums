@@ -165,7 +165,7 @@
 	transform-origin: left center;
 }
 @utility perspective-right-* {
-	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(-5deg);
+	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(1deg);
 	transform-origin: right center;
 }
 
