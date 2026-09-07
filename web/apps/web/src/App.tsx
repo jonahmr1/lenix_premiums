@@ -15,7 +15,7 @@ import { Moon, Sun } from 'lucide-react'
 
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'ipad'
+const dev = 'competitive'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 export const App = () => {
