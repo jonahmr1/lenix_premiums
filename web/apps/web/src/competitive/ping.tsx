@@ -10,7 +10,7 @@ export const Ping = () => {
 	} | null>(null)
 
 	useEffect(() => {
-		DEV(() => setState({ top: 20, left: 40, color: 'green', meter: 459 }), 'competitive')
+		DEV(() => setState({ top: 20, left: 40, color: 'blue', meter: 459 }), 'competitive')
 	}, [])
 
 	if (!state) return null
@@ -25,7 +25,7 @@ export const Ping = () => {
 		>
 			<p className="text-white text-fluid-1.5 text-shadow-md">{state.meter}m</p>
 			<div
-				className="size-2.5 rotate-45 rounded-xs opacity-75"
+				className="size-2.5 rotate-45 rounded-xs opacity-75 ring"
 				style={{
 					backgroundColor: state.color,
 				}}
