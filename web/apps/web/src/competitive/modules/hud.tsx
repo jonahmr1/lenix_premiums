@@ -1,13 +1,15 @@
 import { DEV } from "@/App"
 import { useEffect, useState } from "react"
 
+const segments = 6
+const maxHealth = 100
+const segmentHealth = maxHealth / segments
+
 export const Hud = () => {
 	const [state, setState] = useState<{ health: number }>()
-	const segments = 6
-	const segmentHealth = 100 / segments
 
 	useEffect(() => {
-		DEV(() => setState({ health: 45 }), 'competitive')
+		DEV(() => setState({ health: 25 }), 'competitive')
 	}, [])
 
 	if (!state) return null
@@ -16,7 +18,7 @@ export const Hud = () => {
 		<div className="absolute bottom-1/20 left-1/20">
 			<div className="flex items-end text-white">
 				<p className="leading-tight text-fluid-2">{state.health}</p>
-				<p className="text-fluid-1.5 text-white/70">/100</p>
+				<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
 			</div>
 			<div className="flex gap-px">
 				{[...Array(segments).keys()].map(index => (
@@ -25,8 +27,8 @@ export const Hud = () => {
 							className="bg-white h-full rounded-xs"
 							style={{
 								width: `${Math.min(
-									100,
-									Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * 100),
+									maxHealth,
+									Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * maxHealth),
 								)}%`
 							}}
 						/>
