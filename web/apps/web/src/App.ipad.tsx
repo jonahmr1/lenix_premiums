@@ -18,7 +18,7 @@ const AppFragment = ({ appName, children }: { appName: string; children: React.R
 )
 
 export const Ipad = () => {
-	const [display, setDisplay] = useState()
+	const [display, setDisplay] = useState<boolean>()
 	const [orientation, setOrientation] = useState<Orientation>(
 		storage.get<Storage, 'orientation'>('orientation') || 'portrait',
 	)
@@ -37,7 +37,7 @@ export const Ipad = () => {
 	return (
 		<Layout className='absolute left-1/2 top-1/2 -translate-1/2'>
 			<div
-				className={`rounded-xl relative ring-20 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
+				className={`rounded-xl relative ring-10 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
 			>
 				<div className='relative size-full overflow-hidden'>
 					<img src={tabletBg} className='absolute size-full' alt='' />

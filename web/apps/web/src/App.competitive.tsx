@@ -5,12 +5,12 @@ import { Lobby } from "./competitive/lobby"
 import { Ping } from "./competitive/ping"
 
 export const Competitive = () => {
-
+	
 	return (
 		<>
 			{/* <HitMarker /> */}
 			{/* <DamageEffect /> */}
-			<Flashbang />
+			{/* <Flashbang /> */}
 			{/* <Ping /> */}
 			{/* <Lobby /> */}
 		</>
