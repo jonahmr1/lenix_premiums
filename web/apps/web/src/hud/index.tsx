@@ -86,7 +86,7 @@ export const Hud = () => {
 				<Bar variant='health' />
 				<Bar variant='armor' />
 			</div>
-			<div className='flex items-start justify-end h-full gap-md bg-radial-[at_66%] from-muted/50 to-transparent to-66% pr-10 perspective-right-3'>
+			<div className='flex items-start justify-end h-full gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10 perspective-right-3'>
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200 rotate-1' />
 				<div className='flex flex-col gap-2 items-end justify-between h-full w-1/2 text-white/75 text-shadow-md rotate-1'>
 					<div className='flex justify-between'>
@@ -95,7 +95,7 @@ export const Hud = () => {
 								className={`text-fluid-7 inline-block leading-none  ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
-							<Separator orientation='vertical' className='bg-foreground/50 h-9/10' />
+							<Separator orientation='vertical' className='bg-white/50 h-9/10' />
 							<p className='brightness-75'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 						</div>
 					</div>
