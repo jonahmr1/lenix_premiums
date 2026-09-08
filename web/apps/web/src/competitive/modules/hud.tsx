@@ -6,35 +6,109 @@ const maxHealth = 100
 const segmentHealth = maxHealth / segments
 
 export const Hud = () => {
-	const [state, setState] = useState<{ health: number }>()
+	const [state, setState] = useState<{
+		health: number
+		weaponary: {
+			activeEquipement: number | null
+			equipments: {
+				ammo: number
+				reserve: number
+				name: string
+				image: string
+				className?: React.ComponentProps<'img'>['className']
+			}[]
+		}
+	}>()
+	const activeEquipment = state?.weaponary.activeEquipement ? state.weaponary.equipments[state.weaponary.activeEquipement - 1] : null
 
 	useEffect(() => {
-		DEV(() => setState({ health: 25 }), 'competitive')
+		DEV(() => setState({
+			health: 25,
+			weaponary: {
+				activeEquipement: 3,
+				equipments: [
+					{
+						ammo: 40,
+						reserve: 125,
+						name: 'Assault Shotgun',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
+						className: '-scale-x-100 rotate-15'
+					},
+					{
+						ammo: 2,
+						reserve: 4,
+						name: 'Grenade',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
+						className: 'max-w-[3.5vmin]',
+					},
+					{
+						ammo: 3,
+						reserve: 3,
+						name: 'Flashbang',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
+						className: 'max-w-[3.5vmin]',
+					},
+					{
+						ammo: 1,
+						reserve: 2,
+						name: 'Breach',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
+						className: 'max-w-[3.5vmin]',
+					},
+				]
+			}
+		}), 'competitive')
 	}, [])
 
 	if (!state) return null
 
 	return (
-		<div className="absolute bottom-1/20 left-1/20">
-			<div className="flex items-end text-white">
-				<p className="leading-tight text-fluid-2">{state.health}</p>
-				<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
+		<>
+			{/* Health */}
+			<div className="absolute bottom-1/20 left-1/20">
+				<div className="flex items-end text-white">
+					<p className="leading-tight text-fluid-2">{state.health}</p>
+					<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
+				</div>
+				<div className="flex gap-px">
+					{[...Array(segments).keys()].map(index => (
+						<div key={index} className="w-7 h-4 bg-white/25 rounded-xs overflow-hidden">
+							<div
+								className="bg-white h-full rounded-xs"
+								style={{
+									width: `${Math.min(
+										maxHealth,
+										Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * maxHealth),
+									)}%`
+								}}
+							/>
+						</div>
+					))}
+				</div>
 			</div>
-			<div className="flex gap-px">
-				{[...Array(segments).keys()].map(index => (
-					<div key={index} className="w-7 h-4 bg-white/25 rounded-xs overflow-hidden">
-						<div
-							className="bg-white h-full rounded-xs"
-							style={{
-								width: `${Math.min(
-									maxHealth,
-									Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * maxHealth),
-								)}%`
-							}}
-						/>
+			{/* Weaponary */}
+			<div className="absolute bottom-1/20 right-1/30">
+				<div className="space-y-xs font-medium">
+					<div className="flex justify-between text-fluid-1.75">
+						{activeEquipment && (
+							<>
+								<p>{activeEquipment.name}</p>
+								<p>{activeEquipment.ammo}/{activeEquipment.reserve}</p>
+							</>
+						)}
 					</div>
-				))}
+					<div className="flex">
+						{state.weaponary.equipments.map((equipment, index) => (
+							<div className="space-y-xs">
+								<div className={`size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipement === index + 1 && 'bg-white'}`}>
+									<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipement === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
+								</div>
+								<div className="flex justify-center text-fluid-2">{index + 1}</div>
+							</div>
+						))}
+					</div>
+				</div>
 			</div>
-		</div>
+		</>
 	)
 }
