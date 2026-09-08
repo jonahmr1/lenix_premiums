@@ -1,4 +1,5 @@
 import { DEV } from "@/App"
+import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
 
 const segments = 6
@@ -9,7 +10,7 @@ export const Hud = () => {
 	const [state, setState] = useState<{
 		health: number
 		weaponary: {
-			activeEquipement: number | null
+			activeEquipment: number | null
 			equipments: {
 				ammo: number
 				reserve: number
@@ -19,45 +20,53 @@ export const Hud = () => {
 			}[]
 		}
 	}>()
-	const activeEquipment = state?.weaponary.activeEquipement ? state.weaponary.equipments[state.weaponary.activeEquipement - 1] : null
+	const activeEquipment = state?.weaponary.activeEquipment ? state.weaponary.equipments[state.weaponary.activeEquipment - 1] : null
 
 	useEffect(() => {
-		DEV(() => setState({
-			health: 25,
-			weaponary: {
-				activeEquipement: 3,
-				equipments: [
-					{
-						ammo: 40,
-						reserve: 125,
-						name: 'Assault Shotgun',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
-						className: '-scale-x-100 rotate-15'
-					},
-					{
-						ammo: 2,
-						reserve: 4,
-						name: 'Grenade',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
-						className: 'max-w-[3.5vmin]',
-					},
-					{
-						ammo: 3,
-						reserve: 3,
-						name: 'Flashbang',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
-						className: 'max-w-[3.5vmin]',
-					},
-					{
-						ammo: 1,
-						reserve: 2,
-						name: 'Breach',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
-						className: 'max-w-[3.5vmin]',
-					},
-				]
-			}
-		}), 'competitive')
+		DEV(() => {
+			setState({
+				health: 25,
+				weaponary: {
+					activeEquipment: 3,
+					equipments: [
+						{
+							ammo: 40,
+							reserve: 125,
+							name: 'Assault Shotgun',
+							image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
+							className: '-scale-x-100 rotate-15'
+						},
+						{
+							ammo: 2,
+							reserve: 4,
+							name: 'Grenade',
+							image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
+							className: 'max-w-[3.5vmin]',
+						},
+						{
+							ammo: 3,
+							reserve: 3,
+							name: 'Flashbang',
+							image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
+							className: 'max-w-[3.5vmin]',
+						},
+						{
+							ammo: 1,
+							reserve: 2,
+							name: 'Breach',
+							image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
+							className: 'max-w-[3.5vmin]',
+						},
+					]
+				}
+			})
+
+			const interval = setInterval(() => {
+				setState(prev => prev ? ({ ...prev, weaponary: { ...prev.weaponary, activeEquipment: random(1, 4)}}) : prev)
+			}, 2000)
+
+			return () => clearInterval(interval)
+		}, 'competitive')
 	}, [])
 
 	if (!state) return null
@@ -100,8 +109,9 @@ export const Hud = () => {
 					<div className="flex">
 						{state.weaponary.equipments.map((equipment, index) => (
 							<div className="space-y-xs">
-								<div className={`size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipement === index + 1 && 'bg-white'}`}>
-									<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipement === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
+								<div className={`relative rounded size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
+									<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
+									<span className="absolute top-0 right-2xs text-fluid-1.5 text-white mix-blend-difference">{equipment.ammo}</span>
 								</div>
 								<div className="flex justify-center text-fluid-2">{index + 1}</div>
 							</div>
