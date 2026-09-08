@@ -196,6 +196,7 @@ export namespace Outlaw {
 	export type Hud = {
 		health: number
 		armor: number
+		lungs: number
 		weapon: {
 			name: string,
 			image: string,

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import type { Outlaw } from 'types'
 import { storage } from '@lenix/lenix'
 import type { Storage } from '@/types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 /**
 	@param length length of numbers to stop applying to; e.g. tens? hundreds? thousands? written as 1, 2, 3 ...
@@ -24,6 +25,7 @@ export const Hud = () => {
 			setState({
 				health: 50,
 				armor: 50,
+				lungs: 50,
 				weapon: {
 					name: 'Glock 17',
 					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
@@ -32,6 +34,7 @@ export const Hud = () => {
 					reserveAmmo: 50
 				}
 			})
+			storage.set<Storage>('hudVariant', 'progress')
 		}, 'hud')
 
 		const disposes = [
@@ -43,32 +46,39 @@ export const Hud = () => {
 			),
 		]
 
-		return () => disposes.forEach(dispose => dispose())
+		return () => {
+			disposes.forEach(dispose => dispose())
+			storage.destroy<Storage>('hudVariant')
+		}
 	}, [])
 
 	if (!display || !state) return null
 
-	const Bar = ({ variant }: { variant: 'health' | 'armor' }) => (
+	const Bar = ({ variant }: { variant: 'health' | 'armor' | 'lungs' }) => (
 		<div
-			className='size-full rounded flex items-end gap-2.5'
+			className='w-full rounded flex items-end gap-2.5'
 		>
-			<div className={`text-foreground relative rounded overflow-hidden ${variant === 'health' ? 'bg-rose-950/50 border border-rose-500' : 'bg-sky-950/50 border border-sky-500'}`}>
-				<div className='relative z-20 p-2xs'>
-					{variant === 'health' ? <Heart className='text-red-300' /> : <Shield className='text-sky-400' />}
+			<div className={`relative rounded bg-neutral-600/50 border border-neutral-200`}>
+				<div className='relative flex items-center justify-center z-1 *:p-1'>
+					{variant === 'health'
+					? <FontAwesomeIcon icon={['fas', 'heart']} className='text-neutral-200' />
+					: variant === 'armor'
+					? <FontAwesomeIcon icon={['fas', 'shield']} className='text-neutral-200' />
+					: <FontAwesomeIcon icon={['fas', 'lungs']} className='text-neutral-200' />}
 				</div>
 				<div
-					className={`w-full absolute bottom-0 ${variant === 'health' ? 'bg-red-800' : 'bg-sky-800'}`}
+					className={`w-full rounded-b absolute bottom-0 bg-neutral-600`}
 					style={{
 						height: `${state.health}%`
 					}}
 				/>
 			</div>
-			{hudVariant === 'progress' && <div className='size-full flex flex-col justify-end'>
+			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5'>
 				<p className='text-fluid-1.5 leading-3'>{state[variant]}%</p>
-				<div className='w-full h-2/3 border border-foreground/50 rounded items-center justify-center flex bg-foreground/20'>
-					<div className='w-96/100 h-2/3 bg-foreground/30 rounded-xs relative overflow-hidden'>
+				<div className='w-full h-2/3 border border-foreground/50 rounded-xs items-center justify-center flex bg-foreground/20'>
+					<div className='w-98/100 h-2/3 bg-neutral-400/30 rounded-[1px] relative overflow-hidden'>
 						<div
-							className={`filled h-full transition-all rounded-xs w-0 ${variant === 'health' ? 'bg-rose-400' : 'bg-sky-400'}`}
+							className={`filled h-full transition-all w-0 bg-neutral-400`}
 							style={{
 								width: `${variant === 'health' ? state.health : state.armor}%`
 							}}
@@ -81,10 +91,11 @@ export const Hud = () => {
 	)
 
 	return (
-		<Layout className='absolute bottom-md w-full flex-row justify-between items-end h-[10vh]'>
-			<div className='flex pl-10 gap-2.5 h-1/3'>{/* w-1/3 */}
+		<Layout className='absolute bottom-md left-md w-full flex-row justify-between items-end h-[10vh]'>
+			<div className={`flex gap-2.5 ${hudVariant === 'progress' && 'w-2/7'}`}>
 				<Bar variant='health' />
 				<Bar variant='armor' />
+				<Bar variant='lungs' />
 			</div>
 			<div className='flex items-start justify-end h-full gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
