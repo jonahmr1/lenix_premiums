@@ -62,7 +62,7 @@ export const Hud = () => {
 			})
 
 			const interval = setInterval(() => {
-				setState(prev => prev ? ({ ...prev, weaponary: { ...prev.weaponary, activeEquipment: random(1, 4)}}) : prev)
+				setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4)}}) : prev)
 			}, 2000)
 
 			return () => clearInterval(interval)
