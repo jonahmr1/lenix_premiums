@@ -8,10 +8,10 @@ export const Game = () => {
 
 	return (
 		<>
-			<HitMarker />
+			{/* <HitMarker />
 			<DamageEffect />
 			<Flashbang />
-			<Ping />
+			<Ping /> */}
 			<Hud />
 		</>
 	)
