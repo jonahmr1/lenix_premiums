@@ -1,4 +1,5 @@
 import { DEV } from "@/App"
+import { Layout } from "@/components/layout"
 import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
 
@@ -63,7 +64,7 @@ export const Hud = () => {
 
 			const interval = setInterval(() => {
 				setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4)}}) : prev)
-			}, 2000)
+			}, 1000)
 
 			return () => clearInterval(interval)
 		}, 'competitive')
@@ -74,7 +75,7 @@ export const Hud = () => {
 	return (
 		<>
 			{/* Health */}
-			<div className="absolute bottom-1/20 left-1/20">
+			<Layout className="absolute bottom-0 left-0 perspective-left-100 p-5">
 				<div className="flex items-end text-white">
 					<p className="leading-tight text-fluid-2">{state.health}</p>
 					<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
@@ -94,9 +95,9 @@ export const Hud = () => {
 						</div>
 					))}
 				</div>
-			</div>
+			</Layout>
 			{/* Weaponary */}
-			<div className="absolute bottom-1/20 right-1/30">
+			<Layout className="absolute bottom-0 right-0 perspective-right-100 px-3">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (
@@ -118,7 +119,7 @@ export const Hud = () => {
 						))}
 					</div>
 				</div>
-			</div>
+			</Layout>
 		</>
 	)
 }

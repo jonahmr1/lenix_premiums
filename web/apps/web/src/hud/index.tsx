@@ -2,7 +2,6 @@ import { DEV } from '@/App'
 import { Separator } from '@workspace/ui/components/separator'
 import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
-import { Heart, Shield } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { Outlaw } from 'types'
 import { storage } from '@lenix/lenix'
@@ -23,7 +22,7 @@ export const Hud = () => {
 		DEV(() => {
 			setDisplay({ vitals: true, weaponary: true })
 			setState({
-				health: 50,
+				health: 10,
 				armor: 50,
 				lungs: 50,
 				weapon: {
@@ -76,7 +75,7 @@ export const Hud = () => {
 			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5'>
 				<p className='text-fluid-1.5 leading-3'>{state[variant]}%</p>
 				<div className='w-full h-2/3 border border-foreground/50 rounded-xs items-center justify-center flex bg-foreground/20'>
-					<div className='w-98/100 h-2/3 bg-neutral-400/30 rounded-[1px] relative overflow-hidden'>
+					<div className='w-96/100 h-2/3 bg-neutral-400/30 rounded-[1px] relative overflow-hidden'>
 						<div
 							className={`filled h-full transition-all w-0 bg-neutral-400`}
 							style={{

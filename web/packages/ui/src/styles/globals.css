@@ -161,12 +161,12 @@
 }
 
 @utility perspective-left-* {
-	transform: perspective(200px) rotateY(calc(--value(integer) * 1deg)) rotateX(-1deg);
-	transform-origin: left 100%;
+	transform: perspective(200px) rotateY(5deg);
+	transform-origin: left calc((--value(integer)) * -1%);
 }
 @utility perspective-right-* {
-	transform: perspective(200px) rotateY(calc(--value(integer) * -1deg)) rotateX(1deg);
-	transform-origin: right 100%;
+	transform: perspective(200px) rotateY(-5deg);
+	transform-origin: right calc((--value(integer)) * -1%);
 }
 
 @utility text-fluid-* {
