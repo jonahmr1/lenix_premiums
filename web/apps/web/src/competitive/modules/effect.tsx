@@ -1,8 +1,8 @@
 import { waste } from '@lenix/lenix'
 import { useEffect, useState } from 'react'
-import low from '@workspace/ui/assets/competitive/damage/low.png'
-import high from '@workspace/ui/assets/competitive/damage/high.png'
-import heartbeat from '@workspace/ui/assets/competitive/damage/heartbeat.mp3'
+import low from '@workspace/ui/assets/competitive/effect/low.png'
+import high from '@workspace/ui/assets/competitive/effect/high.png'
+import heartbeat from '@workspace/ui/assets/competitive/effect/heartbeat.mp3'
 import { Howl } from 'howler'
 import { DEV } from '@/App'
 
