@@ -1,4 +1,4 @@
-import { DamageEffect } from "../modules/damage"
+import { DamageEffect } from "../modules/effect"
 import { Flashbang } from "../modules/flashbang"
 import { HitMarker } from "../modules/hit"
 import { Hud } from "../modules/hud"

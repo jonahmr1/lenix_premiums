@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout"
 import { Menu } from "../components/menu"
 import bg1 from '@workspace/ui/assets/start/ls-1.png'
 import bg2 from '@workspace/ui/assets/start/ls-2.png'
