@@ -9,7 +9,7 @@ export const Main = () => {
 
 	useEffect(() => {
 		DEV(() => {
-			nav('/pause')
+			nav('/start')
 		}, 'start')
 
 		const disposes = [

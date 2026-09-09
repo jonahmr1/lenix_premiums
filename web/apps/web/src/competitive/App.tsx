@@ -9,7 +9,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/game'), 'competitive')
+		DEV(() => nav('/'), 'competitive')
 	}, [])
 
 	return (

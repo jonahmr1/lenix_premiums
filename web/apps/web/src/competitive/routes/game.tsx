@@ -8,11 +8,11 @@ export const Game = () => {
 
 	return (
 		<>
-			{/* <HitMarker />
-			<DamageEffect />
-			<Flashbang />
-			<Ping /> */}
-			<Hud />
+			{/* <HitMarker /> */}
+			{/* <DamageEffect /> */}
+			{/* <Flashbang /> */}
+			{/* <Ping /> */}
+			{/* <Hud /> */}
 		</>
 	)
 }

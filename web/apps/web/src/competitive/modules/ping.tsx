@@ -24,15 +24,11 @@ export const Ping = () => {
 									: { ...prev, left: prev.left + 1, meter: prev.meter + 1 }
 				) : {
 					top: 0, left: 0, color: 'blue', meter: 0
-				}
-				)
+				})
 			}, 50)
 			return () => clearInterval(interval)
 		}, 'competitive')
 	}, [])
-
-	console.log(state)
-
 
 	if (!state) return null
 
