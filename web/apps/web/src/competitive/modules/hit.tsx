@@ -2,6 +2,7 @@ import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
 import impact from '@workspace/ui/assets/competitive/bullet-impact.wav'
 import { DEV } from "@/App"
+import './hit.css'
 
 const player = new Howl({
 	src: impact,
