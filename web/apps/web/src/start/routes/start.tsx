@@ -57,12 +57,12 @@ export const Starting = () => {
 	]
 
 	return (
-		<Layout className="relative h-screen overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
+		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
 			<img
 				src={image}
 				className="absolute -z-1 size-full object-cover"
 			/>
 			<Menu buttons={buttons} />
-		</Layout>
+		</div>
 	)
 }
