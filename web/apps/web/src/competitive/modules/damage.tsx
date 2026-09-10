@@ -19,7 +19,7 @@ export const DamageIndicator = () => {
 
 	return <>
 		<div
-			className="absolute-center h-2/3 place-items-center"
+			className="absolute-center h-2/3 w-1/3 place-items-center"
 			style={{
 				rotate: `${state}deg`
 			}}
