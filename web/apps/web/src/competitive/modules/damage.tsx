@@ -15,6 +15,8 @@ export const DamageIndicator = () => {
 		}, 'competitive')
 	}, [])
 
+	if (!state) return null
+
 	return <>
 		<div
 			className="absolute-center h-2/3 place-items-center"
