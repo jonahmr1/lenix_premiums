@@ -1,4 +1,5 @@
 import { DamageIndicator } from "../modules/damage"
+import { DirectionalIndicator } from "../modules/directional"
 import { DamageEffect } from "../modules/effect"
 import { Flashbang } from "../modules/flashbang"
 import { HitMarker } from "../modules/hit"
@@ -14,7 +15,8 @@ export const Game = () => {
 			{/* <Flashbang /> */}
 			{/* <Ping /> */}
 			{/* <Hud /> */}
-			<DamageIndicator />
+			{/* <DamageIndicator /> */}
+			<DirectionalIndicator />
 		</>
 	)
 }
