@@ -25,7 +25,7 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 
 export const Home = ({ orientation }: { orientation: Storage['orientation'] }) => {
 	return (
-		<div className={`relative grid size-full ${orientation === 'portrait' ? 'grid-cols-4' : 'grid-cols-6'} content-start gap-4 p-4`}>
+		<div className={`relative grid size-full ${orientation === 'portrait' ? 'grid-cols-4' : 'grid-cols-6'} content-start gap-xl p-xl`}>
 			<App
 				name='Settings'
 				styles='bg-muted'

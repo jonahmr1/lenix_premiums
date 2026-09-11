@@ -35,7 +35,7 @@ export const Ipad = () => {
 	if (!display) return null
 
 	return (
-		<Layout className='absolute left-1/2 top-1/2 -translate-1/2'>
+		<div className='absolute-center h-full flex items-center'>
 			<div
 				className={`rounded-xl relative ring-10 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
 			>
@@ -67,6 +67,6 @@ export const Ipad = () => {
 					</MemoryRouter>
 				</div>
 			</div>
-		</Layout>
+		</div>
 	)
 }
