@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/av
 import { useState } from "react"
 import { toast } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
+import initials from 'initials'
 
 export const Lobby = () => {
 	const nav = useNavigate()
@@ -72,10 +73,10 @@ export const Lobby = () => {
 						className={`${buttonVariants({ variant: 'secondary' })} h-full`}
 					>
 						<ItemMedia variant="icon">
-						<Avatar>
-							<AvatarImage src={state.avatar} />
-							<AvatarFallback>{'TODO'}</AvatarFallback>
-						</Avatar>
+							<Avatar>
+								<AvatarImage src={state.avatar} />
+								<AvatarFallback>{initials(state.name)}</AvatarFallback>
+							</Avatar>
 						</ItemMedia>
 						<ItemContent>
 							<ItemTitle className="text-fluid-2">{state.name}</ItemTitle>
