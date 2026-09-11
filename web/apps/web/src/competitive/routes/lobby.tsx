@@ -11,7 +11,7 @@ export const Lobby = () => {
 	const [state, setState] = useState({
 		avatar: 'https://lenix.dev/icon.png',
 		name: 'Lenix',
-		status: 'online'
+		status: 'online',
 	} as const)
 
 	const tabs = [
@@ -51,9 +51,10 @@ export const Lobby = () => {
 
 	return <>
 		<div className="w-full h-screen">
-			<div className="w-full h-10/100 flex items-center bg-card">
-				<div className="w-1/5 flex justify-center">FightM</div>
-				<div className="w-3/5 flex justify-center items-center">
+			{/* header */}
+			<div className="w-full h-10/100 flex items-center justify-between px-5xl bg-card">
+				<div className="flex justify-center">FightM</div>
+				<div className="flex justify-center items-center">
 					<p>Q</p>
 					<div className="flex justify-center">
 						{tabs.map(tab => (
@@ -65,7 +66,7 @@ export const Lobby = () => {
 					</div>
 					<p>E</p>
 				</div>
-				<div className="w-1/5">
+				<div>
 					<Item
 						onClick={() => toast('Test')}
 						className={`${buttonVariants({ variant: 'secondary' })} h-full`}
@@ -82,7 +83,10 @@ export const Lobby = () => {
 					</Item>
 				</div>
 			</div>
-			<div className="h-83/100"></div>
+			<div className="h-83/100">
+				
+			</div>
+			{/* footer */}
 			<div className="h-7/100 bg-card flex items-center px-30">
 				{navKbds.map(kbd => (
 					<NavKbd
