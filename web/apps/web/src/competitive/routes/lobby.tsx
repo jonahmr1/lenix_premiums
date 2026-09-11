@@ -2,10 +2,11 @@ import { Button, buttonVariants } from "@workspace/ui/components/button"
 import { useNavigate } from "react-router"
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@workspace/ui/components/item'
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
-import { useState } from "react"
-import { toast } from "@workspace/ui/lib/utils"
+import { useEffect, useState } from "react"
+import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
 import initials from 'initials'
+import { onKeyDown } from "lenix/nui"
 
 export const Lobby = () => {
 	const nav = useNavigate()
@@ -14,6 +15,10 @@ export const Lobby = () => {
 		name: 'Lenix',
 		status: 'online',
 	} as const)
+
+	useEffect(() => {
+		onKeyDown('Escape', handleExit)
+	}, [])
 
 	const tabs = [
 		{
@@ -46,9 +51,14 @@ export const Lobby = () => {
 		{
 			icon: 'Esc',
 			label: 'Exit',
-			onClick: () => {}
+			onClick: () => handleExit()
 		}
 	]
+
+	const handleExit = () => {
+		audiobility.onMouseDown()
+		toast('TODO')
+	}
 
 	return <>
 		<div className="w-full h-screen">
@@ -69,7 +79,7 @@ export const Lobby = () => {
 				</div>
 				<div>
 					<Item
-						onClick={() => toast('Test')}
+						onClick={() => toast('TODO')}
 						className={`${buttonVariants({ variant: 'secondary' })} h-full`}
 					>
 						<ItemMedia variant="icon">
@@ -93,6 +103,7 @@ export const Lobby = () => {
 					<NavKbd
 						icon={kbd.icon}
 						onClick={kbd.onClick}
+						disable='click'
 					>
 						{kbd.label}
 					</NavKbd>
