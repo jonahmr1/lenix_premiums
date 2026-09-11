@@ -4,6 +4,7 @@ import { Item, ItemContent, ItemMedia, ItemTitle } from '@workspace/ui/component
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { useState } from "react"
 import { toast } from "@workspace/ui/lib/utils"
+import { NavKbd } from "@/components/kbd"
 
 export const Lobby = () => {
 	const nav = useNavigate()
@@ -40,9 +41,17 @@ export const Lobby = () => {
 		},
 	]
 
+	const navKbds = [
+		{
+			icon: 'Esc',
+			label: 'Exit',
+			onClick: () => {}
+		}
+	]
+
 	return <>
 		<div className="w-full h-screen">
-			<div className="w-full h-1/10 flex items-center bg-card">
+			<div className="w-full h-10/100 flex items-center bg-card">
 				<div className="w-1/5 flex justify-center">FightM</div>
 				<div className="w-3/5 flex justify-center items-center">
 					<p>Q</p>
@@ -73,8 +82,17 @@ export const Lobby = () => {
 					</Item>
 				</div>
 			</div>
-			<div></div>
-			<div></div>
+			<div className="h-83/100"></div>
+			<div className="h-7/100 bg-card flex items-center px-30">
+				{navKbds.map(kbd => (
+					<NavKbd
+						icon={kbd.icon}
+						onClick={kbd.onClick}
+					>
+						{kbd.label}
+					</NavKbd>
+				))}
+			</div>
 		</div>
 	</>
 }
