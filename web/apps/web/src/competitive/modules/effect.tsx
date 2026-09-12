@@ -8,7 +8,7 @@ import { DEV } from '@/App'
 
 const player = new Howl({
 	src: heartbeat,
-	volume: 0.05
+	volume: 0.1
 })
 
 export const DamageEffect = () => {
