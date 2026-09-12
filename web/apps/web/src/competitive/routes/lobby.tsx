@@ -7,16 +7,22 @@ import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
 import initials from 'initials'
 import { onKeyDown } from "lenix/nui"
+import { DEV } from "@/App"
 
 export const Lobby = () => {
 	const nav = useNavigate()
-	const [state, setState] = useState({
-		avatar: 'https://lenix.dev/icon.png',
-		name: 'Lenix',
-		status: 'online',
-	} as const)
+	const [state, setState] = useState<{
+		avatar: string,
+		name: string,
+	}>()
 
 	useEffect(() => {
+		DEV(() => {
+			setState({
+				avatar: 'https://lenix.dev/icon.png',
+				name: 'Lenix',
+			})
+		}, 'competitive')
 		onKeyDown('Escape', handleExit)
 	}, [])
 
@@ -59,6 +65,8 @@ export const Lobby = () => {
 		audiobility.onMouseDown()
 		toast('TODO')
 	}
+
+	if (!state) return null
 
 	return <>
 		<div className="w-full h-screen">

@@ -16,7 +16,7 @@ export const Game = () => {
 			{/* <Ping /> */}
 			{/* <Hud /> */}
 			{/* <DamageIndicator /> */}
-			<DirectionalIndicator />
+			{/* <DirectionalIndicator /> */}
 		</>
 	)
 }

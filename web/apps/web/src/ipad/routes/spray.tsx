@@ -27,8 +27,8 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 					className={`absolute aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
 					style={{
 						...pixelPosition(zone),
-						height: 1,
-						width: 1
+						height: 10,
+						width: 10
 					}} />
 			))}
 		</div>
