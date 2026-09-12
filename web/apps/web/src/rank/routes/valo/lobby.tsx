@@ -30,6 +30,11 @@ export const Lobby = () => {
 	const [display, setDisplay] = useState<boolean>()
 
 	useEffect(() => {
+		DEV(() => {
+			setDisplay(true)
+			setProfile(FAKE_PROFILE)
+		}, 'rank')
+		
 		const disposes = [
 			onNuiEmit<Competitive.Events['open']>('competitive:open', () => {
 				setDisplay(true)
@@ -51,11 +56,6 @@ export const Lobby = () => {
 	useEffect(() => {
 		if (!display) return
 
-		DEV(() => {
-			setDisplay(true)
-			setProfile(FAKE_PROFILE)
-		}, 'rank')
-
 		setTimeout(async () => {
 			const profile = await fetchNuiServer<Competitive.Requests['getGamerProfile']>('competitive:getGamerProfile', {})
 			setProfile(profile)
@@ -73,8 +73,8 @@ export const Lobby = () => {
 	]
 
 	return (
-		<Layout className='absolute left-1/2 top-1/2 -translate-1/2 w-9/10'>
-			<Layout
+		<div className='absolute left-1/2 top-1/2 -translate-1/2 size-9/10'>
+			<div
 				className='
 					relative
 					isolate
@@ -138,7 +138,7 @@ export const Lobby = () => {
 						{page.element}
 					</div>
 				))}
-			</Layout>
-		</Layout>
+			</div>
+		</div>
 	)
 }

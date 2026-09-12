@@ -43,7 +43,7 @@ export const Credit = () => {
 	]
 
 	return (
-		<Layout className="h-screen bg-background gap-20 justify-evenly py-10">
+		<div className="h-screen flex flex-col items-center bg-background gap-20 justify-evenly py-10">
 			<div className="flex flex-col items-center gap-10 w-full">
 				<p>Designed, Developed and Innovated by</p>
 				<div className="w-1/9 flex flex-col items-center gap-2">
@@ -82,6 +82,6 @@ export const Credit = () => {
 					Back
 				</NavKbd>
 			</div>
-		</Layout>
+		</div>
 	)
 }

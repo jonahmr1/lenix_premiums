@@ -1,7 +1,6 @@
 import { Dot, LogOut, Plus, Target, Trophy } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { rank } from 'config'
-import { Layout } from '@/components/layout'
 import { Button } from '@workspace/valo/components/button'
 import { ToggleGroup, ToggleGroupItem } from '@workspace/valo/components/toggle-group'
 import { Badge } from '@workspace/valo/components/badge'
@@ -137,7 +136,7 @@ export const Play = ({
 
 
 	return (
-		<Layout className='h-full w-full justify-between pt-2'>
+		<div className='h-9/10 w-full flex flex-col items-center justify-between'>
 			<div className='flex flex-col items-center justify-center'>
 				<div className='items-start border-b grid grid-flow-col auto-cols-fr gap-10'>
 					{entries(rank.game_modes).map(([mode]) => (
@@ -324,6 +323,6 @@ export const Play = ({
 					Leave Lobby
 				</Button>
 			</div>
-		</Layout>
+		</div>
 	)
 }
