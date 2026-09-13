@@ -28,7 +28,7 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 			<div className='text-white/70 whitespace-nowrap font-extralight text-[2vmin]'>{callsign}</div>
 		</div>
 		<div className='p-1 flex-1 flex justify-center'>
-			<Separator orientation='vertical' className='h-4 bg-gray-600' />
+			<Separator orientation='vertical' className='h-4' />
 		</div>
 		<div className='flex-8 flex justify-between'>
 			<div className='text-white text-left text-[2vmin] truncate'>{name}</div>
@@ -108,21 +108,21 @@ export const Roster = () => {
 	return (
 		<div
 			inert={!display}
-			className={`absolute top-1/5 right-1/10 w-2/10 h-2/4 flex flex-col overflow-hidden bg-zinc-900 rounded-lg ${display ? 'opacity-100' : 'opacity-0'}`}
+			className={`absolute top-1/5 right-1/10 w-2/10 h-2/4 flex flex-col bg-neutral-950 rounded-md ${display ? 'opacity-100' : 'opacity-0'}`}
 		>
-			<div className='flex-1 min-h-0 px-5 pt-5 flex flex-col gap-3'>
-				<div className='flex flex-col gap-2'>
+			<div className='flex-1 min-h-0 px-5 pt-5 flex flex-col gap-1'>
+				<div className='flex flex-col'>
 					<div className='w-full flex justify-between items-center'>
 						<p className='text-white cursor-default'>Active Officers</p>
-						<div className='flex items-center gap-4'>
+						<div className='flex items-center gap-3'>
 							<div>
-								<Separator orientation='vertical' className='h-4 bg-gray-600' />
+								<Separator orientation='vertical' className='h-4' />
 							</div>
 							<p className='text-white cursor-default'>{Object.entries(officers).length}</p>
 						</div>
 					</div>
 				</div>
-				<Separator className='bg-gray-600' />
+				<Separator />
 				<div className='flex-1 min-h-0 overflow-y-auto scrollbar-none flex flex-col items-center'>
 					{Object.entries(officers).length ? (
 						Object.entries(officers).map(([playerId, officer]) => <Officer key={playerId} {...officer} />)
@@ -135,10 +135,10 @@ export const Roster = () => {
 				</div>
 			</div>
 			{officers[playerId] && (
-				<div className='flex w-full min-w-0 *:flex-1 *:min-w-0 *:rounded-none *:bg-transparent *:text-[1.5vmin] *:border-white/10 *:text-white'>
+				<div className='flex w-full min-w-0 *:flex-1 *:min-w-0 *:bg-transparent *:text-[1.5vmin] *:border-white/10 *:text-white'>
 					<Button
 						variant='outline'
-						className='rounded-bl-lg'
+						className='rounded-none rounded-bl-md'
 						onClick={handleSignin}
 					>
 						{officers[playerId].duty_state === 'off' ? 'Sign-in' : 'Sign-off'}
@@ -156,7 +156,7 @@ export const Roster = () => {
 					</Button>
 					<Button
 						variant='outline'
-						className='rounded-br-lg'
+						className='rounded-none rounded-br-md'
 						onClick={handleCallsign}
 					>
 						Callsign
