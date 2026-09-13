@@ -45,7 +45,7 @@ export const Credit = () => {
 	return (
 		<div className="h-screen flex flex-col items-center bg-background gap-20 justify-evenly py-10">
 			<div className="flex flex-col items-center gap-10 w-full">
-				<p>Designed, Developed and Innovated by</p>
+				<p>Designed, Developed and Produced by</p>
 				<div className="w-1/9 flex flex-col items-center gap-2">
 					<img
 						src={lenixm}
@@ -54,7 +54,7 @@ export const Credit = () => {
 					<p className="text-3xl text-red-600">LenixM</p>
 				</div>
 			</div>
-			<div className="flex flex-col gap-5 w-full">
+			<div className="flex flex-col gap-5 w-full overflow-y-auto">
 				{credits.map(({ names, roles }, i) => (
 					<div key={i} className="flex gap-5">
 						<div className="flex flex-col items-end justify-start flex-1">

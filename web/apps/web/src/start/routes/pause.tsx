@@ -40,7 +40,7 @@ export const Pause = () => {
 	]
 
 	return (
-		<Layout className='h-screen bg-black/50'>
+		<div className='h-screen bg-neutral-950/20'>
 			<Menu buttons={buttons} kbds={[
 				{
 					label: 'Resume',
@@ -49,6 +49,6 @@ export const Pause = () => {
 					onClick: handleEscape
 				}
 			]} />
-		</Layout>
+		</div>
 	)
 }
