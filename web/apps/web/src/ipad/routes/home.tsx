@@ -3,7 +3,7 @@ import { Button } from '@workspace/ui/components/button'
 import { cn } from '@workspace/ui/lib/utils'
 import { Settings } from 'lucide-react'
 import { useNavigate } from 'react-router'
-import { apps } from '../constants'
+import { apps } from '../config'
 
 const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: Omit<AppIcon, 'element'>) => {
 	const nav = useNavigate()

@@ -1,21 +1,39 @@
 import type { Vec2, Vec3 } from "lenix"
+import { maps } from "./constants"
+import { asserts, entries } from "@lenix/lenix"
+
+
+const mapsDimensions = new Map<keyof typeof maps, {
+	width: number
+	height: number
+}>()
+
+for (const [variant, map] of entries(maps)) {
+	const img = new Image()
+	img.src = map
+
+	img.onload = () => mapsDimensions.set(variant, {
+		width: img.naturalWidth,
+		height: img.naturalHeight
+	})
+}
+
+const calibration = [
+	{
+		world: [2599.4819, 2511.7891],
+		pixel: [1534.14, 1339.58]
+	},
+	{
+		world: [487.0760, 6575.9873],
+		pixel: [1052.99, 414.88]
+	},
+	{
+		world: [-2693.6714, 2297.6426],
+		pixel: [329.24, 1389.32]
+	},
+] as const
 
 const calibrate = (axis: 0 | 1) => {
-	const calibration = [
-		{
-			world: [2599.4819, 2511.7891],
-			pixel: [1534.14, 1339.58]
-		},
-		{
-			world: [487.0760, 6575.9873],
-			pixel: [1052.99, 414.88]
-		},
-		{
-			world: [-2693.6714, 2297.6426],
-			pixel: [329.24, 1389.32]
-		},
-	] as const
-	
 	const [p1, p2, p3] = calibration
 	const det =
 		p1.world[0] * (p2.world[1] - p3.world[1]) +
@@ -50,17 +68,15 @@ const calibrate = (axis: 0 | 1) => {
 const [a, b, c] = calibrate(0)
 const [d, e, f] = calibrate(1)
 
-export const pixelPosition = ([X, Y]: Vec2) => {
+export const pixelPosition = ([X, Y]: Vec2, map: keyof typeof maps) => {
 	const pixelX = a * X + b * Y + c
 	const pixelY = d * X + e * Y + f
-	
 
-	const IMAGE_WIDTH = 2048
-	const IMAGE_HEIGHT = 3072
-
+	const dimensions = mapsDimensions.get(map)
+	asserts(dimensions)
 
 	return {
-		left: `${(pixelX / IMAGE_WIDTH) * 100}%`,
-		top: `${(pixelY / IMAGE_HEIGHT) * 100}%`,
+		left: `${(pixelX / dimensions.width) * 100}%`,
+		top: `${(pixelY / dimensions.height) * 100}%`,
 	}
 }

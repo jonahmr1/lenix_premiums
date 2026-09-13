@@ -1,9 +1,10 @@
-import map from '@workspace/ui/assets/ipad/map.jpeg'
 import type { Orientation } from '@/ipad/types'
 import type { Vec2 } from 'lenix'
 import { pixelPosition } from '../utils'
+import { maps } from '../constants'
 
 export const Spray = ({ orientation }: { orientation: Orientation }) => {
+	const mapVariant: keyof typeof maps = 'default'
 	const zones: readonly {
 		styles: string
 		zone: Vec2
@@ -19,17 +20,14 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 	]
 
 	return (
-		<div className='relative size-full overflow-hidden'>
-			<img src={map} className='size-full object-contain' />
+		<div className='relative size-full'>
+			<img src={maps[mapVariant]} className='size-full object-fill' />
 			{zones.map(({ styles, zone }, i) => (
 				<div
 					key={i}
-					className={`absolute aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
-					style={{
-						...pixelPosition(zone),
-						height: 10,
-						width: 10
-					}} />
+					className={`absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
+					style={pixelPosition(zone, mapVariant)}
+				/>
 			))}
 		</div>
 	)
