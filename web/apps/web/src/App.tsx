@@ -5,22 +5,65 @@ import '@workspace/ui/globals.css'
 import { Hud } from './outlaw/hud'
 import { TopScore } from './topscore'
 import { Roster } from './outlaw/roster'
-import { Competitive } from './competitive/App'
 import type { Storage } from './ipad/types'
 import { Button } from '@workspace/ui/components/button'
 import { Moon, Sun } from 'lucide-react'
 import { Ipad } from './ipad/App'
-import { Start } from './start/App'
 import { Rank } from './rank/App'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router'
+import { Toaster } from '@workspace/ui/components/sonner'
+import { Starting } from './start/routes/start'
+import { Credit } from './start/routes/credit'
+import { Lobby } from './competitive/routes/lobby'
+import { Game } from './competitive/routes/game'
+import { useEffect } from 'react'
+import { Pause } from './start/routes/pause'
+import { focus, onNuiEmit } from 'lenix/nui'
+import type { Start } from 'types'
+import { NotFound } from './404'
 
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'roster'
+const dev = 'start'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
+
+const Router = () => {
+	const nav = useNavigate()
+
+	useEffect(() => {
+		DEV(() => nav('/start/'))
+		
+		const disposes = [
+			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
+				nav('/start')
+				focus()
+			}),
+			onNuiEmit<Start.Events['pause']>('start:pause', () => {
+				nav('/start/pause')
+				focus()
+			})
+		]
+
+		return () => {
+			for (const dispose of disposes) dispose()
+		}
+	}, [])
+
+	return (
+		<Routes>
+			<Route path='/*' element={<NotFound />} />
+			<Route path='/start/*' element={<Starting />} />
+			<Route path='/start/credit' element={<Credit />} />
+			<Route path='/start/pause' element={<Pause />} />
+			<Route path='/competitive/*' element={<Lobby />} />
+			<Route path='/competitive/game' element={<Game />} />
+		</Routes>
+	)
+}
 
 export const App = () => {
 	const { theme, toggle } = useTheme()
@@ -41,8 +84,10 @@ export const App = () => {
 					</Button>
 				</>
 			))}
-			<Start />
-			<Competitive />
+			<MemoryRouter>
+				<Router />
+				<Toaster />
+			</MemoryRouter>
 			<Hud />
 			<Roster />
 			<Ipad />

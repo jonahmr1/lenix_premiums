@@ -6,11 +6,9 @@ import { useEffect, useState } from "react"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
 import initials from 'initials'
-import { onKeyDown } from "lenix/nui"
 import { DEV } from "@/App"
 
 export const Lobby = () => {
-	return null
 	const nav = useNavigate()
 	const [state, setState] = useState<{
 		avatar: string,
@@ -18,18 +16,12 @@ export const Lobby = () => {
 	}>()
 
 	useEffect(() => {
-		const disposes = [
-			onKeyDown('Escape', handleExit),
-
-			DEV(() => {
-				setState({
-					avatar: 'https://lenix.dev/icon.png',
-					name: 'Lenix',
-				})
-			}, 'competitive')
-		]
-
-		return () => disposes.forEach(dispose => dispose && dispose())
+		DEV(() => {
+			setState({
+				avatar: 'https://lenix.dev/icon.png',
+				name: 'Lenix',
+			})
+		}, 'competitive')
 	}, [])
 
 	const tabs = [
@@ -63,14 +55,12 @@ export const Lobby = () => {
 		{
 			icon: 'Esc',
 			label: 'Exit',
-			onClick: () => handleExit()
+			onClick: () => {
+				audiobility.onMouseDown()
+				toast('TODO')
+			}
 		}
 	]
-
-	const handleExit = () => {
-		audiobility.onMouseDown()
-		toast('TODO')
-	}
 
 	if (!state) return null
 
@@ -117,7 +107,7 @@ export const Lobby = () => {
 					<NavKbd
 						icon={kbd.icon}
 						onClick={kbd.onClick}
-						disable='click'
+						keybind="Escape"
 					>
 						{kbd.label}
 					</NavKbd>

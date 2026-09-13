@@ -1,7 +1,4 @@
 import { NavKbd } from "@/components/kbd"
-import { Layout } from "@/components/layout"
-import { onKeyDown } from "lenix/nui"
-import { useEffect } from "react"
 import { useNavigate } from "react-router"
 import lenixm from '@workspace/ui/assets/start/lenixm.png'
 
@@ -9,11 +6,6 @@ import lenixm from '@workspace/ui/assets/start/lenixm.png'
 /* TODO: audio, scrollup */
 export const Credit = () => {
 	const nav = useNavigate()
-
-	useEffect(() => {
-		const dispose = onKeyDown('Escape', () => nav(-1))
-		return dispose
-	}, [])
 
 	const credits = [
 		{
@@ -78,6 +70,7 @@ export const Credit = () => {
 				<NavKbd
 					onClick={() => nav(-1)}
 					icon='Esc'
+					keybind="Escape"
 				>
 					Back
 				</NavKbd>

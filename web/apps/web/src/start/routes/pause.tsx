@@ -20,7 +20,7 @@ export const Pause = () => {
 	const handleEscape = (disableClickAudio?: true) => {
 		disableClickAudio !== true && audiobility.onMouseDown()
 		unFocus()
-		nav('/')
+		nav(-1)
 	}
 
 	const buttons: ButtonStart[] = [

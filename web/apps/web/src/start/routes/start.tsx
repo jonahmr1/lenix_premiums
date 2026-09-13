@@ -3,14 +3,13 @@ import bg2 from '@workspace/ui/assets/start/ls-2.png'
 import bg3 from '@workspace/ui/assets/start/ls-3.png'
 import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
-import { fetchNui, fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
+import { fetchNui, fetchNuiServer, onNuiEmit, unFocus } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
-import { useEffect } from "react"
 import type { ButtonStart } from '../types'
 
 const backgrounds = [bg1, bg2, bg3, bg4]
@@ -24,7 +23,7 @@ export const Starting = () => {
 			label: 'Competitive',
 			onClick: () => {
 				fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'competitive' })
-				nav('/')
+				nav('/competitive')
 				unFocus()
 			},
 			disabled: true
@@ -33,7 +32,7 @@ export const Starting = () => {
 			label: 'Outlaw',
 			onClick: () => {
 				fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'outlaw' })
-				nav('/')
+				nav('/outlaw')
 				unFocus()
 			}
 		},
@@ -49,7 +48,7 @@ export const Starting = () => {
 		},
 		{
 			label: 'Credit',
-			onClick: () => nav('/credit')
+			onClick: () => nav('/start/credit')
 		},
 		{
 			label: 'Quit',
