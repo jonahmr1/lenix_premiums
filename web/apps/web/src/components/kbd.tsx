@@ -13,11 +13,12 @@ export const NavKbd = ({ children, icon: Icon, onClick, disable }: {
 			variant='ghost'
 			onClick={onClick}
 			{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
+			className="hover:bg-neutral-900!"
 		>
-			<Kbd className="bg-foreground text-muted rounded-md">
+			<Kbd className="bg-neutral-300 text-neutral-900 rounded-md">
 				{Icon}
 			</Kbd>
-			<span className="font-sans">{children}</span>
+			<span className="font-sans text-neutral-300">{children}</span>
 		</Button>
 	</div>
 )

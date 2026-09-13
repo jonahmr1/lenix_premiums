@@ -10,12 +10,10 @@ import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
-import { ArrowDown, ArrowUp } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const backgrounds = [bg1, bg2, bg3, bg4]
 const image = backgrounds[random(0, backgrounds.length - 1)]
-const keys = ['ArrowUp', 'ArrowDown', 'Enter', 'Escape'] as const
 
 export const Starting = () => {
 	const nav = useNavigate()
@@ -45,7 +43,8 @@ export const Starting = () => {
 		},
 		{
 			label: 'Options',
-			onClick: () => toast.info('Coming soon')
+			onClick: () => toast.info('Coming soon'),
+			styles: 'mt-10'
 		},
 		{
 			label: 'Credit',
@@ -56,54 +55,21 @@ export const Starting = () => {
 			onClick: () => {
 				fetchNuiServer<Start.Requests['exitGame']>('start:exitGame', {})
 			},
-			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50'
+			styles: 'text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50 mt-5'
 		},
 	]
 
 	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
-	const [selected, setSelected] = useState(filteredIndexes[0])
 
 	useEffect(() => {
 		const disposes = [
-			...keys.map(key => (
-				onKeyDown(key, () => {
-					switch (key) {
-						case 'Enter': handleSubmit()
-							break
-
-						case 'Escape': buttons[5].onClick()
-							break
-
-						case 'ArrowDown': handleNav(key)
-							break
-
-						case 'ArrowUp': handleNav(key)
-							break
-
-						default:
-					}
-				})
-			)),
+			onKeyDown('Escape', () => {
+				buttons[5].onClick()
+			})
 		]
 
 		return () => disposes.forEach(dispose => dispose())
-	}, [selected])
-	
-	const handleSubmit = (index?: number) => {
-		const selectedIndex = index ?? selected
-
-		setSelected(selectedIndex)
-		index === undefined && audiobility.onMouseDown()
-		buttons[selectedIndex].onClick()
-	}
-
-	const handleNav = (key: typeof keys[number]) => {
-		const previousSelection = filteredIndexes[filteredIndexes.indexOf(selected) - 1] ?? filteredIndexes[filteredIndexes.length - 1]
-		const nextSelection = filteredIndexes[filteredIndexes.indexOf(selected) + 1] ?? filteredIndexes[0]
-
-		setSelected(key === 'ArrowUp' ? previousSelection : nextSelection)
-		audiobility.onMouseEnter()
-	}
+	}, [])
 
 	return (
 		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-neutral-950/50 to-transparent">
@@ -120,30 +86,14 @@ export const Starting = () => {
 						<Button
 							key={i}
 							variant='default'
-							onClick={() => handleSubmit(i)}
+							onClick={() => button.onClick()}
 							disabled={!filteredIndexes.includes(i)}
-							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white text-shadow-current'}`}
+							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-light text-xl hover:text-neutral-300 cursor-pointer ${button.styles}`}
 							{...audiobility}
 						>{button.label}</Button>
 					))}
 				</div>
-				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-between px-20 py-10'>
-					<div className='flex'>
-						<NavKbd
-							onClick={() => handleNav('ArrowUp')}
-							icon={<ArrowUp />}
-							disable='click'
-						>
-							Previous
-						</NavKbd>
-						<NavKbd
-							onClick={() => handleNav('ArrowDown')}
-							icon={<ArrowDown />}
-							disable='click'
-						>
-							Next
-						</NavKbd>
-					</div>
+				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
 					<NavKbd
 						onClick={() => buttons[5].onClick()}
 						icon='Esc'

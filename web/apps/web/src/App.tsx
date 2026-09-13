@@ -19,7 +19,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'roster'
+const dev = 'start'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 export const App = () => {
@@ -44,8 +44,8 @@ export const App = () => {
 			<Start />
 			<Competitive />
 			<Hud />
-			<Ipad />
 			<Roster />
+			<Ipad />
 			<Rank />
 			<TopScore />
 		</>
