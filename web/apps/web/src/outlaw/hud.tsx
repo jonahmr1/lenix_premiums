@@ -58,7 +58,7 @@ export const Hud = () => {
 			className='w-full rounded flex items-end gap-2.5'
 		>
 			<div className={`relative rounded bg-neutral-600/50 border border-neutral-200`}>
-				<div className='flex items-center justify-center z-1 *:p-1'>
+				<div className='flex items-center justify-center *:p-1'>
 					{variant === 'health'
 					? <FontAwesomeIcon icon={['fas', 'heart']} className='text-neutral-200' />
 					: variant === 'armor'
@@ -66,9 +66,9 @@ export const Hud = () => {
 					: <FontAwesomeIcon icon={['fas', 'lungs']} className='text-neutral-200' />}
 				</div>
 				<div
-					className={`w-full rounded-b absolute bottom-0 bg-neutral-600`}
+					className={`w-full rounded-b absolute bottom-0 bg-neutral-300 -z-1`}
 					style={{
-						height: `${state.health}%`
+						height: `${state[variant]}%`
 					}}
 				/>
 			</div>
@@ -92,14 +92,14 @@ export const Hud = () => {
 	return (
 		<>
 			{/* Vitals */}
-			<Layout className={`absolute bottom-0 left-0 flex gap-2.5 ${hudVariant === 'progress' && 'w-2/7'}`}>
+			<Layout className={`absolute bottom-0 left-0 flex gap-2.5 ${hudVariant === 'progress' && 'w-1/3'}`}>
 				<Bar variant='health' />
 				<Bar variant='armor' />
 				<Bar variant='lungs' />
 			</Layout>
 			{/* Weaponary */}
 			<Layout className='absolute bottom-0 right-0 flex items-start justify-end gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
-				{/* <img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' /> */}
+				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
 				<div className='flex flex-col gap-2 items-end justify-between text-white/75 text-shadow-md'>
 					<div className='flex justify-between'>
 						<div className='flex gap-1 items-start'>
