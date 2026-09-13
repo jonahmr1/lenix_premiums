@@ -2,9 +2,9 @@ import { toggleTheme, useTheme } from '@workspace/ui/hooks/theme'
 import { storage } from '@lenix/lenix'
 
 import '@workspace/ui/globals.css'
-import { Hud } from './hud'
+import { Hud } from './outlaw/hud'
 import { TopScore } from './topscore'
-import { Roster } from './roster'
+import { Roster } from './outlaw/roster'
 import { Competitive } from './competitive/App'
 import type { Storage } from './ipad/types'
 import { Button } from '@workspace/ui/components/button'
@@ -19,7 +19,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'competitive'
+const dev = 'hud'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 export const App = () => {
