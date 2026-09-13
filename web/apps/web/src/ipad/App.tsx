@@ -46,9 +46,9 @@ export const Ipad = () => {
 	return (
 		<div className='absolute-center h-full flex items-center'>
 			<div
-				className={`rounded-xl relative ring-10 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
+				className={`rounded-[1vmin] relative ring-10 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
 			>
-				<div className='relative size-full overflow-hidden rounded-xl'>
+				<div className='relative size-full overflow-hidden rounded-[1vmin]'>
 					<img src={tabletBg} className='absolute size-full invert dark:invert-0'/>
 					<MemoryRouter>
 						<Routes>
@@ -64,7 +64,7 @@ export const Ipad = () => {
 							{apps.map(({ name, element: Element }) => (
 								<Route
 									key={name}
-									path={`/${name}`}
+									path={`/${name.toLowerCase()}`}
 									element={
 										<AppFragment appName={name}>
 											{Element ? <Element /> : <></>}

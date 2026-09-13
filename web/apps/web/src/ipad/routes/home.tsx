@@ -12,10 +12,10 @@ const App = ({ name, styles, disabled, icon: { element: Element, styles: iconSty
 		<div className='text-center'>
 			<Button
 				disabled={disabled}
-				className='size-3xl! p-0 bg-transparent hover:bg-transparent rounded-xl cursor-pointer'
-				onClick={() => nav(`/${name}`)}
+				className='size-3xl! p-0 bg-transparent hover:bg-transparent rounded-[1vmin] cursor-pointer'
+				onClick={() => nav(`/${name.toLowerCase()}`)}
 			>
-				<div className={cn('size-full p-2 rounded-xl', styles)}>
+				<div className={cn('size-full p-2 rounded-[1vmin]', styles)}>
 					<Element className={cn('size-full', iconStyles)} />
 				</div>
 			</Button>

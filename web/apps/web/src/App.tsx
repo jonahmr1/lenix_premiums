@@ -3,7 +3,7 @@ import { storage } from '@lenix/lenix'
 
 import '@workspace/ui/globals.css'
 import { Hud } from './outlaw/hud'
-import { TopScore } from './topscore'
+import { TopScore } from './outlaw/topscore'
 import { Roster } from './outlaw/roster'
 import type { Storage } from './ipad/types'
 import { Button } from '@workspace/ui/components/button'
@@ -28,14 +28,14 @@ import { NotFound } from './404'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'start'
+const dev = 'outlaw'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/start/'))
+		DEV(() => nav('/outlaw'))
 		
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -56,11 +56,16 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/*' element={<NotFound />} />
-			<Route path='/start/*' element={<Starting />} />
+			<Route path='/start' element={<Starting />} />
 			<Route path='/start/credit' element={<Credit />} />
 			<Route path='/start/pause' element={<Pause />} />
-			<Route path='/competitive/*' element={<Lobby />} />
+			<Route path='/competitive' element={<Lobby />} />
 			<Route path='/competitive/game' element={<Game />} />
+			<Route path='/outlaw/*' element={<>
+				<Hud />
+				<Roster />
+				<TopScore />
+			</>} />
 		</Routes>
 	)
 }
@@ -88,11 +93,8 @@ export const App = () => {
 				<Router />
 				<Toaster />
 			</MemoryRouter>
-			<Hud />
-			<Roster />
 			<Ipad />
 			<Rank />
-			<TopScore />
 		</>
 	)
 }

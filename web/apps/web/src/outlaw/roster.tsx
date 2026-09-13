@@ -58,7 +58,7 @@ export const Roster = () => {
 				}
 			})
 			setPlayerId(1)
-		}, 'roster')
+		}, 'outlaw')
 
 		const disposes = [
 			onNuiEmit<Outlaw.Events['displayRoster']>('roster:display', (state, playerId) => {

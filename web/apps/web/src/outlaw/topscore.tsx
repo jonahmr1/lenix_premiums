@@ -102,7 +102,7 @@ export const TopScore = () => {
 					},
 				},
 			})
-		}, 'topscore')
+		}, 'outlaw')
 		
 		const off = onNuiEmit<Outlaw.Events['updateTopscoreData']>('topscore:updateData', setScores)
 

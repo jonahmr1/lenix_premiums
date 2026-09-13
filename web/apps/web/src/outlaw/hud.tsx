@@ -40,7 +40,7 @@ export const Hud = () => {
 			storage.set<Storage>('hudVariant', 'progress')
 
 			return () => clearInterval(interval)
-		}, 'hud')
+		}, 'outlaw')
 
 		const disposes = [
 			onNuiEmit<Outlaw.Events['displayHud']>('hud:display', state => {
