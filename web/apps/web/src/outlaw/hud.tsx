@@ -33,7 +33,7 @@ export const Hud = () => {
 					reserveAmmo: 50
 				}
 			})
-			storage.set<Storage>('hudVariant', 'progress')
+			// storage.set<Storage>('hudVariant', 'progress')
 		}, 'hud')
 
 		const disposes = [
@@ -58,7 +58,7 @@ export const Hud = () => {
 			className='w-full rounded flex items-end gap-2.5'
 		>
 			<div className={`relative rounded bg-neutral-600/50 border border-neutral-200`}>
-				<div className='relative flex items-center justify-center z-1 *:p-1'>
+				<div className='flex items-center justify-center z-1 *:p-1'>
 					{variant === 'health'
 					? <FontAwesomeIcon icon={['fas', 'heart']} className='text-neutral-200' />
 					: variant === 'armor'
@@ -90,28 +90,30 @@ export const Hud = () => {
 	)
 
 	return (
-		<Layout className='absolute bottom-md left-md w-full flex-row justify-between items-end h-[10vh]'>
-			<div className={`flex gap-2.5 ${hudVariant === 'progress' && 'w-2/7'}`}>
+		<>
+			{/* Vitals */}
+			<Layout className={`absolute bottom-0 left-0 flex gap-2.5 ${hudVariant === 'progress' && 'w-2/7'}`}>
 				<Bar variant='health' />
 				<Bar variant='armor' />
 				<Bar variant='lungs' />
-			</div>
-			<div className='flex items-start justify-end h-full gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
-				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
-				<div className='flex flex-col gap-2 items-end justify-between h-full w-1/2 text-white/75 text-shadow-md'>
+			</Layout>
+			{/* Weaponary */}
+			<Layout className='absolute bottom-0 right-0 flex items-start justify-end gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
+				{/* <img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' /> */}
+				<div className='flex flex-col gap-2 items-end justify-between text-white/75 text-shadow-md'>
 					<div className='flex justify-between'>
 						<div className='flex gap-1 items-start'>
 							<p
-								className={`text-fluid-7 inline-block leading-none  ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
+								className={`text-fluid-7 inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
 							<Separator orientation='vertical' className='bg-white/50 h-9/10' />
-							<p className='brightness-75'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
+							<p className='brightness-75 leading-none'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 						</div>
 					</div>
-					<div>{state.weapon.name}</div>
+					<p className='truncate'>{state.weapon.name}</p>
 				</div>
-			</div>
-		</Layout>
+			</Layout>
+		</>			
 	)
 }
