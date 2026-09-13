@@ -19,7 +19,7 @@ const App = ({ name, styles, disabled, icon: { element: Element, styles: iconSty
 					<Element className={cn('size-full', iconStyles)} />
 				</div>
 			</Button>
-			<p className={`${disabled && 'opacity-50'} text-white text-fluid-1.5 font-bold drop-shadow-lg drop-shadow-black`}>{name}</p>
+			<p className={`${disabled && 'opacity-50'} text-foreground text-fluid-1.5 font-bold`}>{name}</p>
 		</div>
 	)
 }
@@ -29,10 +29,10 @@ export const Home = ({ orientation }: { orientation: Storage['orientation'] }) =
 		<div className={`relative grid size-full ${orientation === 'portrait' ? 'grid-cols-4' : 'grid-cols-6'} content-start gap-xl p-xl`}>
 			<App
 				name='Settings'
-				styles='bg-muted'
+				styles='bg-foreground'
 				icon={{
 					element: Settings,
-					styles: 'text-foreground',
+					styles: 'text-muted',
 				}}
 			/>
 			{apps.map(app => (

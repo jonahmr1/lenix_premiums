@@ -21,7 +21,7 @@ export const Settings = ({
 				<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
 					<Field className='flex-row'>
 						<FieldContent>
-							<FieldLabel>Enable landscape orientation</FieldLabel>
+							<FieldLabel>Landscape orientation</FieldLabel>
 						</FieldContent>
 						<Switch
 							defaultChecked={orientation === 'landscape'}
@@ -31,7 +31,7 @@ export const Settings = ({
 					<Separator />
 					<Field className='flex-row'>
 						<FieldContent>
-							<FieldLabel>Turn on light mode</FieldLabel>
+							<FieldLabel>Light mode</FieldLabel>
 						</FieldContent>
 						<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
 					</Field>

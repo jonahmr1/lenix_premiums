@@ -39,8 +39,8 @@ export const Ipad = () => {
 			<div
 				className={`rounded-xl relative ring-10 ring-black h-8/10 w-auto ${orientation === 'portrait' ? 'aspect-3/4' : 'aspect-4/3'}`}
 			>
-				<div className='relative size-full overflow-hidden'>
-					<img src={tabletBg} className='absolute size-full' alt='' />
+				<div className='relative size-full overflow-hidden rounded-xl'>
+					<img src={tabletBg} className='absolute size-full invert dark:invert-0'/>
 					<MemoryRouter>
 						<Routes>
 							<Route path='/' element={<Home orientation={orientation} />} />
@@ -58,7 +58,7 @@ export const Ipad = () => {
 									path={`/${name}`}
 									element={
 										<AppFragment appName={name}>
-											<Element />
+											{Element ? <Element /> : <></>}
 										</AppFragment>
 									}
 								/>
