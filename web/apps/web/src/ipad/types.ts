@@ -7,7 +7,7 @@ export interface AppIcon {
 		element: LucideIcon
 		styles: string
 	}
-	element: (props: { orientation: Orientation }) => React.JSX.Element
+	element: () => React.JSX.Element
 }
 
 export interface Storage {

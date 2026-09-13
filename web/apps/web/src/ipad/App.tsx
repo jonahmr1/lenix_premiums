@@ -58,7 +58,7 @@ export const Ipad = () => {
 									path={`/${name}`}
 									element={
 										<AppFragment appName={name}>
-											<Element orientation={orientation} />
+											<Element />
 										</AppFragment>
 									}
 								/>

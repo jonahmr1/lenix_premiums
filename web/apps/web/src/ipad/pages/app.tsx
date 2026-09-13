@@ -29,7 +29,7 @@ export const Index = ({ appName, children }: { appName: string; children: React.
 			</div>
 			<Separator className='bg-muted-foreground' />
 			<div className='bg-card size-full overflow-hidden'>
-				<div className='size-full'>{children}</div>
+				<div className='size-full relative flex items-center'>{children}</div>
 			</div>
 		</div>
 	)
