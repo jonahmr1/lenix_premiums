@@ -173,6 +173,7 @@ export namespace Outlaw {
 		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
 		displayRoster: Event<'roster:display', [boolean, number]>
 		updateTopscoreData: Event<'topscore:updateData', [Topscore.Data | null]>
+		displayIpad: Event<'ipad:display', []>
 	}
 
 	export interface Requests {

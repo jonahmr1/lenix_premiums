@@ -8,8 +8,9 @@ import type { Orientation, Storage } from '@/ipad/types'
 import { apps } from './config'
 import veritcalBg from '@workspace/ui/assets/ipad/portrait.jpg'
 import horizontalBg from '@workspace/ui/assets/ipad/landscape.jpg'
-import { Layout } from '@/components/layout'
 import { DEV } from '@/App'
+import { onKeyDown, onNuiEmit } from 'lenix/nui'
+import type { Outlaw } from 'types'
 
 const AppFragment = ({ appName, children }: { appName: string; children: React.ReactNode }) => (
 	<div className='relative z-10 flex size-full bg-background rounded-xl overflow-hidden'>
@@ -30,6 +31,14 @@ export const Ipad = () => {
 
 	useEffect(() => {
 		DEV(() => setDisplay(true), 'ipad')
+
+		const disposes = [
+			onNuiEmit<Outlaw.Events['displayIpad']>('ipad:display', () => setDisplay(true)),
+
+			onKeyDown('Escape', () => setDisplay(false))
+		]
+
+		return () => disposes.forEach(dispose => dispose())
 	}, [])
 
 	if (!display) return null
