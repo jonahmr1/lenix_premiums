@@ -52,6 +52,7 @@
 	--radius-4xl: calc(var(--radius) * 2.6);
 	--font-sans: 'Oxanium Variable', sans-serif;
 	
+	--color-light: var(--color-neutral-300);
 
 	--spacing-2xs: 0.5vmin;
 	--spacing-xs: 1vmin;
@@ -186,11 +187,9 @@
 .shine-sm {
 	@apply shadow-[0_0_2px_currentColor]
 }
-
 .shine-md {
 	@apply shadow-[0_0_4px_currentColor]
 }
-
 .shine-lg {
 	@apply shadow-[0_0_6px_currentColor]
 }
