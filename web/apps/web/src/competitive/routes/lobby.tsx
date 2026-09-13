@@ -10,6 +10,7 @@ import { onKeyDown } from "lenix/nui"
 import { DEV } from "@/App"
 
 export const Lobby = () => {
+	return null
 	const nav = useNavigate()
 	const [state, setState] = useState<{
 		avatar: string,
@@ -17,13 +18,18 @@ export const Lobby = () => {
 	}>()
 
 	useEffect(() => {
-		DEV(() => {
-			setState({
-				avatar: 'https://lenix.dev/icon.png',
-				name: 'Lenix',
-			})
-		}, 'competitive')
-		onKeyDown('Escape', handleExit)
+		const disposes = [
+			onKeyDown('Escape', handleExit),
+
+			DEV(() => {
+				setState({
+					avatar: 'https://lenix.dev/icon.png',
+					name: 'Lenix',
+				})
+			}, 'competitive')
+		]
+
+		return () => disposes.forEach(dispose => dispose && dispose())
 	}, [])
 
 	const tabs = [
