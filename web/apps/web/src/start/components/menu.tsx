@@ -74,7 +74,7 @@ export const Menu = ({ buttons, kbds }: {
 							variant='default'
 							onClick={() => handleSubmit(i)}
 							disabled={!filteredIndexes.includes(i)}
-							className={`bg-transparent hover:bg-transparent text-shadow-xs text-shadow-white/50 uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white text-shadow-current'}`}
+							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-white/33 text-xl hover:text-white/66 cursor-pointer ${button.styles} ${selected === i && 'text-white text-shadow-current'}`}
 							{...audiobility}
 						>{button.label}</Button>
 					))}
