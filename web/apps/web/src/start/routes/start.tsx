@@ -62,16 +62,6 @@ export const Starting = () => {
 
 	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
 
-	useEffect(() => {
-		const disposes = [
-			onKeyDown('Escape', () => {
-				buttons[buttons.length - 1].onClick()
-			})
-		]
-
-		return () => disposes.forEach(dispose => dispose())
-	}, [])
-
 	return (
 		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-neutral-950/50 to-transparent">
 			<img
@@ -97,6 +87,7 @@ export const Starting = () => {
 				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
 					<NavKbd
 						onClick={() => buttons[buttons.length - 1].onClick()}
+						keybind='Escape'
 						icon='Esc'
 					>
 						{buttons[buttons.length - 1].label}

@@ -58,6 +58,7 @@ export const Pause = () => {
 				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
 					<NavKbd
 						onClick={() => buttons[buttons.length - 1].onClick()}
+						keybind="Escape"
 						icon='Esc'
 					>
 						{buttons[buttons.length - 1].label}
