@@ -1,6 +1,6 @@
-import { Kbd } from "../../../../packages/ui/src/components/kbd";
-import { Button } from "../../../../packages/ui/src/components/button";
-import { audiobility } from "../../../../packages/ui/src/lib/utils";
+import { Button } from "@workspace/ui/components/button"
+import { Kbd } from "@workspace/ui/components/kbd"
+import { audiobility } from "@workspace/ui/lib/utils"
 
 export const NavKbd = ({ children, icon: Icon, onClick, disable }: {
 	children: React.ReactNode
@@ -14,7 +14,7 @@ export const NavKbd = ({ children, icon: Icon, onClick, disable }: {
 			onClick={onClick}
 			{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
 		>
-			<Kbd className="bg-foreground text-muted">
+			<Kbd className="bg-foreground text-muted rounded-md">
 				{Icon}
 			</Kbd>
 			<span className="font-sans">{children}</span>
