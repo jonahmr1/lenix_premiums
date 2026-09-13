@@ -5,12 +5,13 @@ import { Settings } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { apps } from '../config'
 
-const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: Omit<AppIcon, 'element'>) => {
+const App = ({ name, styles, disabled, icon: { element: Element, styles: iconStyles } }: Omit<AppIcon, 'element'>) => {
 	const nav = useNavigate()
 
 	return (
 		<div className='text-center'>
 			<Button
+				disabled={disabled}
 				className='size-3xl! p-0 bg-transparent hover:bg-transparent rounded-xl cursor-pointer'
 				onClick={() => nav(`/${name}`)}
 			>
@@ -18,7 +19,7 @@ const App = ({ name, styles, icon: { element: Element, styles: iconStyles } }: O
 					<Element className={cn('size-full', iconStyles)} />
 				</div>
 			</Button>
-			<p className='text-white text-fluid-1.5 font-bold drop-shadow-lg drop-shadow-black'>{name}</p>
+			<p className={`${disabled && 'opacity-50'} text-white text-fluid-1.5 font-bold drop-shadow-lg drop-shadow-black`}>{name}</p>
 		</div>
 	)
 }

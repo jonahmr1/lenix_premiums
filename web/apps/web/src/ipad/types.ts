@@ -7,7 +7,8 @@ export interface AppIcon {
 		element: LucideIcon
 		styles: string
 	}
-	element: () => React.JSX.Element
+	element?: () => React.JSX.Element
+	disabled?: true
 }
 
 export interface Storage {

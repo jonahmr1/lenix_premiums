@@ -10,7 +10,7 @@ export const apps: AppIcon[] = [
 			element: Skull,
 			styles: 'text-blue-500',
 		},
-		element: Spray,
+		disabled: true
 	},
 	{
 		name: 'Leaderboard',
@@ -19,7 +19,7 @@ export const apps: AppIcon[] = [
 			element: Trophy,
 			styles: 'text-yellow-500',
 		},
-		element: Spray,
+		disabled: true
 	},
 	{
 		name: 'Sprays War',
@@ -37,6 +37,6 @@ export const apps: AppIcon[] = [
 			element: HandFist,
 			styles: 'text-green-500',
 		},
-		element: Spray,
+		disabled: true
 	},
 ]
