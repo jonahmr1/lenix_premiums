@@ -47,7 +47,7 @@ export const Starting = () => {
 			onClick: () => nav('/credit')
 		},
 		{
-			label: 'Exit Game',
+			label: 'Quit',
 			onClick: () => {
 				fetchNuiServer<Start.Requests['exitGame']>('start:exitGame', {})
 			},
@@ -56,7 +56,7 @@ export const Starting = () => {
 	]
 
 	return (
-		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-black/50 to-transparent">
+		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-neutral-950/50 to-transparent">
 			<img
 				src={image}
 				className="absolute -z-1 size-full object-cover"
