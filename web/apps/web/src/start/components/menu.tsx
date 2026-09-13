@@ -67,7 +67,7 @@ export const Menu = ({ buttons, kbds }: {
 	return (
 		<div className="flex size-full">
 			<div className="w-1/3 h-full bg-linear-to-r from-black/50 to-transparent">
-				<div className="w-full flex flex-col gap-5 items-start px-25 h-full justify-center">
+				<div className="w-full flex flex-col gap-5 items-start px-25 h-8/10 justify-center">
 					{buttons.map((button, i) => (
 						<Button
 							key={i}
@@ -79,33 +79,33 @@ export const Menu = ({ buttons, kbds }: {
 						>{button.label}</Button>
 					))}
 				</div>
-			</div>
-			<KbdGroup className="flex size-full items-end justify-end px-20 py-10 text-sm gap-3">
-				<NavKbd
-					onClick={() => handleNav('ArrowUp')}
-					icon={<ArrowUp />}
-					disable='click'
-				>
-					Previous
-				</NavKbd>
-				<NavKbd
-					onClick={() => handleNav('ArrowDown')}
-					icon={<ArrowDown />}
-					disable='click'
-				>
-					Next
-				</NavKbd>
-				{kbds?.map((kbd, i) => (
+				<KbdGroup className="flex h-2/10 w-full items-end justify-start px-20 py-10 text-sm gap-3">
 					<NavKbd
-						key={i}
-						onClick={kbd.onClick}
-						icon={kbd.icon}
-						disable={kbd.disable}
+						onClick={() => handleNav('ArrowUp')}
+						icon={<ArrowUp />}
+						disable='click'
 					>
-						{kbd.label}
+						Previous
 					</NavKbd>
-				))}
-			</KbdGroup>
+					<NavKbd
+						onClick={() => handleNav('ArrowDown')}
+						icon={<ArrowDown />}
+						disable='click'
+					>
+						Next
+					</NavKbd>
+					{kbds?.map((kbd, i) => (
+						<NavKbd
+							key={i}
+							onClick={kbd.onClick}
+							icon={kbd.icon}
+							disable={kbd.disable}
+						>
+							{kbd.label}
+						</NavKbd>
+					))}
+				</KbdGroup>
+			</div>
 		</div>
 	)
 }
