@@ -30,7 +30,8 @@ export const Pause = () => {
 		},
 		{
 			label: 'Options',
-			onClick: () => toast.info('Coming soon')
+			onClick: () => toast.info('Coming soon'),
+			styles: 'mt-10'
 		},
 		{
 			label: 'Leave',

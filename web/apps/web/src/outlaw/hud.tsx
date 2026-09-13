@@ -80,11 +80,11 @@ export const Hud = () => {
 				/>
 			</div>
 			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5'>
-				<p className='text-fluid-1.5 leading-3 text-light'>{state[variant]}%</p>
+				<p className='text-fluid-1.5 leading-3 text-neutral-200'>{state[variant]}%</p>
 				<div className='w-full h-2/3 p-px border border-neutral-400 rounded-md items-center justify-center flex bg-light/30'>
 					<div className='size-full bg-neutral-400/80 rounded-md relative overflow-hidden'>
 						<div
-							className='h-full w-0 bg-light'
+							className='h-full w-0 bg-neutral-200'
 							style={{
 								width: `${variant === 'health' ? state.health : state.armor}%`
 							}}
