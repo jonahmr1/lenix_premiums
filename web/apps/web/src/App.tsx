@@ -41,13 +41,13 @@ export const App = () => {
 					</Button>
 				</>
 			))}
+			<Start />
+			<Competitive />
 			<Hud />
 			<Ipad />
-			<Start />
+			<Roster />
 			<Rank />
 			<TopScore />
-			<Roster />
-			<Competitive />
 		</>
 	)
 }

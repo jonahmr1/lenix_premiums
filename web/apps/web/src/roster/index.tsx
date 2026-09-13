@@ -15,8 +15,8 @@ const TalkStates: Record<IRoster.TalkState, string> = {
 }
 
 const DutyStates: Record<IRoster.DutyState, string> = {
-	on: 'bg-green-500',
-	off: 'bg-red-500',
+	on: 'bg-green-500 text-green-500',
+	off: 'bg-red-500 text-red-500',
 	break: 'bg-orange-500 text-orange-500',
 }
 
@@ -52,7 +52,7 @@ export const Roster = () => {
 					playerId: 1,
 					name: 'Marwan Jonah',
 					callsign: 'D-35',
-					duty_state: 'break',
+					duty_state: 'on',
 					talk_state: 'off'
 				}
 			})
@@ -112,9 +112,9 @@ export const Roster = () => {
 	return (
 		<div
 			inert={!display}
-			className={`absolute top-1/5 right-1/10 w-2/10 h-2/4 border flex flex-col bg-background rounded-md ${display ? 'opacity-100' : 'opacity-0'}`}
+			className={`absolute top-1/5 right-1/10 w-2/10 h-2/5 border flex flex-col bg-background rounded-md ${display ? 'opacity-100' : 'opacity-0'}`}
 		>
-			<div className='flex-1 min-h-0 px-5 pt-5 flex flex-col gap-1'>
+			<div className='flex-1 min-h-0 px-3 pt-3 flex flex-col gap-1'>
 				<div className='flex flex-col'>
 					<div className='w-full flex justify-between items-center'>
 						<p className='text-foreground cursor-default text-fluid-2 uppercase font-bold'>Active Officers</p>
@@ -139,13 +139,13 @@ export const Roster = () => {
 				</div>
 			</div>
 			<Separator />
-			<div className='flex w-full min-w-0 p-2 gap-2 *:flex-1 *:min-w-0 *:bg-muted *:text-[1.2vmin] *:border'>
+			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-muted *:text-[1.2vmin] *:border'>
 				<Button
 					variant='outline'
 					className='rounded-md text-text'
 					onClick={handleSignin}
 				>
-					<FontAwesomeIcon icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
+					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
 					{dutyState === 'off' ? 'Sign-in' : 'Sign-off'}
 				</Button>
 				<Button
@@ -153,7 +153,7 @@ export const Roster = () => {
 					className='rounded-md text-text'
 					onClick={handleBreak}
 				>
-					<FontAwesomeIcon icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
+					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
 					{dutyState === 'on'
 						? 'Take Break'
 						: dutyState === 'off'
@@ -165,7 +165,7 @@ export const Roster = () => {
 					className='rounded-md text-text'
 					onClick={handleCallsign}
 				>
-					<FontAwesomeIcon icon={['far', 'id-badge']} />
+					<FontAwesomeIcon className='text-fluid-1.5' icon={['far', 'id-badge']} />
 					Callsign
 				</Button>
 			</div>
