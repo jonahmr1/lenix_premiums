@@ -20,15 +20,17 @@ export const Spray = ({ orientation }: { orientation: Orientation }) => {
 	]
 
 	return (
-		<div className='relative size-full'>
-			<img src={maps[mapVariant]} className='size-full object-fill' />
-			{zones.map(({ styles, zone }, i) => (
-				<div
-					key={i}
-					className={`absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
-					style={pixelPosition(zone, mapVariant)}
-				/>
-			))}
+		<div className={`absolute`}>
+			<div className='relative'>
+				<img src={maps[mapVariant]} className='size-full' />
+				{zones.map(({ styles, zone }, i) => (
+					<div
+						key={i}
+						className={`absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full ${styles} opacity-80`}
+						style={pixelPosition(zone, mapVariant)}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }

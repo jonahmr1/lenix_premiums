@@ -14,26 +14,28 @@ export const Settings = ({
 }) => {
 	const { theme, toggle } = useTheme()
 	return (
-		<div className='p-10 gap-3 flex flex-col'>
-			<h1>Appearance</h1>
-			<Separator />
-			<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
-				<Field className='flex-row'>
-					<FieldContent>
-						<FieldLabel>Enable landscape orientation</FieldLabel>
-					</FieldContent>
-					<Switch
-						defaultChecked={orientation === 'landscape'}
-						onCheckedChange={value => setOrientation(value ? 'landscape' : 'portrait')}
-					/>
-				</Field>
+		<div className='size-full'>
+			<div className='p-10 gap-3 flex flex-col'>
+				<h1>Appearance</h1>
 				<Separator />
-				<Field className='flex-row'>
-					<FieldContent>
-						<FieldLabel>Turn on light mode</FieldLabel>
-					</FieldContent>
-					<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
-				</Field>
+				<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
+					<Field className='flex-row'>
+						<FieldContent>
+							<FieldLabel>Enable landscape orientation</FieldLabel>
+						</FieldContent>
+						<Switch
+							defaultChecked={orientation === 'landscape'}
+							onCheckedChange={value => setOrientation(value ? 'landscape' : 'portrait')}
+						/>
+					</Field>
+					<Separator />
+					<Field className='flex-row'>
+						<FieldContent>
+							<FieldLabel>Turn on light mode</FieldLabel>
+						</FieldContent>
+						<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
+					</Field>
+				</div>
 			</div>
 		</div>
 	)
