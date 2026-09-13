@@ -34,7 +34,7 @@ export const App = () => {
 						className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
 					/>
 					<Button
-						className='absolute bottom-5 left-5'
+						className='absolute bottom-5 left-5 z-1'
 						onClick={toggle}
 					>
 						{theme === 'dark' ? <Sun /> : <Moon />}

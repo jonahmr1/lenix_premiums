@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
 import type { Outlaw } from 'types'
-import { storage } from '@lenix/lenix'
+import { random, storage } from '@lenix/lenix'
 import type { Storage } from '@/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -19,21 +19,27 @@ export const Hud = () => {
 	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 	useEffect(() => {
-		DEV(() => {
+		const dispose = DEV(() => {
 			setDisplay({ vitals: true, weaponary: true })
-			setState({
-				health: 10,
-				armor: 50,
-				lungs: 50,
-				weapon: {
-					name: 'Glock 17',
-					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-					clipAmmo: 9,
-					clipSize: 17,
-					reserveAmmo: 50
-				}
-			})
-			// storage.set<Storage>('hudVariant', 'progress')
+			
+			const interval = setInterval(() => {
+				setState({
+					health: random(0, 100),
+					armor: random(0, 100),
+					lungs: random(0, 100),
+					weapon: {
+						name: 'Glock 17',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
+						clipAmmo: 9,
+						clipSize: 17,
+						reserveAmmo: 50
+					}
+				})
+			}, 1000)
+
+			storage.set<Storage>('hudVariant', 'progress')
+
+			return () => clearInterval(interval)
 		}, 'hud')
 
 		const disposes = [
@@ -48,6 +54,7 @@ export const Hud = () => {
 		return () => {
 			disposes.forEach(dispose => dispose())
 			storage.destroy<Storage>('hudVariant')
+			dispose && dispose()
 		}
 	}, [])
 
@@ -55,29 +62,29 @@ export const Hud = () => {
 
 	const Bar = ({ variant }: { variant: 'health' | 'armor' | 'lungs' }) => (
 		<div
-			className='w-full rounded flex items-end gap-2.5'
+			className='w-full rounded-md flex items-end gap-2.5'
 		>
-			<div className={`relative rounded bg-neutral-600/50 border border-neutral-200`}>
-				<div className='flex items-center justify-center *:p-1'>
+			<div className={`relative rounded-md bg-neutral-600/50 border border-neutral-200`}>
+				<div className='flex items-center justify-center *:z-1 *:p-1 *:text-neutral-100 *:drop-shadow *:drop-shadow-neutral-400/50'>
 					{variant === 'health'
-					? <FontAwesomeIcon icon={['fas', 'heart']} className='text-neutral-200' />
+					? <FontAwesomeIcon icon={['fas', 'heart']} />
 					: variant === 'armor'
-					? <FontAwesomeIcon icon={['fas', 'shield']} className='text-neutral-200' />
-					: <FontAwesomeIcon icon={['fas', 'lungs']} className='text-neutral-200' />}
+					? <FontAwesomeIcon icon={['fas', 'shield']} />
+					: <FontAwesomeIcon icon={['fas', 'lungs']} />}
 				</div>
 				<div
-					className={`w-full rounded-b absolute bottom-0 bg-neutral-300 -z-1`}
+					className={`w-full rounded-b-md absolute bottom-0 bg-light`}
 					style={{
 						height: `${state[variant]}%`
 					}}
 				/>
 			</div>
 			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5'>
-				<p className='text-fluid-1.5 leading-3'>{state[variant]}%</p>
-				<div className='w-full h-2/3 border border-foreground/50 rounded-xs items-center justify-center flex bg-foreground/20'>
-					<div className='w-96/100 h-2/3 bg-neutral-400/30 rounded-[1px] relative overflow-hidden'>
+				<p className='text-fluid-1.5 leading-3 text-light'>{state[variant]}%</p>
+				<div className='w-full h-2/3 p-px border border-neutral-400 rounded-md items-center justify-center flex bg-light/30'>
+					<div className='size-full bg-neutral-400/80 rounded-md relative overflow-hidden'>
 						<div
-							className={`filled h-full transition-all w-0 bg-neutral-400`}
+							className='h-full w-0 bg-light'
 							style={{
 								width: `${variant === 'health' ? state.health : state.armor}%`
 							}}
