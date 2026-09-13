@@ -11,6 +11,7 @@ import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
 import { useEffect } from "react"
+import type { ButtonStart } from '../types'
 
 const backgrounds = [bg1, bg2, bg3, bg4]
 const image = backgrounds[random(0, backgrounds.length - 1)]
@@ -18,7 +19,7 @@ const image = backgrounds[random(0, backgrounds.length - 1)]
 export const Starting = () => {
 	const nav = useNavigate()
 
-	const buttons = [
+	const buttons: ButtonStart[] = [
 		{
 			label: 'Competitive',
 			onClick: () => {
@@ -64,7 +65,7 @@ export const Starting = () => {
 	useEffect(() => {
 		const disposes = [
 			onKeyDown('Escape', () => {
-				buttons[5].onClick()
+				buttons[buttons.length - 1].onClick()
 			})
 		]
 
@@ -95,11 +96,10 @@ export const Starting = () => {
 				</div>
 				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
 					<NavKbd
-						onClick={() => buttons[5].onClick()}
+						onClick={() => buttons[buttons.length - 1].onClick()}
 						icon='Esc'
-						disable='click'
 					>
-						Quit
+						{buttons[buttons.length - 1].label}
 					</NavKbd>
 				</KbdGroup>
 			</div>
