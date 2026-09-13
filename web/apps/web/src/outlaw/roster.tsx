@@ -8,6 +8,7 @@ import { Separator } from '@workspace/ui/components/separator'
 import { Badge } from '@workspace/ui/components/badge'
 import { Button } from '@workspace/ui/components/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { audiobility } from '@workspace/ui/lib/utils'
 
 const TalkStates: Record<IRoster.TalkState, string> = {
 	on: 'text-blue-400',
@@ -144,6 +145,7 @@ export const Roster = () => {
 					variant='secondary'
 					className='rounded-md'
 					onClick={handleSignin}
+					{...audiobility}
 				>
 					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
 					{dutyState === 'off' ? 'Sign-in' : 'Sign-off'}
@@ -152,6 +154,7 @@ export const Roster = () => {
 					variant='secondary'
 					className='rounded-md'
 					onClick={handleBreak}
+					{...audiobility}
 				>
 					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
 					{dutyState === 'on'
@@ -164,6 +167,7 @@ export const Roster = () => {
 					variant='secondary'
 					className='rounded-md'
 					onClick={handleCallsign}
+					{...audiobility}
 				>
 					<FontAwesomeIcon className='text-fluid-1.5' icon={['far', 'id-badge']} />
 					Callsign
