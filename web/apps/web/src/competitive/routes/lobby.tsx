@@ -1,5 +1,5 @@
 import { Button, buttonVariants } from "@workspace/ui/components/button"
-import { useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@workspace/ui/components/item'
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
 import { useEffect, useState } from "react"
@@ -10,6 +10,8 @@ import { DEV } from "@/App"
 
 export const Lobby = () => {
 	const nav = useNavigate()
+	const { pathname } = useLocation()
+
 	const [state, setState] = useState<{
 		avatar: string,
 		name: string,
@@ -27,22 +29,22 @@ export const Lobby = () => {
 	const tabs = [
 		{
 			label: 'Play',
-			to: '/',
+			to: '/lobby',
 		},
 		{
 			label: 'Arsenal',
 			to: '/',
-			disabled: true
+			// disabled: true
 		},
 		{
 			label: 'Operator',
 			to: '/',
-			disabled: true
+			// disabled: true
 		},
 		{
 			label: 'Battlepass',
 			to: '/',
-			disabled: true
+			// disabled: true
 		},
 		{
 			label: 'Store',
@@ -67,15 +69,18 @@ export const Lobby = () => {
 	return <>
 		<div className="w-full h-screen">
 			{/* header */}
-			<div className="w-full h-10/100 flex items-center justify-between px-5xl bg-card">
+			<div className="w-full h-10/100 flex items-center justify-between px-5xl">
 				<div className="flex justify-center">FightM</div>
-				<div className="flex justify-center items-center">
+				<div className="flex justify-center items-center gap-md">
 					<p>Q</p>
 					<div className="flex justify-center">
-						{tabs.map(tab => (
+						{tabs.map((tab, i) => (
 							<Button
+								key={i}
 								disabled={tab.disabled}
-								onClick={() => nav(tab.to)}	
+								onClick={() => nav(`/competitive${tab.to}`)}	
+								variant={`/competitive${tab.to}` === pathname ? 'default' : 'secondary'}
+								className="w-[15vmin]"
 							>{tab.label}</Button>
 						))}
 					</div>
@@ -102,9 +107,10 @@ export const Lobby = () => {
 				
 			</div>
 			{/* footer */}
-			<div className="h-7/100 bg-card flex items-center px-30">
-				{navKbds.map(kbd => (
+			<div className="h-7/100 flex items-center px-30">
+				{navKbds.map((kbd, i) => (
 					<NavKbd
+						key={i}
 						icon={kbd.icon}
 						onClick={kbd.onClick}
 						keybind="Escape"

@@ -29,14 +29,14 @@ import { Options } from './start/routes/options'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'start'
+const dev = 'competitive'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/start/'))
+		DEV(() => nav('/start/options'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -61,7 +61,7 @@ const Router = () => {
 			<Route path='/start/credit' element={<Credit />} />
 			<Route path='/start/pause' element={<Pause />} />
 			<Route path='/start/options' element={<Options />} />
-			<Route path='/competitive' element={<Lobby />} />
+			<Route path='/competitive/lobby' element={<Lobby />} />
 			<Route path='/competitive/game' element={<Game />} />
 			<Route path='/outlaw' element={<>
 				<Hud />
@@ -84,7 +84,7 @@ export const App = () => {
 						className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
 					/>
 					<Button
-						className='absolute bottom-5 left-5 z-1'
+						className='absolute bottom-5 left-5 z-1 hiddenx'
 						onClick={toggle}
 					>
 						{theme === 'dark' ? <Sun /> : <Moon />}
