@@ -30,7 +30,7 @@ export const Pause = () => {
 		},
 		{
 			label: 'Options',
-			onClick: () => toast.info('Coming soon'),
+			onClick: () => nav('/start/options'),
 			styles: 'mt-10'
 		},
 		{
@@ -58,11 +58,11 @@ export const Pause = () => {
 				</div>
 				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
 					<NavKbd
-						onClick={() => buttons[buttons.length - 1].onClick()}
+						onClick={() => buttons[0].onClick()}
 						keybind="Escape"
 						icon='Esc'
 					>
-						{buttons[buttons.length - 1].label}
+						{buttons[0].label}
 					</NavKbd>
 				</KbdGroup>
 			</div>

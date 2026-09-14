@@ -9,9 +9,11 @@ import { DEV } from "@/App"
 import { PreviousButton, NextButton } from "@/components/nav"
 import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
 import type { Tab } from "@/types"
+import { useNavigate } from "react-router"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
+	const nav = useNavigate()
 
 	const [state, setState] = useState<{
 		avatar: string,
@@ -47,17 +49,6 @@ export const Lobby = () => {
 			label: 'Store',
 			disabled: true
 		},
-	]
-
-	const navKbds = [
-		{
-			icon: 'Esc',
-			label: 'Exit',
-			onClick: () => {
-				audiobility.onMouseDown()
-				toast('TODO')
-			}
-		}
 	]
 
 	if (!state) return null
@@ -125,16 +116,16 @@ export const Lobby = () => {
 			</Tabs>
 			{/* footer */}
 			<div className="h-7/100 flex items-center px-30">
-				{navKbds.map((kbd, i) => (
-					<NavKbd
-						key={i}
-						icon={kbd.icon}
-						onClick={kbd.onClick}
-						keybind="Escape"
-					>
-						{kbd.label}
-					</NavKbd>
-				))}
+				<NavKbd
+					icon='Esc'
+					onClick={() => {
+						audiobility.onMouseDown()
+						nav('/start/pause')
+					}}
+					keybind="Escape"
+				>
+					Exit
+				</NavKbd>
 			</div>
 		</div>
 	</>
