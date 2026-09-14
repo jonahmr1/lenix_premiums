@@ -59,7 +59,7 @@ export const Options = () => {
 
 
 	return (
-		<Layout className="h-screen w-full flex flex-col bg-background gap-sm">
+		<Layout className="h-screen w-full flex flex-col gap-sm">
 			<h1 className="uppercase text-fluid-9">Options</h1>
 			<div className="flex justify-center *:text-fluid-2 size-full">
 				<PreviousButton
