@@ -8,10 +8,33 @@ const Preview = () => (
 	<p className="text-fluid-5">...</p>
 )
 
-const tabs = [
+const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 	{
-		label: 'Settings',
-		content: <Preview />
+		label: 'General',
+	},
+	{
+		label: 'Graphics',
+	},
+	{
+		label: 'Advanced Graphics',
+	},
+	{
+		label: 'Keybinds',
+	},
+	{
+		label: 'Display',
+	},
+	{
+		label: 'Audio',
+	},
+	{
+		label: 'Camera',
+	},
+	{
+		label: 'Keyboard / Mouse',
+	},
+	{
+		label: 'Gamepad',
 	},
 	{
 		label: 'Brief',
@@ -23,7 +46,7 @@ const tabs = [
 	},
 	{
 		label: 'Gallery',
-		// disabled: true
+		disabled: true
 	},
 	{
 		label: 'Editor',
@@ -68,12 +91,12 @@ export const Options = () => {
 				onValueChange={$ => setState(Number($))}
 				className="size-full"
 			>
-				<TabsList className="bg-transparent w-full p-0 gap-md">
+				<TabsList className="bg-transparent w-full p-0 gap-xs">
 					{tabs.map((tab, i) => (
 						<TabsTrigger
 							key={i}
 							disabled={tab.disabled}
-							className="uppercase text-[2.5vmin] h-full bg-background text-foreground! hover:opacity-80 m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
+							className="uppercase text-[2vmin] h-full bg-background text-foreground! hover:opacity-80 m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
 						>{tab.label}</TabsTrigger>
 					))}
 				</TabsList>
