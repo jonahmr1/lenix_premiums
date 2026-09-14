@@ -70,7 +70,9 @@ export const Lobby = () => {
 		<div className="w-full h-screen">
 			{/* header */}
 			<div className="w-full h-10/100 flex items-center justify-between px-5xl">
-				<div className="flex justify-center">FightM</div>
+				<div className="flex justify-center font-black text-fluid-4">
+					<p>FightM</p>
+				</div>
 				<div className="flex justify-center items-center gap-md">
 					<p>Q</p>
 					<div className="flex justify-center">

@@ -18,7 +18,6 @@ export const PreviousButton = ({ children, list, value, onValueChange }: {
 
 	return (
 		<Button
-			variant='secondary'
 			size='lg'
 			onClick={handlePrevious}
 		>{children}</Button>
@@ -40,7 +39,6 @@ export const NextButton = ({ children, list, value, onValueChange }: {
 
 	return (
 		<Button
-			variant='secondary'
 			size='lg'
 			onClick={handleNext}
 		>{children}</Button>
