@@ -59,8 +59,6 @@ export const Starting = () => {
 		},
 	]
 
-	const filteredIndexes = buttons.flatMap((mode, i) => mode.disabled ? [] : [i])
-
 	return (
 		<div className="relative h-screen p-0 overflow-hidden justify-start flex-row bg-linear-to-t from-neutral-950/50 to-transparent">
 			<img
@@ -77,7 +75,7 @@ export const Starting = () => {
 							key={i}
 							variant='default'
 							onClick={() => button.onClick()}
-							disabled={!filteredIndexes.includes(i)}
+							disabled={button.disabled}
 							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-light text-xl hover:text-neutral-300 cursor-pointer ${button.styles}`}
 							{...audiobility}
 						>{button.label}</Button>
