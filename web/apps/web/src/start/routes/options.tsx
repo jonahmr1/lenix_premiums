@@ -1,9 +1,12 @@
+import { NavKbd } from "@/components/kbd"
 import { Layout } from "@/components/layout"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@workspace/elite/components/tabs"
+import { NextButton, PreviousButton } from "@/components/nav"
+import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
+import { KbdGroup } from "@workspace/ui/components/kbd"
 import { audiobility } from "@workspace/ui/lib/utils"
-import { onKeyDown } from "lenix/nui"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useNavigate } from "react-router"
 
 
 const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
@@ -17,10 +20,10 @@ const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 		label: 'Keybinds',
 	},
 	{
-		label: 'Display',
+		label: 'Audio / Voice Chat',
 	},
 	{
-		label: 'Audio',
+		label: 'Display (Interface)',
 	},
 	{
 		label: 'Camera',
@@ -40,45 +43,30 @@ const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 		disabled: true
 	},
 	{
-		label: 'Gallery / Editor',
+		label: 'Gallery',
+		disabled: true
+	},
+	{
+		label: 'Editor',
 		disabled: true
 	},
 ]
 
 export const Options = () => {
 	const [state, setState] = useState(0)
-	
+	const nav = useNavigate()
+
 	const filteredIndexes = tabs.flatMap((mode, i) => mode.disabled ? [] : [i])
 
-	const handlePrevious = () => {
-		setState(prev => prev === 0 ? filteredIndexes[filteredIndexes.length - 1] : filteredIndexes[filteredIndexes.indexOf(prev) - 1])
-		audiobility.onMouseEnter()
-	}
-
-	const handleNext = () => {
-		setState(prev => prev + 1 > filteredIndexes[filteredIndexes.length - 1] ? 0 : filteredIndexes[filteredIndexes.indexOf(prev) + 1])
-		audiobility.onMouseEnter()
-	}
-
-	useEffect(() => {
-		const disposes = [
-			onKeyDown('q', handlePrevious),
-			onKeyDown('e', handleNext)
-		]
-
-		return () => disposes.forEach(dis => dis())
-	}, [])
-
 	return (
-		<Layout className="h-screen w-full flex flex-col backdrop-blur-sm">
-			<h1 className="uppercase text-fluid-6">Options</h1>
-			<div className="flex justify-center *:text-fluid-2 gap-md bg-card size-full">
-				<Button
-					variant='secondary'
-					className="bg-background hover:bg-background hover:opacity-80"
-					size='lg'
-					onClick={handlePrevious}
-				>Q</Button>
+		<Layout className="h-screen w-full flex flex-col bg-background gap-sm">
+			<h1 className="uppercase text-fluid-9">Options</h1>
+			<div className="flex justify-center *:text-fluid-2 size-full">
+				<PreviousButton
+					list={filteredIndexes}
+					value={state}
+					onValueChange={setState}
+				>Q</PreviousButton>
 				<Tabs
 					value={state.toString()}
 					onValueChange={$ => setState(Number($))}
@@ -86,12 +74,15 @@ export const Options = () => {
 				>
 					<TabsList className="bg-transparent w-full p-0 gap-xs">
 						{tabs.map((tab, i) => (
-							<TabsTrigger
+							<Button
 								key={i}
 								disabled={tab.disabled}
-								className="uppercase text-[2vmin] h-full text-foreground! hover:bg-background m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
+								variant={state === i ? 'default' : 'secondary'}
+								className="flex-1 text-fluid-2!"
+								onClick={() => setState(i)}
+								size='lg'
 								{...audiobility}
-							>{tab.label}</TabsTrigger>
+							>{tab.label}</Button>
 						))}
 					</TabsList>
 					{tabs.map((tab, i) => (
@@ -102,13 +93,23 @@ export const Options = () => {
 						>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
 					))}
 				</Tabs>
-				<Button
-					variant='secondary'
-					className="bg-background hover:bg-background hover:opacity-80"
-					size='lg'
-					onClick={handleNext}
-				>E</Button>
+				<NextButton
+					list={filteredIndexes}
+					value={state}
+					onValueChange={setState}
+				>
+					E
+				</NextButton>
 			</div>
+			<KbdGroup>
+				<NavKbd
+					onClick={() => nav(-1)}
+					icon='Esc'
+					keybind="Escape"
+				>
+					Back
+				</NavKbd>
+			</KbdGroup>
 		</Layout>
 	)
 }
