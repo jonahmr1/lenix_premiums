@@ -43,7 +43,7 @@ export const Starting = () => {
 		},
 		{
 			label: 'Options',
-			onClick: () => toast.info('Coming soon'),
+			onClick: () => nav('/start/options'),
 			styles: 'mt-10'
 		},
 		{
