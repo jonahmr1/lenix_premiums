@@ -1,20 +1,25 @@
+import type { Tab } from "@/types"
 import { Button } from "@workspace/ui/components/button"
 import { audiobility } from "@workspace/ui/lib/utils"
 import { onKeyDown } from "lenix/nui"
 import { useEffect } from "react"
 
-export const PreviousButton = ({ children, list, value, onValueChange }: {
+const filterTabs = (tabs: Tab[]) => tabs.flatMap((mode, i) => mode.disabled ? [] : [i])
+
+export const PreviousButton = ({ children, tabs, value, onValueChange }: {
 	children: React.ReactNode
-	list: number[]
+	tabs: Tab[]
 	value: number
 	onValueChange: (value: number) => void
 }) => {
+	const filteredTabs = filterTabs(tabs)
+
 	const handlePrevious = () => {
-		onValueChange(value === 0 ? list[list.length - 1] : list[list.indexOf(value) - 1])
+		onValueChange(value === 0 ? filteredTabs[filteredTabs.length - 1] : filteredTabs[filteredTabs.indexOf(value) - 1])
 		audiobility.onMouseEnter()
 	}
 
-	useEffect(() => onKeyDown('q', handlePrevious), [list, value, onValueChange])
+	useEffect(() => onKeyDown('q', handlePrevious), [tabs, value, onValueChange])
 
 	return (
 		<Button
@@ -24,18 +29,20 @@ export const PreviousButton = ({ children, list, value, onValueChange }: {
 	)
 }
 
-export const NextButton = ({ children, list, value, onValueChange }: {
+export const NextButton = ({ children, tabs, value, onValueChange }: {
 	children: React.ReactNode
-	list: number[]
+	tabs: Tab[]
 	value: number
 	onValueChange: (value: number) => void
 }) => {
+	const filteredTabs = filterTabs(tabs)
+
 	const handleNext = () => {
-		onValueChange(value + 1 > list[list.length - 1] ? 0 : list[list.indexOf(value) + 1])
+		onValueChange(value + 1 > filteredTabs[filteredTabs.length - 1] ? 0 : filteredTabs[filteredTabs.indexOf(value) + 1])
 		audiobility.onMouseEnter()
 	}
 
-	useEffect(() => onKeyDown('e', handleNext), [list, value, onValueChange])
+	useEffect(() => onKeyDown('e', handleNext), [value])
 
 	return (
 		<Button

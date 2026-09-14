@@ -1,6 +1,7 @@
 import { NavKbd } from "@/components/kbd"
 import { Layout } from "@/components/layout"
 import { NextButton, PreviousButton } from "@/components/nav"
+import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
@@ -9,7 +10,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 
-const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
+const tabs: Tab[] = [
 	{
 		label: 'General',
 	},
@@ -25,15 +26,15 @@ const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 	{
 		label: 'Display (Interface)',
 	},
-	{
-		label: 'Camera',
-	},
-	{
-		label: 'Keyboard / Mouse',
-	},
-	{
-		label: 'Gamepad',
-	},
+	// {
+	// 	label: 'Camera',
+	// },
+	// {
+	// 	label: 'Keyboard / Mouse',
+	// },
+	// {
+	// 	label: 'Gamepad',
+	// },
 	{
 		label: 'Brief',
 		disabled: true
@@ -56,14 +57,13 @@ export const Options = () => {
 	const [state, setState] = useState(0)
 	const nav = useNavigate()
 
-	const filteredIndexes = tabs.flatMap((mode, i) => mode.disabled ? [] : [i])
 
 	return (
 		<Layout className="h-screen w-full flex flex-col bg-background gap-sm">
 			<h1 className="uppercase text-fluid-9">Options</h1>
 			<div className="flex justify-center *:text-fluid-2 size-full">
 				<PreviousButton
-					list={filteredIndexes}
+					tabs={tabs}
 					value={state}
 					onValueChange={setState}
 				>Q</PreviousButton>
@@ -94,7 +94,7 @@ export const Options = () => {
 					))}
 				</Tabs>
 				<NextButton
-					list={filteredIndexes}
+					tabs={tabs}
 					value={state}
 					onValueChange={setState}
 				>
