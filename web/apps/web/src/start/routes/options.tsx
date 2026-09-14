@@ -1,3 +1,4 @@
+import { Layout } from "@/components/layout"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { audiobility } from "@workspace/ui/lib/utils"
@@ -13,10 +14,7 @@ const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 		label: 'General',
 	},
 	{
-		label: 'Graphics',
-	},
-	{
-		label: 'Advanced Graphics',
+		label: 'Graphics / Advanced Graphics',
 	},
 	{
 		label: 'Keybinds',
@@ -79,7 +77,7 @@ export const Options = () => {
 	}, [])
 
 	return (
-		<div className="h-screen w-full bg-dark/80 flex justify-center p-md *:text-fluid-2 gap-md">
+		<Layout className="h-screen w-full bg-dark/80 flex justify-center *:text-fluid-2 gap-md">
 			<Button
 				variant='secondary'
 				className="bg-background hover:bg-background hover:opacity-80"
@@ -96,7 +94,8 @@ export const Options = () => {
 						<TabsTrigger
 							key={i}
 							disabled={tab.disabled}
-							className="uppercase text-[2vmin] h-full bg-background text-foreground! hover:opacity-80 m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
+							className="uppercase text-[2vmin] h-full text-foreground! hover:bg-background m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
+							{...audiobility}
 						>{tab.label}</TabsTrigger>
 					))}
 				</TabsList>
@@ -104,7 +103,7 @@ export const Options = () => {
 					<TabsContent
 						key={i}
 						value={i.toString()}
-						className="size-full place-content-center place-items-center"
+						className="size-full place-content-center place-items-center bg-muted/50"
 					>{tab.content ?? <Preview />}</TabsContent>
 				))}
 			</Tabs>
@@ -114,6 +113,6 @@ export const Options = () => {
 				size='lg'
 				onClick={handleNext}
 			>E</Button>
-		</div>
+		</Layout>
 	)
 }
