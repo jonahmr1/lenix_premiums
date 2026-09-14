@@ -5,9 +5,6 @@ import { audiobility } from "@workspace/ui/lib/utils"
 import { onKeyDown } from "lenix/nui"
 import { useEffect, useState } from "react"
 
-const Preview = () => (
-	<p className="text-fluid-5">...</p>
-)
 
 const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 	{
@@ -43,11 +40,7 @@ const tabs: { label: string, disabled?: true, content?: React.ReactNode }[] = [
 		disabled: true
 	},
 	{
-		label: 'Gallery',
-		disabled: true
-	},
-	{
-		label: 'Editor',
+		label: 'Gallery / Editor',
 		disabled: true
 	},
 ]
@@ -77,42 +70,45 @@ export const Options = () => {
 	}, [])
 
 	return (
-		<Layout className="h-screen w-full bg-dark/80 flex justify-center *:text-fluid-2 gap-md">
-			<Button
-				variant='secondary'
-				className="bg-background hover:bg-background hover:opacity-80"
-				size='lg'
-				onClick={handlePrevious}
-			>Q</Button>
-			<Tabs
-				value={state.toString()}
-				onValueChange={$ => setState(Number($))}
-				className="size-full"
-			>
-				<TabsList className="bg-transparent w-full p-0 gap-xs">
+		<Layout className="h-screen w-full flex flex-col backdrop-blur-sm">
+			<h1 className="uppercase text-fluid-6">Options</h1>
+			<div className="flex justify-center *:text-fluid-2 gap-md bg-card size-full">
+				<Button
+					variant='secondary'
+					className="bg-background hover:bg-background hover:opacity-80"
+					size='lg'
+					onClick={handlePrevious}
+				>Q</Button>
+				<Tabs
+					value={state.toString()}
+					onValueChange={$ => setState(Number($))}
+					className="size-full"
+				>
+					<TabsList className="bg-transparent w-full p-0 gap-xs">
+						{tabs.map((tab, i) => (
+							<TabsTrigger
+								key={i}
+								disabled={tab.disabled}
+								className="uppercase text-[2vmin] h-full text-foreground! hover:bg-background m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
+								{...audiobility}
+							>{tab.label}</TabsTrigger>
+						))}
+					</TabsList>
 					{tabs.map((tab, i) => (
-						<TabsTrigger
+						<TabsContent
 							key={i}
-							disabled={tab.disabled}
-							className="uppercase text-[2vmin] h-full text-foreground! hover:bg-background m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
-							{...audiobility}
-						>{tab.label}</TabsTrigger>
+							value={i.toString()}
+							className="size-full place-content-center place-items-center bg-muted"
+						>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
 					))}
-				</TabsList>
-				{tabs.map((tab, i) => (
-					<TabsContent
-						key={i}
-						value={i.toString()}
-						className="size-full place-content-center place-items-center bg-muted/50"
-					>{tab.content ?? <Preview />}</TabsContent>
-				))}
-			</Tabs>
-			<Button
-				variant='secondary'
-				className="bg-background hover:bg-background hover:opacity-80"
-				size='lg'
-				onClick={handleNext}
-			>E</Button>
+				</Tabs>
+				<Button
+					variant='secondary'
+					className="bg-background hover:bg-background hover:opacity-80"
+					size='lg'
+					onClick={handleNext}
+				>E</Button>
+			</div>
 		</Layout>
 	)
 }
