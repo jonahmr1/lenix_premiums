@@ -4,17 +4,45 @@ import { audiobility } from "@workspace/ui/lib/utils"
 import { onKeyDown } from "lenix/nui"
 import { useEffect, useState } from "react"
 
+const Preview = () => (
+	<p className="text-fluid-5">...</p>
+)
+
+const tabs = [
+	{
+		label: 'Settings',
+		content: <Preview />
+	},
+	{
+		label: 'Brief',
+		disabled: true
+	},
+	{
+		label: 'Stats',
+		disabled: true
+	},
+	{
+		label: 'Gallery',
+		// disabled: true
+	},
+	{
+		label: 'Editor',
+		disabled: true
+	},
+]
+
 export const Options = () => {
 	const [state, setState] = useState(0)
-	console.log(state)
+	
+	const filteredIndexes = tabs.flatMap((mode, i) => mode.disabled ? [] : [i])
 
 	const handlePrevious = () => {
-		setState(prev => prev === 0 ? tabs.length - 1 : prev - 1)
+		setState(prev => prev === 0 ? filteredIndexes[filteredIndexes.length - 1] : filteredIndexes[filteredIndexes.indexOf(prev) - 1])
 		audiobility.onMouseEnter()
 	}
 
 	const handleNext = () => {
-		setState(prev => prev + 1 === tabs.length ? 0 : prev + 1)
+		setState(prev => prev + 1 > filteredIndexes[filteredIndexes.length - 1] ? 0 : filteredIndexes[filteredIndexes.indexOf(prev) + 1])
 		audiobility.onMouseEnter()
 	}
 
@@ -26,29 +54,6 @@ export const Options = () => {
 
 		return () => disposes.forEach(dis => dis())
 	}, [])
-
-	const Preview = () => (
-		<p className="text-fluid-5">Coming Soon...</p>
-	)
-
-	const tabs = [
-		{
-			label: 'Settings',
-			content: <Preview />
-		},
-		{
-			label: 'Brief',
-		},
-		{
-			label: 'Stats',
-		},
-		{
-			label: 'Gallery',
-		},
-		{
-			label: 'Editor',
-		},
-	]
 
 	return (
 		<div className="h-screen w-full bg-dark/80 flex justify-center p-md *:text-fluid-2 gap-md">
@@ -67,6 +72,7 @@ export const Options = () => {
 					{tabs.map((tab, i) => (
 						<TabsTrigger
 							key={i}
+							disabled={tab.disabled}
 							className="uppercase text-[2.5vmin] h-full bg-background text-foreground! hover:opacity-80 m-0 data-active:bg-foreground! data-active:text-background!" value={i.toString()}
 						>{tab.label}</TabsTrigger>
 					))}
