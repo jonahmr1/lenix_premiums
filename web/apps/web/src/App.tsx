@@ -3,13 +3,11 @@ import { storage } from '@lenix/lenix'
 
 import '@workspace/ui/globals.css'
 import { Hud } from './outlaw/hud'
-import { TopScore } from './outlaw/topscore'
 import { Roster } from './outlaw/roster'
 import type { Storage } from './ipad/types'
 import { Button } from '@workspace/ui/components/button'
 import { Moon, Sun } from 'lucide-react'
 import { Ipad } from './ipad/App'
-import { Rank } from './rank/App'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -29,14 +27,14 @@ import { Options } from './start/routes/options'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'competitive'
+const dev = 'outlaw'
 export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/lobby'))
+		DEV(() => nav('/outlaw'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -66,7 +64,7 @@ const Router = () => {
 			<Route path='/outlaw' element={<>
 				<Hud />
 				<Roster />
-				<TopScore />
+				{/* <TopScore /> */}
 			</>} />
 		</Routes>
 	)
@@ -96,7 +94,7 @@ export const App = () => {
 				<Toaster />
 			</MemoryRouter>
 			<Ipad />
-			<Rank />
+			{/* <Rank /> */}
 		</>
 	)
 }
