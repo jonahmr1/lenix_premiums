@@ -10,10 +10,10 @@ export const Play = () => {
 		<div className="size-full flex items-end justify-start px-2xl">
 			<ButtonGroup orientation='vertical'>
 				<Button
-					className="h-auto p-0 relative"
+					className="h-auto p-0 relative group"
 					onClick={() => nav('/competitive/lobby/mode')}
 				>
-					<img src={deathmatch} className="max-w-[40vmin] pointer-events-none" />
+					<img src={deathmatch} className="max-w-[40vmin] pointer-events-none group-hover:brightness-75" />
 					<p className="absolute top-0 bg-background/50 text-foreground w-full">Mode Selected</p>
 					<p className="absolute bottom-0 bg-background text-foreground w-full text-fluid-3 font-black text-start px-md">DEATHMATCH</p>
 				</Button>
