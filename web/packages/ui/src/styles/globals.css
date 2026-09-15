@@ -156,7 +156,7 @@
 	}
 
 	body {
-		@apply text-foreground font-thin selection:bg-foreground selection:text-background;
+		@apply text-foreground font-thin selection:bg-foreground selection:text-background tracking-tighter;
 	}
 }
 
