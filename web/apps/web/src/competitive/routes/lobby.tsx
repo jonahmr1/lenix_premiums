@@ -1,7 +1,7 @@
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@workspace/ui/components/item'
 import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
-import { Activity, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
 import initials from 'initials'
@@ -9,14 +9,13 @@ import { DEV } from "@/App"
 import { PreviousButton, NextButton } from "@/components/nav"
 import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
 import type { Tab } from "@/types"
-import { Outlet, useMatch, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import { Layout } from "@/components/layout"
 import { Play } from "../pages/play"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
-	const isLobby = !!useMatch('/competitive/lobby')
 
 	const [state, setState] = useState<{
 		avatar: string,
@@ -62,81 +61,78 @@ export const Lobby = () => {
 	if (!state) return null
 
 	return <>
-		<Activity mode={isLobby ? 'visible' : 'hidden'}>
-			<div className="w-full h-screen flex flex-col">
-				<Tabs
-					value={tab.toString()}
-					onValueChange={$ => setTab(Number($))}
-					className="w-full flex-20"
-				>
-					<div className="w-full flex flex-row h-15/100">
-						<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
-						<div className="flex flex-2 items-center">
-							<PreviousButton
-								tabs={tabs}
-								value={tab}
-								onValueChange={setTab}
-							>Q</PreviousButton>
-							<TabsList className="bg-transparent w-full p-0 gap-xs">
-								{tabs.map((self, i) => (
-									<Button
-										key={i}
-										disabled={self.disabled}
-										variant={tab === i ? 'default' : 'outline'}
-										className="flex-1 font-black text-fluid-2! font-barlow italic"
-										onClick={() => setTab(i)}
-										size='lg'
-									>{self.label}</Button>
-								))}
-							</TabsList>
-							<NextButton
-								tabs={tabs}
-								value={tab}
-								onValueChange={setTab}
-							>
-								E
-							</NextButton>
-						</div>
-						<div className="flex flex-1 justify-center">
-							<Item
-								onClick={() => toast('TODO')}
-								className={`${buttonVariants({ variant: 'secondary' })} h-full w-fit`}
-							>
-								<ItemMedia variant="icon">
-									<Avatar>
-										<AvatarImage src={state.avatar} />
-										<AvatarFallback>{initials(state.name)}</AvatarFallback>
-									</Avatar>
-								</ItemMedia>
-								<ItemContent>
-									<ItemTitle className="text-fluid-2">{state.name}</ItemTitle>
-								</ItemContent>
-							</Item>
-						</div>
+		<div className="w-full h-screen flex flex-col">
+			<Tabs
+				value={tab.toString()}
+				onValueChange={$ => setTab(Number($))}
+				className="w-full flex-20"
+			>
+				<div className="w-full flex flex-row h-15/100">
+					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
+					<div className="flex flex-2 items-center">
+						<PreviousButton
+							tabs={tabs}
+							value={tab}
+							onValueChange={setTab}
+						>Q</PreviousButton>
+						<TabsList className="bg-transparent w-full p-0 gap-xs">
+							{tabs.map((self, i) => (
+								<Button
+									key={i}
+									disabled={self.disabled}
+									variant={tab === i ? 'default' : 'outline'}
+									className="flex-1 font-black text-fluid-2! font-barlow italic"
+									onClick={() => setTab(i)}
+									size='lg'
+								>{self.label}</Button>
+							))}
+						</TabsList>
+						<NextButton
+							tabs={tabs}
+							value={tab}
+							onValueChange={setTab}
+						>
+							E
+						</NextButton>
 					</div>
-					{tabs.map((tab, i) => (
-						<TabsContent
-							key={i}
-							value={i.toString()}
-							className="size-full place-content-center place-items-center"
-						>{tab.content}</TabsContent>
-					))}
-				</Tabs>
-				{/* footer */}
-				<Layout className="flex-1 flex items-center">
-					<NavKbd
-						icon='Esc'
-						onClick={() => {
-							audiobility.onMouseDown()
-							nav('/start/starting')
-						}}
-						keybind="Escape"
-					>
-						Exit
-					</NavKbd>
-				</Layout>
-			</div>
-		</Activity>
-		<Outlet />
+					<div className="flex flex-1 justify-center">
+						<Item
+							onClick={() => toast('TODO')}
+							className={`${buttonVariants({ variant: 'secondary' })} h-full w-fit`}
+						>
+							<ItemMedia variant="icon">
+								<Avatar>
+									<AvatarImage src={state.avatar} />
+									<AvatarFallback>{initials(state.name)}</AvatarFallback>
+								</Avatar>
+							</ItemMedia>
+							<ItemContent>
+								<ItemTitle className="text-fluid-2">{state.name}</ItemTitle>
+							</ItemContent>
+						</Item>
+					</div>
+				</div>
+				{tabs.map((tab, i) => (
+					<TabsContent
+						key={i}
+						value={i.toString()}
+						className="size-full place-content-center place-items-center"
+					>{tab.content}</TabsContent>
+				))}
+			</Tabs>
+			{/* footer */}
+			<Layout className="flex-1 flex items-center">
+				<NavKbd
+					icon='Esc'
+					onClick={() => {
+						audiobility.onMouseDown()
+						nav('/')
+					}}
+					keybind="Escape"
+				>
+					Exit
+				</NavKbd>
+			</Layout>
+		</div>
 	</>
 }
