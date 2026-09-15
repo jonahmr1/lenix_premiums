@@ -121,7 +121,7 @@ export const Lobby = () => {
 					icon='Esc'
 					onClick={() => {
 						audiobility.onMouseDown()
-						nav('/start/pause')
+						nav('/start/starting')
 					}}
 					keybind="Escape"
 				>

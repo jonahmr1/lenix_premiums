@@ -57,7 +57,7 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/*' element={<NotFound />} />
-			<Route path='/start' element={<Starting />} />
+			<Route path='/start/starting' element={<Starting />} />
 			<Route path='/start/credit' element={<Credit />} />
 			<Route path='/start/pause' element={<Pause />} />
 			<Route path='/start/options' element={<Options />} />
