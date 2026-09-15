@@ -26,8 +26,11 @@ export const Mode = () => {
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
 			<div className="size-full flex items-start flex-col px-5xl py-xl">
 				<div className='flex flex-10 justify-evenly flex-col'>
-					<div>
-						<p className='uppercase text-fluid-12 font-black text-neutral-100'>{mode.label}</p>
+					<div className='flex flex-col gap-md'>
+						<div>
+							<p className='uppercase text-fluid-12 leading-none font-black text-neutral-100'>{mode.label}</p>
+							<p>{mode.description}</p>
+						</div>
 						<div className='flex gap-sm'>
 							{(() => {
 								const classNames = [
@@ -39,10 +42,10 @@ export const Mode = () => {
 										<span className={classNames[0]}>Maps: </span>	
 										<span className={classNames[1]}>{mode.maps.map(map => MAPS[map].label).join(' / ')}</span>	
 									</Badge>
-									{/* {'duration' in mode && <Badge>
+									{'duration' in mode && <Badge>
 										<span className={classNames[0]}>Duration: </span>	
-										<span className={classNames[1]}>{(mode.duration / 1000) / 60}m</span>	
-									</Badge>} */}
+										<span className={`${classNames[1]} uppercase`}>{(mode.duration / 1000) / 60} Minutes</span>	
+									</Badge>}
 									<Badge>
 										<span className={classNames[0]}>Teams: </span>	
 										<span className={classNames[1]}>{mode.teams}</span>	

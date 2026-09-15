@@ -40,6 +40,7 @@ export const MAPS = {
 
 interface ModeDataBase {
 	label: string
+	description: string
 	image: string
 	maps: (keyof typeof MAPS)[]
 	teams: number
@@ -53,6 +54,7 @@ type ModeData = ModeDataBase | ModeDataBase & {
 export const MODES: Record<string, ModeData> = {
 	team_deathmatch: {
 		label: 'Team Deathmatch',
+		description: 'Two teams battle to earn the most eliminations. First team to reach the score limit wins.',
 		image: deathmatch,
 		maps: ['italien_street', 'cinema_studio'],
 		duration: 90_000,
@@ -61,6 +63,7 @@ export const MODES: Record<string, ModeData> = {
 	},
 	street_fight: {
 		label: 'Street Fight',
+		description: '',
 		image: streetfight,
 		maps: ['cinema_studio'],
 		teams: 4,
