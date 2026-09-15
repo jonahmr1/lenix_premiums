@@ -21,7 +21,7 @@ export const Hud = () => {
 	useEffect(() => {
 		const dispose = DEV(() => {
 			setDisplay({ vitals: true, weaponary: true })
-			
+
 			const interval = setInterval(() => {
 				setState({
 					health: random(0, 100),
@@ -30,9 +30,9 @@ export const Hud = () => {
 					weapon: {
 						name: 'Glock 17',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-						clipAmmo: 9,
+						clipAmmo: random(0, 17),
 						clipSize: 17,
-						reserveAmmo: 50
+						reserveAmmo: random(40, 10000)
 					}
 				})
 			}, 1000)
@@ -111,14 +111,14 @@ export const Hud = () => {
 					<div className='flex justify-between'>
 						<div className='flex gap-1 items-start'>
 							<p
-								className={`text-fluid-7 inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500' : 'text-orange-600 text-shadow-orange-600'}`}>
+								className={`text-fluid-6 font-number font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500 glow-sm' : 'text-orange-600 text-shadow-orange-600'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
 							<Separator orientation='vertical' className='bg-white/50 h-9/10' />
 							<p className='brightness-75 leading-none'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 						</div>
 					</div>
-					<p className='truncate'>{state.weapon.name}</p>
+						<p className='truncate font-semibold italic'>{state.weapon.name}</p>
 				</div>
 			</Layout>
 		</>			
