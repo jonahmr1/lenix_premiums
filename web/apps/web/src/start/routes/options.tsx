@@ -15,26 +15,27 @@ const tabs: Tab[] = [
 		label: 'General',
 	},
 	{
-		label: 'Graphics / Advanced Graphics',
+		label: 'Graphics', /* Advanced Graphics */
 	},
 	{
 		label: 'Keybinds',
 	},
 	{
-		label: 'Audio / Voice Chat',
+		label: 'Audio', /* Voice Chat */
 	},
 	{
-		label: 'Display (Interface)',
+		label: 'Interface', /* Display */
 	},
-	// {
-	// 	label: 'Camera',
-	// },
-	// {
-	// 	label: 'Keyboard / Mouse',
-	// },
-	// {
-	// 	label: 'Gamepad',
-	// },
+	{
+		label: 'Camera',
+	},
+	{
+		label: 'Keyboard / Mouse',
+	},
+	{
+		label: 'Gamepad',
+		disabled: true
+	},
 	{
 		label: 'Brief',
 		disabled: true
@@ -59,8 +60,8 @@ export const Options = () => {
 
 
 	return (
-		<Layout className="h-screen w-full flex flex-col gap-sm">
-			<h1 className="uppercase text-fluid-9">Options</h1>
+		<Layout className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
+			<h1 className="uppercase text-fluid-9 font-black italic">Options</h1>
 			<div className="flex justify-center *:text-fluid-2 size-full">
 				<PreviousButton
 					tabs={tabs}
@@ -77,8 +78,8 @@ export const Options = () => {
 							<Button
 								key={i}
 								disabled={tab.disabled}
-								variant={state === i ? 'default' : 'secondary'}
-								className="flex-1 text-fluid-2!"
+								variant={state === i ? 'default' : 'outline'}
+								className="flex-1 text-fluid-2! font-semibold italic"
 								onClick={() => setState(i)}
 								size='lg'
 								{...audiobility}
@@ -89,8 +90,8 @@ export const Options = () => {
 						<TabsContent
 							key={i}
 							value={i.toString()}
-							className="size-full place-content-center place-items-center bg-muted"
-						>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
+							className="size-full place-content-center place-items-center bg-border"
+						>{tab.content ?? <p className="text-fluid-5 font-normal">{tab.label}...</p>}</TabsContent>
 					))}
 				</Tabs>
 				<NextButton

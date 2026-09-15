@@ -10,6 +10,7 @@ import { PreviousButton, NextButton } from "@/components/nav"
 import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
 import type { Tab } from "@/types"
 import { useNavigate } from "react-router"
+import { Layout } from "@/components/layout"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -61,7 +62,7 @@ export const Lobby = () => {
 				className="w-full h-93/100"
 			>
 				<div className="w-full flex flex-row h-15/100">
-					<p className="flex flex-1 justify-center items-center font-black text-fluid-4">FightM</p>
+					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
 					<div className="flex flex-2 items-center">
 						<PreviousButton
 							tabs={tabs}
@@ -73,8 +74,8 @@ export const Lobby = () => {
 								<Button
 									key={i}
 									disabled={self.disabled}
-									variant={tab === i ? 'default' : 'secondary'}
-									className="flex-1 text-fluid-2!"
+									variant={tab === i ? 'default' : 'outline'}
+									className="flex-1 font-black text-fluid-2! font-barlow italic"
 									onClick={() => setTab(i)}
 									size='lg'
 									{...audiobility}
@@ -115,7 +116,7 @@ export const Lobby = () => {
 				))}
 			</Tabs>
 			{/* footer */}
-			<div className="h-7/100 flex items-center px-30">
+			<Layout className="h-7/100 flex items-center">
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
@@ -126,7 +127,7 @@ export const Lobby = () => {
 				>
 					Exit
 				</NavKbd>
-			</div>
+			</Layout>
 		</div>
 	</>
 }

@@ -21,17 +21,16 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 	}, [])
 
 	return (
-		<div className="space-x-2 flex items-center">
+		<div className="group space-x-2 flex items-center">
 			<Button
 				variant='ghost'
 				onClick={onClick}
 				{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
-				className="hover:bg-neutral-900!"
 			>
-				<Kbd className="bg-neutral-300 text-neutral-900 rounded-md">
+				<Kbd className="bg-foreground text-background group-hover:bg-background group-hover:text-foreground rounded-md font-black italic">
 					{Icon}
 				</Kbd>
-				<span className="font-sans text-neutral-300">{children}</span>
+				<span className="font-sans">{children}</span>
 			</Button>
 		</div>
 	)
