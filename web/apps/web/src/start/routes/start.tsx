@@ -3,10 +3,9 @@ import bg2 from '@workspace/ui/assets/start/ls-2.png'
 import bg3 from '@workspace/ui/assets/start/ls-3.png'
 import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
-import { fetchNui, fetchNuiServer, onNuiEmit, unFocus } from "lenix/nui"
+import { fetchNui, fetchNuiServer, unFocus } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
-import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
@@ -76,7 +75,6 @@ export const Starting = () => {
 							onClick={() => button.onClick()}
 							disabled={button.disabled}
 							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-light text-xl hover:text-neutral-300 cursor-pointer ${button.styles}`}
-							{...audiobility}
 						>{button.label}</Button>
 					))}
 				</div>

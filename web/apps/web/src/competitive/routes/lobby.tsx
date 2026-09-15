@@ -84,7 +84,6 @@ export const Lobby = () => {
 									className="flex-1 font-black text-fluid-2! font-barlow italic"
 									onClick={() => setTab(i)}
 									size='lg'
-									{...audiobility}
 								>{self.label}</Button>
 							))}
 						</TabsList>

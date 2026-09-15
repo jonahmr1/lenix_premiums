@@ -5,7 +5,6 @@ import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
-import { audiobility } from "@workspace/ui/lib/utils"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -13,43 +12,55 @@ import { useNavigate } from "react-router"
 const tabs: Tab[] = [
 	{
 		label: 'General',
+		content: ''
 	},
 	{
 		label: 'Graphics', /* Advanced Graphics */
+		content: '',
 	},
 	{
 		label: 'Keybinds',
+		content: '',
 	},
 	{
 		label: 'Audio', /* Voice Chat */
+		content: '',
 	},
 	{
 		label: 'Interface', /* Display */
+		content: '',
 	},
 	{
 		label: 'Camera',
+		content: '',
 	},
 	{
 		label: 'Keyboard / Mouse',
+		content: '',
 	},
 	{
 		label: 'Gamepad',
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Brief',
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Stats',
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Gallery',
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Editor',
+		content: '',
 		disabled: true
 	},
 ]
@@ -82,7 +93,6 @@ export const Options = () => {
 								className="flex-1 text-fluid-2! font-semibold italic"
 								onClick={() => setState(i)}
 								size='lg'
-								{...audiobility}
 							>{tab.label}</Button>
 						))}
 					</TabsList>
