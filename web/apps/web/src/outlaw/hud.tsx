@@ -111,7 +111,7 @@ export const Hud = () => {
 					<div className='flex justify-between'>
 						<div className='flex gap-1 items-start'>
 							<p
-								className={`text-fluid-6 font-number font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500 glow-sm' : 'text-orange-600 text-shadow-orange-600'}`}>
+								className={`text-fluid-6 font-number font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 3 ? undefined : 'text-red-500 text-shadow-red-500 glow-sm'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
 							<Separator orientation='vertical' className='bg-neutral-300 h-9/10' />
