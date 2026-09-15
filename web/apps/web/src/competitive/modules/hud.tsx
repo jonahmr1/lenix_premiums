@@ -75,7 +75,7 @@ export const Hud = () => {
 	return (
 		<>
 			{/* Health */}
-			<Layout className="absolute bottom-0 left-0 perspective-left-100 p-5">
+			<Layout className="absolute bottom-0 left-0 perspective-left-100">
 				<div className="flex items-end text-white">
 					<p className="leading-tight text-fluid-2">{state.health}</p>
 					<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
@@ -97,7 +97,7 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 perspective-right-100 px-3">
+			<Layout className="absolute bottom-0 right-0 perspective-right-100">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (
@@ -110,7 +110,7 @@ export const Hud = () => {
 					<div className="flex">
 						{state.weaponary.equipments.map((equipment, index) => (
 							<div className="space-y-xs">
-								<div className={`relative rounded size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
+								<div className={`relative rounded-md size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
 									<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
 									<span className="absolute top-0 right-2xs text-fluid-1.5 text-white mix-blend-difference">{equipment.ammo}</span>
 								</div>
