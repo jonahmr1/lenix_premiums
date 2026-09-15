@@ -1,31 +1,43 @@
 import { NavKbd } from '@/components/kbd'
-import deathmatch from '@workspace/ui/assets/competitive/lobby/deathmatch.png'
 import { Button } from '@workspace/ui/components/button'
 import { ButtonGroup } from '@workspace/ui/components/button-group'
 import { KbdGroup } from '@workspace/ui/components/kbd'
+import { useContext } from 'react'
 import { useNavigate } from 'react-router'
+import { MODES } from '../constants'
+import { asserts, entries } from '@lenix/lenix'
+import { CompetitiveContext } from '../context'
 
 export const Mode = () => {
 	const nav = useNavigate()
+	const context = useContext(CompetitiveContext)
+	asserts(context, `Failed to use competitive context`)
+	
+	const { selectedMode, setSelectedMode } = context
+
 	return (
 		<div className="relative isolate h-screen w-full">
 			<img
-				src={deathmatch}
-				alt=""
+				src={MODES[selectedMode].image}
 				className="absolute -z-2 size-full object-cover"
 			/>
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
 			<div className="size-full flex items-start flex-col px-5xl py-xl">
 				<div className='flex flex-10 justify-evenly flex-col'>
 					<div className='uppercase text-fluid-12 font-black'>
-						Team Deathmatch
+						{MODES[selectedMode].label}
 					</div>
 					<div>
 						<ButtonGroup>
-							<Button className='h-auto p-0 group relative'>
-								<img src={deathmatch} className='max-w-[40vmin] group-hover:brightness-100 brightness-75' />
-								<p className='absolute bottom-1/5 uppercase text-fluid-3 text-foreground tracking-tighter'>Team Deathmatch</p>
-							</Button>
+							{entries(MODES).map(([mode, data]) => (
+								<Button
+									onClick={() => setSelectedMode(mode)}
+									className='h-auto p-0 group relative'
+								>
+									<img src={data.image} className='max-w-[40vmin] group-hover:brightness-100 brightness-75' />
+									<p className='absolute bottom-1/5 uppercase text-fluid-3 text-foreground tracking-tighter'>{data.label}</p>
+								</Button>
+							))}
 						</ButtonGroup>
 					</div>
 				</div>

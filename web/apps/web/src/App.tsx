@@ -23,6 +23,7 @@ import { Mode } from './competitive/routes/mode'
 import { Starting } from './start'
 import { Credit } from './start/credit'
 import { Pause } from './pause'
+import { CompetitiveProvider } from './competitive/provider'
 
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
@@ -60,9 +61,11 @@ const Router = () => {
 			<Route path='/pause' element={<Pause />} />
 			<Route path='/options' element={<Options />} />
 
-			<Route path='/competitive/lobby' element={<Lobby />} />
-			<Route path='/competitive/lobby/mode' element={<Mode />} />
-			<Route path='/competitive/game' element={<Game />} />
+			<Route path='/competitive' element={<CompetitiveProvider />}>
+				<Route path='lobby' element={<Lobby />} />
+				<Route path='lobby/mode' element={<Mode />} />
+				<Route path='game' element={<Game />} />
+			</Route>
 			
 			<Route path='/outlaw' element={<>
 				<Hud />

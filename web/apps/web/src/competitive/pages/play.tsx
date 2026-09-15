@@ -2,10 +2,16 @@ import { Button } from "@workspace/ui/components/button"
 import { ButtonGroup } from "@workspace/ui/components/button-group"
 import { useNavigate } from "react-router"
 import { MODES } from "../constants"
+import { useContext } from "react"
+import { CompetitiveContext } from "../context"
+import { asserts } from "@lenix/lenix"
 
 export const Play = () => {
 	const nav = useNavigate()
-	const mode = 'street_fight'
+	const context = useContext(CompetitiveContext)
+	asserts(context, `Failed to use competitive context`)
+
+	const mode = context.selectedMode
 
 	return (
 		<div className="size-full flex items-end justify-start px-2xl">
