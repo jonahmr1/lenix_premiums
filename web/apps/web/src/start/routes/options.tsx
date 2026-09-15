@@ -62,7 +62,7 @@ export const Options = () => {
 	return (
 		<Layout className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
 			<h1 className="uppercase text-fluid-9 font-black italic">Options</h1>
-			<div className="flex justify-center *:text-fluid-2 size-full">
+			<div className="flex justify-center *:text-fluid-2 size-full gap-xs">
 				<PreviousButton
 					tabs={tabs}
 					value={state}
