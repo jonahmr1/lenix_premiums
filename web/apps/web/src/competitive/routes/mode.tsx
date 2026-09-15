@@ -35,13 +35,17 @@ export const Mode = () => {
 							{(() => {
 								const classNames = [
 									'text-fluid-2 uppercase',
-									'text-fluid-2 uppercase font-semibold italic'
+									'text-fluid-2 uppercase font-semibold'
 								]
 								return <>
 									<Badge>
 										<span className={classNames[0]}>Maps: </span>	
 										<span className={classNames[1]}>{mode.maps.map(map => MAPS[map].label).join(' / ')}</span>	
 									</Badge>
+									{'scoreLimit' in mode && <Badge>
+										<span className={classNames[0]}>Score Limit: </span>	
+										<span className={`${classNames[1]} uppercase`}>{mode.scoreLimit}</span>	
+									</Badge>}
 									{'duration' in mode && <Badge>
 										<span className={classNames[0]}>Duration: </span>	
 										<span className={`${classNames[1]} uppercase`}>{(mode.duration / 1000) / 60} Minutes</span>	

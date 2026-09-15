@@ -49,21 +49,23 @@ interface ModeDataBase {
 
 type ModeData = ModeDataBase | ModeDataBase & {
 	duration: number
+	scoreLimit: number
 }
 
 export const MODES: Record<string, ModeData> = {
 	team_deathmatch: {
 		label: 'Team Deathmatch',
-		description: 'Two teams battle to earn the most eliminations. First team to reach the score limit wins.',
+		description: 'Teams battle for the highest score. Reach the kill limit or have the most eliminations when the timer expires to win.',
 		image: deathmatch,
 		maps: ['italien_street', 'cinema_studio'],
 		duration: 90_000,
 		teams: 2,
 		players: 4,
+		scoreLimit: 60
 	},
 	street_fight: {
 		label: 'Street Fight',
-		description: '',
+		description: 'Take on rival teams and fight to survive. The last team standing wins.',
 		image: streetfight,
 		maps: ['cinema_studio'],
 		teams: 4,
