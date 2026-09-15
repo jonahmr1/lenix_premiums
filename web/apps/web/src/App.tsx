@@ -26,14 +26,14 @@ import { Options } from './start/routes/options'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = 'outlaw'
-export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && module === dev ? cb() : undefined
+const dev = true
+export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && /* module ===  */dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/outlaw'))
+		DEV(() => nav('/start/starting'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
