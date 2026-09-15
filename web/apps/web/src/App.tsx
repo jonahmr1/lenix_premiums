@@ -34,7 +34,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/lobby'))
+		DEV(() => nav('/'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -55,14 +55,15 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/*' element={<NotFound />} />
-			<Route path='/start/starting' element={<Starting />} />
-			<Route path='/start/credit' element={<Credit />} />
-			<Route path='/start/pause' element={<Pause />} />
-			<Route path='/start/options' element={<Options />} />
-			<Route path='/competitive/lobby' element={<Lobby />}>
-				<Route path='mode' element={<Mode />} />
-			</Route>
+			<Route path='/' element={<Starting />} />
+			<Route path='/credit' element={<Credit />} />
+			<Route path='/pause' element={<Pause />} />
+			<Route path='/options' element={<Options />} />
+
+			<Route path='/competitive/lobby' element={<Lobby />} />
+			<Route path='/competitive/lobby/mode' element={<Mode />} />
 			<Route path='/competitive/game' element={<Game />} />
+			
 			<Route path='/outlaw' element={<>
 				<Hud />
 				<Roster />
