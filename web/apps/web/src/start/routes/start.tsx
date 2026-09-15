@@ -41,12 +41,12 @@ export const Starting = () => {
 		},
 		{
 			label: 'Options',
-			onClick: () => nav('/start/options'),
+			onClick: () => nav('/options'),
 			styles: 'mt-10'
 		},
 		{
 			label: 'Credit',
-			onClick: () => nav('/start/credit')
+			onClick: () => nav('/credit')
 		},
 		{
 			label: 'Quit',
