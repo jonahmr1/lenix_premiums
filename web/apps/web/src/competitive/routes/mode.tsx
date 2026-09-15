@@ -4,9 +4,10 @@ import { ButtonGroup } from '@workspace/ui/components/button-group'
 import { KbdGroup } from '@workspace/ui/components/kbd'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router'
-import { MODES } from '../constants'
+import { MAPS, MODES } from '../constants'
 import { asserts, entries } from '@lenix/lenix'
 import { CompetitiveContext } from '../context'
+import { Badge } from '@workspace/ui/components/badge'
 
 export const Mode = () => {
 	const nav = useNavigate()
@@ -14,18 +15,49 @@ export const Mode = () => {
 	asserts(context, `Failed to use competitive context`)
 	
 	const { selectedMode, setSelectedMode } = context
+	const mode = MODES[selectedMode]
 
 	return (
 		<div className="relative isolate h-screen w-full">
 			<img
-				src={MODES[selectedMode].image}
+				src={mode.image}
 				className="absolute -z-2 size-full object-cover"
 			/>
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
 			<div className="size-full flex items-start flex-col px-5xl py-xl">
 				<div className='flex flex-10 justify-evenly flex-col'>
-					<div className='uppercase text-fluid-12 font-black text-neutral-100'>
-						{MODES[selectedMode].label}
+					<div>
+						<p className='uppercase text-fluid-12 font-black text-neutral-100'>{mode.label}</p>
+						<div className='flex gap-sm'>
+							{(() => {
+								const classNames = [
+									'text-fluid-2 uppercase',
+									'text-fluid-2 uppercase font-semibold italic'
+								]
+								return <>
+									<Badge>
+										<span className={classNames[0]}>Maps: </span>	
+										<span className={classNames[1]}>{mode.maps.map(map => MAPS[map].label).join(' / ')}</span>	
+									</Badge>
+									{/* {'duration' in mode && <Badge>
+										<span className={classNames[0]}>Duration: </span>	
+										<span className={classNames[1]}>{(mode.duration / 1000) / 60}m</span>	
+									</Badge>} */}
+									<Badge>
+										<span className={classNames[0]}>Teams: </span>	
+										<span className={classNames[1]}>{mode.teams}</span>	
+									</Badge>
+									<Badge>
+										<span className={classNames[0]}>Players: </span>	
+										<span className={classNames[1]}>{mode.players}</span>	
+									</Badge>
+									<Badge>
+										<span className={classNames[0]}>Total Players: </span>	
+										<span className={classNames[1]}>{mode.teams * mode.players}</span>	
+									</Badge>
+								</>
+							})()}
+						</div>
 					</div>
 					<div>
 						<div className='flex gap-md'>
