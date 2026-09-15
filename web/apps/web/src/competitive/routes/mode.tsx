@@ -24,21 +24,21 @@ export const Mode = () => {
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
 			<div className="size-full flex items-start flex-col px-5xl py-xl">
 				<div className='flex flex-10 justify-evenly flex-col'>
-					<div className='uppercase text-fluid-12 font-black'>
+					<div className='uppercase text-fluid-12 font-black text-neutral-100'>
 						{MODES[selectedMode].label}
 					</div>
 					<div>
-						<ButtonGroup>
+						<div className='flex gap-md'>
 							{entries(MODES).map(([mode, data]) => (
 								<Button
 									onClick={() => setSelectedMode(mode)}
-									className='h-auto p-0 group relative'
+									className='h-auto p-0 group relative border border-dark overflow-hidden'
 								>
-									<img src={data.image} className='max-w-[40vmin] group-hover:brightness-100 brightness-75' />
-									<p className='absolute bottom-1/5 uppercase text-fluid-3 text-foreground tracking-tighter'>{data.label}</p>
+									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${selectedMode !== mode && 'brightness-50'}`} />
+									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${selectedMode === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
 							))}
-						</ButtonGroup>
+						</div>
 					</div>
 				</div>
 				<KbdGroup className='flex-1'>
