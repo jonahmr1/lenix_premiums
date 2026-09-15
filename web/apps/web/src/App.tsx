@@ -22,6 +22,7 @@ import { focus, onNuiEmit } from 'lenix/nui'
 import type { Start } from 'types'
 import { NotFound } from './404'
 import { Options } from './start/routes/options'
+import { Mode } from './competitive/routes/mode'
 
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
@@ -58,7 +59,9 @@ const Router = () => {
 			<Route path='/start/credit' element={<Credit />} />
 			<Route path='/start/pause' element={<Pause />} />
 			<Route path='/start/options' element={<Options />} />
-			<Route path='/competitive/lobby' element={<Lobby />} />
+			<Route path='/competitive/lobby' element={<Lobby />}>
+				<Route path='mode' element={<Mode />} />
+			</Route>
 			<Route path='/competitive/game' element={<Game />} />
 			<Route path='/outlaw' element={<>
 				<Hud />
