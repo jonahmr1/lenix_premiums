@@ -24,7 +24,7 @@ export const Index = ({ appName, children }: { appName: string; children: React.
 					</ButtonGroup>
 				</div>
 				<div>
-					<p className='text-muted-foreground text-fluid-2'>{appName}</p>
+					<p className='text-muted-foreground text-fluid-2 font-normal'>{appName}</p>
 				</div>
 			</div>
 			<Separator className='bg-muted-foreground' />

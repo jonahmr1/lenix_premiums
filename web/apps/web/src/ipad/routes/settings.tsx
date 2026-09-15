@@ -16,14 +16,15 @@ export const Settings = ({
 	return (
 		<div className='size-full'>
 			<div className='p-10 gap-3 flex flex-col'>
-				<h1>Appearance</h1>
+				<h1 className='font-black italic text-fluid-3'>Appearance</h1>
 				<Separator />
 				<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
 					<Field className='flex-row'>
 						<FieldContent>
-							<FieldLabel>Landscape orientation</FieldLabel>
+							<FieldLabel htmlFor='orientation'>Landscape orientation</FieldLabel>
 						</FieldContent>
 						<Switch
+							id='orientation'
 							defaultChecked={orientation === 'landscape'}
 							onCheckedChange={value => setOrientation(value ? 'landscape' : 'portrait')}
 						/>
@@ -31,9 +32,9 @@ export const Settings = ({
 					<Separator />
 					<Field className='flex-row'>
 						<FieldContent>
-							<FieldLabel>Light mode</FieldLabel>
+							<FieldLabel htmlFor='theme'>Light mode</FieldLabel>
 						</FieldContent>
-						<Switch defaultChecked={theme === 'light'} onCheckedChange={toggle} />
+						<Switch id='theme' defaultChecked={theme === 'light'} onCheckedChange={toggle} />
 					</Field>
 				</div>
 			</div>
