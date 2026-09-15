@@ -23,11 +23,11 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 	return (
 		<div className="group space-x-2 flex items-center">
 			<Button
-				variant='ghost'
 				onClick={onClick}
 				{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
+				className="border border-input"
 			>
-				<Kbd className="bg-foreground text-background group-hover:bg-background group-hover:text-foreground rounded-md font-black italic">
+				<Kbd className="bg-background text-foreground group-hover:bg-foreground group-hover:text-background rounded-md font-black italic">
 					{Icon}
 				</Kbd>
 				<span className="font-sans">{children}</span>
