@@ -3,6 +3,13 @@
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/oxanium';
 @import '@fontsource-variable/martian-mono/wght.css';
+@import '@fontsource/barlow/100.css';
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/900.css';
+@import '@fontsource/barlow/100-italic.css';
+@import '@fontsource/barlow/600-italic.css';
+@import '@fontsource/barlow/900-italic.css';
 
 @custom-variant dark (&:is(.dark *));
 @source "../../../apps/**/*.{ts,tsx}";
@@ -50,7 +57,9 @@
 	--radius-2xl: calc(var(--radius) * 1.8);
 	--radius-3xl: calc(var(--radius) * 2.2);
 	--radius-4xl: calc(var(--radius) * 2.6);
-	--font-sans: 'Oxanium Variable', sans-serif;
+	--font-barlow: 'Barlow', sans-serif;
+	--font-oxanium: 'Oxanium Variable', sans-serif;
+	--font-sans: var(--font-barlow);
 	
 	--color-light: var(--color-neutral-400);
 	--color-dark: var(--color-neutral-700);
