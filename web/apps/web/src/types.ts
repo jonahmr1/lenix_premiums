@@ -3,6 +3,6 @@ export interface Storage {
 }
 export interface Tab {
 	label: string
+	content: React.ReactNode
 	disabled?: true
-	content?: React.ReactNode
 }

@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
 import type { Tab } from "@/types"
 import { useNavigate } from "react-router"
 import { Layout } from "@/components/layout"
+import { Play } from "../pages/play"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -33,21 +34,26 @@ export const Lobby = () => {
 	const tabs: Tab[] = [
 		{
 			label: 'Play',
+			content: <Play />
 		},
 		{
 			label: 'Arsenal',
+			content: '',
 			disabled: true
 		},
 		{
 			label: 'Operator',
+			content: '',
 			disabled: true
 		},
 		{
 			label: 'Battlepass',
+			content: '',
 			disabled: true
 		},
 		{
 			label: 'Store',
+			content: '',
 			disabled: true
 		},
 	]
@@ -55,11 +61,11 @@ export const Lobby = () => {
 	if (!state) return null
 
 	return <>
-		<div className="w-full h-screen">
+		<div className="w-full h-screen flex flex-col">
 			<Tabs
 				value={tab.toString()}
 				onValueChange={$ => setTab(Number($))}
-				className="w-full h-92/100"
+				className="w-full flex-20"
 			>
 				<div className="w-full flex flex-row h-15/100">
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
@@ -112,11 +118,11 @@ export const Lobby = () => {
 						key={i}
 						value={i.toString()}
 						className="size-full place-content-center place-items-center"
-					>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
+					>{tab.content}</TabsContent>
 				))}
 			</Tabs>
 			{/* footer */}
-			<Layout className="h-7/100 flex items-center">
+			<Layout className="flex-1 flex items-center">
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
