@@ -23,10 +23,9 @@ export const Starting = () => {
 			label: 'Competitive',
 			onClick: () => {
 				fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'competitive' })
-				nav('/competitive')
+				nav('/competitive/lobby')
 				unFocus()
 			},
-			disabled: true
 		},
 		{
 			label: 'Outlaw',
