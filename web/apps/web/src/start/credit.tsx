@@ -59,9 +59,7 @@ export const Credit = () => {
 							))}
 						</div>
 						<div className="flex-1">
-							{names.map(name => (
-								<p key={name}>{name}</p>
-							))}
+							{names.map(name => <p key={name}>{name}</p>)}
 						</div>
 					</div>
 				))}
