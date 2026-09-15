@@ -70,7 +70,7 @@ export const Mode = () => {
 						{entries(MODES).map(([mode, data]) => (
 							<Button
 								onClick={() => setSelectedMode(mode)}
-								className='h-auto p-0 group relative border border-dark overflow-hidden'
+								className='h-auto p-0 group relative border border-input hover:border-dark overflow-hidden'
 							>
 								<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${selectedMode !== mode && 'brightness-50'}`} />
 								<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${selectedMode === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
