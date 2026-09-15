@@ -59,7 +59,7 @@ export const Lobby = () => {
 			<Tabs
 				value={tab.toString()}
 				onValueChange={$ => setTab(Number($))}
-				className="w-full h-93/100"
+				className="w-full h-92/100"
 			>
 				<div className="w-full flex flex-row h-15/100">
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
