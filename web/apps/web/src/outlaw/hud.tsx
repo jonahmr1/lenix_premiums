@@ -107,15 +107,15 @@ export const Hud = () => {
 			{/* Weaponary */}
 			<Layout className='absolute bottom-0 right-0 flex items-start justify-end gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
-				<div className='flex flex-col gap-2 items-end justify-between text-white/75 text-shadow-md'>
+				<div className='flex flex-col gap-2 items-end justify-between text-neutral-300 text-shadow-md'>
 					<div className='flex justify-between'>
 						<div className='flex gap-1 items-start'>
 							<p
 								className={`text-fluid-6 font-number font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 2 ? undefined : state.weapon.clipAmmo <= state.weapon.clipSize / 4 ? 'text-red-500 text-shadow-red-500 glow-sm' : 'text-orange-600 text-shadow-orange-600'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
-							<Separator orientation='vertical' className='bg-white/50 h-9/10' />
-							<p className='brightness-75 leading-none'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
+							<Separator orientation='vertical' className='bg-neutral-300 h-9/10' />
+							<p className='leading-none'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 						</div>
 					</div>
 						<p className='truncate font-semibold italic'>{state.weapon.name}</p>
