@@ -17,13 +17,14 @@ export const Mode = () => {
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
 			<div className="size-full flex items-start flex-col px-5xl py-xl">
 				<div className='flex flex-10 justify-evenly flex-col'>
-					<div className='uppercase italic text-fluid-6 font-black'>
+					<div className='uppercase text-fluid-12 font-black'>
 						Deathmatch
 					</div>
 					<div>
 						<ButtonGroup>
-							<Button className='h-auto p-0 group'>
-								<img src={deathmatch} className='max-w-[40vmin] group-hover:brightness-75' />
+							<Button className='h-auto p-0 group relative'>
+								<img src={deathmatch} className='max-w-[40vmin] group-hover:brightness-100 brightness-75' />
+								<p className='absolute bottom-1/5 uppercase font-semibold text-fluid-3 text-foreground tracking-tighter'>Deathmatch</p>
 							</Button>
 						</ButtonGroup>
 					</div>

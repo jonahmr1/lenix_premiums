@@ -101,7 +101,7 @@ export const Options = () => {
 							key={i}
 							value={i.toString()}
 							className="size-full place-content-center place-items-center bg-border"
-						>{tab.content ?? <p className="text-fluid-5 font-normal">{tab.label}...</p>}</TabsContent>
+						>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
 					))}
 				</Tabs>
 				<NextButton
