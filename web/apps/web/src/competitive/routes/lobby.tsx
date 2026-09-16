@@ -68,7 +68,7 @@ export const Lobby = () => {
 				onValueChange={$ => setTab(Number($))}
 				className="w-full h-full"
 			>
-				<div className="w-full flex flex-row h-15/100">
+				<div className="w-full flex flex-row">
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
 					<div className="flex flex-2 items-center">
 						<PreviousButton
