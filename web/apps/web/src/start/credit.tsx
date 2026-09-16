@@ -36,8 +36,8 @@ export const Credit = () => {
 	]
 
 	return (
-		<Layout type="p" className="h-screen flex flex-col items-center bg-background ">
-			<div className="h-9/10 flex flex-col justify-evenly">
+		<Layout type="p" className="h-screen flex flex-col items-center bg-background">
+			<div className="h-full flex flex-col justify-evenly">
 				<div className="flex flex-col items-center justify-center gap-10 w-full">
 					<p>Designed, Developed and Produced by</p>
 					<div className="w-1/9 flex flex-col items-center gap-2">
