@@ -73,7 +73,17 @@ export const Mode = () => {
 							})()}
 						</div>
 					</div>
-					<div className='flex items-end gap-md overflow-x-scroll'>
+					<div className='
+						flex items-end gap-md overflow-x-scroll pb-xs
+						[&::-webkit-scrollbar]:h-xs
+						hover:[--scrollbar-fix:1]
+						[&:hover::-webkit-scrollbar-track]:bg-card
+						[&::-webkit-scrollbar-track]:border-front/20
+						[&::-webkit-scrollbar-track]:rounded-md
+						[&:hover::-webkit-scrollbar-thumb]:bg-front
+						[&::-webkit-scrollbar-thumb]:rounded-md
+						[&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
+						'>
 						{entries(MODES).map(([mode, data]) => (
 							<div className='flex flex-col'>
 								<Button
