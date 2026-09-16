@@ -70,9 +70,9 @@ export const Options = () => {
 	const nav = useNavigate()
 
 	return (
-		<div className="h-screen w-full flex flex-col px-5xl gap-sm backdrop-blur-sm">
-			<h1 className="uppercase text-fluid-9 font-black italic">Options</h1>
-			<div className="flex justify-center *:text-fluid-2 size-full gap-xs">
+		<Layout type="p" className="h-screen w-full flex flex-col gap-sm">
+			<h1 className="uppercase text-fluid-9 font-black italic leading-none">Options</h1>
+			<div className="flex justify-center *:text-fluid-2 size-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}
 					value={state}
@@ -111,7 +111,7 @@ export const Options = () => {
 					E
 				</NextButton>
 			</div>
-			<KbdGroup>
+			<KbdGroup className="px-3xl">
 				<NavKbd
 					onClick={() => nav(-1)}
 					icon='Esc'
@@ -120,6 +120,6 @@ export const Options = () => {
 					Back
 				</NavKbd>
 			</KbdGroup>
-		</div>
+		</Layout>
 	)
 }
