@@ -50,7 +50,7 @@ export const Play = () => {
 						animate={{ width: 'auto' }}
 						whileHover={{ width: '100%' }}
 						className="group justify-between transition"
-						onClick={() =>{
+						onClick={() => {
 							toast('Missions are not available yet', { toasterId: 'notify' })
 							audio.unavailable()
 						}}
