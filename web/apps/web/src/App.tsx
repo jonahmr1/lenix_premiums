@@ -35,7 +35,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/game'))
+		DEV(() => nav('/competitive/lobby'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -84,7 +84,7 @@ export const App = () => {
 			{DEV(() => (
 				<>
 					<img
-						src={`${theme}.png`}
+						src={`lobby.png`}
 						className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
 					/>
 					<Button
@@ -104,7 +104,7 @@ export const App = () => {
 					expand={false}
 					toastOptions={{
 						classNames: {
-							default: 'bg-transparent! border-transparent! shadow-none! text-background! font-semibold text-shadow-sm! text-fluid-2! justify-center'
+							default: 'bg-transparent! border-transparent! shadow-none! text-foreground! font-semibold text-shadow-sm! text-fluid-2! justify-center'
 						}
 					}}
 				/>
