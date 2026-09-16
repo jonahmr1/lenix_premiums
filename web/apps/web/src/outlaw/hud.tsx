@@ -79,7 +79,7 @@ export const Hud = () => {
 					}}
 				/>
 			</div>
-			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5'>
+			{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5 gap-px'>
 				<p className='text-fluid-1.5 leading-3 text-neutral-200 text-shadow-sm'>{state[variant]}%</p>
 				<div className='w-full h-2/3 p-px border border-neutral-400 rounded-md items-center justify-center flex bg-light/30'>
 					<div className='size-full bg-neutral-400/80 rounded-md relative overflow-hidden'>
