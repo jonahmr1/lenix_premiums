@@ -8,7 +8,7 @@ export const Layout = ({
 	children: React.ReactNode
 	className?: React.ComponentProps<'div'>['className']
 } & React.ComponentProps<'div'>) => (
-	<div className={cn('p-xl', className)} {...prop}>
+	<div className={cn('px-2xl py-xs', className)} {...prop}>
 		{children}
 	</div>
 )

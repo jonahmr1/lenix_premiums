@@ -65,7 +65,7 @@ export const Lobby = () => {
 			<Tabs
 				value={tab.toString()}
 				onValueChange={$ => setTab(Number($))}
-				className="w-full flex-20"
+				className="w-full flex-10"
 			>
 				<div className="w-full flex flex-row h-15/100">
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
@@ -121,7 +121,7 @@ export const Lobby = () => {
 				))}
 			</Tabs>
 			{/* footer */}
-			<Layout className="flex-1 flex items-center">
+			<Layout className="flex-1 flex items-center pt-0">
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
