@@ -29,7 +29,7 @@ library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
 const dev = true
-export const DEV = <T,>(cb: () => T, module: typeof dev = dev): T | undefined => import.meta.env.DEV && /* module ===  */dev ? cb() : undefined
+export const DEV = <T,>(cb: () => T, _module: typeof dev | any = dev): T | undefined => import.meta.env.DEV && /* module ===  */dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()

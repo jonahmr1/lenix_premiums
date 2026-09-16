@@ -1,12 +1,12 @@
-import { audiobility, toast } from "@workspace/ui/lib/utils"
+import { audiobility } from "@workspace/ui/lib/utils"
 import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
 import { Button } from "@workspace/ui/components/button"
-import type { ButtonStart } from "../types"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
+import type { ButtonStart } from "@/start/types"
 
 export const Pause = () => {
 	const nav = useNavigate()

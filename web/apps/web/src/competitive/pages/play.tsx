@@ -6,7 +6,7 @@ import { MODES } from "../constants"
 import { useContext } from "react"
 import { CompetitiveContext } from "../context"
 import { asserts } from "@lenix/lenix"
-import { ArrowRight, ClipboardX } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Xbox } from "@/components/xbox"
 import { toast } from "@workspace/ui/lib/utils"
 
