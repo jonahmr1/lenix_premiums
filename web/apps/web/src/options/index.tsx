@@ -8,59 +8,58 @@ import { KbdGroup } from "@workspace/ui/components/kbd"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
-
 const tabs: Tab[] = [
 	{
 		label: 'General',
-		content: ''
+		content: <p className="text-fluid-5">General...</p>
 	},
 	{
 		label: 'Graphics', /* Advanced Graphics */
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Keybinds',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Audio', /* Voice Chat */
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Interface', /* Display */
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Camera',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Keyboard / Mouse',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 	},
 	{
 		label: 'Gamepad',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 		disabled: true
 	},
 	{
 		label: 'Brief',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 		disabled: true
 	},
 	{
 		label: 'Stats',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 		disabled: true
 	},
 	{
 		label: 'Gallery',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 		disabled: true
 	},
 	{
 		label: 'Editor',
-		content: '',
+		content: <p className="text-fluid-5">...</p>,
 		disabled: true
 	},
 ]
@@ -100,7 +99,7 @@ export const Options = () => {
 							key={i}
 							value={i.toString()}
 							className="size-full place-content-center place-items-center bg-border"
-						>{tab.content ?? <p className="text-fluid-5">{tab.label}...</p>}</TabsContent>
+						>{tab.content}</TabsContent>
 					))}
 				</Tabs>
 				<NextButton
