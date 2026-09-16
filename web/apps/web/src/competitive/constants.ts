@@ -1,5 +1,6 @@
 import deathmatch from '@workspace/ui/assets/competitive/lobby/team_deathmatch.png'
 import streetfight from '@workspace/ui/assets/competitive/lobby/street_fight.png'
+import hostageextraction from '@workspace/ui/assets/competitive/lobby/hostage_extraction.png'
 
 export const MAPS = {
 	italien_street: {
@@ -70,5 +71,13 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio'],
 		teams: 4,
 		players: 4,
-	}
+	},
+	extraction: {
+		label: 'Hostage Extraction',
+		description: 'Two teams battle over a hostage. SWAT pushes in to extract the hostage while the Criminals defends from inside.',
+		image: hostageextraction,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 2,
+		players: 5,
+	},
 } as const
