@@ -1,6 +1,8 @@
 import { DEV } from "@/App"
 import { Layout } from "@/components/layout"
+import { anim } from "@/lib"
 import { random } from "@lenix/lenix"
+import { motion } from "motion/react"
 import { useEffect, useState } from "react"
 
 const segments = 6
@@ -63,7 +65,7 @@ export const Hud = () => {
 			})
 
 			const interval = setInterval(() => {
-				setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4)}}) : prev)
+				setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4) } }) : prev)
 			}, 1000)
 
 			return () => clearInterval(interval)
@@ -76,21 +78,23 @@ export const Hud = () => {
 		<>
 			{/* Health */}
 			<Layout className="absolute bottom-0 left-0 perspective-left-100">
-				<div className="flex items-end text-white">
+				<div className="flex items-end text-light">
 					<p className="leading-tight text-fluid-2">{state.health}</p>
-					<p className="text-fluid-1.5 text-white/70">/{maxHealth}</p>
+					<p className="text-fluid-1.5 text-light/70">/{maxHealth}</p>
 				</div>
 				<div className="flex gap-px">
 					{[...Array(segments).keys()].map(index => (
 						<div key={index} className="w-7 h-4 bg-white/25 rounded-xs overflow-hidden">
-							<div
-								className="bg-white h-full rounded-xs"
-								style={{
+							<motion.div
+								{...anim}
+								initial={false}
+								animate={{
 									width: `${Math.min(
-										maxHealth,
-										Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * maxHealth),
-									)}%`
+										100,
+										Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * 100),
+									)}%`,
 								}}
+								className="bg-light h-full rounded-xs"
 							/>
 						</div>
 					))}
