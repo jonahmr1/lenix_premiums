@@ -11,10 +11,10 @@ import { useNavigate } from "react-router"
 const KeyboardMouse = () => {
 	return (
 		<div className="size-full border flex">
-			<div className="w-1/3">
-
-			</div>
 			<div className="w-2/3">
+				
+			</div>
+			<div className="w-1/3">
 			
 			</div>
 		</div>
