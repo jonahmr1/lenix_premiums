@@ -4,6 +4,7 @@ import hostageextraction from '@workspace/ui/assets/competitive/lobby/hostage_ex
 import bombplant from '@workspace/ui/assets/competitive/lobby/bomb_plant.png'
 import domination from '@workspace/ui/assets/competitive/lobby/domination.png'
 import flagcapture from '@workspace/ui/assets/competitive/lobby/flag_capture.png'
+import armsrace from '@workspace/ui/assets/competitive/lobby/arms_race.png'
 
 export const MAPS = {
 	italien_street: {
@@ -103,11 +104,20 @@ export const MODES: Record<string, ModeData> = {
 		players: 12,
 	},
 	flag_capture: {
-		label: 'Flag Caprute',
-		description: '',
+		label: 'Flag Capture',
+		description: 'Capture the enemy flag and return it to your base while defending your own. First team to reach the score limit wins.',
 		image: flagcapture,
 		maps: ['cinema_studio', 'italien_street'],
+		scoreLimit: 10,
 		teams: 3,
-		players: 5,
+		players: 4,
+	},
+	arms_race: {
+		label: 'Arms Race',
+		description: 'Eliminate enemies to advance through a set of weapons. The first player to complete the weapon progression wins.',
+		image: armsrace,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 10,
+		players: 1,
 	},
 } as const
