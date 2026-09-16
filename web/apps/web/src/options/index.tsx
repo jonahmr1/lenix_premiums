@@ -70,7 +70,7 @@ export const Options = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
+		<div className="h-screen w-full flex flex-col px-5xl gap-sm backdrop-blur-sm">
 			<h1 className="uppercase text-fluid-9 font-black italic">Options</h1>
 			<div className="flex justify-center *:text-fluid-2 size-full gap-xs">
 				<PreviousButton
@@ -120,6 +120,6 @@ export const Options = () => {
 					Back
 				</NavKbd>
 			</KbdGroup>
-		</Layout>
+		</div>
 	)
 }
