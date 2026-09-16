@@ -27,8 +27,8 @@ export const Mode = () => {
 				className="absolute -z-2 size-full object-cover"
 			/>
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
-			<div className="size-full flex items-start flex-col px-5xl py-xl">
-				<div className='size-full flex flex-10 justify-evenly flex-col gap-5xl'>
+			<div className="size-full flex items-start flex-col px-5xl">
+				<div className='size-full flex h-9/10 justify-evenly flex-col gap-5xl'>
 					<div className='w-full h-2/4 flex flex-col justify-end gap-md'>
 						<div>
 							<p className='uppercase text-fluid-12 leading-none font-black text-neutral-50'>{mode.label}</p>
@@ -78,7 +78,7 @@ export const Mode = () => {
 									className='h-auto p-0 group relative border border-chart-3 hover:border-front overflow-hidden'
 								>
 									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
-									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter transition-all ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
+									<p className={`absolute bottom-1/6 uppercase text-fluid-2 tracking-tighter transition-all ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
 								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
 									<motion.p
@@ -93,7 +93,7 @@ export const Mode = () => {
 						))}
 					</div>
 				</div>
-				<KbdGroup className='flex-1'>
+				<KbdGroup className='h-1/10'>
 					<NavKbd
 						onClick={() => nav(-1)}
 						keybind='Escape'
