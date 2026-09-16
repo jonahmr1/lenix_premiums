@@ -51,6 +51,7 @@ interface ModeDataBase {
 	maps: (keyof typeof MAPS)[]
 	teams: number
 	players: number
+	disabled?: true
 }
 
 type ModeData = ModeDataBase | ModeDataBase & {
@@ -69,7 +70,7 @@ export const MODES: Record<string, ModeData> = {
 		duration: 90_000,
 		teams: 2,
 		players: 4,
-		scoreLimit: 60
+		scoreLimit: 60,
 	},
 	street_fight: {
 		label: 'Street Fight',
@@ -86,6 +87,7 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 2,
 		players: 5,
+		disabled: true
 	},
 	bomb_plant: {
 		label: 'Bomb Plant',
@@ -94,6 +96,7 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 2,
 		players: 5,
+		disabled: true
 	},
 	domination: {
 		label: 'Domination',
@@ -103,6 +106,7 @@ export const MODES: Record<string, ModeData> = {
 		points: ['Alpha', 'Bravo', 'Charlie'],
 		teams: 2,
 		players: 12,
+		disabled: true
 	},
 	flag_capture: {
 		label: 'Flag Capture',
@@ -112,6 +116,7 @@ export const MODES: Record<string, ModeData> = {
 		scoreLimit: 10,
 		teams: 3,
 		players: 4,
+		disabled: true
 	},
 	arms_race: {
 		label: 'Arms Race',
@@ -120,6 +125,7 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 10,
 		players: 1,
+		disabled: true
 	},
 	convoy_shift: {
 		label: 'Convoy Shift',
@@ -128,5 +134,6 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 2,
 		players: 6,
+		disabled: true
 	},
 } as const
