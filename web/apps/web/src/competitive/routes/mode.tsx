@@ -12,7 +12,7 @@ export const Mode = () => {
 	const nav = useNavigate()
 	const context = useContext(CompetitiveContext)
 	asserts(context, `Failed to use competitive context`)
-	
+
 	const { selectedMode, setSelectedMode } = context
 	const [preview, setPreview] = useState<keyof typeof MODES>(selectedMode)
 
@@ -36,32 +36,32 @@ export const Mode = () => {
 							{(() => {
 								const classNames = [
 									'text-fluid-2 uppercase',
-									'text-fluid-2 uppercase font-semibold'
+									'text-fluid-2 uppercase font-semibold',
 								]
 								return <>
 									<Badge>
-										<span className={classNames[0]}>Maps: </span>	
-										<span className={classNames[1]}>{mode.maps.map(map => MAPS[map].label).join(' / ')}</span>	
+										<span className={classNames[0]}>Maps: </span>
+										<span className={classNames[1]}>{mode.maps.map(map => MAPS[map].label).join(' / ')}</span>
 									</Badge>
 									{'scoreLimit' in mode && <Badge>
-										<span className={classNames[0]}>Score Limit: </span>	
-										<span className={`${classNames[1]} uppercase`}>{mode.scoreLimit}</span>	
+										<span className={classNames[0]}>Score Limit: </span>
+										<span className={`${classNames[1]} uppercase`}>{mode.scoreLimit}</span>
 									</Badge>}
 									{'duration' in mode && <Badge>
-										<span className={classNames[0]}>Duration: </span>	
-										<span className={`${classNames[1]} uppercase`}>{(mode.duration / 1000) / 60} Minutes</span>	
+										<span className={classNames[0]}>Duration: </span>
+										<span className={`${classNames[1]} uppercase`}>{(mode.duration / 1000) / 60} Minutes</span>
 									</Badge>}
 									<Badge>
-										<span className={classNames[0]}>Teams: </span>	
-										<span className={classNames[1]}>{mode.teams}</span>	
+										<span className={classNames[0]}>Teams: </span>
+										<span className={classNames[1]}>{mode.teams}</span>
 									</Badge>
 									<Badge>
-										<span className={classNames[0]}>Players: </span>	
-										<span className={classNames[1]}>{mode.players}</span>	
+										<span className={classNames[0]}>Players: </span>
+										<span className={classNames[1]}>{mode.players}</span>
 									</Badge>
 									<Badge>
-										<span className={classNames[0]}>Total Players: </span>	
-										<span className={classNames[1]}>{mode.teams * mode.players}</span>	
+										<span className={classNames[0]}>Total Players: </span>
+										<span className={classNames[1]}>{mode.teams * mode.players}</span>
 									</Badge>
 								</>
 							})()}
@@ -72,13 +72,14 @@ export const Mode = () => {
 							<div className='flex flex-col'>
 								<Button
 									onClick={() => setSelectedMode(mode)}
-									onMouseEnter={() => setPreview(mode)}
-									className='h-auto p-0 group relative border border-input hover:border-dark overflow-hidden'
+									onMouseOver={() => setPreview(mode)}
+									onMouseLeave={() => setPreview(selectedMode)}
+									className='h-auto p-0 group relative border border-chart-3 hover:border-front overflow-hidden'
 								>
 									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
 									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
-								{selectedMode === mode && <p className='bg-foreground text-background text-center uppercase font-semibold'>Selected</p>}
+								{selectedMode === mode && <p className='bg-foreground text-background text-center uppercase font-semibold border-b border-x border-chart-5'>Selected</p>}
 							</div>
 						))}
 					</div>

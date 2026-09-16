@@ -7,7 +7,7 @@ import hover from '../assets/start/hover.mp3'
 
 export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
 	const audio = new Audio(src === 'hover' ? hover : src === 'click' ? click : customAudio)
-	audio.volume = src === 'hover' ? 0.03 : src === 'click' ? 1.0 : customVolume
+	audio.volume = src === 'hover' ? 0.2 : src === 'click' ? 1.0 : customVolume
 	audio.play()
 }
 

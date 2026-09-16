@@ -61,8 +61,8 @@
 	--font-oxanium: 'Oxanium Variable', sans-serif;
 	--font-sans: var(--font-barlow);
 	
-	--color-light: var(--color-neutral-400);
-	--color-dark: var(--color-neutral-700);
+	--color-light: var(--color-neutral-300);
+	--color-dark: var(--color-neutral-800);
 	--color-front: var(--front);
 
 	--spacing-2xs: 0.5vmin;
