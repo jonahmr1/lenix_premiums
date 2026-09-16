@@ -1,10 +1,13 @@
 import { Button } from "@workspace/ui/components/button"
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@workspace/ui/components/card"
 import { ButtonGroup } from "@workspace/ui/components/button-group"
 import { useNavigate } from "react-router"
 import { MODES } from "../constants"
 import { useContext } from "react"
 import { CompetitiveContext } from "../context"
 import { asserts } from "@lenix/lenix"
+import { ArrowRight, ClipboardX } from "lucide-react"
+import { Xbox } from "@/components/xbox"
 
 export const Play = () => {
 	const nav = useNavigate()
@@ -14,8 +17,8 @@ export const Play = () => {
 	const mode = context.selectedMode
 
 	return (
-		<div className="size-full flex items-end justify-start px-2xl">
-			<ButtonGroup orientation='vertical'>
+		<div className="size-full flex justify-between px-2xl">
+			<ButtonGroup orientation='vertical' className="h-full justify-end">
 				<Button
 					className="h-auto p-0 relative hover:brightness-75"
 					onClick={() => nav('/competitive/lobby/mode')}
@@ -26,6 +29,22 @@ export const Play = () => {
 				</Button>
 				<Button size='lg' className="uppercase border-t text-fluid-5! font-black italic px-4xl py-xl hover:text-foreground hover:bg-background">Start</Button>
 			</ButtonGroup>
+			<Card className="w-1/5 h-1/2 self-center">
+				<CardHeader>
+					<CardTitle className="text-fluid-3 uppercase font-black italic tracking-normal">Missions</CardTitle>
+					<CardDescription>All the upcoming missions and it's progress will show up here</CardDescription>
+					<CardAction className="font-normal">No Mission</CardAction>
+				</CardHeader>
+				<CardContent className="size-full">
+					<Xbox />
+				</CardContent>
+				<CardFooter>
+					<Button variant='outline' className="hover:w-full [interpolate-size:allow-keywords] transition-[width] group justify-between duration-400">
+						View Missions
+						<ArrowRight className="hidden group-hover:block" />
+					</Button>
+				</CardFooter>
+			</Card>
 		</div>
 	)
 }
