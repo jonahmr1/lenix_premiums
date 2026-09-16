@@ -53,6 +53,10 @@ export const Mode = () => {
 										<span className={classNames[0]}>Duration: </span>
 										<span className={`${classNames[1]} uppercase`}>{(mode.duration / 1000) / 60} Minutes</span>
 									</Badge>}
+									{'points' in mode && <Badge>
+										<span className={classNames[0]}>Points: </span>
+										<span className={`${classNames[1]} uppercase`}>{mode.points.join(' / ')}</span>
+									</Badge>}
 									<Badge>
 										<span className={classNames[0]}>Teams: </span>
 										<span className={classNames[1]}>{mode.teams}</span>
@@ -69,7 +73,7 @@ export const Mode = () => {
 							})()}
 						</div>
 					</div>
-					<div className='flex items-end gap-md'>
+					<div className='flex items-end gap-md overflow-x-scroll'>
 						{entries(MODES).map(([mode, data]) => (
 							<div className='flex flex-col'>
 								<Button

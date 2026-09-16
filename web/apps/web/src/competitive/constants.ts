@@ -98,9 +98,9 @@ export const MODES: Record<string, ModeData> = {
 		description: 'Capture and hold three control points to earn points. The team with the most points when the timer ends wins.',
 		image: domination,
 		maps: ['cinema_studio', 'italien_street'],
+		points: ['Alpha', 'Bravo', 'Charlie'],
 		teams: 2,
 		players: 12,
-		points: ['Alpha', 'Bravo', 'Charlie']
 	},
 	flag_capture: {
 		label: 'Flag Caprute',
