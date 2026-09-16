@@ -9,6 +9,10 @@ import { asserts } from "@lenix/lenix"
 import { ArrowRight } from "lucide-react"
 import { Xbox } from "@/components/xbox"
 import { toast } from "@workspace/ui/lib/utils"
+import { motion } from "motion/react"
+import { anim } from "@/lib"
+
+const MotionButton = motion.create(Button)
 
 export const Play = () => {
 	const nav = useNavigate()
@@ -40,14 +44,17 @@ export const Play = () => {
 					<Xbox />
 				</CardContent>
 				<CardFooter>
-					<Button
-						variant='outline'
-						className="hover:w-full [interpolate-size:allow-keywords] transition-[width] group justify-between duration-300"
-						onClick={() => toast.info('Missions are not available yet at the moment')}
+					<MotionButton
+						{...anim}
+						variant="outline"
+						animate={{ width: 'auto' }}
+						whileHover={{ width: '100%' }}
+						className="group justify-between"
+						onClick={() => toast.info('Missions are not available yet')}
 					>
 						View Missions
-						<ArrowRight className="hidden group-hover:block" />
-					</Button>
+						<ArrowRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+					</MotionButton>
 				</CardFooter>
 			</Card>
 		</div>

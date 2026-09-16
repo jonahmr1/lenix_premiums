@@ -7,6 +7,8 @@ import { MAPS, MODES } from '../constants'
 import { asserts, entries } from '@lenix/lenix'
 import { CompetitiveContext } from '../context'
 import { Badge } from '@workspace/ui/components/badge'
+import { motion } from 'motion/react'
+import { anim } from '@/lib'
 
 export const Mode = () => {
 	const nav = useNavigate()
@@ -79,11 +81,13 @@ export const Mode = () => {
 									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter transition-all ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
 								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
-									<p
-										className={`border-b border-x border-chart-5 bg-foreground text-background text-center uppercase font-semibold duration-300 ${selectedMode === mode ? 'translate-y-0' : '-translate-y-full'}`}
+									<motion.p
+										animate={{ y: selectedMode === mode ? '0%' : '-100%' }}
+										className="flex h-full items-center justify-center border-b border-x border-chart-5 bg-foreground text-background uppercase font-semibold"
+										{...anim}
 									>
 										Selected
-									</p>
+									</motion.p>
 								</div>
 							</div>
 						))}
