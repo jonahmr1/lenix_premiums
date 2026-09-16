@@ -10,6 +10,7 @@ import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
 import type { ButtonStart } from './types'
+import { Layout } from '@/components/layout'
 
 const backgrounds = [bg1, bg2, bg3, bg4]
 const image = backgrounds[random(0, backgrounds.length - 1)]
@@ -66,8 +67,8 @@ export const Starting = () => {
 			<div
 				className='absolute size-full -z-1 bg-linear-to-r from-black/50 to-transparent'
 			/>
-			<div className="flex flex-col size-full justify-between">
-				<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center">
+			<Layout type='p' className="relative flex flex-col size-full justify-between">
+				<div className="flex flex-col gap-5 items-start h-9/10 justify-center px-3xl">
 					{buttons.map((button, i) => (
 						<Button
 							key={i}
@@ -78,7 +79,7 @@ export const Starting = () => {
 						>{button.label}</Button>
 					))}
 				</div>
-				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
+				<KbdGroup className='flex px-3xl'>
 					<NavKbd
 						onClick={() => buttons[buttons.length - 1].onClick()}
 						keybind='Escape'
@@ -87,7 +88,7 @@ export const Starting = () => {
 						{buttons[buttons.length - 1].label}
 					</NavKbd>
 				</KbdGroup>
-			</div>
+			</Layout>
 		</div>
 	)
 }
