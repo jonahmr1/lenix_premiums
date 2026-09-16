@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@workspace/ui/components/item"
 import { KbdGroup } from "@workspace/ui/components/kbd"
+import { audiobility } from "@workspace/ui/lib/utils"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -77,12 +78,12 @@ const KeyboardMouse = () => {
 		},
 	]
 	return (
-		<div className="size-full border flex">
-			<div className="w-2/3 overflow-x-scroll">
+		<div className="size-full flex">
+			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
 				{settings.map(setting => (
-					<Item className="bg-background px-lg">
+					<Item className="bg-background px-md hover:invert" onMouseEnter={audiobility.onMouseEnter}>
 						<ItemContent>
-							<ItemTitle className="text-fluid-3 uppercase italic font-semibold">{setting.title}</ItemTitle>
+							<ItemTitle className="text-fluid-2 uppercase italic font-bold tracking-normal">{setting.title}</ItemTitle>
 						</ItemContent>
 						<ItemActions>
 							<Button>Action</Button>
@@ -90,7 +91,7 @@ const KeyboardMouse = () => {
 					</Item>
 				))}
 			</div>
-			<div className="w-1/3">
+			<div className="w-2/5">
 			
 			</div>
 		</div>
@@ -158,9 +159,9 @@ export const Settings = () => {
 	const nav = useNavigate()
 
 	return (
-		<Layout type="p" className="h-screen w-full flex flex-col gap-sm">
+		<Layout type="p" className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
 			<h1 className="uppercase text-fluid-9 font-black italic leading-none">Settings</h1>
-			<div className="flex justify-center *:text-fluid-2 size-full gap-xs px-sm">
+			<div className="flex justify-center *:text-fluid-2 min-h-0 w-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}
 					value={state}
@@ -169,7 +170,7 @@ export const Settings = () => {
 				<Tabs
 					value={state.toString()}
 					onValueChange={$ => setState(Number($))}
-					className="size-full"
+					className="flex-1"
 				>
 					<TabsList className="bg-transparent w-full p-0 gap-xs">
 						{tabs.map((tab, i) => (
@@ -187,7 +188,7 @@ export const Settings = () => {
 						<TabsContent
 							key={i}
 							value={i.toString()}
-							className="size-full"
+							className="overflow-hidden"
 						>{tab.content}</TabsContent>
 					))}
 				</Tabs>
