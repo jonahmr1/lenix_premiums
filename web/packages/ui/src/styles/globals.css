@@ -226,6 +226,7 @@
 
 .scrollbar {
 	@apply [&::-webkit-scrollbar]:h-2xs
+		[&::-webkit-scrollbar]:w-2xs
 		hover:[--scrollbar-fix:1]
 		[&:hover::-webkit-scrollbar-thumb]:bg-foreground/80
 		[&::-webkit-scrollbar-thumb]:rounded-md
