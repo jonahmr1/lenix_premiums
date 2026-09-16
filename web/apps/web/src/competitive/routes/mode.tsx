@@ -1,8 +1,7 @@
 import { NavKbd } from '@/components/kbd'
 import { Button } from '@workspace/ui/components/button'
-import { ButtonGroup } from '@workspace/ui/components/button-group'
 import { KbdGroup } from '@workspace/ui/components/kbd'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { MAPS, MODES } from '../constants'
 import { asserts, entries } from '@lenix/lenix'
@@ -15,7 +14,9 @@ export const Mode = () => {
 	asserts(context, `Failed to use competitive context`)
 	
 	const { selectedMode, setSelectedMode } = context
-	const mode = MODES[selectedMode]
+	const [preview, setPreview] = useState<keyof typeof MODES>(selectedMode)
+
+	const mode = MODES[preview]
 
 	return (
 		<div className="relative isolate h-screen w-full">
@@ -68,13 +69,17 @@ export const Mode = () => {
 					</div>
 					<div className='flex items-end gap-md'>
 						{entries(MODES).map(([mode, data]) => (
-							<Button
-								onClick={() => setSelectedMode(mode)}
-								className='h-auto p-0 group relative border border-input hover:border-dark overflow-hidden'
-							>
-								<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${selectedMode !== mode && 'brightness-50'}`} />
-								<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${selectedMode === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
-							</Button>
+							<div className='flex flex-col'>
+								<Button
+									onClick={() => setSelectedMode(mode)}
+									onMouseEnter={() => setPreview(mode)}
+									className='h-auto p-0 group relative border border-input hover:border-dark overflow-hidden'
+								>
+									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
+									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
+								</Button>
+								{selectedMode === mode && <p className='bg-foreground text-background text-center uppercase font-semibold'>Selected</p>}
+							</div>
 						))}
 					</div>
 				</div>
