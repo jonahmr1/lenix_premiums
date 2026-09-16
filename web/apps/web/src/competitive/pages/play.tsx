@@ -22,7 +22,7 @@ export const Play = () => {
 	const mode = context.selectedMode
 
 	return (
-		<div className="size-full flex justify-between px-2xl">
+		<div className="size-full flex justify-between px-3xl py-xl">
 			<ButtonGroup orientation='vertical' className="h-full justify-end">
 				<Button
 					className="h-auto p-0 relative hover:brightness-75"
