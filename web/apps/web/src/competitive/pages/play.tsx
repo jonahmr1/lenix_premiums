@@ -49,11 +49,13 @@ export const Play = () => {
 						variant="outline"
 						animate={{ width: 'auto' }}
 						whileHover={{ width: '100%' }}
-						className="group justify-between"
-						onClick={() => toast('Missions are not available yet', { toasterId: 'notify' })}
+						className="group justify-between transition"
+						onClick={() =>
+							toast('Missions are not available yet', { toasterId: 'notify' })
+						}
 					>
 						View Missions
-						<ArrowRight className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+						<ArrowRight className="hidden group-hover:block transition-opacity" />
 					</MotionButton>
 				</CardFooter>
 			</Card>
