@@ -12,6 +12,7 @@ import type { Tab } from "@/types"
 import { useNavigate } from "react-router"
 import { Play } from "../pages/play"
 import { KbdGroup } from "@workspace/ui/components/kbd"
+import { Layout } from "@/components/layout"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -61,11 +62,11 @@ export const Lobby = () => {
 	if (!state) return null
 
 	return <>
-		<div className="w-full h-screen flex flex-col">
+		<Layout type="p" className="w-full h-screen flex flex-col">
 			<Tabs
 				value={tab.toString()}
 				onValueChange={$ => setTab(Number($))}
-				className="w-full flex-10"
+				className="w-full h-full"
 			>
 				<div className="w-full flex flex-row h-15/100">
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
@@ -120,8 +121,7 @@ export const Lobby = () => {
 					>{tab.content}</TabsContent>
 				))}
 			</Tabs>
-			{/* footer */}
-			<KbdGroup className="h-1/10 flex items-center pt-0 px-5xl">
+			<KbdGroup className="flex items-center px-3xl">
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
@@ -133,6 +133,6 @@ export const Lobby = () => {
 					Exit
 				</NavKbd>
 			</KbdGroup>
-		</div>
+		</Layout>
 	</>
 }
