@@ -223,3 +223,11 @@
 .shine-lg {
 	@apply shadow-[0_0_6px_currentColor]
 }
+
+.scrollbar {
+	@apply [&::-webkit-scrollbar]:h-2xs
+		hover:[--scrollbar-fix:1]
+		[&:hover::-webkit-scrollbar-thumb]:bg-foreground/80
+		[&::-webkit-scrollbar-thumb]:rounded-md
+		[&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
+}

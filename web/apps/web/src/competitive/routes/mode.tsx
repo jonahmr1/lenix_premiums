@@ -74,14 +74,7 @@ export const Mode = () => {
 							})()}
 						</div>
 					</div>
-					<div className='
-						flex items-end gap-md overflow-x-scroll pb-xs
-						[&::-webkit-scrollbar]:h-2xs
-						hover:[--scrollbar-fix:1]
-						[&:hover::-webkit-scrollbar-thumb]:bg-foreground/80
-						[&::-webkit-scrollbar-thumb]:rounded-md
-						[&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
-						'>
+					<div className='flex items-end gap-md overflow-x-scroll pb-xs scrollbar'>
 						{entries(MODES).map(([mode, data]) => (
 							<div className='flex flex-col'>
 								<Button
