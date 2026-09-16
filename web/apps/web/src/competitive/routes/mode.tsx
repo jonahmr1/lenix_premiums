@@ -73,7 +73,6 @@ export const Mode = () => {
 								<Button
 									onClick={() => setSelectedMode(mode)}
 									onMouseOver={() => setPreview(mode)}
-									onMouseLeave={() => setPreview(selectedMode)}
 									className='h-auto p-0 group relative border border-chart-3 hover:border-front overflow-hidden'
 								>
 									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
