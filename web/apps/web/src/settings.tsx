@@ -8,10 +8,23 @@ import { KbdGroup } from "@workspace/ui/components/kbd"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
+const KeyboardMouse = () => {
+	return (
+		<div className="size-full border flex">
+			<div className="w-1/3">
+
+			</div>
+			<div className="w-2/3">
+			
+			</div>
+		</div>
+	)
+}
+
 const tabs: Tab[] = [
 	{
 		label: 'General',
-		content: <p className="text-fluid-5">General...</p>
+		content: <p className="text-fluid-5">...</p>
 	},
 	{
 		label: 'Graphics', /* Advanced Graphics */
@@ -35,31 +48,31 @@ const tabs: Tab[] = [
 	},
 	{
 		label: 'Keyboard / Mouse',
-		content: <p className="text-fluid-5">...</p>,
+		content: <KeyboardMouse />,
 	},
 	{
 		label: 'Gamepad',
-		content: <p className="text-fluid-5">...</p>,
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Brief',
-		content: <p className="text-fluid-5">...</p>,
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Stats',
-		content: <p className="text-fluid-5">...</p>,
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Gallery',
-		content: <p className="text-fluid-5">...</p>,
+		content: '',
 		disabled: true
 	},
 	{
 		label: 'Editor',
-		content: <p className="text-fluid-5">...</p>,
+		content: '',
 		disabled: true
 	},
 ]
@@ -98,7 +111,7 @@ export const Settings = () => {
 						<TabsContent
 							key={i}
 							value={i.toString()}
-							className="size-full place-content-center place-items-center bg-border"
+							className="size-full"
 						>{tab.content}</TabsContent>
 					))}
 				</Tabs>
