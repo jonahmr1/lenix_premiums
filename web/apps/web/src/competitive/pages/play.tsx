@@ -8,6 +8,7 @@ import { CompetitiveContext } from "../context"
 import { asserts } from "@lenix/lenix"
 import { ArrowRight, ClipboardX } from "lucide-react"
 import { Xbox } from "@/components/xbox"
+import { toast } from "@workspace/ui/lib/utils"
 
 export const Play = () => {
 	const nav = useNavigate()
@@ -39,7 +40,11 @@ export const Play = () => {
 					<Xbox />
 				</CardContent>
 				<CardFooter>
-					<Button variant='outline' className="hover:w-full [interpolate-size:allow-keywords] transition-[width] group justify-between duration-400">
+					<Button
+						variant='outline'
+						className="hover:w-full [interpolate-size:allow-keywords] transition-[width] group justify-between duration-300"
+						onClick={() => toast.info('Missions are not available yet at the moment')}
+					>
 						View Missions
 						<ArrowRight className="hidden group-hover:block" />
 					</Button>

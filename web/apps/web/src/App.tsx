@@ -97,7 +97,11 @@ export const App = () => {
 			))}
 			<MemoryRouter>
 				<Router />
-				<Toaster />
+				<Toaster position='top-center' offset={{ top: '10%'}} toastOptions={{
+					classNames: {
+						info: 'bg-transparent! border-transparent! shadow-none! text-background! font-semibold text-shadow-sm! text-fluid-2!'
+					}
+				}} />
 			</MemoryRouter>
 			{/* <Ipad /> */}
 			{/* <Rank /> */}
