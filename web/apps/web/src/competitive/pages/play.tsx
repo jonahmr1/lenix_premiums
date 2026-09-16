@@ -8,7 +8,7 @@ import { CompetitiveContext } from "../context"
 import { asserts } from "@lenix/lenix"
 import { ArrowRight } from "lucide-react"
 import { Xbox } from "@/components/xbox"
-import { toast } from "@workspace/ui/lib/utils"
+import { audio, toast } from "@workspace/ui/lib/utils"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
 
@@ -50,9 +50,10 @@ export const Play = () => {
 						animate={{ width: 'auto' }}
 						whileHover={{ width: '100%' }}
 						className="group justify-between transition"
-						onClick={() =>
+						onClick={() =>{
 							toast('Missions are not available yet', { toasterId: 'notify' })
-						}
+							audio.unavailable()
+						}}
 					>
 						View Missions
 						<ArrowRight className="hidden group-hover:block transition-opacity" />
