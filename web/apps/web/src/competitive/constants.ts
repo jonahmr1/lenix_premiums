@@ -5,6 +5,7 @@ import bombplant from '@workspace/ui/assets/competitive/lobby/bomb_plant.png'
 import domination from '@workspace/ui/assets/competitive/lobby/domination.png'
 import flagcapture from '@workspace/ui/assets/competitive/lobby/flag_capture.png'
 import armsrace from '@workspace/ui/assets/competitive/lobby/arms_race.png'
+import convoyshift from '@workspace/ui/assets/competitive/lobby/convoy_shift.png'
 
 export const MAPS = {
 	italien_street: {
@@ -119,5 +120,13 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 10,
 		players: 1,
+	},
+	convoy_shift: {
+		label: 'Convoy Shift',
+		description: 'Two teams fight for control of the convoy. Push it to the enemy base—the team that pushes it farthest wins.',
+		image: convoyshift,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 2,
+		players: 6,
 	},
 } as const

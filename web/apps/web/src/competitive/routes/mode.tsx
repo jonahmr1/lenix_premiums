@@ -26,13 +26,13 @@ export const Mode = () => {
 				src={mode.image}
 				className="absolute -z-2 size-full object-cover"
 			/>
-			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent' />
+			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent from-5%' />
 			<div className="size-full flex items-start flex-col px-5xl">
 				<div className='size-full flex h-9/10 justify-evenly flex-col gap-5xl'>
 					<div className='w-full h-2/4 flex flex-col justify-end gap-md'>
 						<div>
 							<p className='uppercase text-fluid-12 leading-none font-black text-neutral-50'>{mode.label}</p>
-							<p className='text-light'>{mode.description}</p>
+							<p className='text-light text-shadow-lg'>{mode.description}</p>
 						</div>
 						<div className='flex gap-sm'>
 							{(() => {
