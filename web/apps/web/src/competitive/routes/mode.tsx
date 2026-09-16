@@ -29,8 +29,8 @@ export const Mode = () => {
 				<div className='size-full flex flex-10 justify-evenly flex-col gap-5xl'>
 					<div className='w-full h-2/4 flex flex-col justify-end gap-md'>
 						<div>
-							<p className='uppercase text-fluid-12 leading-none font-black text-neutral-100'>{mode.label}</p>
-							<p>{mode.description}</p>
+							<p className='uppercase text-fluid-12 leading-none font-black text-neutral-50'>{mode.label}</p>
+							<p className='text-light'>{mode.description}</p>
 						</div>
 						<div className='flex gap-sm'>
 							{(() => {
