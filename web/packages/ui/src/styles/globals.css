@@ -184,6 +184,10 @@
 	font-size: calc(--value(number) * 1vmin);
 }
 
+@utility w-fluid-* {
+	width: calc(--value(number) * 1vmin);
+}
+
 @utility deep-* {
 	--deep-amount: calc(--value(integer) * 1%);
 }

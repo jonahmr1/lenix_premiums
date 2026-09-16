@@ -6,6 +6,8 @@
 // import { Hud } from "../modules/hud"
 // import { Ping } from "../modules/ping"
 
+import { KillFeed } from "../modules/killfeed"
+
 export const Game = () => {
 
 	return (
@@ -17,6 +19,7 @@ export const Game = () => {
 			{/* <Hud /> */}
 			{/* <DamageIndicator /> */}
 			{/* <DirectionalIndicator /> */}
+			<KillFeed />
 		</>
 	)
 }
