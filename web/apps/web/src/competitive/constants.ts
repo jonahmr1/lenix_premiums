@@ -2,6 +2,7 @@ import deathmatch from '@workspace/ui/assets/competitive/lobby/team_deathmatch.p
 import streetfight from '@workspace/ui/assets/competitive/lobby/street_fight.png'
 import hostageextraction from '@workspace/ui/assets/competitive/lobby/hostage_extraction.png'
 import bombplant from '@workspace/ui/assets/competitive/lobby/bomb_plant.png'
+import domination from '@workspace/ui/assets/competitive/lobby/domination.png'
 
 export const MAPS = {
 	italien_street: {
@@ -90,5 +91,14 @@ export const MODES: Record<string, ModeData> = {
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 2,
 		players: 5,
+	},
+	domination: {
+		label: 'Domination',
+		description: 'Capture and hold three control points to earn points. The team with the most points when the timer ends wins.',
+		image: domination,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 2,
+		players: 12,
+		points: ['Alpha', 'Bravo', 'Charlie']
 	},
 } as const
