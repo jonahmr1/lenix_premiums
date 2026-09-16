@@ -24,7 +24,7 @@ export const Hud = () => {
 	const activeEquipment = state?.weaponary.activeEquipment ? state.weaponary.equipments[state.weaponary.activeEquipment - 1] : null
 
 	useEffect(() => {
-		DEV(() => {
+		return DEV(() => {
 			setState({
 				health: 25,
 				weaponary: {
@@ -97,7 +97,7 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 perspective-right-100">
+			<Layout className="absolute bottom-0 right-0 perspective-right-100 text-light">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (
