@@ -35,7 +35,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/game'))
+		DEV(() => nav('/competitive/lobby'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -97,11 +97,17 @@ export const App = () => {
 			))}
 			<MemoryRouter>
 				<Router />
-				<Toaster position='top-center' offset={{ top: '10%'}} toastOptions={{
-					classNames: {
-						info: 'bg-transparent! border-transparent! shadow-none! text-background! font-semibold text-shadow-sm! text-fluid-2!'
-					}
-				}} />
+				<Toaster
+					id='notify'
+					position='top-center'
+					offset={{ top: '10%' }}
+					expand={false}
+					toastOptions={{
+						classNames: {
+							default: 'bg-transparent! border-transparent! shadow-none! text-background! font-semibold text-shadow-sm! text-fluid-2! justify-center'
+						}
+					}}
+				/>
 			</MemoryRouter>
 			{/* <Ipad /> */}
 			{/* <Rank /> */}
