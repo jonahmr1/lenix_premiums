@@ -10,8 +10,8 @@ import { PreviousButton, NextButton } from "@/components/nav"
 import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
 import type { Tab } from "@/types"
 import { useNavigate } from "react-router"
-import { Layout } from "@/components/layout"
 import { Play } from "../pages/play"
+import { KbdGroup } from "@workspace/ui/components/kbd"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -121,7 +121,7 @@ export const Lobby = () => {
 				))}
 			</Tabs>
 			{/* footer */}
-			<Layout className="flex-1 flex items-center pt-0">
+			<KbdGroup className="h-1/10 flex items-center pt-0 px-5xl">
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
@@ -132,7 +132,7 @@ export const Lobby = () => {
 				>
 					Exit
 				</NavKbd>
-			</Layout>
+			</KbdGroup>
 		</div>
 	</>
 }
