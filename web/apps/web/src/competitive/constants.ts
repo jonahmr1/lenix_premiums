@@ -3,6 +3,7 @@ import streetfight from '@workspace/ui/assets/competitive/lobby/street_fight.png
 import hostageextraction from '@workspace/ui/assets/competitive/lobby/hostage_extraction.png'
 import bombplant from '@workspace/ui/assets/competitive/lobby/bomb_plant.png'
 import domination from '@workspace/ui/assets/competitive/lobby/domination.png'
+import flagcapture from '@workspace/ui/assets/competitive/lobby/flag_capture.png'
 
 export const MAPS = {
 	italien_street: {
@@ -100,5 +101,13 @@ export const MODES: Record<string, ModeData> = {
 		teams: 2,
 		players: 12,
 		points: ['Alpha', 'Bravo', 'Charlie']
+	},
+	flag_capture: {
+		label: 'Flag Caprute',
+		description: '',
+		image: flagcapture,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 3,
+		players: 5,
 	},
 } as const
