@@ -64,13 +64,13 @@ const tabs: Tab[] = [
 	},
 ]
 
-export const Options = () => {
+export const Settings = () => {
 	const [state, setState] = useState(0)
 	const nav = useNavigate()
 
 	return (
 		<Layout type="p" className="h-screen w-full flex flex-col gap-sm">
-			<h1 className="uppercase text-fluid-9 font-black italic leading-none">Options</h1>
+			<h1 className="uppercase text-fluid-9 font-black italic leading-none">Settings</h1>
 			<div className="flex justify-center *:text-fluid-2 size-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}

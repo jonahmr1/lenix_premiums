@@ -18,10 +18,10 @@ import { useEffect } from 'react'
 import { focus, onNuiEmit } from 'lenix/nui'
 import type { Start } from 'types'
 import { NotFound } from './404'
-import { Options } from './options'
+import { Settings } from './settings'
 import { Mode } from './competitive/routes/mode'
 import { Starting } from './start'
-import { Credit } from './start/credit'
+import { Credit } from './credit'
 import { Pause } from './pause'
 import { CompetitiveProvider } from './competitive/provider'
 
@@ -59,14 +59,14 @@ const Router = () => {
 			<Route path='/' element={<Starting />} />
 			<Route path='/credit' element={<Credit />} />
 			<Route path='/pause' element={<Pause />} />
-			<Route path='/options' element={<Options />} />
+			<Route path='/settings' element={<Settings />} />
 
 			<Route path='/competitive' element={<CompetitiveProvider />}>
 				<Route path='lobby' element={<Lobby />} />
 				<Route path='lobby/mode' element={<Mode />} />
 				<Route path='game' element={<Game />} />
 			</Route>
-			
+
 			<Route path='/outlaw' element={<>
 				<Hud />
 				<Roster />

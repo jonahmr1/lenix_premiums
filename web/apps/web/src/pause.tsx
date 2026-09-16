@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
-import type { ButtonStart } from "@/start/types"
+import type { ButtonStart } from "./types"
 
 export const Pause = () => {
 	const nav = useNavigate()
@@ -29,8 +29,8 @@ export const Pause = () => {
 			onClick: () => handleEscape(true)
 		},
 		{
-			label: 'Options',
-			onClick: () => nav('/start/options'),
+			label: 'Settings',
+			onClick: () => nav('/start/settings'),
 			styles: 'mt-10'
 		},
 		{

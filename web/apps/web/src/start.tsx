@@ -9,8 +9,8 @@ import { useNavigate } from "react-router"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
-import type { ButtonStart } from './types'
 import { Layout } from '@/components/layout'
+import type { ButtonStart } from './types'
 
 const backgrounds = [bg1, bg2, bg3, bg4]
 const image = backgrounds[random(0, backgrounds.length - 1)]
@@ -41,8 +41,8 @@ export const Starting = () => {
 			disabled: true
 		},
 		{
-			label: 'Options',
-			onClick: () => nav('/options'),
+			label: 'Settings',
+			onClick: () => nav('/settings'),
 			styles: 'mt-10'
 		},
 		{
