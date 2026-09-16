@@ -4,15 +4,91 @@ import { NextButton, PreviousButton } from "@/components/nav"
 import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
+import { Item, ItemActions, ItemContent, ItemTitle } from "@workspace/ui/components/item"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
 const KeyboardMouse = () => {
+	const settings = [
+		{
+			title: 'Mouse Input Method',
+			options: ['Raw Input', 'Something Else']
+		},
+		{
+			title: 'Mouse Look Sensitivity',
+			options: 'slider'
+		},
+		{
+			title: 'Mouse Smoothing Scale',
+			options: 'slider'
+		},
+		{
+			title: 'Fine Aiming Control',
+			options: 'toggle'
+		},
+		{
+			title: 'Invert Mouse Look',
+			options: 'toggle'
+		},
+		{
+			title: 'Toggle Aim',
+			options: 'toggle'
+		},
+		{
+			title: 'First Person Aim Type',
+			options: ['Normal', 'Something Else']
+		},
+		{
+			title: 'Default Mouse Driving Control',
+			options: ['Camera', 'Something Else']
+		},
+		{
+			title: 'Default Mouse Flying Control',
+			options: ['Camera', 'Something Else']
+		},
+		{
+			title: 'Default Mouse Submarine Control',
+			options: ['Camera', 'Something Else']
+		},
+		{
+			title: 'Mouse Driving Sensitivity',
+			options: 'slider'
+		},
+		{
+			title: 'Mouse Plane Sensitivity',
+			options: 'slider'
+		},
+		{
+			title: 'Mouse Heli Sensitivity',
+			options: 'slider'
+		},
+		{
+			title: 'Mouse Submarine Sensitivity',
+			options: 'slider'
+		},
+		{
+			title: 'Invert Mouse Flying',
+			options: 'toggle'
+		},
+		{
+			title: 'Invert Mouse Submarine',
+			options: 'toggle'
+		},
+	]
 	return (
 		<div className="size-full border flex">
-			<div className="w-2/3">
-				
+			<div className="w-2/3 overflow-x-scroll">
+				{settings.map(setting => (
+					<Item className="bg-background px-lg">
+						<ItemContent>
+							<ItemTitle className="text-fluid-3 uppercase italic font-semibold">{setting.title}</ItemTitle>
+						</ItemContent>
+						<ItemActions>
+							<Button>Action</Button>
+						</ItemActions>
+					</Item>
+				))}
 			</div>
 			<div className="w-1/3">
 			

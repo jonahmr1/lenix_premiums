@@ -76,12 +76,9 @@ export const Mode = () => {
 					</div>
 					<div className='
 						flex items-end gap-md overflow-x-scroll pb-xs
-						[&::-webkit-scrollbar]:h-xs
+						[&::-webkit-scrollbar]:h-2xs
 						hover:[--scrollbar-fix:1]
-						[&:hover::-webkit-scrollbar-track]:bg-card
-						[&::-webkit-scrollbar-track]:border-front/20
-						[&::-webkit-scrollbar-track]:rounded-md
-						[&:hover::-webkit-scrollbar-thumb]:bg-front
+						[&:hover::-webkit-scrollbar-thumb]:bg-foreground/80
 						[&::-webkit-scrollbar-thumb]:rounded-md
 						[&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
 						'>
