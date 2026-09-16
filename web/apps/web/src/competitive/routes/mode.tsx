@@ -9,6 +9,7 @@ import { CompetitiveContext } from '../context'
 import { Badge } from '@workspace/ui/components/badge'
 import { motion } from 'motion/react'
 import { anim } from '@/lib'
+import { audio, toast } from '@workspace/ui/lib/utils'
 
 export const Mode = () => {
 	const nav = useNavigate()
@@ -87,11 +88,19 @@ export const Mode = () => {
 						{entries(MODES).map(([mode, data]) => (
 							<div className='flex flex-col'>
 								<Button
-									onClick={() => setSelectedMode(mode)}
+									onClick={() => {
+										if (data.disabled) {
+											toast('This mode is not available yet', { toasterId: 'notify' })
+											audio.unavailable()
+											return
+										}
+										setSelectedMode(mode)
+										audio.select()
+									}}
 									onMouseOver={() => setPreview(mode)}
 									className='h-auto p-0 group relative border border-chart-3 hover:border-front overflow-hidden'
 								>
-									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
+									<img src={data.image} className={`pointer-events-none max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
 									<p className={`absolute bottom-1/6 uppercase text-fluid-2 tracking-tighter transition-all ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
 								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
