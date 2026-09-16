@@ -77,7 +77,7 @@ export const Mode = () => {
 									className='h-auto p-0 group relative border border-chart-3 hover:border-front overflow-hidden'
 								>
 									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
-									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
+									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter transition-all ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
 								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
 									<p
