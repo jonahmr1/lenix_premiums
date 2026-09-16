@@ -79,7 +79,13 @@ export const Mode = () => {
 									<img src={data.image} className={`max-w-[30vmin] group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`} />
 									<p className={`absolute bottom-1/6 uppercase text-fluid-3 tracking-tighter ${preview === mode ? 'text-neutral-50 font-black' : 'text-neutral-300'}`}>{data.label}</p>
 								</Button>
-								{selectedMode === mode && <p className='bg-foreground text-background text-center uppercase font-semibold border-b border-x border-chart-5'>Selected</p>}
+								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
+									<p
+										className={`border-b border-x border-chart-5 bg-foreground text-background text-center uppercase font-semibold duration-300 ${selectedMode === mode ? 'translate-y-0' : '-translate-y-full'}`}
+									>
+										Selected
+									</p>
+								</div>
 							</div>
 						))}
 					</div>
