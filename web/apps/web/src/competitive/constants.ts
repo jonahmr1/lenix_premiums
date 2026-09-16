@@ -1,6 +1,7 @@
 import deathmatch from '@workspace/ui/assets/competitive/lobby/team_deathmatch.png'
 import streetfight from '@workspace/ui/assets/competitive/lobby/street_fight.png'
 import hostageextraction from '@workspace/ui/assets/competitive/lobby/hostage_extraction.png'
+import bombplant from '@workspace/ui/assets/competitive/lobby/bomb_plant.png'
 
 export const MAPS = {
 	italien_street: {
@@ -51,6 +52,8 @@ interface ModeDataBase {
 type ModeData = ModeDataBase | ModeDataBase & {
 	duration: number
 	scoreLimit: number
+} | ModeDataBase & {
+	points: string[]
 }
 
 export const MODES: Record<string, ModeData> = {
@@ -72,10 +75,18 @@ export const MODES: Record<string, ModeData> = {
 		teams: 4,
 		players: 4,
 	},
-	extraction: {
+	hostage_extraction: {
 		label: 'Hostage Extraction',
 		description: 'Two teams battle over a hostage. SWAT pushes in to extract the hostage while the Criminals defends from inside.',
 		image: hostageextraction,
+		maps: ['cinema_studio', 'italien_street'],
+		teams: 2,
+		players: 5,
+	},
+	bomb_plant: {
+		label: 'Bomb Plant',
+		description: 'Plant the bomb at the target site and defend it until it detonates. The opposing team must stop the detonation before time runs out.',
+		image: bombplant,
 		maps: ['cinema_studio', 'italien_street'],
 		teams: 2,
 		players: 5,
