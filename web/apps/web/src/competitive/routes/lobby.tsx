@@ -105,22 +105,7 @@ export const Lobby = () => {
 							E
 						</NextButton>
 					</div>
-					<div className="flex flex-1 justify-center">
-						<Item
-							onClick={() => toast('TODO')}
-							className={`${buttonVariants({ variant: 'secondary' })} h-full w-fit`}
-						>
-							<ItemMedia variant="icon">
-								<Avatar>
-									<AvatarImage src={state.avatar} />
-									<AvatarFallback>{initials(state.name)}</AvatarFallback>
-								</Avatar>
-							</ItemMedia>
-							<ItemContent>
-								<ItemTitle className="text-fluid-2">{state.name}</ItemTitle>
-							</ItemContent>
-						</Item>
-					</div>
+					<div>{/* top right side */}</div>
 				</motion.div>
 				{tabs.map((tab, i) => (
 					<TabsContent
