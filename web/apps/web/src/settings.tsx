@@ -227,6 +227,11 @@ const KeyboardMouse = () => {
 						</Item>
 					)
 				})}
+				<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" {...audiobility}>
+					<ItemContent>
+						<ItemTitle className="uppercase italic text-fluid-2 font-bold">Restore Defaults</ItemTitle>
+					</ItemContent>
+				</Item>
 			</div>
 			<div className="w-2/5">
 				<Xbox />
