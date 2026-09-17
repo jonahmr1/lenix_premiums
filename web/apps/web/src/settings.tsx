@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { useStates } from "./hook"
+import { entries } from "@lenix/lenix"
 
 const KeyboardMouse = () => {
 	const [{ settings: { keyboardMouse }}, setStates] = useStates()
@@ -19,156 +20,183 @@ const KeyboardMouse = () => {
 	const settings: {
 		key: keyof States['settings']['keyboardMouse']
 		title: string
-		options: 'slider' | string[]
+		options?: Partial<Record<`${States['settings']['keyboardMouse'][keyof States['settings']['keyboardMouse']]}`, string>>
 	}[] = [
 		{
 			key: 'mouseInputMethod',
 			title: 'Mouse Input Method',
-			options: ['Raw Input', 'Something Else']
+			options: {
+				raw: 'Raw Input',
+				other: 'Something Else'
+			}
 		},
 		{
 			key: 'mouseLookSensitivity',
 			title: 'Mouse Look Sensitivity',
-			options: 'slider'
 		},
 		{
 			key: 'mouseSmoothingScale',
 			title: 'Mouse Smoothing Scale',
-			options: 'slider'
 		},
 		{
 			key: 'fineAimingControl',
 			title: 'Fine Aiming Control',
-			options: ['On', 'Off']
+			options: {
+				on: 'On',
+				off: 'Off'
+			}
 		},
 		{
 			key: 'invertMouseLook',
 			title: 'Invert Mouse Look',
-			options: ['On', 'Off']
+			options: {
+				on: 'On',
+				off: 'Off'
+			}
 		},
 		{
 			key: 'toggleAim',
 			title: 'Toggle Aim',
-			options: ['On', 'Off']
+			options: {
+				on: 'On',
+				off: 'Off'
+			}
 		},
 		{
 			key: 'firstPersonAimType',
 			title: 'First Person Aim Type',
-			options: ['Normal', 'Something Else']
+			options: {
+				normal: 'Normal',
+				other: 'Something Else'
+			}
 		},
 		{
 			key: 'defaultMouseDrivingControl',
 			title: 'Default Mouse Driving Control',
-			options: ['Camera', 'Something Else']
+			options: {
+				camera: 'Camera',
+				other: 'Something Else'
+			}
 		},
 		{
 			key: 'defaultMouseFlyingControl',
 			title: 'Default Mouse Flying Control',
-			options: ['Camera', 'Something Else']
+			options: {
+				camera: 'Camera',
+				other: 'Something Else'
+			}
 		},
 		{
 			key: 'defaultMouseSubmarineControl',
 			title: 'Default Mouse Submarine Control',
-			options: ['Camera', 'Something Else']
+			options: {
+				camera: 'Camera',
+				other: 'Something Else'
+			}
 		},
 		{
 			key: 'mouseDrivingSensitivity',
 			title: 'Mouse Driving Sensitivity',
-			options: 'slider'
 		},
 		{
 			key: 'mousePlaneSensitivity',
 			title: 'Mouse Plane Sensitivity',
-			options: 'slider'
 		},
 		{
 			key: 'mouseHeliSensitivity',
 			title: 'Mouse Heli Sensitivity',
-			options: 'slider'
 		},
 		{
 			key: 'mouseSubmarineSensitivity',
 			title: 'Mouse Submarine Sensitivity',
-			options: 'slider'
 		},
 		{
 			key: 'invertMouseFlying',
 			title: 'Invert Mouse Flying',
-			options: ['On', 'Off']
+			options: {
+				on: 'On',
+				off: 'Off'
+			}
 		},
 		{
 			key: 'invertMouseSubmarine',
 			title: 'Invert Mouse Submarine',
-			options: ['On', 'Off']
+			options: {
+				on: 'On',
+				off: 'Off'
+			}
 		},
 		{
 			key: 'mouseFlyingControlType',
 			title: 'Mouse Flying Control Type',
-			options: ['Roll', 'Pitch']
+			options: {
+				roll: 'Roll',
+				pitch: 'Pitch',
+				other: 'Other'
+			}
 		},
 		{
 			key: 'autoCenterMouseOnBikes',
 			title: 'Auto Center Mouse On Bikes',
-			options: 'slider'
 		},
 		{
 			key: 'autoCenterMouseInCars',
 			title: 'Auto-Center Mouse In Cars',
-			options: 'slider'
 		},
 		{
 			key: 'autoCenterMouseInAircraft',
 			title: 'Auto-Center Mouse In Aircraft',
-			options: 'slider'
 		},
 	]
 
 	return (
 		<div className="size-full flex">
 			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
-				{settings.map(setting => (
-					<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
-						<ItemContent>
-							<ItemTitle className="uppercase italic text-fluid-2 font-bold">{setting.title}</ItemTitle>
-						</ItemContent>
-						<ItemActions>
-							<Button
-								variant='ghost'
-							>
-								<ChevronLeft />
-							</Button>
-							<div className="w-fluid-25">
-								{setting.options === 'slider'
-									? (
+				{settings.map(setting => {
+					const value = keyboardMouse[setting.key]
+					return (
+						<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
+							<ItemContent>
+								<ItemTitle className="uppercase italic text-fluid-2 font-bold">{setting.title}</ItemTitle>
+							</ItemContent>
+							<ItemActions>
+								<Button
+									variant='ghost'
+								>
+									<ChevronLeft />
+								</Button>
+								<div className="w-fluid-25">
+									{typeof value === 'number' ? (
 										<Slider
 											step={1}
 											max={8}
-											defaultValue={[Number(keyboardMouse[setting.key])]}
+											defaultValue={[value]}
 											onValueChange={value => {
-												setStates(null, { settings: { keyboardMouse: { [setting.key]: value } } })
+												setStates(null, { settings: { keyboardMouse: { [setting.key]: value[0] } } })
 												audiobility.onMouseEnter()
 											}}
 										/>
-									)
-									: Array.isArray(setting.options)
-									? <div className="w-full">
-										<p className="text-center italic uppercase">{setting.options[0]}</p>
-										<div className="flex gap-4">
-											{setting.options.map((_, i) => (
-												<div className={`w-full h-0.5 ${i === 0 ? 'bg-foreground' : 'bg-muted'}`} />
-											))}
+									) : setting.options && (
+										<div className="w-full">
+											<p className="text-center italic uppercase">{setting.options[value]}</p>
+											<div className="flex gap-4">
+												{/* @ts-ignore */}
+												{entries(setting.options).map(([option]) => (
+													<div className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted'}`} />
+												))}
+											</div>
 										</div>
-									</div>
-									: <></> }
-							</div>
-							<Button
-								variant='ghost'
-							>
-								<ChevronRight />
-							</Button>
-						</ItemActions>
-					</Item>
-				))}
+									)}
+								</div>
+								<Button
+									variant='ghost'
+								>
+									<ChevronRight />
+								</Button>
+							</ItemActions>
+						</Item>
+					)
+				})}
 			</div>
 			<div className="w-2/5">
 			
