@@ -50,8 +50,38 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 						autoCenterMouseOnBikes: 2,
 						autoCenterMouseInCars: 5,
 						autoCenterMouseInAircraft: 5,
+					},
+					keybinds: {
+						general: {
+							pause: ['E', ''],
+							radarZoomMultiplayerInformation: ['E', ''],
+							cycleCamera: ['E', ''],
+							toggleSpecialAbility: ['E', ''],
+							characterSelector: ['E', ''],
+							switchToMichael: ['E', ''],
+							switchToFranklin: ['E', ''],
+							switchToTrevor: ['E', ''],
+							switchToGtaOnline: ['E', ''],
+							interactionMenu: ['E', ''],
+							startStopRecording: ['E', ''],
+							startStopActionReplayRecording: ['E', ''],
+							cancelRecording: ['E', ''],
+							rockstarGamesOverlay: ['E', ''],
+							contextAction: ['E', ''],
+						},
+						movement: [],
+						combat: [],
+						weaponSelect: [],
+						carsBikesBoats: [],
+						aircraft: [],
+						submersibles: [],
+						parachute: [],
+						cellphone: [],
+						gtaOnline: [],
+						gtaOnlineVehicles: [],
+						fivem: [],
 					}
-				}
+				},
 			})
 		})
 	}, [])

@@ -1,5 +1,6 @@
 import type { S } from "@lenix/lenix"
 import type { MODES } from "./competitive/constants"
+import type { Vec2 } from "lenix"
 
 export interface Storage {
 	hudVariant: 'progress' | 'bar'
@@ -42,6 +43,36 @@ export interface States {
 			autoCenterMouseOnBikes: 2,
 			autoCenterMouseInCars: 5,
 			autoCenterMouseInAircraft: 5,
+		},
+		keybinds: {
+			general: Record<
+				| 'pause'
+				| 'radarZoomMultiplayerInformation'
+				| 'cycleCamera'
+				| 'toggleSpecialAbility'
+				| 'characterSelector'
+				| 'switchToMichael'
+				| 'switchToFranklin'
+				| 'switchToTrevor'
+				| 'switchToGtaOnline'
+				| 'interactionMenu'
+				| 'startStopRecording'
+				| 'startStopActionReplayRecording'
+				| 'cancelRecording'
+				| 'rockstarGamesOverlay'
+				| 'contextAction'
+			, [string, string]>
+			movement: []
+			combat: []
+			weaponSelect: []
+			carsBikesBoats: []
+			aircraft: []
+			submersibles: []
+			parachute: []
+			cellphone: []
+			gtaOnline: []
+			gtaOnlineVehicles: []
+			fivem: []
 		}
 	}
 }
