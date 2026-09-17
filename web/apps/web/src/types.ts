@@ -29,7 +29,7 @@ export interface States {
 			invertMouseLook: boolean
 			toggleAim: boolean
 			firstPersonAimType: string
-			defaultMouseDivingControl: string
+			defaultMouseDrivingControl: string
 			defaultMouseFlyingControl: string
 			defaultMouseSubmarineControl: string
 			mouseDrivingSensitivity: number

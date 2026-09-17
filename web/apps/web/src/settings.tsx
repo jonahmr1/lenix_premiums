@@ -1,7 +1,7 @@
 import { NavKbd } from "@/components/kbd"
 import { Layout } from "@/components/layout"
 import { NextButton, PreviousButton } from "@/components/nav"
-import type { Tab } from "@/types"
+import type { States, Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@workspace/ui/components/item"
@@ -13,7 +13,11 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 const KeyboardMouse = () => {
-	const settings = [
+	const settings: {
+		key: keyof States['settings']['keyboardMouse']
+		title: string
+		options: 'slider' | string[]
+	}[] = [
 		{
 			key: 'mouseInputMethod',
 			title: 'Mouse Input Method',
@@ -50,7 +54,7 @@ const KeyboardMouse = () => {
 			options: ['Normal', 'Something Else']
 		},
 		{
-			key: 'defaultMouseDivingControl',
+			key: 'defaultMouseDrivingControl',
 			title: 'Default Mouse Driving Control',
 			options: ['Camera', 'Something Else']
 		},

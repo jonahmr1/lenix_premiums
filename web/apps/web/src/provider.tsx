@@ -23,7 +23,7 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 						invertMouseLook: false,
 						toggleAim: true,
 						firstPersonAimType: 'normal',
-						defaultMouseDivingControl: 'camera',
+						defaultMouseDrivingControl: 'camera',
 						defaultMouseFlyingControl: 'camera',
 						defaultMouseSubmarineControl: 'camera',
 						mouseDrivingSensitivity: 4,
