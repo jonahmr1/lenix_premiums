@@ -46,8 +46,13 @@ export interface States {
 	}
 }
 
+export type DeepPartial<T> =
+	T extends readonly unknown[] ? T :
+	T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } :
+	T
+
 export type SetStatesOverload = (
 	...args:
 		| [value: Parameters<S<States>>[0]]
-		| [value: null, patch: Partial<States>]
+		| [value: null, patch: DeepPartial<States>]
 ) => void

@@ -11,8 +11,11 @@ import { audiobility } from "@workspace/ui/lib/utils"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router"
+import { useStates } from "./hook"
 
 const KeyboardMouse = () => {
+	const [{ settings: { keyboardMouse }}, setStates] = useStates()
+
 	const settings: {
 		key: keyof States['settings']['keyboardMouse']
 		title: string
@@ -124,9 +127,9 @@ const KeyboardMouse = () => {
 		<div className="size-full flex">
 			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
 				{settings.map(setting => (
-					<Item className="bg-background px-md hover:invert text-fluid-2 font-black tracking-normal" onMouseEnter={audiobility.onMouseEnter}>
+					<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
 						<ItemContent>
-							<ItemTitle className="uppercase italic tracking-normal text-fluid-2 font-black">{setting.title}</ItemTitle>
+							<ItemTitle className="uppercase italic text-fluid-2 font-bold">{setting.title}</ItemTitle>
 						</ItemContent>
 						<ItemActions>
 							<Button
@@ -136,7 +139,17 @@ const KeyboardMouse = () => {
 							</Button>
 							<div className="w-fluid-25">
 								{setting.options === 'slider'
-									? <Slider step={1} max={8} defaultValue={[3]} onValueChange={() => { audiobility.onMouseEnter() }} />
+									? (
+										<Slider
+											step={1}
+											max={8}
+											defaultValue={[Number(keyboardMouse[setting.key])]}
+											onValueChange={value => {
+												setStates(null, { settings: { keyboardMouse: { [setting.key]: value } } })
+												audiobility.onMouseEnter()
+											}}
+										/>
+									)
 									: Array.isArray(setting.options)
 									? <div className="w-full">
 										<p className="text-center italic uppercase">{setting.options[0]}</p>
