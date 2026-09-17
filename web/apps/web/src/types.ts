@@ -22,26 +22,26 @@ export interface States {
 	}
 	settings: {
 		keyboardMouse: {
-			mouseInputMethod: string
-			mouseLookSensitivity: number
-			mouseSmoothingScale: number
-			fineAimingControl: boolean
-			invertMouseLook: boolean
-			toggleAim: boolean
-			firstPersonAimType: string
-			defaultMouseDrivingControl: string
-			defaultMouseFlyingControl: string
-			defaultMouseSubmarineControl: string
-			mouseDrivingSensitivity: number
-			mousePlaneSensitivity: number
-			mouseHeliSensitivity: number
-			mouseSubmarineSensitivity: number
-			invertMouseFlying: boolean
-			invertMouseSubmarine: boolean
-			mouseFlyingControlType: string
-			autoCenterMouseOnBikes: number
-			autoCenterMouseInCars: number
-			autoCenterMouseInAircraft: number
+			mouseInputMethod: 'raw' | 'other',
+			mouseLookSensitivity: 3,
+			mouseSmoothingScale: 3,
+			fineAimingControl: 'on' | 'off',
+			invertMouseLook: 'on' | 'off',
+			toggleAim: 'on' | 'off',
+			firstPersonAimType: 'normal' | 'other',
+			defaultMouseDrivingControl: 'camera' | 'other',
+			defaultMouseFlyingControl: 'camera' | 'other',
+			defaultMouseSubmarineControl: 'camera' | 'other',
+			mouseDrivingSensitivity: 4,
+			mousePlaneSensitivity: 5,
+			mouseHeliSensitivity: 6,
+			mouseSubmarineSensitivity: 8,
+			invertMouseFlying: 'on' | 'off',
+			invertMouseSubmarine: 'on' | 'off',
+			mouseFlyingControlType: 'roll' | 'pitch' | 'other',
+			autoCenterMouseOnBikes: 2,
+			autoCenterMouseInCars: 5,
+			autoCenterMouseInAircraft: 5,
 		}
 	}
 }
