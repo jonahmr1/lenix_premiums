@@ -87,7 +87,7 @@ const tabs: Tab[] = [
 ]
 
 export const Settings = () => {
-	const [state, setState] = useState(0)
+	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
 
 	return (
@@ -96,24 +96,20 @@ export const Settings = () => {
 			<div className="flex justify-center *:text-fluid-2 min-h-0 w-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}
-					value={state}
-					onValueChange={setState}
+					value={tab}
+					onValueChange={setTab}
 				>Q</PreviousButton>
-				<Tabs
-					value={state.toString()}
-					onValueChange={$ => setState(Number($))}
-					className="flex-1"
-				>
+				<Tabs className="flex-1">
 					<TabsList className="bg-transparent w-full p-0 gap-xs">
-						{tabs.map((tab, i) => (
+						{tabs.map(({ disabled, label }, i) => (
 							<Button
 								key={i}
-								disabled={tab.disabled}
-								variant={state === i ? 'default' : 'secondary'}
+								disabled={disabled}
+								variant={tab === i ? 'default' : 'secondary'}
 								className="flex-1 text-fluid-2! font-bold italic"
-								onClick={() => setState(i)}
+								onClick={() => setTab(i)}
 								size='lg'
-							>{tab.label}</Button>
+							>{label}</Button>
 						))}
 					</TabsList>
 					{tabs.map((tab, i) => (
@@ -126,8 +122,8 @@ export const Settings = () => {
 				</Tabs>
 				<NextButton
 					tabs={tabs}
-					value={state}
-					onValueChange={setState}
+					value={tab}
+					onValueChange={setTab}
 				>
 					E
 				</NextButton>
