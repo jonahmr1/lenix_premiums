@@ -20,7 +20,7 @@ const KeyboardMouse = () => {
 
 	type Value = `${States['settings']['keyboardMouse'][keyof States['settings']['keyboardMouse']]}` | number
 
-	const settings: {
+	const labels: {
 		key: keyof States['settings']['keyboardMouse']
 		title: string
 		options?: Partial<Record<Value, string>>
@@ -155,7 +155,7 @@ const KeyboardMouse = () => {
 	return (
 		<div className="size-full flex gap-md">
 			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
-				{settings.map(setting => {
+				{labels.map(setting => {
 					const value = keyboardMouse[setting.key]
 					const handle = (value: Value) => {
 						setStates(null, { settings: { keyboardMouse: { [setting.key]: value } } })
