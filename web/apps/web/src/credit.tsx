@@ -67,7 +67,7 @@ export const Credit = () => {
 					))}
 				</div>
 			</div>
-			<div className="flex w-full items-start px-3xl">
+			<div className="flex w-full items-start">
 				<NavKbd
 					onClick={() => nav(-1)}
 					icon='Esc'

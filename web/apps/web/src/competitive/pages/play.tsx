@@ -19,7 +19,7 @@ export const Play = () => {
 	const mode = lobby.mode
 
 	return (
-		<div className="size-full flex justify-between px-3xl py-xl">
+		<div className="size-full flex justify-between">
 			<ButtonGroup orientation='vertical' className="h-full justify-end">
 				<Button
 					className="h-auto p-0 relative hover:brightness-75"

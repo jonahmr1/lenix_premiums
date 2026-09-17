@@ -68,7 +68,7 @@ export const Starting = () => {
 				className='absolute size-full -z-1 bg-linear-to-r from-black/50 to-transparent'
 			/>
 			<Layout type='p' className="relative flex flex-col size-full justify-between">
-				<div className="flex flex-col gap-5 items-start h-9/10 justify-center px-3xl">
+				<div className="flex flex-col gap-5 items-start h-9/10 justify-center">
 					{buttons.map((button, i) => (
 						<Button
 							key={i}
@@ -79,7 +79,7 @@ export const Starting = () => {
 						>{button.label}</Button>
 					))}
 				</div>
-				<KbdGroup className='flex px-3xl'>
+				<KbdGroup className='flex'>
 					<NavKbd
 						onClick={() => buttons[buttons.length - 1].onClick()}
 						keybind='Escape'

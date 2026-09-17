@@ -11,6 +11,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Keybinds } from "./keybinds"
 import { KeyboardMouse } from "./keyboardMouse"
+import { Header } from "@/components/header"
 
 export const LabelItem = ({ children, title, className, digest, ...props }: {
 	children?: React.ReactNode,
@@ -94,7 +95,7 @@ export const Settings = () => {
 
 	return (
 		<Layout type="p" className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
-			<h1 className="uppercase text-fluid-9 font-black italic leading-none">Settings</h1>
+			<Header>Settings</Header>
 			<div className="flex justify-center *:text-fluid-2 min-h-0 w-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}
@@ -133,7 +134,7 @@ export const Settings = () => {
 					E
 				</NextButton>
 			</div>
-			<KbdGroup className="px-3xl">
+			<KbdGroup>
 				<NavKbd
 					onClick={() => nav(-1)}
 					icon='Esc'

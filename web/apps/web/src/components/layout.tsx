@@ -10,7 +10,7 @@ export const Layout = ({
 	className?: React.ComponentProps<'div'>['className']
 	type?: 'm' | 'p'
 } & React.ComponentProps<'div'>) => (
-	<div className={cn(type === 'm' ? 'mx-lg my-md' : 'px-lg py-md', className)} {...prop}>
+	<div className={cn(type === 'm' ? 'mx-lg my-md' : 'px-4xl py-xl', className)} {...prop}>
 		{children}
 	</div>
 )

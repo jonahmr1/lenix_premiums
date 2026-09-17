@@ -119,11 +119,11 @@ export const Lobby = () => {
 					<TabsContent
 						key={i}
 						value={i.toString()}
-						className="size-full place-content-center place-items-center"
+						className="size-full place-content-center place-items-center py-xl"
 					>{tab.content}</TabsContent>
 				))}
 			</Tabs>
-			<KbdGroup className="flex items-center px-3xl">
+			<KbdGroup>
 				<NavKbd
 					icon='Esc'
 					onClick={() => {
