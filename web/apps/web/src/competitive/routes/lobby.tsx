@@ -13,6 +13,8 @@ import { useNavigate } from "react-router"
 import { Play } from "../pages/play"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { Layout } from "@/components/layout"
+import { motion } from "motion/react"
+import { anim } from "@/lib"
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -68,7 +70,12 @@ export const Lobby = () => {
 				onValueChange={$ => setTab(Number($))}
 				className="w-full h-full"
 			>
-				<div className="w-full flex flex-row">
+				<motion.div
+					className="w-full flex flex-row"
+					{...anim}
+					initial={{ opacity: 0, y: -100 }}
+					animate={{ opacity: 1, y: 0 }}
+				>
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
 					<div className="flex flex-2 items-center">
 						<PreviousButton
@@ -114,7 +121,7 @@ export const Lobby = () => {
 							</ItemContent>
 						</Item>
 					</div>
-				</div>
+				</motion.div>
 				{tabs.map((tab, i) => (
 					<TabsContent
 						key={i}
