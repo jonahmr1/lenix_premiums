@@ -14,9 +14,9 @@ const MotionButton = motion.create(Button)
 
 export const Play = () => {
 	const nav = useNavigate()
-	const { state } = useCompetitive()
+	const [{ lobby  }] = useCompetitive()
 
-	const mode = state.lobby.mode
+	const mode = lobby.mode
 
 	return (
 		<div className="size-full flex justify-between px-3xl py-xl">

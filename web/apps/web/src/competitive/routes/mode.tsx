@@ -14,7 +14,7 @@ import { useCompetitive } from '../hook'
 export const Mode = () => {
 	const nav = useNavigate()
 
-	const { state: { lobby }, setState } = useCompetitive()
+	const [{ lobby }, setState] = useCompetitive()
 	const [preview, setPreview] = useState(lobby.mode)
 
 	const mode = MODES[preview]

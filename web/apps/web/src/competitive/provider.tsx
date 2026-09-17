@@ -23,7 +23,7 @@ export const CompetitiveProvider = () => {
 	}
 
 	return (
-		<CompetitiveContext.Provider value={{ state, setState }}>
+		<CompetitiveContext.Provider value={[state, setState]}>
 			<Outlet />
 		</CompetitiveContext.Provider>
 	)
