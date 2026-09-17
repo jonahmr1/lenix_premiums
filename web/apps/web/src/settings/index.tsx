@@ -6,18 +6,19 @@ import { Tabs, TabsList, TabsContent } from "@workspace/elite/components/tabs"
 import { Button } from "@workspace/ui/components/button"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@workspace/ui/components/item"
 import { KbdGroup } from "@workspace/ui/components/kbd"
-import { audiobility } from "@workspace/ui/lib/utils"
+import { audiobility, cn } from "@workspace/ui/lib/utils"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { Keybinds } from "./keybinds"
 import { KeyboardMouse } from "./keyboardMouse"
 
-export const LabelItem = ({ children, title, ...props }: {
+export const LabelItem = ({ children, title, className, ...props }: {
 	children?: React.ReactNode,
 	title: React.ReactNode
+	className?: React.ComponentProps<typeof Item>['className']
 } & React.ComponentProps<typeof Item>) => (
 	<Item
-		className="bg-background px-md hover:invert text-fluid-1.5 font-black tracking-normal"
+		className={cn('bg-background px-md hover:invert text-fluid-1.5 font-black tracking-normal text-foreground', className)}
 		onMouseEnter={audiobility.onMouseEnter}
 		{...props}
 	>
@@ -99,7 +100,10 @@ export const Settings = () => {
 					value={tab}
 					onValueChange={setTab}
 				>Q</PreviousButton>
-				<Tabs className="flex-1">
+				<Tabs
+					value={tab.toString()}
+					className="flex-1"
+				>
 					<TabsList className="bg-transparent w-full p-0 gap-xs">
 						{tabs.map(({ disabled, label }, i) => (
 							<Button
