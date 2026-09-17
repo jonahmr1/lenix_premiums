@@ -9,12 +9,12 @@ import { Badge } from '@workspace/ui/components/badge'
 import { motion } from 'motion/react'
 import { anim } from '@/lib'
 import { audio, toast } from '@workspace/ui/lib/utils'
-import { useCompetitive } from '../hook'
+import { useStates } from '@/hook'
 
 export const Mode = () => {
 	const nav = useNavigate()
 
-	const [{ lobby }, setState] = useCompetitive()
+	const [{ lobby }, setState] = useStates()
 	const [preview, setPreview] = useState(lobby.mode)
 
 	const mode = MODES[preview]

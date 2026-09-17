@@ -23,7 +23,7 @@ import { Mode } from './competitive/routes/mode'
 import { Starting } from './start'
 import { Credit } from './credit'
 import { Pause } from './pause'
-import { CompetitiveProvider } from './competitive/provider'
+import { StatesProvider } from './provider'
 
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
@@ -61,11 +61,9 @@ const Router = () => {
 			<Route path='/pause' element={<Pause />} />
 			<Route path='/settings' element={<Settings />} />
 
-			<Route path='/competitive' element={<CompetitiveProvider />}>
-				<Route path='lobby' element={<Lobby />} />
-				<Route path='lobby/mode' element={<Mode />} />
-				<Route path='game' element={<Game />} />
-			</Route>
+			<Route path='/competitive/lobby' element={<Lobby />} />
+			<Route path='/competitive/lobby/mode' element={<Mode />} />
+			<Route path='/competitive/game' element={<Game />} />
 
 			<Route path='/outlaw' element={<>
 				<Hud />
@@ -96,18 +94,20 @@ export const App = () => {
 				</>
 			))}
 			<MemoryRouter>
-				<Router />
-				<Toaster
-					id='notify'
-					position='top-center'
-					offset={{ top: '10%' }}
-					expand={false}
-					toastOptions={{
-						classNames: {
-							default: 'bg-transparent! border-transparent! shadow-none! text-foreground! font-semibold text-shadow-sm! text-fluid-2! justify-center'
-						}
-					}}
-				/>
+				<StatesProvider>
+					<Router />
+					<Toaster
+						id='notify'
+						position='top-center'
+						offset={{ top: '10%' }}
+						expand={false}
+						toastOptions={{
+							classNames: {
+								default: 'bg-transparent! border-transparent! shadow-none! text-foreground! font-semibold text-shadow-sm! text-fluid-2! justify-center'
+							}
+						}}
+					/>
+				</StatesProvider>
 			</MemoryRouter>
 			{/* <Ipad /> */}
 			{/* <Rank /> */}

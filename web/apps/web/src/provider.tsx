@@ -1,11 +1,10 @@
-import { Outlet } from "react-router";
-import { CompetitiveContext } from "./context";
+import { StatesContext } from "./context";
 import { useState } from "react";
-import { MODES } from "./constants";
-import { entries, type S } from "@lenix/lenix";
+import { entries } from "@lenix/lenix";
 import type { SetStatesOverload, States } from "./types";
+import { MODES } from "./competitive/constants";
 
-export const CompetitiveProvider = () => {
+export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, setRawState] = useState<States>({
 		lobby: {
 			mode: entries(MODES)[0][0]
@@ -23,8 +22,8 @@ export const CompetitiveProvider = () => {
 	}
 
 	return (
-		<CompetitiveContext.Provider value={[state, setState]}>
-			<Outlet />
-		</CompetitiveContext.Provider>
+		<StatesContext.Provider value={[state, setState]}>
+			{children}
+		</StatesContext.Provider>
 	)
 }

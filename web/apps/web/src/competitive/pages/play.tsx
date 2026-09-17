@@ -8,13 +8,13 @@ import { Xbox } from "@/components/xbox"
 import { audio, toast } from "@workspace/ui/lib/utils"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
-import { useCompetitive } from "../hook"
+import { useStates } from "@/hook"
 
 const MotionButton = motion.create(Button)
 
 export const Play = () => {
 	const nav = useNavigate()
-	const [{ lobby  }] = useCompetitive()
+	const [{ lobby }] = useStates()
 
 	const mode = lobby.mode
 
