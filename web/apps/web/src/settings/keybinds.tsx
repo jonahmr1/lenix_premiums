@@ -1,13 +1,13 @@
 import { entries } from "@lenix/lenix"
 import { LabelItem } from "."
-import { audiobility } from "@workspace/ui/lib/utils"
+import { audiobility, toast } from "@workspace/ui/lib/utils"
 import { Tabs, TabsContent, TabsList } from "@workspace/ui/components/tabs"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { States } from "@/types"
 import { Button } from "@workspace/ui/components/button"
 import { useStates } from "@/hook"
 import { Kbd } from "@workspace/ui/components/kbd"
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@workspace/ui/components/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@workspace/ui/components/dialog"
 
 const labels = {
 	general: {
@@ -30,56 +30,142 @@ const labels = {
 			contextAction: 'Context Action',
 		}
 	},
-	// movement: {
-	// 	label: 'Movement',
-	// 	items: {},
-	// },
-	// combat: {
-	// 	label: 'Combat',
-	// 	items: {},
-	// },
-	// weaponSelect: {
-	// 	label: 'Weapons Select',
-	// 	items: {},
-	// },
-	// carsBikesBoats: {
-	// 	label: 'Cars / Bikes / Boats',
-	// 	items: {},
-	// },
-	// aircraft: {
-	// 	label: 'Aircraft',
-	// 	items: {},
-	// },
-	// submersibles: {
-	// 	label: 'Submersibles',
-	// 	items: {},
-	// },
-	// parachute: {
-	// 	label: 'Parachute',
-	// 	items: {},
-	// },
-	// cellphone: {
-	// 	label: 'Cellphone',
-	// 	items: {},
-	// },
-	// gtaOnline: {
-	// 	label: 'GTA Online',
-	// 	items: {},
-	// },
-	// gtaOnlineVehicles: {
-	// 	label: 'GTA Online Vehicles',
-	// 	items: {},
-	// },
-	// fivem: {
-	// 	label: 'FiveM',
-	// 	items: {},
-	// },
+	movement: {
+		label: 'Movement',
+		items: {},
+	},
+	combat: {
+		label: 'Combat',
+		items: {},
+	},
+	weaponSelect: {
+		label: 'Weapons Select',
+		items: {},
+	},
+	carsBikesBoats: {
+		label: 'Cars / Bikes / Boats',
+		items: {},
+	},
+	aircraft: {
+		label: 'Aircraft',
+		items: {},
+	},
+	submersibles: {
+		label: 'Submersibles',
+		items: {},
+	},
+	parachute: {
+		label: 'Parachute',
+		items: {},
+	},
+	cellphone: {
+		label: 'Cellphone',
+		items: {},
+	},
+	gtaOnline: {
+		label: 'GTA Online',
+		items: {},
+	},
+	gtaOnlineVehicles: {
+		label: 'GTA Online Vehicles',
+		items: {},
+	},
+	fivem: {
+		label: 'FiveM',
+		items: {},
+	},
 } as const
 
 export const Keybinds = () => {
 	const [tab, setTab] = useState<keyof States['settings']['keybinds']>(entries(labels)[0][0])
 	const [{ settings: { keybinds } }, setStates] = useStates()
-	const [updating, setUpdating] = useState(false)
+
+	const KbdDialog = ({ children, binding, order }: {
+		children: React.ReactNode
+		binding: keyof States['settings']['keybinds'][keyof States['settings']['keybinds']]
+		order: number
+	}) => {
+		const [updating, setUpdating] = useState(false)
+
+		const updateBind = (value: string) => {
+			setStates(prev => {
+				const bindings = [...prev.settings.keybinds[tab][binding]]
+				bindings[order] = value
+
+				return {
+					...prev,
+					settings: {
+						...prev.settings,
+						keybinds: {
+							...prev.settings.keybinds,
+							[tab]: {
+								...prev.settings.keybinds[tab],
+								[binding]: bindings,
+							},
+						},
+					},
+				}
+			})
+		}
+
+		useEffect(() => {
+			if (!updating) return
+
+			const handleKey = (event: KeyboardEvent) => {
+				event.preventDefault()
+				event.stopImmediatePropagation()
+
+				const key = event.key
+				if (key !== 'Escape') {
+					updateBind(key === ' ' ? event.code : key)
+				}
+				setUpdating(false)
+			}
+
+			const handleMouse = (event: MouseEvent) => {
+				event.preventDefault()
+
+				const key = event.button
+				updateBind(key === 0 ? 'MOUSE_LEFT' : key === 1 ? 'MOUSE_MIDDLE' : key === 2 ? 'MOUSE_RIGHT' : 'Unknown')
+
+				setUpdating(false)
+			}
+
+			window.addEventListener('keydown', handleKey, true)
+			window.addEventListener('mousedown', handleMouse, true)
+
+			return () => {
+				window.removeEventListener('keydown', handleKey, true)
+				window.removeEventListener('mousedown', handleMouse, true)
+			}
+
+		}, [updating])
+
+		return (
+			<Dialog open={updating} onOpenChange={setUpdating}>
+				<DialogTrigger asChild>
+					<Button
+						variant='secondary'
+						className="w-1/4 border border-border cursor-pointer"
+						onClick={() => setUpdating(true)}
+					>
+						{children}
+					</Button>
+				</DialogTrigger>
+				<DialogContent
+					showCloseButton={false}
+					className="sm:max-w-none justify-center bg-transparent ring-0"
+				>
+					<DialogTitle className="uppercase text-fluid-6 italic font-black">
+						Press a key or mouse button
+					</DialogTitle>
+					<DialogDescription className="uppercase italic text-fluid-2 flex justify-center">
+						Press Esc to cancel
+					</DialogDescription>
+				</DialogContent>
+			</Dialog>
+		)
+	}
 
 	return (
 		<div className="size-full">
@@ -101,19 +187,18 @@ export const Keybinds = () => {
 							value={title}
 							className="flex flex-col gap-xs"
 						>
-							{entries(data.items).map(([type, value]) => {
+							{entries(data.items).map(([binding, label]) => {
 								return (
-									<div key={type} className="flex bg-background/50 px-sm py-sm gap-md">
-										<div className="w-1/2 text-fluid-2 font-black tracking-tight italic uppercase">{value}</div>
-										{keybinds[title][type].map(key => (
-											<Button
+									<div key={binding} className="flex bg-background/50 px-sm py-sm gap-md">
+										<div className="w-1/2 text-fluid-2 font-black tracking-tight italic uppercase">{label}</div>
+										{keybinds[title][binding].map((key, i) => (
+											<KbdDialog
 												key={key}
-												variant='secondary'
-												className="w-1/4 border border-border cursor-pointer"
-												onClick={() => setUpdating(true)}
+												binding={binding}
+												order={i}
 											>
 												{key.length ? <Kbd>{key}</Kbd> : <></>}
-											</Button>
+											</KbdDialog>
 										))}
 									</div>
 								)
@@ -122,19 +207,6 @@ export const Keybinds = () => {
 					))}
 				</div>
 			</Tabs>
-			<Dialog open={updating} onOpenChange={setUpdating}>
-				<DialogContent
-					showCloseButton={false}
-					className="sm:max-w-none justify-center bg-transparent ring-0"
-				>
-					<DialogTitle className="uppercase text-fluid-4 italic font-black">
-						Press a key or mouse button
-					</DialogTitle>
-					<DialogDescription className="uppercase italic flex justify-center">
-						Press Esc to cancel
-					</DialogDescription>
-				</DialogContent>
-			</Dialog>
 		</div>
 	)
 }
