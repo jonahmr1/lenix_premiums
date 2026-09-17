@@ -12,10 +12,11 @@ import { useNavigate } from "react-router"
 import { Keybinds } from "./keybinds"
 import { KeyboardMouse } from "./keyboardMouse"
 
-export const LabelItem = ({ children, title, className, ...props }: {
+export const LabelItem = ({ children, title, className, digest, ...props }: {
 	children?: React.ReactNode,
 	title: React.ReactNode
 	className?: React.ComponentProps<typeof Item>['className']
+	digest?: true
 } & React.ComponentProps<typeof Item>) => (
 	<Item
 		className={cn('bg-background/50 px-md hover:invert hover:bg-background text-fluid-1.5 font-black tracking-normal text-foreground', className)}
@@ -23,7 +24,7 @@ export const LabelItem = ({ children, title, className, ...props }: {
 		{...props}
 	>
 		<ItemContent>
-			<ItemTitle className="uppercase italic text-fluid-2 font-bold">{title}</ItemTitle>
+			<ItemTitle className={`uppercase italic text-fluid-2 font-bold ${digest && 'font-black'}`}>{title}</ItemTitle>
 		</ItemContent>
 		<ItemActions>
 			{children}
