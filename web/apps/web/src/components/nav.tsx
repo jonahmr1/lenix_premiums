@@ -28,6 +28,7 @@ export const PreviousButton = ({ children, tabs, value, onValueChange, variant =
 			size='lg'
 			onClick={handlePrevious}
 			variant={variant}
+			className="px-[1.5vmin] py-[2.1vmin]"
 		>
 			<Kbd>{children}</Kbd>
 		</Button>
@@ -55,6 +56,7 @@ export const NextButton = ({ children, tabs, value, onValueChange, variant = 'se
 			size='lg'
 			onClick={handleNext}
 			variant={variant}
+			className="px-[1.5vmin] py-[2.1vmin]"
 		>
 			<Kbd>{children}</Kbd>
 		</Button>
