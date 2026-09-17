@@ -49,20 +49,21 @@ export const KillFeed = () => {
 
 	return (
 		<Layout className="absolute w-fluid-30 uppercase h-4/100 top-1/100 right-0 text-fluid-1.5 font-normal">
-			<AnimatePresence initial={false}>
+			<AnimatePresence>
 				{feeds.map(feed => (
 					<motion.div
 						key={feed.id}
 						layout
 						{...anim}
-						initial={{ opacity: 0, x: 200 }}
+						initial={{ opacity: 0, x: 100 }}
 						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: 200 }}
-						className={`flex size-full items-center justify-between px-2 bg-background border-l-2 border-foreground ${feed.killer !== name && 'invert'}`}
+						exit={{ opacity: 0, x: 100 }}
+						transition={{ duration: 0.2, ease: 'easeOut' }}
+						className={`flex size-full items-center justify-between px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
 					>
 						<p>{feed.killer}</p>
 						<div className="flex h-2/5 gap-sm items-center">
-							<img src={feed.gun} className="h-full brightness-0" />
+							<img src={feed.gun} className={`h-full ${feed.killer === name ? 'brightness-200' : 'brightness-0'}`} />
 							{feed.type === 'headshot'
 								? <Skull className="size-sm" />
 								: feed.type === 'roll'
