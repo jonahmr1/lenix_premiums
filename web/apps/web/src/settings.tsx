@@ -13,6 +13,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { useStates } from "./hook"
 import { asserts, entries } from "@lenix/lenix"
+import { Xbox } from "./components/xbox"
 
 const KeyboardMouse = () => {
 	const [{ settings: { keyboardMouse }}, setStates] = useStates()
@@ -152,7 +153,7 @@ const KeyboardMouse = () => {
 	]
 
 	return (
-		<div className="size-full flex">
+		<div className="size-full flex gap-md">
 			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
 				{settings.map(setting => {
 					const value = keyboardMouse[setting.key]
@@ -228,7 +229,7 @@ const KeyboardMouse = () => {
 				})}
 			</div>
 			<div className="w-2/5">
-			
+				<Xbox />
 			</div>
 		</div>
 	)
