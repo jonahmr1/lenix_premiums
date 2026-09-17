@@ -162,9 +162,9 @@ const KeyboardMouse = () => {
 						audiobility.onMouseEnter()
 					}
 					return (
-						<Item key={setting.key} className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
+						<Item key={setting.key} className="bg-background px-md hover:invert text-fluid-1.5 font-black tracking-normal" onMouseEnter={audiobility.onMouseEnter}>
 							<ItemContent>
-								<ItemTitle className="uppercase italic text-fluid-2 font-bold">{setting.title}</ItemTitle>
+								<ItemTitle className="uppercase italic text-fluid-2 font-black">{setting.title}</ItemTitle>
 							</ItemContent>
 							<ItemActions>
 								<Button
@@ -227,9 +227,9 @@ const KeyboardMouse = () => {
 						</Item>
 					)
 				})}
-				<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" {...audiobility}>
+				<Item className="bg-background px-md hover:invert tracking-normal" {...audiobility}>
 					<ItemContent>
-						<ItemTitle className="uppercase italic text-fluid-2 font-bold">Restore Defaults</ItemTitle>
+						<ItemTitle className="uppercase italic text-fluid-2 font-black">Restore Defaults</ItemTitle>
 					</ItemContent>
 				</Item>
 			</div>
