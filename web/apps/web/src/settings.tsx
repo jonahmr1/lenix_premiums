@@ -17,10 +17,12 @@ import { entries } from "@lenix/lenix"
 const KeyboardMouse = () => {
 	const [{ settings: { keyboardMouse }}, setStates] = useStates()
 
+	type Value = `${States['settings']['keyboardMouse'][keyof States['settings']['keyboardMouse']]}` | number
+
 	const settings: {
 		key: keyof States['settings']['keyboardMouse']
 		title: string
-		options?: Partial<Record<`${States['settings']['keyboardMouse'][keyof States['settings']['keyboardMouse']]}`, string>>
+		options?: Partial<Record<Value, string>>
 	}[] = [
 		{
 			key: 'mouseInputMethod',
@@ -154,14 +156,23 @@ const KeyboardMouse = () => {
 			<div className="w-3/5 overflow-y-scroll scrollbar pr-2xs space-y-2xs">
 				{settings.map(setting => {
 					const value = keyboardMouse[setting.key]
+					const handle = (value: Value) => {
+						setStates(null, { settings: { keyboardMouse: { [setting.key]: value } } })
+						audiobility.onMouseEnter()
+					}
 					return (
-						<Item className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
+						<Item key={setting.key} className="bg-background px-md hover:invert text-fluid-2 font-bold" onMouseEnter={audiobility.onMouseEnter}>
 							<ItemContent>
 								<ItemTitle className="uppercase italic text-fluid-2 font-bold">{setting.title}</ItemTitle>
 							</ItemContent>
 							<ItemActions>
 								<Button
 									variant='ghost'
+									onClick={() => {
+										if (typeof value === 'number') {
+											setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 }}})
+										}
+									}}
 								>
 									<ChevronLeft />
 								</Button>
@@ -170,19 +181,16 @@ const KeyboardMouse = () => {
 										<Slider
 											step={1}
 											max={8}
-											defaultValue={[value]}
-											onValueChange={value => {
-												setStates(null, { settings: { keyboardMouse: { [setting.key]: value[0] } } })
-												audiobility.onMouseEnter()
-											}}
+											value={[value]}
+											onValueChange={value => handle(value[0])}
 										/>
 									) : setting.options && (
 										<div className="w-full">
 											<p className="text-center italic uppercase">{setting.options[value]}</p>
 											<div className="flex gap-4">
 												{/* @ts-ignore */}
-												{entries(setting.options).map(([option]) => (
-													<div className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted'}`} />
+												{entries(setting.options).map(([option], i) => (
+													<div key={i} className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted'}`} />
 												))}
 											</div>
 										</div>
@@ -190,6 +198,11 @@ const KeyboardMouse = () => {
 								</div>
 								<Button
 									variant='ghost'
+									onClick={() => {
+										if (typeof value === 'number') {
+											setStates(null, { settings: { keyboardMouse: { [setting.key]: value < 8 ? value + 1 : 8 }}})
+										}
+									}}
 								>
 									<ChevronRight />
 								</Button>
