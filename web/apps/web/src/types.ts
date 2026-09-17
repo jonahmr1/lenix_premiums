@@ -1,6 +1,5 @@
 import type { S } from "@lenix/lenix"
 import type { MODES } from "./competitive/constants"
-import type { Vec2 } from "lenix"
 
 export interface Storage {
 	hudVariant: 'progress' | 'bar'

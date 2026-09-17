@@ -73,7 +73,7 @@ export const Lobby = () => {
 				<motion.div
 					className="w-full flex flex-row"
 					{...anim}
-					initial={{ opacity: 0, y: -100 }}
+					initial={{ opacity: 0, y: '-40%' }}
 					animate={{ opacity: 1, y: 0 }}
 				>
 					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>

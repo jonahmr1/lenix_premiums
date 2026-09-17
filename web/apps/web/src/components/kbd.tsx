@@ -25,9 +25,8 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 	return (
 		<motion.div
 			{...anim}
-			initial={{ opacity: 0, y: 50 }}
+			initial={{ opacity: 0, y: '50%' }}
 			animate={{ opacity: 1, y: 0 }}
-			exit={{ opacity: 0, y: 50 }}
 			className="group space-x-2 flex items-center"
 		>
 			<Button

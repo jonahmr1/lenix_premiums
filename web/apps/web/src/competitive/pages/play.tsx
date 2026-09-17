@@ -20,7 +20,7 @@ export const Play = () => {
 
 	return (
 		<div className="size-full flex justify-between">
-			<motion.div {...anim} initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0}}>
+			<motion.div {...anim} initial={{ opacity: 0, x: `-10%` }} animate={{ opacity: 1, x: 0}}>
 				<ButtonGroup orientation='vertical' className="h-full justify-end">
 					<Button
 						className="h-auto p-0 relative hover:brightness-75"
@@ -35,7 +35,7 @@ export const Play = () => {
 			</motion.div>
 			<motion.div
 				{...anim}
-				initial={{ opacity: 0, x: 100 }}
+				initial={{ opacity: 0, x: `10%` }}
 				animate={{ opacity: 1, x: 0 }}
 				className="w-1/5 h-1/2 self-center"
 			>

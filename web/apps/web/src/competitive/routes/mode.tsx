@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import { MAPS, MODES } from '../constants'
 import { entries } from '@lenix/lenix'
 import { Badge } from '@workspace/ui/components/badge'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { anim } from '@/lib'
 import { audio, toast } from '@workspace/ui/lib/utils'
 import { useStates } from '@/hook'
@@ -21,10 +21,17 @@ export const Mode = () => {
 
 	return (
 		<div className="relative isolate h-screen w-full">
-			<img
-				src={mode.image}
-				className="absolute -z-2 size-full object-cover"
-			/>
+			<AnimatePresence initial={false}>
+				<motion.img
+					key={mode.image}
+					src={mode.image}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.1 }}
+					className="absolute inset-0 -z-2 size-full object-cover"
+				/>
+			</AnimatePresence>
 			<div className='absolute size-full -z-1 bg-linear-to-r from-neutral-950/90 to-transparent from-5%' />
 			<div className="size-full flex items-start flex-col px-5xl">
 				<div className='size-full flex h-9/10 justify-evenly flex-col gap-5xl'>
