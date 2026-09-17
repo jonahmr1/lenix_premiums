@@ -3,17 +3,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
 
 export const DirectionalIndicator = () => {
-	const [state, setState] = useState<{ img: string, degree: number }>()
+	const [state, setState] = useState<{ img: string, degree: number, distance: number }>()
 
 	useEffect(() => {
 		return DEV(() => {
+			let value = 0
+			let direction = 1
+
+			const distance = () => {
+				if (value >= 100) direction = -1
+				if (value <= 0) direction = 1
+				return value += direction
+			}
+
 			const interval = setInterval(() => {
+				const nextDistance = distance()
 				setState(prev => prev ? {
 					...prev,
-					degree: prev.degree < 360 ? prev.degree + 1 : 0
+					degree: prev.degree < 360 ? prev.degree + 1 : 0,
+					distance: nextDistance
 				} : {
 					img: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
-					degree: 0
+					degree: 0,
+					distance: 100
 				})
 			}, 25)
 			
@@ -25,9 +37,10 @@ export const DirectionalIndicator = () => {
 
 	return <>
 		<div
-			className="absolute-center flex flex-col items-center gap-2 h-4/5"
+			className="absolute-center flex flex-col items-center gap-2"
 			style={{
-				rotate: `${state.degree}deg`
+				rotate: `${state.degree}deg`,
+				height: `${state.distance}%`
 			}}
 		>
 			<FontAwesomeIcon icon={['fas', 'caret-up']} />
