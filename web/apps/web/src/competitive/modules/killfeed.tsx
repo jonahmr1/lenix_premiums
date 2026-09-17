@@ -59,9 +59,9 @@ export const KillFeed = () => {
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: 100 }}
 						transition={{ duration: 0.2, ease: 'easeOut' }}
-						className={`flex size-full items-center justify-between px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
+						className={`flex size-full items-center justify-between italic px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
 					>
-						<p>{feed.killer}</p>
+						<p className={`${feed.killer === name && 'font-bold tracking-normal'}`}>{feed.killer}</p>
 						<div className="flex h-2/5 gap-sm items-center">
 							<img src={feed.gun} className={`h-full ${feed.killer === name ? 'brightness-200' : 'brightness-0'}`} />
 							{feed.type === 'headshot'
