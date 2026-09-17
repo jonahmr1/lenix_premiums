@@ -3,7 +3,7 @@ import { Layout } from "@/components/layout"
 import { anim } from "@/lib"
 import { random } from "@lenix/lenix"
 import { motion } from "motion/react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const segments = 6
 const maxHealth = 100
@@ -23,7 +23,18 @@ export const Hud = () => {
 			}[]
 		}
 	}>()
+	const previous = useRef(state?.health)
+	const decreasing =
+		state !== undefined &&
+		previous.current !== undefined &&
+		state.health < previous.current
 	const activeEquipment = state?.weaponary.activeEquipment ? state.weaponary.equipments[state.weaponary.activeEquipment - 1] : null
+
+	useEffect(() => {
+		if (state?.health === undefined) return
+		previous.current = state.health
+	}, [state?.health])
+
 
 	useEffect(() => {
 		return DEV(() => {
@@ -95,6 +106,11 @@ export const Hud = () => {
 									)}%`,
 								}}
 								className="bg-light h-full rounded-xs"
+								transition={{
+									duration: 0.12,
+									delay: (decreasing ? segments - 1 - index : index) * 0.12,
+									ease: 'linear',
+								}}
 							/>
 						</div>
 					))}
