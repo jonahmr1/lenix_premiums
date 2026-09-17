@@ -25,6 +25,7 @@ export const PreviousButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handlePrevious}
+			className="hover:invert"
 		>{children}</Button>
 	)
 }
@@ -48,6 +49,7 @@ export const NextButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handleNext}
+			className="hover:invert"
 		>{children}</Button>
 	)
 }
