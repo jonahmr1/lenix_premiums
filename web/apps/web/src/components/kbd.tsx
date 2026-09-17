@@ -1,7 +1,9 @@
+import { anim } from "@/lib"
 import { Button } from "@workspace/ui/components/button"
 import { Kbd } from "@workspace/ui/components/kbd"
 import { audiobility } from "@workspace/ui/lib/utils"
 import { onKeyDown } from "lenix/nui"
+import { motion } from "motion/react"
 import { useEffect } from "react"
 
 export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
@@ -21,7 +23,13 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 	}, [])
 
 	return (
-		<div className="group space-x-2 flex items-center">
+		<motion.div
+			{...anim}
+			initial={{ opacity: 0, y: 50 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: 50 }}
+			className="group space-x-2 flex items-center"
+		>
 			<Button
 				onClick={onClick}
 				{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
@@ -33,6 +41,6 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 				</Kbd>
 				<span className="font-sans">{children}</span>
 			</Button>
-		</div>
+		</motion.div>
 	)
 }
