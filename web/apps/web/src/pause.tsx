@@ -7,6 +7,9 @@ import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
 import type { ButtonStart } from "./types"
+import { Layout } from "./components/layout"
+import { ArrowRight } from "lucide-react"
+import { ButtonGroup } from "@workspace/ui/components/button-group"
 
 export const Pause = () => {
 	const nav = useNavigate()
@@ -30,8 +33,7 @@ export const Pause = () => {
 		},
 		{
 			label: 'Settings',
-			onClick: () => nav('/start/settings'),
-			styles: 'mt-10'
+			onClick: () => nav('/settings'),
 		},
 		{
 			label: 'Leave',
@@ -43,19 +45,26 @@ export const Pause = () => {
 	]
 
 	return (
-		<div className='h-screen bg-neutral-950/40'>
+		<Layout type="p" className='h-screen bg-linear-to-r from-neutral-950 to-transparent'>
 			<div className="flex flex-col size-full justify-between">
-				<div className="w-1/3 flex flex-col gap-5 items-start px-25 h-full justify-center">
+				<ButtonGroup orientation='vertical' className="w-1/3 px-3xl h-full justify-center">
 					{buttons.map((button, i) => (
-						<Button
-							key={i}
-							variant='default'
-							onClick={() => button.onClick()}
-							className={`bg-transparent hover:bg-transparent uppercase drop-shadow-2xl hover:drop-shadow-white/50 duration-0 text-light text-xl hover:text-neutral-300 cursor-pointer ${button.styles}`}
-						>{button.label}</Button>
+						<div className="flex group gap-xs">
+							<div className="h-full w-px shrink-0 bg-foreground border-0 opacity-0 group-hover:opacity-100"></div>
+							<Button
+								key={i}
+								variant='ghost'
+								onClick={() => button.onClick()}
+								size='lg'
+								className='uppercase text-light font-semibold border-0 tracking-wider text-fluid-2.5 w-full justify-between py-md px-px'
+							>
+								<span className="px-lg">{button.label}</span>
+								<ArrowRight className="opacity-0 [:hover>&]:opacity-100 size-md stroke-1 mr-sm" />
+							</Button>
+						</div>
 					))}
-				</div>
-				<KbdGroup className='absolute bottom-0 w-full flex items-end justify-end px-20 py-10'>
+				</ButtonGroup>
+				<KbdGroup className='w-full flex px-3xl'>
 					<NavKbd
 						onClick={() => buttons[0].onClick()}
 						keybind="Escape"
@@ -65,6 +74,6 @@ export const Pause = () => {
 					</NavKbd>
 				</KbdGroup>
 			</div>
-		</div>
+		</Layout>
 	)
 }
