@@ -13,6 +13,30 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 			setRawState({
 				lobby: {
 					mode: entries(MODES)[0][0]
+				},
+				settings: {
+					keyboardMouse: {
+						mouseInputMethod: 'raw',
+						mouseLookSensitivity: 3,
+						mouseSmoothingScale: 3,
+						fineAimingControl: true,
+						invertMouseLook: false,
+						toggleAim: true,
+						firstPersonAimType: 'normal',
+						defaultMouseDivingControl: 'camera',
+						defaultMouseFlyingControl: 'camera',
+						defaultMouseSubmarineControl: 'camera',
+						mouseDrivingSensitivity: 4,
+						mousePlaneSensitivity: 5,
+						mouseHeliSensitivity: 6,
+						mouseSubmarineSensitivity: 8,
+						invertMouseFlying: false,
+						invertMouseSubmarine: true,
+						mouseFlyingControlType: 'roll',
+						autoCenterMouseOnBikes: 2,
+						autoCenterMouseInCars: 5,
+						autoCenterMouseInAircraft: 5,
+					}
 				}
 			})
 		})

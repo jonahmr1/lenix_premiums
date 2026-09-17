@@ -15,68 +15,104 @@ import { useNavigate } from "react-router"
 const KeyboardMouse = () => {
 	const settings = [
 		{
+			key: 'mouseInputMethod',
 			title: 'Mouse Input Method',
 			options: ['Raw Input', 'Something Else']
 		},
 		{
+			key: 'mouseLookSensitivity',
 			title: 'Mouse Look Sensitivity',
 			options: 'slider'
 		},
 		{
+			key: 'mouseSmoothingScale',
 			title: 'Mouse Smoothing Scale',
 			options: 'slider'
 		},
 		{
+			key: 'fineAimingControl',
 			title: 'Fine Aiming Control',
 			options: ['On', 'Off']
 		},
 		{
+			key: 'invertMouseLook',
 			title: 'Invert Mouse Look',
 			options: ['On', 'Off']
 		},
 		{
+			key: 'toggleAim',
 			title: 'Toggle Aim',
 			options: ['On', 'Off']
 		},
 		{
+			key: 'firstPersonAimType',
 			title: 'First Person Aim Type',
 			options: ['Normal', 'Something Else']
 		},
 		{
+			key: 'defaultMouseDivingControl',
 			title: 'Default Mouse Driving Control',
 			options: ['Camera', 'Something Else']
 		},
 		{
+			key: 'defaultMouseFlyingControl',
 			title: 'Default Mouse Flying Control',
 			options: ['Camera', 'Something Else']
 		},
 		{
+			key: 'defaultMouseSubmarineControl',
 			title: 'Default Mouse Submarine Control',
 			options: ['Camera', 'Something Else']
 		},
 		{
+			key: 'mouseDrivingSensitivity',
 			title: 'Mouse Driving Sensitivity',
 			options: 'slider'
 		},
 		{
+			key: 'mousePlaneSensitivity',
 			title: 'Mouse Plane Sensitivity',
 			options: 'slider'
 		},
 		{
+			key: 'mouseHeliSensitivity',
 			title: 'Mouse Heli Sensitivity',
 			options: 'slider'
 		},
 		{
+			key: 'mouseSubmarineSensitivity',
 			title: 'Mouse Submarine Sensitivity',
 			options: 'slider'
 		},
 		{
+			key: 'invertMouseFlying',
 			title: 'Invert Mouse Flying',
 			options: ['On', 'Off']
 		},
 		{
+			key: 'invertMouseSubmarine',
 			title: 'Invert Mouse Submarine',
 			options: ['On', 'Off']
+		},
+		{
+			key: 'mouseFlyingControlType',
+			title: 'Mouse Flying Control Type',
+			options: ['Roll', 'Pitch']
+		},
+		{
+			key: 'autoCenterMouseOnBikes',
+			title: 'Auto Center Mouse On Bikes',
+			options: 'slider'
+		},
+		{
+			key: 'autoCenterMouseInCars',
+			title: 'Auto-Center Mouse In Cars',
+			options: 'slider'
+		},
+		{
+			key: 'autoCenterMouseInAircraft',
+			title: 'Auto-Center Mouse In Aircraft',
+			options: 'slider'
 		},
 	]
 
