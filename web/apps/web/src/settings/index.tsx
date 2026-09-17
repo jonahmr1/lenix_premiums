@@ -12,6 +12,8 @@ import { useNavigate } from "react-router"
 import { Keybinds } from "./keybinds"
 import { KeyboardMouse } from "./keyboardMouse"
 import { Header } from "@/components/header"
+import { motion } from "motion/react"
+import { anim } from "@/lib"
 
 export const LabelItem = ({ children, title, className, digest, ...props }: {
 	children?: React.ReactNode,
@@ -90,12 +92,18 @@ const tabs: Tab[] = [
 ]
 
 export const Settings = () => {
-	const [tab, setTab] = useState(0)
+	const [tab, setTab] = useState(2)
 	const nav = useNavigate()
 
 	return (
 		<Layout type="p" className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">
-			<Header>Settings</Header>
+			<motion.div
+				{...anim}
+				initial={{ opacity: 0, y: -50 }}
+				animate={{ opacity: 1, y: 0 }}
+			>
+				<Header>Settings</Header>
+			</motion.div>
 			<div className="flex justify-center *:text-fluid-2 min-h-0 w-full gap-xs px-sm">
 				<PreviousButton
 					tabs={tabs}
@@ -106,7 +114,7 @@ export const Settings = () => {
 					value={tab.toString()}
 					className="flex-1"
 				>
-					<TabsList className="bg-transparent w-full p-0 gap-xs">
+					<TabsList className="bg-transparent w-full p-0 gap-xs h-full">
 						{tabs.map(({ disabled, label }, i) => (
 							<Button
 								key={i}
