@@ -1,7 +1,8 @@
 import { createContext } from "react";
-import { MODES } from "./constants";
+import type { States } from "@/types";
+import type { S } from "@lenix/lenix";
 
 export const CompetitiveContext = createContext<{
-	selectedMode: keyof typeof MODES
-	setSelectedMode: (mode: keyof typeof MODES) => void
+	state: States
+	setState: S<States>
 } | null>(null)

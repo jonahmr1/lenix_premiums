@@ -1,3 +1,5 @@
+import type { MODES } from "./competitive/constants"
+
 export interface Storage {
 	hudVariant: 'progress' | 'bar'
 }
@@ -11,4 +13,9 @@ export interface ButtonStart {
 	onClick: () => void
 	disabled?: true
 	styles?: string
+}
+export interface States {
+	lobby: {
+		mode: keyof typeof MODES
+	}
 }

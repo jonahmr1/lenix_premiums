@@ -14,8 +14,8 @@ import { useCompetitive } from '../hook'
 export const Mode = () => {
 	const nav = useNavigate()
 
-	const { selectedMode, setSelectedMode } = useCompetitive()
-	const [preview, setPreview] = useState(selectedMode)
+	const { state: { lobby }, setState } = useCompetitive()
+	const [preview, setPreview] = useState(lobby.mode)
 
 	const mode = MODES[preview]
 
@@ -82,7 +82,7 @@ export const Mode = () => {
 											audio.unavailable()
 											return
 										}
-										setSelectedMode(mode)
+										setState(prev => ({ ...prev, lobby: { mode } }))
 										audio.select()
 									}}
 									onMouseOver={() => setPreview(mode)}
@@ -93,7 +93,7 @@ export const Mode = () => {
 								</Button>
 								<div className="h-[calc(var(--spacing-md)+1px)] overflow-hidden">
 									<motion.p
-										animate={{ y: selectedMode === mode ? '0%' : '-100%' }}
+										animate={{ y: lobby.mode === mode ? '0%' : '-100%' }}
 										className="flex h-full items-center justify-center border-b border-x border-chart-5 bg-foreground text-background uppercase font-semibold"
 										{...anim}
 									>

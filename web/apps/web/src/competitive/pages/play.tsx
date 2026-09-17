@@ -3,23 +3,20 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { ButtonGroup } from "@workspace/ui/components/button-group"
 import { useNavigate } from "react-router"
 import { MODES } from "../constants"
-import { useContext } from "react"
-import { CompetitiveContext } from "../context"
-import { asserts } from "@lenix/lenix"
 import { ArrowRight } from "lucide-react"
 import { Xbox } from "@/components/xbox"
 import { audio, toast } from "@workspace/ui/lib/utils"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
+import { useCompetitive } from "../hook"
 
 const MotionButton = motion.create(Button)
 
 export const Play = () => {
 	const nav = useNavigate()
-	const context = useContext(CompetitiveContext)
-	asserts(context, `Failed to use competitive context`)
+	const { state } = useCompetitive()
 
-	const mode = context.selectedMode
+	const mode = state.lobby.mode
 
 	return (
 		<div className="size-full flex justify-between px-3xl py-xl">
