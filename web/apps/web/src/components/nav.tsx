@@ -1,5 +1,6 @@
 import type { Tab } from "@/types"
 import { Button } from "@workspace/ui/components/button"
+import { Kbd } from "@workspace/ui/components/kbd"
 import { audiobility } from "@workspace/ui/lib/utils"
 import { onKeyDown } from "lenix/nui"
 import { useEffect } from "react"
@@ -25,8 +26,10 @@ export const PreviousButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handlePrevious}
-			className="hover:invert"
-		>{children}</Button>
+			variant='secondary'
+		>
+			<Kbd>{children}</Kbd>
+		</Button>
 	)
 }
 
@@ -49,7 +52,9 @@ export const NextButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handleNext}
-			className="hover:invert"
-		>{children}</Button>
+			variant='secondary'
+		>
+			<Kbd>{children}</Kbd>
+		</Button>
 	)
 }

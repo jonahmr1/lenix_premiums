@@ -25,9 +25,10 @@ export const NavKbd = ({ children, icon: Icon, onClick, keybind, disable }: {
 			<Button
 				onClick={onClick}
 				{...disable === 'click' ? { onMouseEnter: audiobility.onMouseEnter } : disable === 'hover' ? { onMouseDown: audiobility.onMouseDown } : audiobility}
-				className="bg-foreground"
+				variant='secondary'
+				className="gap-xs"
 			>
-				<Kbd className="bg-background text-foreground group-hover:bg-foreground group-hover:text-background rounded-md font-black italic">
+				<Kbd>
 					{Icon}
 				</Kbd>
 				<span className="font-sans">{children}</span>
