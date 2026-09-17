@@ -25,9 +25,9 @@ export const Hud = () => {
 	}>()
 	const previous = useRef(state?.health)
 	const decreasing =
-		state !== undefined &&
-		previous.current !== undefined &&
-		state.health < previous.current
+	state !== undefined &&
+	previous.current !== undefined &&
+	state.health < previous.current
 	const activeEquipment = state?.weaponary.activeEquipment ? state.weaponary.equipments[state.weaponary.activeEquipment - 1] : null
 
 	useEffect(() => {

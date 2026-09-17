@@ -109,9 +109,9 @@ export const Hud = () => {
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
 				<div className='flex flex-col gap-2 items-end justify-between text-neutral-300 text-shadow-md'>
 					<div className='flex justify-between'>
-						<div className='flex gap-1 items-start'>
+						<div className='flex gap-1 items-start font-number'>
 							<p
-								className={`text-fluid-6 font-number font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 3 ? undefined : 'text-red-500 text-shadow-red-500 glow-sm'}`}>
+								className={`text-fluid-6 font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 3 ? undefined : 'text-red-500 text-shadow-red-500 glow-sm'}`}>
 								{zeroed(state.weapon.clipAmmo, 2)}
 							</p>
 							<Separator orientation='vertical' className='bg-neutral-300 h-9/10' />

@@ -16,7 +16,6 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@fontsource-variable/martian-mono": "^5.3.0",
 		"@fontsource-variable/oxanium": "^5.3.0",
 		"@fontsource/barlow": "^5.3.0",
 		"@lenix/lenix": "npm:@jsr/lenix__lenix",

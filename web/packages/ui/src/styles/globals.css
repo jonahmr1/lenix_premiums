@@ -2,7 +2,6 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/oxanium';
-@import '@fontsource-variable/martian-mono/wght.css';
 @import '@fontsource/barlow/100.css';
 @import '@fontsource/barlow/200.css';
 @import '@fontsource/barlow/300.css';
@@ -27,9 +26,41 @@
 @source "../../../components/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
+@font-face {
+	font-family: 'Unispace';
+	src: url('../assets/fonts/Unispace Rg.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('../assets/fonts/Unispace Bd.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('../assets/fonts/Unispace It.otf') format('opentype');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('../assets/fonts/Unispace Bd It.otf') format('opentype');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
 @theme inline {
 	--font-heading: var(--font-sans);
-	--font-number: 'Martian Mono Variable', sans-serif;
+	--font-number: 'Unispace', sans-serif;
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
