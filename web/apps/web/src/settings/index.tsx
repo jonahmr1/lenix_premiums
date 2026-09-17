@@ -18,12 +18,12 @@ export const LabelItem = ({ children, title, className, ...props }: {
 	className?: React.ComponentProps<typeof Item>['className']
 } & React.ComponentProps<typeof Item>) => (
 	<Item
-		className={cn('bg-background px-md hover:invert text-fluid-1.5 font-black tracking-normal text-foreground', className)}
+		className={cn('bg-background/50 px-md hover:invert hover:bg-background text-fluid-1.5 font-black tracking-normal text-foreground', className)}
 		onMouseEnter={audiobility.onMouseEnter}
 		{...props}
 	>
 		<ItemContent>
-			<ItemTitle className="uppercase italic text-fluid-2 font-black">{title}</ItemTitle>
+			<ItemTitle className="uppercase italic text-fluid-2 font-bold">{title}</ItemTitle>
 		</ItemContent>
 		<ItemActions>
 			{children}

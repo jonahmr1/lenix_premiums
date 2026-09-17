@@ -4,6 +4,7 @@ import { audiobility } from "@workspace/ui/lib/utils"
 import { Tabs, TabsContent, TabsList } from "@workspace/ui/components/tabs"
 import { useState } from "react"
 import type { States } from "@/types"
+import { Button } from "@workspace/ui/components/button"
 
 export const Keybinds = () => {
 	const labels = {
@@ -71,32 +72,36 @@ export const Keybinds = () => {
 			label: 'FiveM',
 			items: {},
 		},
-	}
+	} as const
 	const [tab, setTab]	= useState<keyof States['settings']['keybinds']>(entries(labels)[0][0])
 
 	return (
 		<div className="size-full">
-			<Tabs value={tab} orientation='vertical' className="gap-lg">
+			<Tabs value={tab} orientation='vertical' className="gap-lg h-full">
 				<TabsList className="gap-1 bg-transparent cursor-default w-1/4">
 					{entries(labels).map(([title, data]) => (
 						<LabelItem
 							key={title}
 							title={data.label}
 							onClick={() => setTab(title)}
-							className={`${tab === title && 'invert'}`}
+							className={`${tab === title && 'invert bg-background'}`}
 							{...audiobility} />
 					))}
 				</TabsList>
-				<div className="w-3/4">
+				<div className="w-3/4 overflow-y-auto scrollbar pr-xs">
 					{entries(labels).map(([title, data]) => (
 						<TabsContent
 							key={title}
 							value={title}
-							className=""
+							className="flex flex-col gap-xs"
 						>
 							{/* @ts-ignore */}
 							{entries(data.items).map(([type, value]) => (
-								<div key={type}>{type}</div>
+								<div key={type} className="flex bg-background/50 px-sm py-sm gap-md">
+									<div className="w-1/2 text-fluid-2 font-black tracking-tight italic uppercase">{value}</div>
+									<Button variant='secondary' className="w-1/4 border border-border cursor-pointer"></Button>
+									<Button variant='secondary' className="w-1/4 border border-border cursor-pointer"></Button>
+								</div>
 							))}
 						</TabsContent>
 					))}
