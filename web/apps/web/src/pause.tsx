@@ -50,7 +50,7 @@ export const Pause = () => {
 	return (
 		<motion.div
 			{...anim}
-			initial={{ opacity: 0, x: -200 }}
+			initial={{ opacity: 0, x: -100 }}
 			animate={{ opacity: 1, x: 0 }}
 		>
 			<Layout
@@ -64,7 +64,7 @@ export const Pause = () => {
 				<ButtonGroup orientation='vertical' className="w-1/3 h-full justify-center">
 					{buttons.map((button, i) => (
 						<div className="flex group gap-xs not-last:border-b">
-							<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 group-hover:opacity-100"></div>
+							<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 group-hover:opacity-100" />
 							<Button
 								key={i}
 								variant='ghost'
