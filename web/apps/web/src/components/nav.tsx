@@ -7,11 +7,12 @@ import { useEffect } from "react"
 
 const filterTabs = (tabs: Tab[]) => tabs.flatMap((mode, i) => mode.disabled ? [] : [i])
 
-export const PreviousButton = ({ children, tabs, value, onValueChange }: {
+export const PreviousButton = ({ children, tabs, value, onValueChange, variant = 'secondary'}: {
 	children: React.ReactNode
 	tabs: Tab[]
 	value: number
 	onValueChange: (value: number) => void
+	variant?: React.ComponentProps<typeof Button>['variant']
 }) => {
 	const filteredTabs = filterTabs(tabs)
 
@@ -26,18 +27,19 @@ export const PreviousButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handlePrevious}
-			variant='secondary'
+			variant={variant}
 		>
 			<Kbd>{children}</Kbd>
 		</Button>
 	)
 }
 
-export const NextButton = ({ children, tabs, value, onValueChange }: {
+export const NextButton = ({ children, tabs, value, onValueChange, variant = 'secondary'}: {
 	children: React.ReactNode
 	tabs: Tab[]
 	value: number
 	onValueChange: (value: number) => void
+	variant?: React.ComponentProps<typeof Button>['variant']
 }) => {
 	const filteredTabs = filterTabs(tabs)
 
@@ -52,7 +54,7 @@ export const NextButton = ({ children, tabs, value, onValueChange }: {
 		<Button
 			size='lg'
 			onClick={handleNext}
-			variant='secondary'
+			variant={variant}
 		>
 			<Kbd>{children}</Kbd>
 		</Button>

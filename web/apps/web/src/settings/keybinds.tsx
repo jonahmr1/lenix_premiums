@@ -103,7 +103,7 @@ export const Keybinds = () => {
 									<div key={type} className="flex bg-background/50 px-sm py-sm gap-md">
 										<div className="w-1/2 text-fluid-2 font-black tracking-tight italic uppercase">{value}</div>
 										{keybinds[title][type].map(key => (
-											<Button variant='secondary' className="group w-1/4 border border-border cursor-pointer">
+											<Button variant='secondary' className="w-1/4 border border-border cursor-pointer">
 												{key.length ? <Kbd>{key}</Kbd> : <></>}
 											</Button>
 										))}

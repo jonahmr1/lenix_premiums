@@ -75,6 +75,7 @@ export const Lobby = () => {
 							tabs={tabs}
 							value={tab}
 							onValueChange={setTab}
+							variant='ghost'
 						>Q</PreviousButton>
 						<TabsList className="bg-transparent w-full p-0 gap-xs">
 							{tabs.map((self, i) => (
@@ -92,6 +93,7 @@ export const Lobby = () => {
 							tabs={tabs}
 							value={tab}
 							onValueChange={setTab}
+							variant='ghost'
 						>
 							E
 						</NextButton>
