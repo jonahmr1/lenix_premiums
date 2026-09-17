@@ -12,7 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { useStates } from "./hook"
-import { entries } from "@lenix/lenix"
+import { asserts, entries } from "@lenix/lenix"
 
 const KeyboardMouse = () => {
 	const [{ settings: { keyboardMouse }}, setStates] = useStates()
@@ -44,24 +44,24 @@ const KeyboardMouse = () => {
 			key: 'fineAimingControl',
 			title: 'Fine Aiming Control',
 			options: {
+				off: 'Off',
 				on: 'On',
-				off: 'Off'
 			}
 		},
 		{
 			key: 'invertMouseLook',
 			title: 'Invert Mouse Look',
 			options: {
+				off: 'Off',
 				on: 'On',
-				off: 'Off'
 			}
 		},
 		{
 			key: 'toggleAim',
 			title: 'Toggle Aim',
 			options: {
+				off: 'Off',
 				on: 'On',
-				off: 'Off'
 			}
 		},
 		{
@@ -116,16 +116,16 @@ const KeyboardMouse = () => {
 			key: 'invertMouseFlying',
 			title: 'Invert Mouse Flying',
 			options: {
+				off: 'Off',
 				on: 'On',
-				off: 'Off'
 			}
 		},
 		{
 			key: 'invertMouseSubmarine',
 			title: 'Invert Mouse Submarine',
 			options: {
+				off: 'Off',
 				on: 'On',
-				off: 'Off'
 			}
 		},
 		{
@@ -169,8 +169,13 @@ const KeyboardMouse = () => {
 								<Button
 									variant='ghost'
 									onClick={() => {
-										if (typeof value === 'number') {
-											setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 }}})
+										if (typeof value === 'number') setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 }}})
+										else {
+											asserts(setting.options)
+											{/* @ts-ignore */}
+											const values = entries(setting.options).map(([key]) => key)
+											const index = values.indexOf(value)
+											setStates(null, { settings: { keyboardMouse: { [setting.key]: index === 0 ? values[values.length - 1] : values[index - 1] } }})
 										}
 									}}
 								>
@@ -190,7 +195,14 @@ const KeyboardMouse = () => {
 											<div className="flex gap-4">
 												{/* @ts-ignore */}
 												{entries(setting.options).map(([option], i) => (
-													<div key={i} className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted'}`} />
+													<div
+														key={i}
+														className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted hover:bg-foreground/50'}`}
+														onClick={() => {
+															setStates(null, { settings: { keyboardMouse: { [setting.key]: option } }})
+															audiobility.onMouseDown()
+														}}
+													/>
 												))}
 											</div>
 										</div>
@@ -199,8 +211,12 @@ const KeyboardMouse = () => {
 								<Button
 									variant='ghost'
 									onClick={() => {
-										if (typeof value === 'number') {
-											setStates(null, { settings: { keyboardMouse: { [setting.key]: value < 8 ? value + 1 : 8 }}})
+										if (typeof value === 'number') setStates(null, { settings: { keyboardMouse: { [setting.key]: value < 8 ? value + 1 : 8 }}})
+										else {
+											asserts(setting.options)
+											const values = entries(setting.options).map(([key]) => key)
+											const index = values.indexOf(value)
+											setStates(null, { settings: { keyboardMouse: { [setting.key]: index === values.length - 1 ? values[0] : values[index + 1] } }})
 										}
 									}}
 								>
