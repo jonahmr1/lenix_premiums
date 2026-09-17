@@ -76,8 +76,8 @@ export const Keybinds = () => {
 
 	return (
 		<div className="size-full">
-			<Tabs value={tab} orientation='vertical'>
-				<TabsList className="gap-1 bg-transparent cursor-default">
+			<Tabs value={tab} orientation='vertical' className="gap-lg">
+				<TabsList className="gap-1 bg-transparent cursor-default w-1/4">
 					{entries(labels).map(([title, data]) => (
 						<LabelItem
 							key={title}
@@ -87,14 +87,20 @@ export const Keybinds = () => {
 							{...audiobility} />
 					))}
 				</TabsList>
-				{entries(labels).map(([title, data]) => (
-					<TabsContent key={title} value={title}>
-						{/* @ts-ignore */}
-						{entries(data.items).map(([type, value]) => (
-							<div key={type}>{type}</div>
-						))}
-					</TabsContent>
-				))}
+				<div className="w-3/4">
+					{entries(labels).map(([title, data]) => (
+						<TabsContent
+							key={title}
+							value={title}
+							className=""
+						>
+							{/* @ts-ignore */}
+							{entries(data.items).map(([type, value]) => (
+								<div key={type}>{type}</div>
+							))}
+						</TabsContent>
+					))}
+				</div>
 			</Tabs>
 		</div>
 	)
