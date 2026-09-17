@@ -40,7 +40,7 @@ export const DirectionalIndicator = () => {
 			className="absolute-center flex flex-col items-center gap-2"
 			style={{
 				rotate: `${state.degree}deg`,
-				height: `${state.distance}%`
+				height: `${state.distance / 3}%`
 			}}
 		>
 			<FontAwesomeIcon icon={['fas', 'caret-up']} />
