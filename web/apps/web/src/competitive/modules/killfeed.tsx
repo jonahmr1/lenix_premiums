@@ -48,7 +48,7 @@ export const KillFeed = () => {
 	if (!feeds) return null
 
 	return (
-		<Layout className="absolute w-fluid-30 uppercase h-4/100 top-1/100 right-0 text-fluid-1.5 font-normal">
+		<Layout className="absolute w-fluid-30 uppercase h-4/100 top-1/100 right-0 text-fluid-1.5 font-normal perspective-right-50">
 			<AnimatePresence>
 				{feeds.map(feed => (
 					<motion.div

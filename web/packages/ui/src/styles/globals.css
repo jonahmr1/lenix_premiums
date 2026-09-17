@@ -204,11 +204,19 @@
 
 @utility perspective-left-* {
 	transform: perspective(200px) rotateY(5deg);
-	transform-origin: left calc((--value(integer)) * -1%);
+	transform-origin: left calc((--value(integer)) * 10%);
+}
+@utility -perspective-left-* {
+	transform: perspective(200px) rotateY(5deg);
+	transform-origin: left calc((--value(integer)) * -10%);
 }
 @utility perspective-right-* {
 	transform: perspective(200px) rotateY(-5deg);
-	transform-origin: right calc((--value(integer)) * -1%);
+	transform-origin: right calc((--value(integer)) * 10%);
+}
+@utility -perspective-right-* {
+	transform: perspective(200px) rotateY(-5deg);
+	transform-origin: right calc((--value(integer)) * -10%);
 }
 
 @utility text-fluid-* {

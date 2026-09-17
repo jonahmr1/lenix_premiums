@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import impact from '@workspace/ui/assets/competitive/hit/bullet-impact.wav'
 import { DEV } from "@/App"
 import './hit.css'
+import { Howl } from 'howler'
 
 const player = new Howl({
 	src: impact,

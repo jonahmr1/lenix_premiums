@@ -88,7 +88,7 @@ export const Hud = () => {
 	return (
 		<>
 			{/* Health */}
-			<Layout className="absolute bottom-0 left-0 perspective-left-100">
+			<Layout className="absolute bottom-0 left-0 -perspective-left-50">
 				<div className="flex items-end text-light">
 					<p className="leading-tight text-fluid-2">{state.health}</p>
 					<p className="text-fluid-1.5 text-light/70">/{maxHealth}</p>
@@ -117,7 +117,7 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 perspective-right-100 text-light">
+			<Layout className="absolute bottom-0 right-0 -perspective-right-20 text-light">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (
