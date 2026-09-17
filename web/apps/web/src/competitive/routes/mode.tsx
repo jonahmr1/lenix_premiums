@@ -82,7 +82,7 @@ export const Mode = () => {
 											audio.unavailable()
 											return
 										}
-										setState(prev => ({ ...prev, lobby: { mode } }))
+										setState(null, { lobby: { mode } })
 										audio.select()
 									}}
 									onMouseOver={() => setPreview(mode)}

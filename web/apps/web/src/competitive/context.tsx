@@ -1,8 +1,7 @@
 import { createContext } from "react";
-import type { States } from "@/types";
-import type { S } from "@lenix/lenix";
+import type { SetStatesOverload, States } from "./types";
 
-export const CompetitiveContext = createContext<{
-	state: States
-	setState: S<States>
-} | null>(null)
+	export const CompetitiveContext = createContext<{
+		state: States
+		setState: SetStatesOverload
+	} | null>(null)
