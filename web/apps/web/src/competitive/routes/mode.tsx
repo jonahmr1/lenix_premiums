@@ -1,22 +1,20 @@
 import { NavKbd } from '@/components/kbd'
 import { Button } from '@workspace/ui/components/button'
 import { KbdGroup } from '@workspace/ui/components/kbd'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { MAPS, MODES } from '../constants'
-import { asserts, entries } from '@lenix/lenix'
-import { CompetitiveContext } from '../context'
+import { entries } from '@lenix/lenix'
 import { Badge } from '@workspace/ui/components/badge'
 import { motion } from 'motion/react'
 import { anim } from '@/lib'
 import { audio, toast } from '@workspace/ui/lib/utils'
+import { useCompetitive } from '../hook'
 
 export const Mode = () => {
 	const nav = useNavigate()
-	const context = useContext(CompetitiveContext)
-	asserts(context, `Failed to use competitive context`)
 
-	const { selectedMode, setSelectedMode } = context
+	const { selectedMode, setSelectedMode } = useCompetitive()
 	const [preview, setPreview] = useState(selectedMode)
 
 	const mode = MODES[preview]

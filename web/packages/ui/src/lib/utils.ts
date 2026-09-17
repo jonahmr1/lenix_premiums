@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 
 import click from '../assets/click.wav'
 import hover from '../assets/hover.wav'
+import select from '../assets/select.wav'
 import error from '../assets/error.wav'
 import unavailable from '../assets/unavailable.ogg'
 import cannot from '../assets/cannot.ogg'
@@ -29,4 +30,5 @@ export const audio = {
 	error: () => playAudio('custom', error),
 	unavailable: () => playAudio('custom', unavailable, 0.4),
 	cannot: () => playAudio('custom', cannot),
+	select: () => playAudio('custom', select),
 }
