@@ -4,7 +4,7 @@ import { asserts } from "@lenix/lenix"
 
 export const useCompetitive = () => {
 	const context = useContext(CompetitiveContext)
-	asserts(context, `Failed to use competitive context`)
+	asserts(context, 'useCompetitive must be used inside CompetitiveProvider')
 
 	return context
 }
