@@ -1,10 +1,7 @@
-import { Button, buttonVariants } from "@workspace/ui/components/button"
-import { Item, ItemContent, ItemMedia, ItemTitle } from '@workspace/ui/components/item'
-import { Avatar, AvatarFallback, AvatarImage } from "@workspace/ui/components/avatar"
+import { Button } from "@workspace/ui/components/button"
 import { useEffect, useState } from "react"
-import { audiobility, toast } from "@workspace/ui/lib/utils"
+import { audiobility } from "@workspace/ui/lib/utils"
 import { NavKbd } from "@/components/kbd"
-import initials from 'initials'
 import { DEV } from "@/App"
 import { PreviousButton, NextButton } from "@/components/nav"
 import { Tabs, TabsList, TabsContent } from "@workspace/ui/components/tabs"
@@ -20,17 +17,8 @@ export const Lobby = () => {
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
 
-	const [state, setState] = useState<{
-		avatar: string,
-		name: string,
-	}>()
-
 	useEffect(() => {
 		DEV(() => {
-			setState({
-				avatar: 'https://lenix.dev/icon.png',
-				name: 'Lenix',
-			})
 		}, 'competitive')
 	}, [])
 
@@ -60,8 +48,6 @@ export const Lobby = () => {
 			disabled: true
 		},
 	]
-
-	if (!state) return null
 
 	return <>
 		<Layout type="p" className="w-full h-screen flex flex-col">
