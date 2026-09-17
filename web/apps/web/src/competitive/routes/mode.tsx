@@ -17,7 +17,7 @@ export const Mode = () => {
 	asserts(context, `Failed to use competitive context`)
 
 	const { selectedMode, setSelectedMode } = context
-	const [preview, setPreview] = useState<keyof typeof MODES>(selectedMode)
+	const [preview, setPreview] = useState(selectedMode)
 
 	const mode = MODES[preview]
 
