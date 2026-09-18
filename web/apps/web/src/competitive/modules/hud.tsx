@@ -117,7 +117,7 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 -perspective-right-20 text-light">
+			<Layout className="absolute bottom-0 right-0 -perspective-right-10 text-light">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (
