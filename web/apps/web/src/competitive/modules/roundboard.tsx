@@ -13,11 +13,15 @@ export const Roundboard = () => {
 	const [state, setState] = useState<{ own: number, opponent: number }>()
 
 	useEffect(() => {
-		DEV(() => {
-			setState({
-				own: random(0, target),
-				opponent: random(0, target),
-			})
+		return DEV(() => {
+			const interval = setInterval(() => {
+				setState({
+					own: random(0, target),
+					opponent: random(0, target),
+				})
+			}, 1000)
+
+			return () => clearInterval(interval)
 		}, 'competitive')
 	}, [])
 
