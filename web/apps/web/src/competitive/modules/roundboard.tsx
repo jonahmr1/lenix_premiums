@@ -7,9 +7,11 @@ import { zeroed } from "@/lib"
 import { MODES } from "../constants"
 
 const target = MODES.team_deathmatch.scoreLimit
+const timeLeft = MODES.team_deathmatch.duration
 
 export const Roundboard = () => {
-	const [state, setState] = useState<{ own: number, opponent: number }>()
+	const [state, setState] = useState<{ own: number, opponent: number, timeLeft: number }>()
+	
 
 	useEffect(() => {
 		return DEV(() => {
@@ -17,6 +19,7 @@ export const Roundboard = () => {
 				setState({
 					own: random(0, target),
 					opponent: random(0, target),
+					timeLeft
 				})
 			}, 1000)
 
