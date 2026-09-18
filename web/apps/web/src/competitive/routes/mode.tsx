@@ -9,7 +9,7 @@ import { Badge } from '@workspace/ui/components/badge'
 import { AnimatePresence, motion } from 'motion/react'
 import { anim } from '@/lib'
 import { audio, toast } from '@workspace/ui/lib/utils'
-import { useStates } from '@/hook'
+import { useStates } from '@/hooks'
 
 export const Mode = () => {
 	const nav = useNavigate()

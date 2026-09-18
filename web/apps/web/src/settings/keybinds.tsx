@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList } from "@workspace/ui/components/tabs"
 import { useEffect, useState } from "react"
 import type { States } from "@/types"
 import { Button } from "@workspace/ui/components/button"
-import { useStates } from "@/hook"
+import { useStates } from "@/hooks"
 import { Kbd } from "@workspace/ui/components/kbd"
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@workspace/ui/components/dialog"
 

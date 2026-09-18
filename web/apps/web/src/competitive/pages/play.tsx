@@ -8,7 +8,7 @@ import { Xbox } from "@/components/xbox"
 import { audio, toast } from "@workspace/ui/lib/utils"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
-import { useStates } from "@/hook"
+import { useStates } from "@/hooks"
 
 const MotionButton = motion.create(Button)
 
@@ -20,7 +20,7 @@ export const Play = () => {
 
 	return (
 		<div className="size-full flex justify-between">
-			<motion.div {...anim} initial={{ opacity: 0, x: `-10%` }} animate={{ opacity: 1, x: 0}}>
+			<motion.div {...anim} initial={{ opacity: 0, x: `-10%` }} animate={{ opacity: 1, x: 0 }}>
 				<ButtonGroup orientation='vertical' className="h-full justify-end">
 					<Button
 						className="h-auto p-0 relative hover:brightness-75"
