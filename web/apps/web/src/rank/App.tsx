@@ -6,15 +6,15 @@ import { InGame as ValoInGame } from './routes/valo/in-game'
 import { Lobby as ValoLobby } from './routes/valo/lobby'
 import { Loading as ValoLoading } from './routes/valo/loading'
 
-// import '@workspace/elite/globals.css'
-// import '@workspace/valo/globals.css'
+import '@workspace/elite/globals.css'
+import '@workspace/valo/globals.css'
 import { useEffect } from 'react'
 import type { Competitive } from 'types'
 import { onNuiEmit } from 'lenix/nui'
 import { DEV } from '@/App'
 
 
-const VARIANT: keyof typeof VARIANTS = 'valo'
+const VARIANT: keyof typeof VARIANTS = 'elite'
 const VARIANTS = {
 	elite: {
 		lobby: <EliteLobby />,

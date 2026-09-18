@@ -35,7 +35,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/game'))
+		DEV(() => nav('/'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -68,6 +68,7 @@ const Router = () => {
 			<Route path='/outlaw' element={<>
 				<Hud />
 				<Roster />
+				{/* <Ipad /> */}
 				{/* <TopScore /> */}
 			</>} />
 		</Routes>
@@ -109,7 +110,6 @@ export const App = () => {
 					/>
 				</StatesProvider>
 			</MemoryRouter>
-			{/* <Ipad /> */}
 			{/* <Rank /> */}
 		</>
 	)
