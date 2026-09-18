@@ -7,11 +7,7 @@ import type { Outlaw } from 'types'
 import { random, storage } from '@lenix/lenix'
 import type { Storage } from '@/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-/**
-	@param length length of numbers to stop applying to; e.g. tens? hundreds? thousands? written as 1, 2, 3 ...
- */
-const zeroed = (value: string | number, length: number) => String(value).padStart(length, '0')
+import { zeroed } from '@/lib'
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
