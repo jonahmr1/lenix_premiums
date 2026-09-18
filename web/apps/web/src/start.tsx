@@ -7,8 +7,6 @@ import { fetchNui, fetchNuiServer, unFocus } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { Button } from "@workspace/ui/components/button"
-import { KbdGroup } from "@workspace/ui/components/kbd"
-import { NavKbd } from "@/components/kbd"
 import { Layout } from '@/components/layout'
 import type { ButtonStart } from './types'
 
