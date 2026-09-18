@@ -61,17 +61,17 @@ export interface States {
 				| 'rockstarGamesOverlay'
 				| 'contextAction'
 			, [string, string]>
-			movement: []
-			combat: []
-			weaponSelect: []
-			carsBikesBoats: []
-			aircraft: []
-			submersibles: []
-			parachute: []
-			cellphone: []
-			gtaOnline: []
-			gtaOnlineVehicles: []
-			fivem: []
+			// movement: []
+			// combat: []
+			// weaponSelect: []
+			// carsBikesBoats: []
+			// aircraft: []
+			// submersibles: []
+			// parachute: []
+			// cellphone: []
+			// gtaOnline: []
+			// gtaOnlineVehicles: []
+			// fivem: []
 		}
 	}
 }

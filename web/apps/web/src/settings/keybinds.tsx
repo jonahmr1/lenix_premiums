@@ -1,6 +1,6 @@
 import { entries } from "@lenix/lenix"
 import { LabelItem } from "."
-import { audiobility, toast } from "@workspace/ui/lib/utils"
+import { audiobility } from "@workspace/ui/lib/utils"
 import { Tabs, TabsContent, TabsList } from "@workspace/ui/components/tabs"
 import { useEffect, useState } from "react"
 import type { States } from "@/types"
@@ -30,50 +30,39 @@ const labels = {
 			contextAction: 'Context Action',
 		}
 	},
-	movement: {
-		label: 'Movement',
-		items: {},
-	},
-	combat: {
-		label: 'Combat',
-		items: {},
-	},
-	weaponSelect: {
-		label: 'Weapons Select',
-		items: {},
-	},
-	carsBikesBoats: {
-		label: 'Cars / Bikes / Boats',
-		items: {},
-	},
-	aircraft: {
-		label: 'Aircraft',
-		items: {},
-	},
-	submersibles: {
-		label: 'Submersibles',
-		items: {},
-	},
-	parachute: {
-		label: 'Parachute',
-		items: {},
-	},
-	cellphone: {
-		label: 'Cellphone',
-		items: {},
-	},
-	gtaOnline: {
-		label: 'GTA Online',
-		items: {},
-	},
-	gtaOnlineVehicles: {
-		label: 'GTA Online Vehicles',
-		items: {},
-	},
-	fivem: {
-		label: 'FiveM',
-		items: {},
-	},
+	// movement: {
+	// 	label: 'Movement',
+	// },
+	// combat: {
+	// 	label: 'Combat',
+	// },
+	// weaponSelect: {
+	// 	label: 'Weapons Select',
+	// },
+	// carsBikesBoats: {
+	// 	label: 'Cars / Bikes / Boats',
+	// },
+	// aircraft: {
+	// 	label: 'Aircraft',
+	// },
+	// submersibles: {
+	// 	label: 'Submersibles',
+	// },
+	// parachute: {
+	// 	label: 'Parachute',
+	// },
+	// cellphone: {
+	// 	label: 'Cellphone',
+	// },
+	// gtaOnline: {
+	// 	label: 'GTA Online',
+	// },
+	// gtaOnlineVehicles: {
+	// 	label: 'GTA Online Vehicles',
+	// },
+	// fivem: {
+	// 	label: 'FiveM',
+	// },
 } as const
 
 export const Keybinds = () => {

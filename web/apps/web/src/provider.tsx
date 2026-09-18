@@ -69,17 +69,6 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 							rockstarGamesOverlay: ['E', ''],
 							contextAction: ['E', ''],
 						},
-						movement: [],
-						combat: [],
-						weaponSelect: [],
-						carsBikesBoats: [],
-						aircraft: [],
-						submersibles: [],
-						parachute: [],
-						cellphone: [],
-						gtaOnline: [],
-						gtaOnlineVehicles: [],
-						fivem: [],
 					}
 				},
 			})
