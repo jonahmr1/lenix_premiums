@@ -79,15 +79,6 @@ export const Starting = () => {
 						>{button.label}</Button>
 					))}
 				</div>
-				<KbdGroup className='flex'>
-					<NavKbd
-						onClick={() => buttons[buttons.length - 1].onClick()}
-						keybind='Escape'
-						icon='Esc'
-					>
-						{buttons[buttons.length - 1].label}
-					</NavKbd>
-				</KbdGroup>
 			</Layout>
 		</div>
 	)
