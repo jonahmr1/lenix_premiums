@@ -8,6 +8,8 @@ import select from '../assets/select.wav'
 import error from '../assets/error.wav'
 import unavailable from '../assets/unavailable.ogg'
 import cannot from '../assets/cannot.ogg'
+import orchestra from '../assets/orchestra.wav'
+import impact from '../assets/impact.mp3'
 
 export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
 	const audio = new Audio(src === 'hover' ? hover : src === 'click' ? click : customAudio)
@@ -31,4 +33,6 @@ export const audio = {
 	unavailable: () => playAudio('custom', unavailable, 0.4),
 	cannot: () => playAudio('custom', cannot),
 	select: () => playAudio('custom', select),
+	orchestra: () => playAudio('custom', orchestra),
+	impact: () => playAudio('custom', impact),
 }

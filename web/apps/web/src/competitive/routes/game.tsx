@@ -5,6 +5,7 @@
 // import { HitMarker } from "../modules/hit"
 import { Hud } from "../modules/hud"
 import { KillFeed } from "../modules/killfeed"
+import { Result } from "../modules/result"
 // import { Ping } from "../modules/ping"
 import { Roundboard } from "../modules/roundboard"
 
@@ -21,6 +22,7 @@ export const Game = () => {
 			<Hud />
 			<KillFeed />
 			<Roundboard />
+			<Result />
 		</>
 	)
 }
