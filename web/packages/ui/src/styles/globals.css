@@ -106,6 +106,7 @@
 	--color-light: var(--color-neutral-300);
 	--color-dark: var(--color-neutral-800);
 	--color-front: var(--front);
+	--color-brand: #E2FF00;
 
 	--spacing-2xs: 0.5vmin;
 	--spacing-xs: 1vmin;
@@ -234,7 +235,7 @@
 @utility bg-deep-* {
 	background-color: color-mix(
 		in oklab,
-		color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 20%)), black) calc(--modifier(integer, --default(100)) * 1%),
+		color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 60%)), black) calc(--modifier(integer, --default(100)) * 1%),
 		transparent
 	);
 }
