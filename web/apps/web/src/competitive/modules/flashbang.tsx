@@ -26,7 +26,7 @@ export const Flashbang = () => {
 
 	return (
 		<div
-			className='absolute size-full'
+			className='absolute size-full z-10'
 			style={{
 				backgroundImage: `radial-gradient(circle, transparent ${(progress * 2) - 100}%, white ${progress * 2}%)`,
 			}}
