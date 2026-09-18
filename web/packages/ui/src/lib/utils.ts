@@ -34,5 +34,5 @@ export const audio = {
 	cannot: () => playAudio('custom', cannot),
 	select: () => playAudio('custom', select),
 	orchestra: () => playAudio('custom', orchestra),
-	impact: () => playAudio('custom', impact),
+	impact: () => playAudio('custom', impact, 0.4),
 }
