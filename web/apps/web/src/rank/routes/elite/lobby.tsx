@@ -40,6 +40,7 @@ import type { Route } from '@/rank/types'
 import { Play } from '@/rank/pages/elite/play'
 import { Stats } from '@/rank/pages/elite/stats'
 import { Leaderboard } from '@/rank/pages/elite/leaderboard'
+import { DEV } from '@/App'
 
 const Notifications = ({ notifications }: {
 	notifications: Competitive.Notification[]
@@ -315,6 +316,18 @@ export const Lobby = () => {
 			setDisplay(false)
 			focus()
 		}
+
+		DEV(() => {
+			setDisplay(true)
+			setProfile({
+				profile_id: '',
+				name: 'Lenix',
+				avatar: 'https://lenix.dev/icon.png',
+				status: "online"
+			 })
+			 setFriends([])
+			 
+		}, 'rank')
 
 		window.addEventListener('keydown', handler)
 
