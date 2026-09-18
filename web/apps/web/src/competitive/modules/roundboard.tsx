@@ -29,7 +29,7 @@ export const Roundboard = () => {
 			<Progress value={state.own} className="h-xs bg-deep-brand" barClassName="bg-brand" />
 			<div className="bg-ring/50 text-foreground px-sm">
 				<span>{target}</span>
-				<FontAwesomeIcon className="absolute -top-1/3 right-1/2 translate-x-1/2 text-xs text-brand" icon={['fas', 'crown']} />
+				<FontAwesomeIcon className={`absolute -top-1/3 right-1/2 translate-x-1/2 text-xs ${state.own > state.opponent && 'text-brand'}`} icon={['fas', 'crown']} />
 			</div>
 			<Progress value={state.opponent} className="rotate-180 h-xs" />
 			<div className="bg-foreground text-background px-sm">{zeroed(state.opponent, 3)}</div>
