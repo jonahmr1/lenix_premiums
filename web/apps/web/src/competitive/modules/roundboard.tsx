@@ -3,15 +3,16 @@ import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
 import { Progress } from '@workspace/ui/components/progress'
 import { Layout } from "@/components/layout"
-import { zeroed } from "@/lib"
+import { formatTime, timestamp, zeroed } from "@/lib"
 import { MODES } from "../constants"
+import { useTimer } from 'react-timer-hook'
 
 const target = MODES.team_deathmatch.scoreLimit
-const timeLeft = MODES.team_deathmatch.duration
+const duration = MODES.team_deathmatch.duration
 
 export const Roundboard = () => {
-	const [state, setState] = useState<{ own: number, opponent: number, timeLeft: number }>()
-	
+	const [state, setState] = useState<{ own: number, opponent: number }>()
+	const timer = useTimer({ expiryTimestamp: timestamp(duration) })
 
 	useEffect(() => {
 		return DEV(() => {
@@ -19,7 +20,6 @@ export const Roundboard = () => {
 				setState({
 					own: random(0, target),
 					opponent: random(0, target),
-					timeLeft
 				})
 			}, 1000)
 
@@ -33,7 +33,7 @@ export const Roundboard = () => {
 
 	return (
 		<Layout className="absolute top-0 right-1/2 translate-x-1/2 w-1/3 mx-0!">
-			<p className="text-center font-number text-fluid-1.5 text-neutral-400 text-shadow-lg">08:40</p>
+			<p className={`text-center text-fluid-1.5 text-neutral-400 text-shadow-lg uppercase font-black tracking-normal ${timer.isRunning ? 'font-number' : 'font-barlow'}`}>{timer.isRunning ? formatTime(timer.totalSeconds * 1000) : 'Overtime'}</p>
 			<div className="flex items-center font-number gap-xs tracking-wider">
 				<p className="bg-deep-brand text-brand px-sm perspective-left-20 glow-sm">{zeroed(state.own, 3)}</p>
 				<Progress value={state.own} className="h-xs bg-deep-brand" barClassName="bg-brand" />

@@ -21,6 +21,7 @@
 		"@workspace/elite": "workspace:*",
 		"@workspace/ui": "workspace:*",
 		"@workspace/valo": "workspace:*",
+		"dayjs": "^1.11.23",
 		"howler": "^2.2.4",
 		"initials": "^3.1.2",
 		"leaflet": "^1.9.4",
@@ -30,6 +31,7 @@
 		"react-dom": "^19.2.6",
 		"react-leaflet": "^5.0.0",
 		"react-router": "^8.3.0",
+		"react-timer-hook": "^4.0.6",
 		"react-zoom-pan-pinch": "^4.2.0"
 	},
 	"devDependencies": {
