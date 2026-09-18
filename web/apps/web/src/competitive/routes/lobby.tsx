@@ -76,7 +76,7 @@ export const Lobby = () => {
 									key={i}
 									disabled={self.disabled}
 									variant={tab === i ? 'default' : 'outline'}
-									className="flex-1 font-black tracking-normal text-fluid-2! font-barlow italic hover:invert"
+									className="flex-1 font-black tracking-normal text-fluid-2! font-sans italic hover:invert"
 									onClick={() => setTab(i)}
 									size='lg'
 								>{self.label}</Button>

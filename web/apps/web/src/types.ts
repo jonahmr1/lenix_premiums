@@ -86,3 +86,8 @@ export type SetStatesOverload = (
 		| [value: Parameters<S<States>>[0]]
 		| [value: null, patch: DeepPartial<States>]
 ) => void
+
+export interface MatchScore {
+	own: number
+	opponent: number
+}
