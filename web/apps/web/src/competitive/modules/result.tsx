@@ -8,12 +8,12 @@ import { useEffect, useState } from "react"
 const delay = 1
 
 export const Result = () => {
-	const [state, setState] = useState<MatchScore>()
+	const [state, setState] = useState<MatchScore & { endSituation: 'score' | 'time' }>()
 
 	useEffect(() => {
 		DEV(() => {
 			const winner = random(0, 1)
-			setState({ own: winner ? 100 : 67, opponent: winner ? 67 : 100 })
+			setState({ own: winner ? 100 : 67, opponent: winner ? 67 : 100, endSituation: random(0, 1) ? 'score' : 'time' })
 			setTimeout(() => {
 				audio.impact()
 			}, delay * 1000);
@@ -62,7 +62,7 @@ export const Result = () => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: delay + 1, duration: 0.7, ease: 'easeOut' }}
 					className="text-fluid-2"
-				>Score limit reached</motion.div>
+				>{state.endSituation === 'score' ? 'Score limit reached' : 'Overtime concluded'}</motion.div>
 			</motion.div>
 		</div>
 	)
