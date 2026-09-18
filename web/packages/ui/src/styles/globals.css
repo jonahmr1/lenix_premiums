@@ -106,7 +106,8 @@
 	--color-light: var(--color-neutral-300);
 	--color-dark: var(--color-neutral-800);
 	--color-front: var(--front);
-	--color-brand: #E2FF00;
+	--color-brand: #3F00FF;
+	--color-opposite: #ff2900;
 
 	--spacing-2xs: 0.5vmin;
 	--spacing-xs: 1vmin;
