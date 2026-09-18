@@ -1,6 +1,5 @@
 import { NavKbd } from "@/components/kbd"
 import { useNavigate } from "react-router"
-import lenixm from '@workspace/ui/assets/start/lenixm.png'
 import { Layout } from "@/components/layout"
 
 
@@ -42,10 +41,10 @@ export const Credit = () => {
 					<p>Designed, Developed and Produced by</p>
 					<div className="w-1/9 flex flex-col items-center gap-2">
 						<img
-							src={lenixm}
+							src='https://business.lenix.dev/lenixm.png'
 							className="rounded"
 						/>
-						<p className="text-3xl text-red-600">LenixM</p>
+						<p className="text-3xl text-brand">LenixM</p>
 					</div>
 				</div>
 				<div className="flex flex-col gap-5 w-full justify-center overflow-y-auto">
