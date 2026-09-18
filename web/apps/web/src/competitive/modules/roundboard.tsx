@@ -29,7 +29,7 @@ export const Roundboard = () => {
 	const winning = state.own > state.opponent
 
 	return (
-		<Layout className="absolute top-0 right-1/2 translate-x-1/2 w-1/3">
+		<Layout className="absolute top-0 right-1/2 translate-x-1/2 w-1/3 mx-0!">
 			<p className="text-center font-number text-fluid-1.5 text-neutral-400 text-shadow-lg">08:40</p>
 			<div className="flex items-center font-number gap-xs tracking-wider">
 				<p className="bg-deep-brand text-brand px-sm perspective-left-20">{zeroed(state.own, 3)}</p>
