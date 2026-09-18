@@ -84,7 +84,7 @@ export const Mode = () => {
 							<div className='flex flex-col'>
 								<Button
 									onClick={() => {
-										if (data.disabled) {
+										if ('disabled' in data) {
 											toast('This mode is not available yet', { toasterId: 'notify' })
 											audio.unavailable()
 											return

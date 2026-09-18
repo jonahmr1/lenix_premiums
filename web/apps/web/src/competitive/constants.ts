@@ -61,7 +61,7 @@ type ModeData = ModeDataBase | ModeDataBase & {
 	points: string[]
 }
 
-export const MODES: Record<string, ModeData> = {
+export const MODES = {
 	team_deathmatch: {
 		label: 'Team Deathmatch',
 		description: 'Teams battle for the highest score. Reach the kill limit or have the most eliminations when the timer expires to win.',
@@ -70,7 +70,7 @@ export const MODES: Record<string, ModeData> = {
 		duration: 90_000,
 		teams: 2,
 		players: 4,
-		scoreLimit: 60,
+		scoreLimit: 100,
 	},
 	street_fight: {
 		label: 'Street Fight',
@@ -136,4 +136,4 @@ export const MODES: Record<string, ModeData> = {
 		players: 6,
 		disabled: true
 	},
-} as const
+} as const satisfies Record<string, ModeData>
