@@ -1,0 +1,14 @@
+{
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	"editor.quickSuggestions": {
+		"strings": "on"
+	},
+	"tailwindCSS.experimental.configFile": {
+		"web/packages/ui/src/styles/globals.css": [
+			"web/apps/web/src/**",
+			"web/packages/**/src/**"
+		]
+	}
+}

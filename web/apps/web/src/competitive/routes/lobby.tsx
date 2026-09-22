@@ -12,6 +12,7 @@ import { KbdGroup } from "@workspace/ui/components/kbd"
 import { Layout } from "@/components/layout"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
+import logo from '@workspace/ui/assets/competitive/lobby/logo.png'
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
@@ -62,7 +63,10 @@ export const Lobby = () => {
 					initial={{ opacity: 0, y: '-40%' }}
 					animate={{ opacity: 1, y: 0 }}
 				>
-					<p className="flex flex-1 justify-center items-center font-black italic text-fluid-4">FightM</p>
+					<div className="flex flex-1 justify-center items-center">
+						{/* <img src={logo} className="size-5xl" /> */}
+						<p className="font-black italic text-fluid-4">FightM</p>
+					</div>
 					<div className="flex flex-2 items-center">
 						<PreviousButton
 							tabs={tabs}
