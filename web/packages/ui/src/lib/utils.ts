@@ -2,14 +2,14 @@ import { clsx, type ClassValue } from 'clsx'
 import { toast as sonner } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 
-import click from '../assets/click.wav'
-import hover from '../assets/hover.wav'
-import select from '../assets/select.wav'
-import error from '../assets/error.wav'
-import unavailable from '../assets/unavailable.ogg'
-import cannot from '../assets/cannot.ogg'
-import orchestra from '../assets/orchestra.wav'
-import impact from '../assets/impact.mp3'
+import click from '../assets/audio/click.wav'
+import hover from '../assets/audio/hover.wav'
+import select from '../assets/audio/select.wav'
+import error from '../assets/audio/error.wav'
+import unavailable from '../assets/audio/unavailable.ogg'
+import cannot from '../assets/audio/cannot.ogg'
+import orchestra from '../assets/audio/orchestra.wav'
+import impact from '../assets/audio/impact.mp3'
 
 export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
 	const audio = new Audio(src === 'hover' ? hover : src === 'click' ? click : customAudio)
