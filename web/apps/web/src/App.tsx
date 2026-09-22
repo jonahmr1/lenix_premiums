@@ -35,7 +35,7 @@ const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/'))
+		DEV(() => nav('/competitive/game'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {

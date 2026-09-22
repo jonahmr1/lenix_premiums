@@ -2,12 +2,15 @@ import { DEV } from "@/App"
 import { Layout } from "@/components/layout"
 import { anim } from "@/lib"
 import { random } from "@lenix/lenix"
+import { Circle } from "lucide-react"
 import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
-const segments = 6
+const healthSegments = 6
 const maxHealth = 100
-const segmentHealth = maxHealth / segments
+const segmentHealth = maxHealth / healthSegments
+
+const weaponarySegments = 6
 
 export const Hud = () => {
 	const [state, setState] = useState<{
@@ -94,7 +97,7 @@ export const Hud = () => {
 					<p className="text-fluid-1.5 text-light/70">/{maxHealth}</p>
 				</div>
 				<div className="flex gap-px">
-					{[...Array(segments).keys()].map(index => (
+					{[...Array(healthSegments).keys()].map(index => (
 						<div key={index} className="w-7 h-4 bg-white/25 rounded-xs overflow-hidden">
 							<motion.div
 								{...anim}
@@ -108,7 +111,7 @@ export const Hud = () => {
 								className="bg-light h-full rounded-xs"
 								transition={{
 									duration: 0.12,
-									delay: (decreasing ? segments - 1 - index : index) * 0.12,
+									delay: (decreasing ? healthSegments - 1 - index : index) * 0.12,
 									ease: 'linear',
 								}}
 							/>
@@ -128,15 +131,23 @@ export const Hud = () => {
 						)}
 					</div>
 					<div className="flex">
-						{state.weaponary.equipments.map((equipment, index) => (
-							<div className="space-y-xs">
-								<div className={`relative rounded-md size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
-									<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
-									<span className="absolute top-0 right-2xs text-fluid-1.5 text-white mix-blend-difference">{equipment.ammo}</span>
+						{[...Array(weaponarySegments).keys()].map(index => {
+							const equipment = state.weaponary.equipments[index]
+
+							return (
+								<div className="space-y-xs" key={index}>
+									<div className={`relative rounded-md size-2xl px-2xs flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
+										{equipment ? <>
+											<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
+											<span className="absolute top-0 right-2xs text-fluid-1.5 text-white mix-blend-difference">{equipment.ammo}</span>
+										</> : <>
+											<Circle className="size-xs" />
+										</>}
+									</div>
+									<div className="flex justify-center text-fluid-2">{index + 1}</div>
 								</div>
-								<div className="flex justify-center text-fluid-2">{index + 1}</div>
-							</div>
-						))}
+							)
+						})}
 					</div>
 				</div>
 			</Layout>
