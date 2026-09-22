@@ -28,7 +28,7 @@ export const PreviousButton = ({ children, tabs, value, onValueChange, variant =
 			size='lg'
 			onClick={handlePrevious}
 			variant={variant}
-			className="px-[1.5vmin] py-[2.1vmin]"
+			className="px-[1.3vmin] py-[1.8vmin]"
 		>
 			<Kbd>{children}</Kbd>
 		</Button>

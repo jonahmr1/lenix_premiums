@@ -55,9 +55,9 @@ export const KillFeed = () => {
 						key={feed.id}
 						layout
 						{...anim}
-						initial={{ opacity: 0, x: 100 }}
+						initial={{ opacity: 0, x: 30 }}
 						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: 100 }}
+						exit={{ opacity: 0, x: 30 }}
 						transition={{ duration: 0.2, ease: 'easeOut' }}
 						className={`flex size-full items-center justify-between italic px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
 					>

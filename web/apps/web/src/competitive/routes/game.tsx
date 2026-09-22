@@ -23,7 +23,7 @@ export const Game = () => {
 			<Hud />
 			<KillFeed />
 			<Roundboard />
-			<Result />
+			{/* <Result /> */}
 		</>
 	)
 }
