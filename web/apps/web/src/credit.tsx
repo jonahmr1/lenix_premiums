@@ -15,19 +15,13 @@ export const Credit = () => {
 			],
 		},
 		{
-			names: ['WinkyQx'],
-			roles: [
-				'UI/UX Consultant',
-			],
-		},
-		{
 			names: ['Mazen'],
 			roles: [
 				'Gameplay Consultant',
 			],
 		},
 		{
-			names: ['WinkyQx', '3mr'],
+			names: ['3mr'],
 			roles: [
 				'Game Tester',
 			],
@@ -41,7 +35,7 @@ export const Credit = () => {
 					<p>Designed, Developed and Produced by</p>
 					<div className="w-1/9 flex flex-col items-center gap-2">
 						<img
-							src='https://business.lenix.dev/lenixm.png'
+							src='https://lenix.dev/lenixm.png'
 							className="rounded"
 						/>
 						<p className="text-3xl text-brand">LenixM</p>
