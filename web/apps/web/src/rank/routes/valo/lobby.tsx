@@ -7,7 +7,7 @@ import { useTheme } from '@workspace/ui/hooks/theme'
 import { useEffect, useState } from 'react'
 import type { Competitive } from 'types'
 import { Skeleton } from '@workspace/ui/components/skeleton'
-import { focus, onNuiEmit, onKeyDown, unFocus, fetchNuiServer, fetchNui } from 'lenix/nui'
+import { focusNui, onNuiEmit, onKeyDown, unFocusNui, fetchNuiServer, fetchNui } from 'lenix/nui'
 import { DEV } from '@/App'
 import { Separator } from '@workspace/ui/components/separator'
 import bg from '@workspace/valo/assets/bg.svg'
@@ -37,18 +37,18 @@ export const Lobby = () => {
 		const disposes = [
 			onNuiEmit<Competitive.Events['open']>('competitive:open', () => {
 				setDisplay(true)
-				focus()
+				focusNui()
 			}),
 			onKeyDown('Escape', () => {
 				setDisplay(false)
-				unFocus()
-				fetchNui('competitive:unFocus', {})
+				unFocusNui()
+				fetchNui('competitive:unFocusNui', {})
 			})
 		]
 
 		return () => {
 			disposes.forEach(dispose => dispose())
-			unFocus()
+			unFocusNui()
 		}
 	}, [])
 

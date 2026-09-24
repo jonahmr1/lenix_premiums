@@ -15,7 +15,7 @@ import { Toaster } from '@workspace/ui/components/sonner'
 import { Lobby } from './competitive/routes/lobby'
 import { Game } from './competitive/routes/game'
 import { useEffect } from 'react'
-import { focus, onNuiEmit } from 'lenix/nui'
+import { focusNui, onNuiEmit } from 'lenix/nui'
 import type { Start } from 'types'
 import { NotFound } from './404'
 import { Settings } from './settings'
@@ -40,11 +40,11 @@ const Router = () => {
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
 				nav('/start')
-				focus()
+				focusNui()
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
 				nav('/pause')
-				focus()
+				focusNui()
 			})
 		]
 

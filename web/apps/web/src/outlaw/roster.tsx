@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { DEV } from '@/App'
 import { Frown } from 'lucide-react'
-import { focus, onNuiEmit, fetchNui, onKeyDown, unFocus } from 'lenix/nui'
+import { focusNui, onNuiEmit, fetchNui, onKeyDown, unFocusNui } from 'lenix/nui'
 import { AudioLines } from 'lucide-react'
 import type { Roster as IRoster, Outlaw } from 'types'
 import { Separator } from '@workspace/ui/components/separator'
@@ -66,7 +66,7 @@ export const Roster = () => {
 			}),
 			onNuiEmit<Outlaw.Events['refreshOfficers']>('roster:refreshOfficers', setOfficers),
 			onKeyDown('Escape', () => {
-				unFocus()
+				unFocusNui()
 			})
 		]
 
@@ -101,7 +101,7 @@ export const Roster = () => {
 	}
 
 	const handleCallsign = () => {
-		focus()
+		focusNui()
 		fetchNui<Outlaw.Requests['triggerCallsign']>('roster:callsign', {})
 	}
 

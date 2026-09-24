@@ -3,7 +3,7 @@ import bg2 from '@workspace/ui/assets/start/ls-2.png'
 import bg3 from '@workspace/ui/assets/start/ls-3.png'
 import bg4 from '@workspace/ui/assets/start/ls-4.png'
 import { random } from "@lenix/lenix"
-import { fetchNui, fetchNuiServer, unFocus } from "lenix/nui"
+import { fetchNui, fetchNuiServer, unFocusNui } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { Button } from "@workspace/ui/components/button"
@@ -22,7 +22,7 @@ export const Starting = () => {
 			onClick: () => {
 				fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'competitive' })
 				nav('/competitive/lobby')
-				unFocus()
+				unFocusNui()
 			},
 		},
 		{
@@ -30,7 +30,7 @@ export const Starting = () => {
 			onClick: () => {
 				fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'outlaw' })
 				nav('/outlaw')
-				unFocus()
+				unFocusNui()
 			}
 		},
 		{

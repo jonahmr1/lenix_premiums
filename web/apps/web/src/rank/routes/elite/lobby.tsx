@@ -27,7 +27,7 @@ import {
 import { Button } from '@workspace/elite/components/button'
 import { Badge } from '@workspace/elite/components/badge'
 import { useTheme } from '@workspace/ui/hooks/theme'
-import { fetchNuiServer, focus, onNuiEmit } from 'lenix/nui'
+import { fetchNuiServer, focusNui, onNuiEmit } from 'lenix/nui'
 import type { Competitive } from 'types'
 import { Loading } from '@/rank/components/loading'
 import { Spinner } from '@workspace/ui/components/spinner'
@@ -306,7 +306,7 @@ export const Lobby = () => {
 		const disposes = [
 			onNuiEmit<Competitive.Events['open']>('competitive:open', async () => {
 				setDisplay(true)
-				focus()
+				focusNui()
 				setProfile(await fetchNuiServer<Competitive.Requests['getProfile']>('competitive:getProfile', {}))
 				setFriends(await fetchNuiServer<Competitive.Requests['getFriends']>('competitive:getFriends', {}))
 			}),
@@ -314,7 +314,7 @@ export const Lobby = () => {
 		const handler = (e: KeyboardEvent) => {
 			if (e.key !== 'Escape') return
 			setDisplay(false)
-			focus()
+			focusNui()
 		}
 
 		DEV(() => {

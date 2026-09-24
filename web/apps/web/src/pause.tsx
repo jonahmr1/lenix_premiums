@@ -1,5 +1,5 @@
 import { audiobility } from "@workspace/ui/lib/utils"
-import { fetchNuiServer, onKeyDown, unFocus } from "lenix/nui"
+import { fetchNuiServer, onKeyDown, unFocusNui } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
 import { useEffect } from "react"
@@ -25,7 +25,7 @@ export const Pause = () => {
 
 	const handleEscape = (disableClickAudio?: true) => {
 		disableClickAudio !== true && audiobility.onMouseDown()
-		unFocus()
+		unFocusNui()
 		nav(-1)
 	}
 
