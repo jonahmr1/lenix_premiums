@@ -1,20 +1,27 @@
-import { Button } from "@/components/ui/button"
+import { useEffect } from "react"
+import { focusNui, onNuiEmit } from 'lenix/nui'
+import type { Start } from 'types'
+import { useNavigate } from "@tanstack/react-router"
+import { Pause } from "./screens/pause"
+import { Settings } from "./screens/settings"
 
 export function App() {
+	const nav = useNavigate()
+
+	useEffect(() => onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
+		nav({ to: '/starting' })
+		focusNui()
+	}), [])
+
   return (
-    <div className="flex min-h-svh p-6 bg-background">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+		<>
+			<img
+				src='lobby.png'
+				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
+			/>
+			<Pause />
+			<Settings />
+		</>
   )
 }
 
