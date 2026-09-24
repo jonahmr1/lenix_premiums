@@ -162,7 +162,6 @@ export const KeyboardMouse = () => {
 									if (typeof value === 'number') setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 } } })
 									else {
 										asserts(setting.options)
-										{/* @ts-ignore */ }
 										const values = entries(setting.options).map(([key]) => key)
 										const index = values.indexOf(value)
 										setStates(null, { settings: { keyboardMouse: { [setting.key]: index === 0 ? values[values.length - 1] : values[index - 1] } } })
@@ -183,7 +182,6 @@ export const KeyboardMouse = () => {
 									<div className="w-full">
 										<p className="text-center italic uppercase">{setting.options[value]}</p>
 										<div className="flex gap-4">
-											{/* @ts-ignore */}
 											{entries(setting.options).map(([option], i) => (
 												<div
 													key={i}
