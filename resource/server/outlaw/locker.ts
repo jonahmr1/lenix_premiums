@@ -11,6 +11,10 @@ setImmediate(() => {
 		{
 			police: 1,
 		},
-		Constants.locker.coords
+		{
+			x: Constants.locker.coords[0],
+			y: Constants.locker.coords[1],
+			z: Constants.locker.coords[2]
+		}
 	)
 })

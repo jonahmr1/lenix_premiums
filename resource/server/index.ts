@@ -5,7 +5,7 @@ import { ResourceName } from 'common/resource'
 
 import './init'
 
-debugger
+asserts(false, 'bypassed')
 
 const LICENSE = GetConvar('lenix:license_key', '')
 asserts(
