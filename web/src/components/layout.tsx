@@ -3,14 +3,14 @@ import { cn } from "cn"
 export const Layout = ({
 	children,
 	className,
-	type = 'm',
+	invert,
 	...prop
 }: {
 	children: React.ReactNode
 	className?: React.ComponentProps<'div'>['className']
-	type?: 'm' | 'p'
+	invert?: true
 } & React.ComponentProps<'div'>) => (
-	<div className={cn(type === 'm' ? 'mx-lg my-md' : 'px-4xl py-xl', className)} {...prop}>
+	<div className={cn(invert ? 'mx-lg my-md' : 'px-4xl py-xl', className)} {...prop}>
 		{children}
 	</div>
 )

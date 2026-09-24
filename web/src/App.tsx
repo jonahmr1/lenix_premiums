@@ -8,10 +8,13 @@ import { Settings } from "./screens/settings"
 export function App() {
 	const nav = useNavigate()
 
-	useEffect(() => onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
+	useEffect(() => {
 		nav({ to: '/starting' })
-		focusNui()
-	}), [])
+		return onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
+			nav({ to: '/starting' })
+			focusNui()
+		})
+	}, [])
 
   return (
 		<>
