@@ -24,6 +24,7 @@ export const Starting = () => {
 				nav('/competitive/lobby')
 				unFocusNui()
 			},
+			disabled: true
 		},
 		{
 			label: 'Outlaw',

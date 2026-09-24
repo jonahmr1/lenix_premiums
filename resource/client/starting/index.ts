@@ -34,7 +34,8 @@ control.on({
 	event: 'press',
 	key: 'ESCAPE',
 	onEvent: () => {
-		emitNui<Start.Events['pause']>('start:pause')
+		// emitNui<Start.Events['pause']>('start:pause')
+		console.log('pause')
 	}
 })
 
