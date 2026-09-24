@@ -40,11 +40,11 @@ const Router = () => {
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
 				console.log('mode selection')
-				nav('/')
+				nav('/start')
 				focus()
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
-				nav('/start/pause')
+				nav('/pause')
 				focus()
 			})
 		]

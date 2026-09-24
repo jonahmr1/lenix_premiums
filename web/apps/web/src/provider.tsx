@@ -23,55 +23,56 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, setRawState] = useState<States>()
 
 	useEffect(() => {
-		DEV(() => {
-			setRawState({
-				lobby: {
-					mode: entries(MODES)[0][0]
+		setRawState({
+			lobby: {
+				mode: entries(MODES)[0][0]
+			},
+			settings: {
+				keyboardMouse: {
+					mouseInputMethod: 'raw',
+					mouseLookSensitivity: 3,
+					mouseSmoothingScale: 3,
+					fineAimingControl: 'on',
+					invertMouseLook: 'off',
+					toggleAim: 'on',
+					firstPersonAimType: 'normal',
+					defaultMouseDrivingControl: 'camera',
+					defaultMouseFlyingControl: 'camera',
+					defaultMouseSubmarineControl: 'camera',
+					mouseDrivingSensitivity: 4,
+					mousePlaneSensitivity: 5,
+					mouseHeliSensitivity: 6,
+					mouseSubmarineSensitivity: 8,
+					invertMouseFlying: 'off',
+					invertMouseSubmarine: 'on',
+					mouseFlyingControlType: 'roll',
+					autoCenterMouseOnBikes: 2,
+					autoCenterMouseInCars: 5,
+					autoCenterMouseInAircraft: 5,
 				},
-				settings: {
-					keyboardMouse: {
-						mouseInputMethod: 'raw',
-						mouseLookSensitivity: 3,
-						mouseSmoothingScale: 3,
-						fineAimingControl: 'on',
-						invertMouseLook: 'off',
-						toggleAim: 'on',
-						firstPersonAimType: 'normal',
-						defaultMouseDrivingControl: 'camera',
-						defaultMouseFlyingControl: 'camera',
-						defaultMouseSubmarineControl: 'camera',
-						mouseDrivingSensitivity: 4,
-						mousePlaneSensitivity: 5,
-						mouseHeliSensitivity: 6,
-						mouseSubmarineSensitivity: 8,
-						invertMouseFlying: 'off',
-						invertMouseSubmarine: 'on',
-						mouseFlyingControlType: 'roll',
-						autoCenterMouseOnBikes: 2,
-						autoCenterMouseInCars: 5,
-						autoCenterMouseInAircraft: 5,
+				keybinds: {
+					general: {
+						pause: ['E', ''],
+						radarZoomMultiplayerInformation: ['E', ''],
+						cycleCamera: ['E', ''],
+						toggleSpecialAbility: ['E', ''],
+						characterSelector: ['E', ''],
+						switchToMichael: ['E', ''],
+						switchToFranklin: ['E', ''],
+						switchToTrevor: ['E', ''],
+						switchToGtaOnline: ['E', ''],
+						interactionMenu: ['E', ''],
+						startStopRecording: ['E', ''],
+						startStopActionReplayRecording: ['E', ''],
+						cancelRecording: ['E', ''],
+						rockstarGamesOverlay: ['E', ''],
+						contextAction: ['E', ''],
 					},
-					keybinds: {
-						general: {
-							pause: ['E', ''],
-							radarZoomMultiplayerInformation: ['E', ''],
-							cycleCamera: ['E', ''],
-							toggleSpecialAbility: ['E', ''],
-							characterSelector: ['E', ''],
-							switchToMichael: ['E', ''],
-							switchToFranklin: ['E', ''],
-							switchToTrevor: ['E', ''],
-							switchToGtaOnline: ['E', ''],
-							interactionMenu: ['E', ''],
-							startStopRecording: ['E', ''],
-							startStopActionReplayRecording: ['E', ''],
-							cancelRecording: ['E', ''],
-							rockstarGamesOverlay: ['E', ''],
-							contextAction: ['E', ''],
-						},
-					}
-				},
-			})
+				}
+			},
+		})
+		DEV(() => {
+			
 		})
 	}, [])
 
