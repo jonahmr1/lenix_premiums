@@ -24,7 +24,8 @@ export function App() {
 				src='lobby.png'
 				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
 			/>
-			{overlay && overlay === 'pause' ? <Pause setOverlay={setOverlay} /> : <Settings setOverlay={setOverlay} />}
+			{overlay === 'pause' && <Pause setOverlay={setOverlay} />}
+			{overlay === 'settings' && <Settings setOverlay={setOverlay} />}
 		</>
   )
 }
