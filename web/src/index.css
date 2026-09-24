@@ -197,3 +197,75 @@
 		@apply font-sans;
 	}
 }
+
+
+
+@utility perspective-left-* {
+	transform: perspective(200px) rotateY(5deg);
+	transform-origin: left calc((--value(integer)) * 10%);
+}
+
+@utility -perspective-left-* {
+	transform: perspective(200px) rotateY(5deg);
+	transform-origin: left calc((--value(integer)) * -10%);
+}
+
+@utility perspective-right-* {
+	transform: perspective(200px) rotateY(-5deg);
+	transform-origin: right calc((--value(integer)) * 10%);
+}
+
+@utility -perspective-right-* {
+	transform: perspective(200px) rotateY(-5deg);
+	transform-origin: right calc((--value(integer)) * -10%);
+}
+
+@utility text-fluid-* {
+	font-size: calc(--value(number) * 1vmin);
+}
+
+@utility w-fluid-* {
+	width: calc(--value(number) * 1vmin);
+}
+
+@utility deep-* {
+	--deep-amount: calc(--value(integer) * 1%);
+}
+
+@utility bg-deep-* {
+	background-color: color-mix(in oklab,
+	color-mix(in oklab, --value(--color-*) calc(100% - var(--deep-amount, 60%)), black) calc(--modifier(integer, --default(100)) * 1%),
+	transparent);
+}
+
+.absolute-center {
+	@apply absolute left-1/2 top-1/2 -translate-1/2;
+}
+
+.glow-sm {
+	@apply text-shadow-current text-shadow-[0_0_6px_blue]
+}
+
+.glow-md {
+	@apply text-shadow-current text-shadow-[0_0_16px_blue]
+}
+
+.glow-lg {
+	@apply text-shadow-current text-shadow-[0_0_26px_blue]
+}
+
+.shine-sm {
+	@apply shadow-[0_0_2px_currentColor]
+}
+
+.shine-md {
+	@apply shadow-[0_0_4px_currentColor]
+}
+
+.shine-lg {
+	@apply shadow-[0_0_6px_currentColor]
+}
+
+.scrollbar {
+	@apply [&::-webkit-scrollbar]:h-2xs [&::-webkit-scrollbar]:w-2xs hover:[--scrollbar-fix:1] [&:hover::-webkit-scrollbar-thumb]:bg-foreground/80 [&::-webkit-scrollbar-thumb]:rounded-md [&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
+}
