@@ -128,17 +128,6 @@
 @theme inline {
 	--color-brand: #3F00FF;
 	--color-opposite: #ff2900;
-
-	--spacing-2xs: 0.5vmin;
-	--spacing-xs: 1vmin;
-	--spacing-sm: 2vmin;
-	--spacing-md: 3vmin;
-	--spacing-lg: 4vmin;
-	--spacing-xl: 5vmin;
-	--spacing-2xl: 6vmin;
-	--spacing-3xl: 7vmin;
-	--spacing-4xl: 8vmin;
-	--spacing-5xl: 9vmin;
 	
 	--font-number: 'Unispace', sans-serif;
 	--font-sans: 'Barlow', 'Source Sans 3 Variable', sans-serif;
@@ -218,14 +207,6 @@
 @utility -perspective-right-* {
 	transform: perspective(200px) rotateY(-5deg);
 	transform-origin: right calc((--value(integer)) * -10%);
-}
-
-@utility text-fluid-* {
-	font-size: calc(--value(number) * 1vmin);
-}
-
-@utility w-fluid-* {
-	width: calc(--value(number) * 1vmin);
 }
 
 @utility deep-* {
