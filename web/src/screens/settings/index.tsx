@@ -109,10 +109,7 @@ export const Settings = () => {
   if (!visible) return null
 
   return (
-    <Layout
-      type="p"
-      className="gap-sm flex h-screen w-full flex-col backdrop-blur-sm"
-    >
+    <Layout className="gap-sm flex h-screen w-full flex-col backdrop-blur-sm">
       <motion.div
         {...anim}
         initial={{ opacity: 0, y: -50 }}

@@ -1,5 +1,11 @@
 import { audiobility } from "@/lib"
-import { fetchNuiServer, focusNui, onKeyDown, onNuiEmit, unFocusNui } from "lenix/nui"
+import {
+  fetchNuiServer,
+  focusNui,
+  onKeyDown,
+  onNuiEmit,
+  unFocusNui,
+} from "lenix/nui"
 import type { Start } from "types"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -16,12 +22,14 @@ import { useNavigate } from "@tanstack/react-router"
 
 export const Pause = () => {
   const [visible, setVisible] = useState(false)
-	const nav = useNavigate()
+  const nav = useNavigate()
 
-	useEffect(() => onNuiEmit<Start.Events['pause']>('start:pause', () => {
-		focusNui()
-		setVisible(true)
-	}))
+  useEffect(() =>
+    onNuiEmit<Start.Events["pause"]>("start:pause", () => {
+      focusNui()
+      setVisible(true)
+    })
+  )
 
   const buttons: ButtonStart[] = [
     {
@@ -45,7 +53,7 @@ export const Pause = () => {
         /* TODO: run the client logout also and not just logout */
         await fetchNuiServer<Start.Requests["logout"]>("start:logout", {})
         setVisible(false)
-        nav({ to: '/starting' })
+        nav({ to: "/starting" })
       },
     },
   ]
@@ -60,10 +68,7 @@ export const Pause = () => {
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
     >
-      <Layout
-        type="p"
-        className="flex h-screen flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent"
-      >
+      <Layout className="flex h-screen flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
         <div className="gap-md flex items-center">
           <div className="h-2/3 w-0.5 bg-foreground"></div>
           <Header>Paused</Header>
