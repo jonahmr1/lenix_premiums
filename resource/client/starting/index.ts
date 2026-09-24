@@ -45,6 +45,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 
 	await repeat(() => isNuiReady(), true, 500)
 	emitNui<Start.Events['modeSelection']>('start:modeSelection')
+	ShutdownLoadingScreen()
 
 	return repeat(() => character, character => character !== null, 500)
 })

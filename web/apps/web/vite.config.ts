@@ -16,6 +16,12 @@ export default defineConfig({
 		},
 	},
 	build: {
-		minify: false
+		minify: false,
+		rolldownOptions: {
+			input: {
+				main: path.resolve(__dirname, 'index.html'),
+				loading: path.resolve(__dirname, 'loading.html'),
+			},
+		},
 	}
 })

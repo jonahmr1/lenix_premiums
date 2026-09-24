@@ -93,7 +93,10 @@ const tabs: Tab[] = [
 
 export const Settings = () => {
 	const [tab, setTab] = useState(2)
+	const [visible, setVisible] = useState(false)
 	const nav = useNavigate()
+
+	if (!visible) return null
 
 	return (
 		<Layout type="p" className="h-screen w-full flex flex-col gap-sm backdrop-blur-sm">

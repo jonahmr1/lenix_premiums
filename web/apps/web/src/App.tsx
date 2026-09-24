@@ -56,21 +56,27 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/*' element={<NotFound />} />
+			<Route path='/' element={
+				<>
+					<Pause />
+					<Settings />
+				</>
+			} />
 			<Route path='/start' element={<Starting />} />
 			<Route path='/credit' element={<Credit />} />
-			<Route path='/pause' element={<Pause />} />
-			<Route path='/settings' element={<Settings />} />
 
 			<Route path='/competitive/lobby' element={<Lobby />} />
 			<Route path='/competitive/lobby/mode' element={<Mode />} />
 			<Route path='/competitive/game' element={<Game />} />
 
-			<Route path='/outlaw' element={<>
-				<Hud />
-				<Roster />
-				{/* <Ipad /> */}
-				{/* <TopScore /> */}
-			</>} />
+			<Route path='/outlaw' element={
+				<>
+					<Hud />
+					<Roster />
+					{/* <Ipad /> */}
+					{/* <TopScore /> */}
+				</>
+			} />
 		</Routes>
 	)
 }

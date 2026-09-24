@@ -2,7 +2,7 @@ import { audiobility } from "@workspace/ui/lib/utils"
 import { fetchNuiServer, onKeyDown, unFocusNui } from "lenix/nui"
 import type { Start } from "types"
 import { useNavigate } from "react-router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { KbdGroup } from "@workspace/ui/components/kbd"
 import { NavKbd } from "@/components/kbd"
@@ -16,12 +16,9 @@ import { anim } from "./lib"
 
 export const Pause = () => {
 	const nav = useNavigate()
+	const [visible, setVisible] = useState(false)
 
-	useEffect(() => {
-		const dispose = onKeyDown('Escape', handleEscape)
-
-		return dispose
-	}, [])
+	useEffect(() => onKeyDown('Escape', handleEscape), [])
 
 	const handleEscape = (disableClickAudio?: true) => {
 		disableClickAudio !== true && audiobility.onMouseDown()
@@ -46,6 +43,8 @@ export const Pause = () => {
 			}
 		},
 	]
+
+	if (!visible) return null
 
 	return (
 		<motion.div
