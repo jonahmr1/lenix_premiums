@@ -28,18 +28,18 @@ import { StatesProvider } from './provider'
 library.add(fas, far)
 toggleTheme(storage.get<Storage, 'theme'>('theme') ?? 'dark')
 
-const dev = true
+const dev = false
 export const DEV = <T,>(cb: () => T, _module: typeof dev | any = dev): T | undefined => import.meta.env.DEV && /* module ===  */dev ? cb() : undefined
 
 const Router = () => {
 	const nav = useNavigate()
 
 	useEffect(() => {
-		DEV(() => nav('/competitive/game'))
+		DEV(() => nav('/'))
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
-				nav('/start')
+				nav('/')
 				focus()
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
@@ -56,7 +56,7 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/*' element={<NotFound />} />
-			<Route path='/' element={<Starting />} />
+			<Route path='/start' element={<Starting />} />
 			<Route path='/credit' element={<Credit />} />
 			<Route path='/pause' element={<Pause />} />
 			<Route path='/settings' element={<Settings />} />

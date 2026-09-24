@@ -36,7 +36,7 @@ control.on({
 	onEvent: () => {
 		emitNui<Start.Events['pause']>('start:pause')
 	}
-}),
+})
 
 globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	character = null

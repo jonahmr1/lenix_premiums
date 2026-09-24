@@ -1,6 +1,6 @@
-import { State } from '@lenix/lenix'
+import { repeat, State } from '@lenix/lenix'
 import { cache, checkDependency } from '@overextended/ox_lib'
-import { emitNui, onEvent, pool } from 'lenix/client'
+import { emitNui, isNuiReady, onEvent, pool } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Outlaw } from 'types/index'
 
@@ -35,7 +35,8 @@ const state = new State<Outlaw.Hud & {
 		clipAmmo: 0,
 		clipSize: 0,
 		reserveAmmo: 0,
-	}
+	},
+	lungs: 0
 })
 
 const updateDisplay = (newState: typeof state.display) => {
@@ -78,7 +79,10 @@ const updateThisFrame = () => {
 }
 
 const load = () => {
-	updateDisplay({ vitals: true, weaponary: true })
+	setTimeout(async () => {
+		await repeat(isNuiReady)
+		updateDisplay({ vitals: true, weaponary: true })
+	})
 
 	return () => updateDisplay({ vitals: false, weaponary: false })
 }
