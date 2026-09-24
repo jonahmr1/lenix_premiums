@@ -39,7 +39,6 @@ const Router = () => {
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
-				console.log('mode selection')
 				nav('/start')
 				focus()
 			}),
