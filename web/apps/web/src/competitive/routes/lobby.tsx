@@ -12,7 +12,7 @@ import { KbdGroup } from "@workspace/ui/components/kbd"
 import { Layout } from "@/components/layout"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
-import logo from '@workspace/ui/assets/competitive/lobby/logo.png'
+// import logo from '@workspace/ui/assets/competitive/lobby/logo.png'
 
 export const Lobby = () => {
 	const [tab, setTab] = useState(0)
