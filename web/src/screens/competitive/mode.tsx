@@ -112,7 +112,7 @@ export const Mode = () => {
               })()}
             </div>
           </div>
-          <div className="scrollbar flex items-end gap-w-1 overflow-x-scroll text-input">
+          <div className="flex items-end gap-w-1 pb-1 overflow-hidden text-input">
             {entries(MODES).map(([mode, data]) => (
               <div className="flex flex-col">
                 <Button
@@ -134,9 +134,7 @@ export const Mode = () => {
                     src={data.image}
                     className={`pointer-events-none max-w-w-15 group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`}
                   />
-                  <p
-                    className={`absolute bottom-1/6 text-v-1.5 tracking-tighter uppercase transition-all ${preview === mode ? 'font-black text-neutral-50' : 'text-neutral-300'}`}
-                  >
+                  <p className={`absolute bottom-2 font-light text-v-1.75 font-heading tracking-tighter uppercase transition-all ${preview === mode ? 'font-bold! text-neutral-50' : 'text-neutral-300'}`}>
                     {data.label}
                   </p>
                 </Button>
