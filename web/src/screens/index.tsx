@@ -7,9 +7,8 @@ import { Settings } from "./settings"
 
 export function App() {
   const nav = useNavigate()
-  const hash = useLocation({ select: (location) => location.hash })
+  const hash = useLocation({ select: location => location.hash })
 
-	console.log({hash})
   useEffect(() => {
     nav({ to: '/starting' })
     const disposes = [

@@ -30,11 +30,11 @@ export const Starting = () => {
     },
     {
       label: "Outlaw",
-      onClick: () => {
-        fetchNui<Start.Requests["selectMode"]>("start:selectMode", {
-          mode: "outlaw",
+      onClick: async () => {
+				await fetchNui<Start.Requests["selectMode"]>("start:selectMode", {
+					mode: "outlaw",
         })
-        // nav('/outlaw')
+				nav({ to: '/outlaw' })
         unFocusNui()
       },
     },
