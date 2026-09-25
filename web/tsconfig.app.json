@@ -26,5 +26,9 @@
 			"types": ["../types/index.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+	"exclude": [
+    "src/screens/outlaw/ipad/**",
+    "src/screens/outlaw/rank/**"
+  ]
 }

@@ -8,25 +8,25 @@ export function Loading() {
     const handler = (e: MessageEvent) => {
       switch (e.data?.eventName) {
         case "loadProgress": {
-          console.log(e.data.loadFraction)
+          console.log(e.data.loadFraction, 'loadProgress.loadFraction')
           break
         }
         case "onLogLine": {
-          console.log(e.data.message)
+          console.log(e.data.message, 'onLogLine.loadFraction')
           break
         }
         case "startDataFileEntries": {
-          console.log(e.data.count)
+          console.log(e.data.count, 'startDataFileEntries.count')
           break
         }
         case "onDataFileEntry": {
-          console.log(e.data.name)
-          console.log(e.data.type)
-          console.log(e.data.isNew)
+          console.log(e.data.name, 'onDataFileEntry.name')
+          console.log(e.data.type, 'onDataFileEntry.type')
+          console.log(e.data.isNew, 'onDataFileEntry.isNew')
           break
         }
         case "performMapLoadFunction": {
-          console.log(e.data.idx)
+          console.log(e.data.idx, 'performMapLoadFunction.idx')
           break
         }
         case "endDataFileEntries": {
@@ -34,28 +34,28 @@ export function Loading() {
           break
         }
         case "startInitFunction": {
-          console.log(e.data.type)
+          console.log(e.data.type, 'startInitFunction.type')
           break
         }
         case "startInitFunctionOrder": {
-          console.log(e.data.type)
-          console.log(e.data.order)
-          console.log(e.data.count)
+          console.log(e.data.type, 'startInitFunctionOrder.type')
+          console.log(e.data.order, 'startInitFunctionOrder.order')
+          console.log(e.data.count, 'startInitFunctionOrder.count')
           break
         }
         case "initFunctionInvoking": {
-          console.log(e.data.type)
-          console.log(e.data.name)
-          console.log(e.data.idx)
+          console.log(e.data.type, 'initFunctionInvoking.type')
+          console.log(e.data.name, 'initFunctionInvoking.name')
+          console.log(e.data.idx, 'initFunctionInvoking.idx')
           break
         }
         case "initFunctionInvoked": {
-          console.log(e.data.type)
-          console.log(e.data.name)
+          console.log(e.data.type, 'initFunctionInvoking.type')
+          console.log(e.data.name, 'initFunctionInvoking.name')
           break
         }
         case "endInitFunction": {
-          console.log(e.data.type)
+          console.log(e.data.type, 'endInitFunction.type')
           break
         }
       }

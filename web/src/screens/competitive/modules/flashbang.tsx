@@ -20,7 +20,9 @@ export const Flashbang = () => {
 		}
 	}
 	
-	useEffect(() => triggerFlashbang(), [])
+	useEffect(() => {
+		triggerFlashbang()
+	}, [])
 
 	return (
 		<div

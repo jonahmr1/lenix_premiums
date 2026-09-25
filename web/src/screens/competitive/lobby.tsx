@@ -7,13 +7,11 @@ import type { Tab } from '@/types'
 import { Play } from './pages/play'
 import { motion } from 'motion/react'
 import { anim } from '@/lib'
-import { useNavigate } from '@tanstack/react-router'
 import { PageScreen } from '@/components/screen'
 // import logo from '@/assets/ui/competitive/lobby/logo.png'
 
 export const Lobby = () => {
   const [tab, setTab] = useState(0)
-  const nav = useNavigate()
 
   const tabs: Tab[] = [
     {
