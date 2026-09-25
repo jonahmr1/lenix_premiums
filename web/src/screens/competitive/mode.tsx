@@ -112,9 +112,9 @@ export const Mode = () => {
               })()}
             </div>
           </div>
-          <div className="flex items-end gap-w-1 pb-1 overflow-hidden text-input">
+          <div className="flex items-end justify-between gap-w-1 pb-1 min-w-0 w-full overflow-hidden text-input">
             {entries(MODES).map(([mode, data]) => (
-              <div className="flex flex-col">
+              <div className={`flex flex-col ${preview === mode ? 'flex-3' : 'flex-2'} transition-all`}>
                 <Button
                   onClick={() => {
                     if ('disabled' in data) {
@@ -132,7 +132,7 @@ export const Mode = () => {
                 >
                   <img
                     src={data.image}
-                    className={`pointer-events-none max-w-w-15 group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`}
+                    className={`pointer-events-none group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`}
                   />
                   <p className={`absolute bottom-2 font-light text-v-1.75 font-heading tracking-tighter uppercase transition-all ${preview === mode ? 'font-bold! text-neutral-50' : 'text-neutral-300'}`}>
                     {data.label}
