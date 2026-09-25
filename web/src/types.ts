@@ -16,8 +16,6 @@ export interface ButtonStart {
 	styles?: string
 }
 
-export type Overlay = 'pause' | 'settings' | null
-
 export interface States {
 	lobby: {
 		mode: keyof typeof MODES

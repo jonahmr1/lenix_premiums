@@ -46,7 +46,7 @@ export const Starting = () => {
     {
       label: "Settings",
       onClick: () => {
-        // nav('/settings')
+        nav({ to: '/', hash: 'settings' })
       },
       styles: "mt-10",
     },

@@ -11,7 +11,7 @@ export const Index = ({ appName, children }: { appName: string; children: React.
 		<div className='size-full flex overflow-hidden flex-col'>
 			<div className='bg-card h-6/100 w-full overflow-hidden px-2 items-center justify-between flex'>
 				<div className='flex items-center gap-2'>
-					<Button variant='destructive' className='px-1 rounded-full size-md!' onClick={() => nav({'/'})}>
+					<Button variant='destructive' className='px-1 rounded-full size-md!' onClick={() => nav('/')}>
 						<XIcon className='size-sm'/>
 					</Button>
 					<ButtonGroup>

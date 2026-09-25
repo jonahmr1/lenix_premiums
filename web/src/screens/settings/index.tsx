@@ -1,7 +1,7 @@
 import { NavKbd } from "@/components/kbd"
 import { Layout } from "@/components/layout"
 import { NextButton, PreviousButton } from "@/components/nav"
-import type { Overlay, Tab } from "@/types"
+import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/components/ui/item"
@@ -14,7 +14,7 @@ import { Header } from "@/components/header"
 import { motion } from "motion/react"
 import { anim } from "@/lib"
 import { cn } from "cn"
-import type { S } from "@lenix/lenix"
+import { useRouter } from "@tanstack/react-router"
 
 export const LabelItem = ({
   children,
@@ -103,8 +103,9 @@ const tabs: Tab[] = [
   },
 ]
 
-export const Settings = ({ setOverlay }: { setOverlay: S<Overlay> }) => {
+export const Settings = () => {
   const [tab, setTab] = useState(2)
+	const router = useRouter()
 
   return (
     <Layout className="gap-sm flex h-screen w-full flex-col backdrop-blur-sm">
@@ -149,7 +150,7 @@ export const Settings = ({ setOverlay }: { setOverlay: S<Overlay> }) => {
         </NextButton>
       </div>
       <KbdGroup>
-        <NavKbd onClick={() => setOverlay(null)} icon="Esc" keybind="Escape">
+        <NavKbd onClick={() => router.history.back()} icon="Esc" keybind="Escape">
           Back
         </NavKbd>
       </KbdGroup>

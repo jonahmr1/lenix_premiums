@@ -1,9 +1,7 @@
 import { audiobility } from "@/lib"
 import {
   fetchNuiServer,
-  focusNui,
   onKeyDown,
-  onNuiEmit,
   unFocusNui,
 } from "lenix/nui"
 import type { Start } from "types"
@@ -11,7 +9,7 @@ import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { KbdGroup } from "@/components/ui/kbd"
 import { NavKbd } from "@/components/kbd"
-import type { ButtonStart, Overlay } from "@/types"
+import type { ButtonStart } from "@/types"
 import { Layout } from "@/components/layout"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Header } from "@/components/header"
@@ -19,17 +17,9 @@ import { motion } from "motion/react"
 import { anim } from "@/lib"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useNavigate } from "@tanstack/react-router"
-import type { S } from "@lenix/lenix"
 
-export const Pause = ({ setOverlay }: { setOverlay: S<Overlay> }) => {
+export const Pause = () => {
   const nav = useNavigate()
-
-  useEffect(() =>
-    onNuiEmit<Start.Events["pause"]>("start:pause", () => {
-      focusNui()
-      setOverlay(null)
-    })
-  )
 
   const buttons: ButtonStart[] = [
     {
@@ -37,13 +27,13 @@ export const Pause = ({ setOverlay }: { setOverlay: S<Overlay> }) => {
       onClick: () => {
         audiobility.onMouseDown()
         unFocusNui()
-				setOverlay(null)
+				nav({ to: '/', hash: '', replace: true })
       },
     },
     {
       label: "Settings",
       onClick: () => {
-				setOverlay('settings')
+				nav({ to: '/', hash: 'settings', replace: true })
       },
     },
     {
@@ -51,7 +41,6 @@ export const Pause = ({ setOverlay }: { setOverlay: S<Overlay> }) => {
       onClick: async () => {
         /* TODO: run the client logout also and not just logout */
         await fetchNuiServer<Start.Requests["logout"]>("start:logout", {})
-				setOverlay(null)
         nav({ to: "/starting" })
       },
     },
