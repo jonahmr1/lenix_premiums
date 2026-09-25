@@ -1,6 +1,6 @@
-import { NavKbd } from "@/components/kbd"
-import { Layout } from "@/components/layout"
-import { useNavigate } from "@tanstack/react-router"
+import { NavKbd } from '@/components/kbd'
+import { Layout } from '@/components/layout'
+import { useNavigate } from '@tanstack/react-router'
 
 /* TODO: audio, scrollup */
 export const Credit = () => {
@@ -8,16 +8,16 @@ export const Credit = () => {
 
   const credits = [
     {
-      names: ["Lenix"],
-      roles: ["Lead Developer"],
+      names: ['Lenix'],
+      roles: ['Lead Developer'],
     },
     {
-      names: ["Mazen"],
-      roles: ["Gameplay Consultant"],
+      names: ['Mazen'],
+      roles: ['Gameplay Consultant'],
     },
     {
-      names: ["3mr"],
-      roles: ["Game Tester"],
+      names: ['3mr'],
+      roles: ['Game Tester'],
     },
   ]
 
@@ -40,7 +40,7 @@ export const Credit = () => {
                     key={role}
                     className="flex flex-wrap justify-end gap-x-3 tracking-widest text-white/80 uppercase"
                   >
-                    {role.split(" ").map((word, index) => (
+                    {role.split(' ').map((word, index) => (
                       <span key={`${role}-${index}`}>{word}</span>
                     ))}
                   </div>
@@ -57,7 +57,7 @@ export const Credit = () => {
       </div>
       <div className="flex w-full items-start">
         <NavKbd
-          onClick={() => nav({ to: "/starting" })}
+          onClick={() => nav({ to: '/starting' })}
           icon="Esc"
           keybind="Escape"
         >
