@@ -1,7 +1,7 @@
 import type { MotionProps } from "motion/react";
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import hover from '../assets/audio/hover.ogg'
+import hover from '../assets/audio/hover.wav'
 import click from '../assets/audio/click.wav'
 import error from '../assets/audio/error.wav'
 import unavailable from '../assets/audio/unavailable.ogg'

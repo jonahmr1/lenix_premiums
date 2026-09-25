@@ -11,13 +11,11 @@ export const NavKbd = ({
   icon: Icon,
   onClick,
   keybind,
-  disable,
 }: {
   children: React.ReactNode
   icon: React.ReactNode
   onClick: () => void
   keybind: string
-  disable?: "click" | "hover"
 }) => {
   useEffect(() => {
     const dispose = onKeyDown(keybind, () => {
@@ -37,11 +35,6 @@ export const NavKbd = ({
     >
       <Button
         onClick={onClick}
-        {...(disable === "click"
-          ? { onMouseEnter: audiobility.onMouseEnter }
-          : disable === "hover"
-            ? { onMouseDown: audiobility.onMouseDown }
-            : audiobility)}
         variant="secondary"
         className="gap-xs"
       >
