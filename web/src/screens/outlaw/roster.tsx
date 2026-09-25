@@ -22,13 +22,13 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 	<div className='w-full min-h-1/10 flex justify-around items-center bg-card px-2 border rounded-md'>
 		<div className='flex-3.5 flex gap-1.5 items-center'>
 			<Badge className={`size-2 rounded-full p-0 shine-md ${DutyStates[duty_state]}`} />
-			<p className='text-neutral-600 whitespace-nowrap font-extralight text-fluid-1.5 pt-px'>{callsign}</p>
+			<p className='text-neutral-600 whitespace-nowrap font-extralight text-v-1.5 pt-px'>{callsign}</p>
 		</div>
 		<div className='p-1 flex-1 flex justify-center'>
 			<Separator orientation='vertical' className='h-4' />
 		</div>
 		<div className='flex-8 flex justify-between'>
-			<p className='text-neutral-600 text-left text-fluid-1.5 truncate'>{name}</p>
+			<p className='text-neutral-600 text-left text-v-1.5 truncate'>{name}</p>
 			<Badge className='hidden'>
 				{/* TODO */}
 				<WaveformIcon className={`${TalkStates[talk_state]}`} />
@@ -113,12 +113,12 @@ export const Roster = () => {
 			<div className='flex-1 min-h-0 px-3 pt-3 flex flex-col gap-1'>
 				<div className='flex flex-col'>
 					<div className='w-full flex justify-between items-center'>
-						<p className='text-foreground cursor-default text-fluid-2 uppercase italic font-black'>Active Officers</p>
+						<p className='text-foreground cursor-default text-v-1.5 uppercase italic font-black'>Active Officers</p>
 						<div className='flex items-center gap-3'>
 							<div>
 								<Separator orientation='vertical' className='h-4' />
 							</div>
-							<p className='text-neutral-600 cursor-default text-fluid-2'>{Object.entries(officers).length}</p>
+							<p className='text-neutral-600 cursor-default text-v-1.5'>{Object.entries(officers).length}</p>
 						</div>
 					</div>
 				</div>
@@ -135,13 +135,13 @@ export const Roster = () => {
 				</div>
 			</div>
 			<Separator />
-			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-card *:text-[1.2vmin] *:border *:border-border *:text-neutral-600'>
+			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-card *:text-v-1 *:border *:border-border *:text-neutral-600'>
 				<Button
 					variant='secondary'
 					className='rounded-md'
 					onClick={handleSignin}
 				>
-					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
+					<FontAwesomeIcon className='text-v-1.2' icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
 					{dutyState === 'off' ? 'Sign-in' : 'Sign-off'}
 				</Button>
 				<Button
@@ -149,7 +149,7 @@ export const Roster = () => {
 					className='rounded-md'
 					onClick={handleBreak}
 				>
-					<FontAwesomeIcon className='text-fluid-1.5' icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
+					<FontAwesomeIcon className='text-v-1.2' icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
 					{dutyState === 'on'
 						? 'Take Break'
 						: dutyState === 'off'

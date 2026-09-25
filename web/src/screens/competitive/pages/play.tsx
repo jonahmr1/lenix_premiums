@@ -27,11 +27,11 @@ export const Play = () => {
 						className="h-auto p-0 relative hover:brightness-75"
 						onClick={() => nav({ to: '/competitive/lobby/mode' })}
 					>
-						<img src={MODES[mode].image} className="max-w-[40vmin] pointer-events-none" />
+						<img src={MODES[mode].image} className="max-w-w-20 pointer-events-none" />
 						<p className="absolute top-0 bg-background/50 text-foreground w-full">Mode Selected</p>
-						<p className="absolute bottom-0 bg-background text-foreground w-full text-fluid-3 font-black text-start tracking-normal px-md">{MODES[mode].label}</p>
+						<p className="absolute bottom-0 bg-background text-foreground w-full text-v-2 text-start tracking-normal px-w-1">{MODES[mode].label}</p>
 					</Button>
-					<Button size='lg' className="uppercase border-t text-fluid-5! font-black italic px-4xl py-xl hover:text-foreground hover:bg-background">Start</Button>
+					<Button size='lg' className="uppercase border-t text-v-4 py-h-4 font-black italic hover:text-foreground hover:bg-background">Start</Button>
 				</ButtonGroup>
 			</motion.div>
 			<motion.div

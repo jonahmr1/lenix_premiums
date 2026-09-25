@@ -31,12 +31,12 @@ export const NavKbd = ({
       {...anim}
       initial={{ opacity: 0, y: "50%" }}
       animate={{ opacity: 1, y: 0 }}
-      className="group flex items-center space-x-2"
+      className="group flex items-center"
     >
       <Button
         onClick={onClick}
         variant="secondary"
-        className="gap-xs"
+        className="gap-w-0.5 py-h-2"
       >
         <Kbd>{Icon}</Kbd>
         <span className="font-sans">{children}</span>

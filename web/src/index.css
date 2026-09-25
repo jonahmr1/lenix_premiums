@@ -22,6 +22,8 @@
 @import '@fontsource/barlow/800-italic.css';
 @import '@fontsource/barlow/900-italic.css';
 
+@plugin "./viewport-utilities.mjs";
+
 @font-face {
 	font-family: 'Unispace';
 	src: url('./assets/fonts/Unispace Rg.otf') format('opentype');
@@ -248,5 +250,5 @@
 }
 
 .scrollbar {
-	@apply [&::-webkit-scrollbar]:h-[0.5vmin] [&::-webkit-scrollbar]:w-[0.5vmin] hover:[--scrollbar-fix:1] [&:hover::-webkit-scrollbar-thumb]:bg-foreground/80 [&::-webkit-scrollbar-thumb]:rounded-md [&:hover::-webkit-scrollbar-thumb:hover]:bg-foreground
+	@apply [&::-webkit-scrollbar]:h-[0.5vmin] [&::-webkit-scrollbar]:w-[0.5vmin] hover:[--scrollbar-fix:1] [&:hover::-webkit-scrollbar-thumb]:bg-current [&::-webkit-scrollbar-thumb]:rounded-md [&:hover::-webkit-scrollbar-thumb:hover]:bg-current
 }

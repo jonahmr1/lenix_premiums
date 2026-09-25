@@ -48,7 +48,7 @@ export const Starting = () => {
       onClick: () => {
         nav({ to: '/', hash: 'settings' })
       },
-      styles: "mt-10",
+      styles: "mt-h-5",
     },
     {
       label: "Credit",
@@ -60,7 +60,7 @@ export const Starting = () => {
         fetchNuiServer<Start.Requests["exitGame"]>("start:exitGame", {})
       },
       styles:
-        "text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50 mt-5",
+        "text-red-700 hover:text-red-500 text-shadow-red-700 hover:drop-shadow-red-500/50 mt-h-3",
     },
   ]
 
@@ -69,14 +69,14 @@ export const Starting = () => {
       <img src={image} className="absolute -z-1 size-full object-cover" />
       <div className="absolute -z-1 size-full bg-linear-to-r from-black/50 to-transparent" />
       <Layout className="relative flex size-full flex-col justify-between">
-        <div className="flex h-9/10 flex-col items-start justify-center gap-5">
+        <div className="flex h-9/10 flex-col items-start justify-center gap-h-2">
           {buttons.map((button, i) => (
             <Button
               key={i}
               variant="default"
               onClick={() => button.onClick()}
               disabled={button.disabled}
-              className={`cursor-pointer bg-transparent text-xl text-neutral-300 uppercase drop-shadow-2xl duration-0 hover:bg-transparent hover:text-neutral-300 hover:drop-shadow-white/50 ${button.styles}`}
+              className={`cursor-pointer bg-transparent text-v-2! text-neutral-300 uppercase drop-shadow-2xl duration-0 hover:bg-transparent hover:text-neutral-300 hover:drop-shadow-white/50 ${button.styles}`}
             >
               {button.label}
             </Button>

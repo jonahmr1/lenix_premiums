@@ -10,7 +10,7 @@ export const Layout = ({
 	className?: React.ComponentProps<'div'>['className']
 	invert?: true
 } & React.ComponentProps<'div'>) => (
-	<div className={cn(invert ? 'mx-lg my-md' : 'px-[7vmin] py-[4vmin]', className)} {...prop}>
+	<div className={cn(invert ? 'm-v-5' : 'p-v-5', className)} {...prop}>
 		{children}
 	</div>
 )
