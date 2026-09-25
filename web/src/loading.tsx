@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { createRoot } from "react-dom/client"
 import { Layout } from "./components/layout"
 import { Spinner } from "./components/ui/spinner"
+import './index.css'
 
 export function Loading() {
   useEffect(() => {
