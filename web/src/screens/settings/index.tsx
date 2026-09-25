@@ -108,7 +108,7 @@ export const Settings = () => {
 	const router = useRouter()
 
   return (
-    <Layout className="gap-sm flex h-screen w-full flex-col backdrop-blur-sm">
+    <Layout className="gap-[1vmin] flex h-screen w-full flex-col backdrop-blur-sm">
       <motion.div
         {...anim}
         initial={{ opacity: 0, y: -50 }}
@@ -116,7 +116,7 @@ export const Settings = () => {
       >
         <Header>Settings</Header>
       </motion.div>
-      <div className="*:text-fluid-2 gap-xs px-sm flex min-h-0 w-full justify-center">
+      <div className="*:text-[2vmin] gap-[0.5vmin] px-[0.5min] flex min-h-0 w-full justify-center">
         <PreviousButton tabs={tabs} value={tab} onValueChange={setTab}>
           Q
         </PreviousButton>
