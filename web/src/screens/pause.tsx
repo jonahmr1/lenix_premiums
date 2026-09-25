@@ -17,6 +17,7 @@ import { motion } from "motion/react"
 import { anim } from "@/lib"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useNavigate } from "@tanstack/react-router"
+import { Separator } from "@/components/ui/separator"
 
 export const Pause = () => {
   const nav = useNavigate()
@@ -55,8 +56,8 @@ export const Pause = () => {
       animate={{ opacity: 1, x: 0 }}
     >
       <Layout className="flex h-screen flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
-        <div className="gap-md flex items-center">
-          <div className="h-2/3 w-0.5 bg-foreground"></div>
+        <div className="gap-w-1 flex items-center">
+          <div className="h-2/3 mt-h-1 w-0.5 bg-foreground" />
           <Header>Paused</Header>
         </div>
         <ButtonGroup
@@ -64,19 +65,22 @@ export const Pause = () => {
           className="h-full w-1/3 justify-center"
         >
           {buttons.map((button, i) => (
-            <div className="group gap-xs flex not-last:border-b">
-              <div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 group-hover:opacity-100" />
-              <Button
-                key={i}
-                variant="ghost"
-                onClick={() => button.onClick()}
-                size="lg"
-                className="text-fluid-2.5 py-md w-full justify-between border-0 px-px font-semibold tracking-wider text-neutral-300 uppercase italic"
-              >
-                <span className="px-lg">{button.label}</span>
-                <ArrowRightIcon className="size-md mr-sm stroke-1 opacity-0 [:hover>&]:opacity-100" />
-              </Button>
-            </div>
+						<>
+							<Button
+								key={i}
+								variant="ghost"
+								onClick={() => button.onClick()}
+								size="lg"
+								className="group text-v-2.5! h-fit w-full justify-between px-px font-semibold tracking-wider text-neutral-300 uppercase italic"
+							>
+								<div className="h-full w-fu flex justify-start">
+									<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 group-hover:opacity-100" />
+									<span className="px-w-1.5">{button.label}</span>
+								</div>
+								<ArrowRightIcon className="size-v-3 mr-w-1 stroke-1 opacity-0 [:hover>&]:opacity-100" />
+							</Button>
+							<Separator className="last:hidden" />
+						</>
           ))}
         </ButtonGroup>
         <KbdGroup className="flex w-full">

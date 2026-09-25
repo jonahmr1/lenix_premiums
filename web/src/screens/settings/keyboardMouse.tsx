@@ -146,8 +146,8 @@ export const KeyboardMouse = () => {
 	const [{ settings: { keyboardMouse } }, setStates] = useStates()
 
 	return (
-		<div className="size-full flex gap-md">
-			<div className="w-3/5 overflow-y-scroll scrollbar pr-[0.5vmin] space-y-[0.5vmin]">
+		<div className="size-full flex gap-w-1">
+			<div className="w-3/5 overflow-y-scroll scrollbar pr-w-0.5 space-y-h-0.5">
 				{labels.map(setting => {
 					const value = keyboardMouse[setting.key]
 					const handle = (value: Value) => {
@@ -170,13 +170,14 @@ export const KeyboardMouse = () => {
 							>
 								<CaretLeftIcon />
 							</Button>
-							<div className="w-fluid-25">
+							<div className="w-w-20">
 								{typeof value === 'number' ? (
 									<Slider
 										step={1}
 										max={8}
 										value={[value]}
 										onValueChange={value => handle(value[0])}
+										className="group-hover:invert"
 									/>
 								) : setting.options && (
 									<div className="w-full">

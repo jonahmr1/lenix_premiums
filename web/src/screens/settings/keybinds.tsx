@@ -145,10 +145,10 @@ export const Keybinds = () => {
 					showCloseButton={false}
 					className="sm:max-w-none justify-center bg-transparent ring-0"
 				>
-					<DialogTitle className="uppercase text-fluid-6 italic font-black">
+					<DialogTitle className="uppercase text-v-4 italic font-black">
 						Press a key or mouse button
 					</DialogTitle>
-					<DialogDescription className="uppercase italic text-fluid-2 flex justify-center">
+					<DialogDescription className="uppercase italic text-v-1.5 flex justify-center">
 						Press Esc to cancel
 					</DialogDescription>
 				</DialogContent>
@@ -157,45 +157,43 @@ export const Keybinds = () => {
 	}
 
 	return (
-		<div className="size-full">
-			<Tabs value={tab} orientation='vertical' className="gap-lg h-full">
-				<TabsList className="gap-1 bg-transparent cursor-default w-1/4">
-					{entries(labels).map(([title, data]) => (
-						<LabelItem
-							key={title}
-							title={data.label}
-							onClick={() => setTab(title)}
-							className={`${tab === title && 'invert bg-background'}`}
-							{...audiobility} />
-					))}
-				</TabsList>
-				<div className="w-3/4 overflow-y-auto scrollbar pr-xs">
-					{entries(labels).map(([title, data]) => (
-						<TabsContent
-							key={title}
-							value={title}
-							className="flex flex-col gap-xs"
-						>
-							{entries(data.items).map(([binding, label]) => {
-								return (
-									<div key={binding} className="flex bg-background/50 px-sm py-sm gap-md">
-										<div className="w-1/2 text-fluid-2 font-black tracking-tight italic uppercase">{label}</div>
-										{keybinds[title][binding].map((key, i) => (
-											<KbdDialog
-												key={key}
-												binding={binding}
-												order={i}
-											>
-												{key.length ? <Kbd>{key}</Kbd> : <></>}
-											</KbdDialog>
-										))}
-									</div>
-								)
-							})}
-						</TabsContent>
-					))}
-				</div>
-			</Tabs>
-		</div>
-	)
+		<Tabs value={tab} orientation="vertical" className="gap-w-1">
+			<TabsList className="w-1/4 cursor-default gap-1 bg-transparent">
+				{entries(labels).map(([title, data]) => (
+					<LabelItem
+						key={title}
+						title={data.label}
+						onClick={() => setTab(title)}
+						className={`${tab === title && 'bg-background invert'}`}
+						{...audiobility}
+					/>
+				))}
+			</TabsList>
+			<div className="scrollbar pr-w-0.5 w-3/4 overflow-y-auto">
+				{entries(labels).map(([title, data]) => (
+					<TabsContent
+						key={title}
+						value={title}
+						className="gap-h-0.5 flex flex-col"
+					>
+						{entries(data.items).map(([binding, label]) => (
+							<div
+								key={binding}
+								className="p-v-1 gap-w-1 flex items-center bg-background/50"
+							>
+								<div className="text-v-1.25 w-1/2 font-black tracking-tight uppercase italic">
+									{label}
+								</div>
+								{keybinds[title][binding].map((key, i) => (
+									<KbdDialog key={key} binding={binding} order={i}>
+										{key.length ? <Kbd>{key}</Kbd> : <></>}
+									</KbdDialog>
+								))}
+							</div>
+						))}
+					</TabsContent>
+				))}
+			</div>
+		</Tabs>
+  )
 }

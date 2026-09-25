@@ -10,7 +10,7 @@ export function App() {
   const hash = useLocation({ select: location => location.hash })
 
   useEffect(() => {
-    nav({ to: '/starting' })
+    nav({ to: '/' })
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })

@@ -78,8 +78,8 @@ export const Hud = () => {
 							/>
 						</div>
 						{hudVariant === 'progress' && <div className='flex flex-col justify-end w-full h-5 gap-px'>
-							<p className='text-fluid-1.5 leading-3 text-neutral-200 text-shadow-sm'>{state[variant]}%</p>
-							<div className='w-full h-2/3 p-px border border-neutral-400 rounded-md items-center justify-center flex bgtext-neutral-300/30'>
+							<p className='text-v-1 leading-3 text-neutral-200 text-shadow-sm'>{state[variant]}%</p>
+							<div className='w-full h-2/3 p-px border border-neutral-400 rounded-md items-center justify-center flex text-neutral-300/30'>
 								<div className='size-full bg-neutral-400/80 rounded-md relative overflow-hidden'>
 									<div
 										className='h-full w-0 bg-neutral-200'
@@ -95,20 +95,20 @@ export const Hud = () => {
 				))}
 			</Layout>
 			{/* Weaponary */}
-			<Layout className='absolute bottom-0 right-0 flex items-start justify-end gap-md bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
+			<Layout className='absolute bottom-0 right-0 w-w-20 h-h-15 flex pt-0 pl-0 items-start justify-end gap-w-1 bg-radial-[at_66%] from-black/10 to-transparent to-66% pr-10'>
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
-				<div className='flex flex-col gap-2 items-end justify-between text-neutral-300 text-shadow-md'>
-					<div className='flex justify-between'>
-						<div className='flex gap-1 items-start font-number'>
-							<p
-								className={`text-fluid-6 font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 3 ? undefined : 'text-red-500 text-shadow-red-500 glow-sm'}`}>
-								{zeroed(state.weapon.clipAmmo, 2)}
-							</p>
-							<Separator orientation='vertical' className='bg-neutral-300 h-9/10' />
+				<div className='flex flex-col gap-2 h-full items-end w-3/4 justify-between text-neutral-300 text-shadow-md'>
+					<div className='w-full h-1/2 flex gap-1 items-start font-number'>
+						<p
+							className={`text-v-5 w-2/3 text-end font-black inline-block leading-[0.75em] ${state.weapon.clipAmmo > state.weapon.clipSize / 3 ? undefined : 'text-red-500 text-shadow-red-500 glow-sm'}`}>
+							{zeroed(state.weapon.clipAmmo, 2)}
+						</p>
+						<div className='flex h-full gap-1 w-1/3'>
+							<Separator orientation='vertical' className='bg-neutral-300 h-full' />
 							<p className='leading-none'>{zeroed(state.weapon.reserveAmmo, 3)}</p>
 						</div>
 					</div>
-						<p className='truncate font-semibold italic'>{state.weapon.name}</p>
+					<p className='truncate font-semibold italic px-1'>{state.weapon.name}</p>
 				</div>
 			</Layout>
 		</>			

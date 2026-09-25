@@ -1,11 +1,8 @@
-import { NavKbd } from "@/components/kbd"
-import { Layout } from "@/components/layout"
 import { NextButton, PreviousButton } from "@/components/nav"
 import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Item, ItemActions, ItemContent, ItemTitle } from "@/components/ui/item"
-import { KbdGroup } from "@/components/ui/kbd"
 import { audiobility } from "@/lib"
 import { useState } from "react"
 import { Keybinds } from "./keybinds"
@@ -15,6 +12,7 @@ import { motion } from "motion/react"
 import { anim } from "@/lib"
 import { cn } from "cn"
 import { useRouter } from "@tanstack/react-router"
+import { PageScreen } from "@/components/screen"
 
 export const LabelItem = ({
   children,
@@ -30,7 +28,7 @@ export const LabelItem = ({
 } & React.ComponentProps<typeof Item>) => (
   <Item
     className={cn(
-      "px-md text-fluid-1.5 bg-background/50 font-black tracking-normal text-foreground hover:bg-background hover:invert",
+      "px-w-1 text-v-1.5 bg-background/50 font-black tracking-normal text-foreground hover:bg-background hover:invert group",
       className
     )}
     onMouseEnter={audiobility.onMouseEnter}
@@ -38,7 +36,7 @@ export const LabelItem = ({
   >
     <ItemContent>
       <ItemTitle
-        className={`text-fluid-2 font-bold uppercase italic ${digest && "font-black"}`}
+        className={`text-v-1.25 font-bold uppercase italic ${digest && "font-black"}`}
       >
         {title}
       </ItemTitle>
@@ -50,11 +48,11 @@ export const LabelItem = ({
 const tabs: Tab[] = [
   {
     label: "General",
-    content: <p className="text-fluid-5">...</p>,
+    content: <div className="size-full flex items-center justify-center text-v-4">General Soon...</div>,
   },
   {
     label: "Graphics" /* Advanced Graphics */,
-    content: <p className="text-fluid-5">...</p>,
+    content: <div className="size-full flex items-center justify-center text-v-4">Graphics Soon...</div>,
   },
   {
     label: "Keybinds",
@@ -62,15 +60,15 @@ const tabs: Tab[] = [
   },
   {
     label: "Audio" /* Voice Chat */,
-    content: <p className="text-fluid-5">...</p>,
+    content: <div className="size-full flex items-center justify-center text-v-4">Audio Soon...</div>,
   },
   {
     label: "Interface" /* Display */,
-    content: <p className="text-fluid-5">...</p>,
+    content: <div className="size-full flex items-center justify-center text-v-4">Display Soon...</div>,
   },
   {
     label: "Camera",
-    content: <p className="text-fluid-5">...</p>,
+    content: <div className="size-full flex items-center justify-center text-v-4">Display Soon...</div>,
   },
   {
     label: "Keyboard / Mouse",
@@ -108,7 +106,17 @@ export const Settings = () => {
 	const router = useRouter()
 
   return (
-    <Layout className="gap-[1vmin] flex h-screen w-full flex-col backdrop-blur-sm">
+    <PageScreen
+			className="gap-h-1 flex h-screen w-full flex-col backdrop-blur-sm"
+			kbds={[
+				{
+					onClick: () => router.history.back(),
+					icon: "Esc",
+					keybind: "Escape",
+					children: 'Back'
+				}
+			]}
+		>
       <motion.div
         {...anim}
         initial={{ opacity: 0, y: -50 }}
@@ -116,18 +124,18 @@ export const Settings = () => {
       >
         <Header>Settings</Header>
       </motion.div>
-      <div className="*:text-[2vmin] gap-[0.5vmin] px-[0.5min] flex min-h-0 w-full justify-center">
+      <div className="*:text-v-2 gap-w-0.5 flex min-h-0 size-full justify-center">
         <PreviousButton tabs={tabs} value={tab} onValueChange={setTab}>
           Q
         </PreviousButton>
-        <Tabs value={tab.toString()} className="flex-1">
-          <TabsList className="gap-xs h-full w-full bg-transparent p-0">
+        <Tabs value={tab.toString()} className="flex-1 size-full">
+          <TabsList className="gap-w-0.5 h-full w-full bg-transparent p-0">
             {tabs.map(({ disabled, label }, i) => (
               <Button
                 key={i}
                 disabled={disabled}
                 variant={tab === i ? "default" : "secondary"}
-                className="text-fluid-2! flex-1 font-bold italic"
+                className="text-v-1.4 flex-1 font-bold italic uppercase"
                 onClick={() => setTab(i)}
                 size="lg"
               >
@@ -139,7 +147,7 @@ export const Settings = () => {
             <TabsContent
               key={i}
               value={i.toString()}
-              className="overflow-hidden"
+              className="overflow-hidden size-full"
             >
               {tab.content}
             </TabsContent>
@@ -149,11 +157,6 @@ export const Settings = () => {
           E
         </NextButton>
       </div>
-      <KbdGroup>
-        <NavKbd onClick={() => router.history.back()} icon="Esc" keybind="Escape">
-          Back
-        </NavKbd>
-      </KbdGroup>
-    </Layout>
+    </PageScreen>
   )
 }
