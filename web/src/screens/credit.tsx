@@ -46,7 +46,7 @@ export const Credit = () => {
 							{roles.map((role) => (
 								<div
 									key={role}
-									className="flex flex-wrap justify-end gap-x-3 tracking-widest text-white/80 uppercase"
+									className="flex flex-wrap justify-end gap-x-3 tracking-widest font-normal text-white/80 uppercase"
 								>
 									{role.split(' ').map((word, index) => (
 										<span key={`${role}-${index}`}>{word}</span>
