@@ -68,10 +68,10 @@ export const Pause = () => {
 								variant="ghost"
 								onClick={() => button.onClick()}
 								size="lg"
-								className="group text-v-2.5! h-fit w-full justify-between px-px font-semibold tracking-wider text-neutral-300 uppercase italic"
+								className="group text-v-2! h-fit w-full justify-between px-px font-semibold text-neutral-300 uppercase italic"
 							>
-								<div className="h-full w-fu flex justify-start">
-									<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 group-hover:opacity-100" />
+								<div className="h-full w-fu flex justify-start items-center">
+									<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 py-h-4 group-hover:opacity-100" />
 									<span className="px-w-1.5">{button.label}</span>
 								</div>
 								<ArrowRightIcon className="size-v-3 mr-w-1 stroke-1 opacity-0 [:hover>&]:opacity-100" />
