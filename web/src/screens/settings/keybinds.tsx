@@ -145,10 +145,10 @@ export const Keybinds = () => {
 					showCloseButton={false}
 					className="sm:max-w-none justify-center bg-transparent ring-0"
 				>
-					<DialogTitle className="uppercase text-v-4 italic font-black">
+					<DialogTitle className="uppercase text-v-4 italic font-black font-sans">
 						Press a key or mouse button
 					</DialogTitle>
-					<DialogDescription className="uppercase italic text-v-1.5 flex justify-center">
+					<DialogDescription className="italic text-v-1.5 flex font-normal justify-center">
 						Press Esc to cancel
 					</DialogDescription>
 				</DialogContent>
@@ -181,7 +181,7 @@ export const Keybinds = () => {
 								key={binding}
 								className="p-v-1 gap-w-1 flex items-center bg-background/50"
 							>
-								<div className="text-v-1.25 w-1/2 font-black tracking-tight uppercase italic">
+								<div className="text-v-1.25 w-1/2 uppercase italic">
 									{label}
 								</div>
 								{keybinds[title][binding].map((key, i) => (

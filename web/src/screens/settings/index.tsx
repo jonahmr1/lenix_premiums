@@ -18,7 +18,6 @@ export const LabelItem = ({
   children,
   title,
   className,
-  digest,
   ...props
 }: {
   children?: React.ReactNode
@@ -28,7 +27,7 @@ export const LabelItem = ({
 } & React.ComponentProps<typeof Item>) => (
   <Item
     className={cn(
-      "px-w-1 text-v-1.5 bg-background/50 font-black tracking-normal text-foreground hover:bg-background hover:invert group",
+      "px-w-1 bg-background/50 text-foreground hover:bg-background italic hover:invert group",
       className
     )}
     onMouseEnter={audiobility.onMouseEnter}
@@ -36,7 +35,7 @@ export const LabelItem = ({
   >
     <ItemContent>
       <ItemTitle
-        className={`text-v-1.25 font-bold uppercase italic ${digest && "font-black"}`}
+        className='text-v-1.25 uppercase font-bold'
       >
         {title}
       </ItemTitle>
@@ -111,7 +110,7 @@ export const Settings = () => {
 			kbds={[
 				{
 					onClick: () => router.history.back(),
-					icon: "Esc",
+					icon: "ESC",
 					keybind: "Escape",
 					children: 'Back'
 				}

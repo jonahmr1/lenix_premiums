@@ -155,7 +155,7 @@ export const KeyboardMouse = () => {
 						audiobility.onMouseEnter()
 					}
 					return (
-						<LabelItem key={setting.key} title={setting.title} digest>
+						<LabelItem key={setting.key} title={setting.title}>
 							<Button
 								variant='ghost'
 								onClick={() => {
