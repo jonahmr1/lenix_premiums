@@ -14,7 +14,7 @@ library.add(fas, far)
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<ThemeProvider>
+		<ThemeProvider defaultTheme="dark">
 			<StatesProvider>
 				<RouterProvider router={router} />
 				<Toaster

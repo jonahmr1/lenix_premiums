@@ -5,7 +5,7 @@ import {
   unFocusNui,
 } from "lenix/nui"
 import type { Start } from "types"
-import { useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { KbdGroup } from "@/components/ui/kbd"
 import { NavKbd } from "@/components/kbd"
@@ -65,9 +65,8 @@ export const Pause = () => {
           className="h-full w-1/3 justify-center"
         >
           {buttons.map((button, i) => (
-						<>
+						<Fragment key={i}>
 							<Button
-								key={i}
 								variant="ghost"
 								onClick={() => button.onClick()}
 								size="lg"
@@ -80,7 +79,7 @@ export const Pause = () => {
 								<ArrowRightIcon className="size-v-3 mr-w-1 stroke-1 opacity-0 [:hover>&]:opacity-100" />
 							</Button>
 							<Separator className="last:hidden" />
-						</>
+						</Fragment>
           ))}
         </ButtonGroup>
         <KbdGroup className="flex w-full">

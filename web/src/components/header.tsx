@@ -1,1 +1,1 @@
-export const Header = ({ children }: { children: React.ReactNode }) => <h1 className="uppercase text-[10vmin] font-black italic leading-none">{children}</h1>
+export const Header = ({ children }: { children: React.ReactNode }) => <h1 className="uppercase text-v-8 font-black italic leading-none">{children}</h1>
