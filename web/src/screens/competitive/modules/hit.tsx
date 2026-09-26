@@ -1,6 +1,6 @@
 import { random } from "@lenix/lenix"
 import { useEffect, useState } from "react"
-import impact from '@workspace/ui/assets/competitive/hit/bullet-impact.wav'
+import impact from '@/assets/competitive/hit/bullet-impact.wav'
 import './hit.css'
 import { Howl } from 'howler'
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import indicator from '@workspace/ui/assets/competitive/damage/damage-indicator.png'
+import indicator from '@/assets/competitive/damage/damage-indicator.png'
 
 export const DamageIndicator = () => {
 	const [state, setState] = useState<number>()

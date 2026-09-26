@@ -1,7 +1,7 @@
 import { playAudio } from "@/lib";
 import { useEffect, useState } from "react";
-import flashbang from '@workspace/ui/assets/competitive/flashbang/flashbang.wav'
-import flashbangEffect from '@workspace/ui/assets/competitive/flashbang/flashbang-effect.wav'
+import flashbang from '@/assets/competitive/flashbang/flashbang.wav'
+import flashbangEffect from '@/assets/competitive/flashbang/flashbang-effect.wav'
 import { waste } from "@lenix/lenix";
 
 export const Flashbang = () => {
