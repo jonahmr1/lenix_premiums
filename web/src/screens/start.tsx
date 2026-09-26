@@ -20,7 +20,6 @@ export const Start = () => {
     {
       label: 'Multiplayer',
       onClick: () => nav({ to: '/starting/select' }),
-      disabled: true,
     },
     {
       label: 'Campaign',
