@@ -9,9 +9,9 @@ type MarkerConfig = {
 
 const hitVariants = ['hit', 'headshot', 'armorHit', 'armorBreak', 'kill'] as const
 const variants = {
-	hit: { lines: 1, color: 'bg-white' },
+	hit: { lines: 1, color: 'bg-foreground' },
 	headshot: { lines: 1, color: 'bg-amber-400' },
-	armorHit: { lines: 2, color: 'bg-white' },
+	armorHit: { lines: 2, color: 'bg-foreground' },
 	armorBreak: { lines: 1, color: 'bg-blue-400' },
 	kill: { lines: 1, color: 'bg-red-800' },
 } satisfies Record<HitVariant, MarkerConfig>
