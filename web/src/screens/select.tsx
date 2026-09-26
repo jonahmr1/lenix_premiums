@@ -70,6 +70,7 @@ export function Select() {
                 className='pointer-events-none absolute inset-0 size-full object-cover'
               />
               <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
+              <div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_3px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
             </div>
           </button>
         ))}
