@@ -39,7 +39,7 @@ export const Mode = () => {
           {
             onClick: () => router.history.back(),
             keybind: 'Escape',
-            icon: 'Esc',
+            icon: 'ESC',
             children: 'Back',
           },
         ]}

@@ -46,7 +46,7 @@ export const Lobby = () => {
 				className="flex h-screen w-full flex-col"
 				kbds={[
 					{
-						icon: "Esc",
+						icon: "ESC",
             onClick: () => {
               audiobility.onMouseDown()
               // nav({ to: '' })

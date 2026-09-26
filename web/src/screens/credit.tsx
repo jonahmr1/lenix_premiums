@@ -26,7 +26,7 @@ export const Credit = () => {
 			kbds={[
 				{
 					onClick: () => nav({ to: '/starting' }),
-          icon: "Esc",
+          icon: "ESC",
           keybind: "Escape",
 					children: 'Back'
 				}

@@ -181,7 +181,7 @@
 	}
 
 	body {
-		@apply text-foreground;
+		@apply text-foreground font-bold;
 	}
 
 	html {
