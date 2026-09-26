@@ -181,7 +181,7 @@
 	}
 
 	body {
-		@apply text-foreground font-bold;
+		@apply text-foreground font-bold cursor-default selection:bg-transparent;
 	}
 
 	html {
