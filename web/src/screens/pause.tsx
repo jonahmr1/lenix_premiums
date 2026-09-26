@@ -68,7 +68,7 @@ export const Pause = () => {
 								variant="ghost"
 								onClick={() => button.onClick()}
 								size="lg"
-								className="group text-v-2! h-fit w-full justify-between px-px font-semibold text-neutral-300 uppercase italic"
+								className="group text-v-2! h-fit w-full justify-between px-px font-semibold text-muted-foreground uppercase italic"
 							>
 								<div className="h-full w-fu flex justify-start items-center">
 									<div className="h-full w-0.5 shrink-0 bg-foreground opacity-0 py-h-4 group-hover:opacity-100" />

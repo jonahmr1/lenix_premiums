@@ -19,16 +19,16 @@ const DutyStates: Record<IRoster.DutyState, string> = {
 }
 
 const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) => (
-	<div className='w-full min-h-1/10 flex justify-around items-center bg-card px-2 border rounded-md'>
+	<div className='w-full min-h-1/10 flex justify-around text-muted-foreground items-center bg-card px-2 border rounded-md'>
 		<div className='flex-3.5 flex gap-1.5 items-center'>
 			<Badge className={`size-2 rounded-full p-0 shine-md ${DutyStates[duty_state]}`} />
-			<p className='text-neutral-600 whitespace-nowrap font-extralight text-v-1.5 pt-px'>{callsign}</p>
+			<p className='whitespace-nowrap font-extralight text-v-1.5 pt-px'>{callsign}</p>
 		</div>
 		<div className='p-1 flex-1 flex justify-center'>
 			<Separator orientation='vertical' className='h-4' />
 		</div>
 		<div className='flex-8 flex justify-between'>
-			<p className='text-neutral-600 text-left text-v-1.5 truncate'>{name}</p>
+			<p className='text-left text-v-1.5 truncate'>{name}</p>
 			<Badge className='hidden'>
 				{/* TODO */}
 				<WaveformIcon className={`${TalkStates[talk_state]}`} />
@@ -118,7 +118,7 @@ export const Roster = () => {
 							<div>
 								<Separator orientation='vertical' className='h-4' />
 							</div>
-							<p className='text-neutral-600 cursor-default text-v-1.5'>{Object.entries(officers).length}</p>
+							<p className='text-muted-foreground cursor-default text-v-1.5'>{Object.entries(officers).length}</p>
 						</div>
 					</div>
 				</div>
@@ -128,14 +128,14 @@ export const Roster = () => {
 						Object.entries(officers).map(([playerId, officer]) => <Officer key={playerId} {...officer} />)
 					) : (
 						<div className='h-full flex flex-col justify-center items-center gap-5'>
-							<SmileySadIcon className='text-neutral-600' size={60} />
-							<p className='text-neutral-600'>No officer found!</p>
+							<SmileySadIcon className='text-muted-foreground' size={60} />
+							<p className='text-muted-foreground'>No officer found!</p>
 						</div>
 					)}
 				</div>
 			</div>
 			<Separator />
-			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-card *:text-v-1 *:border *:border-border *:text-neutral-600'>
+			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-card *:text-v-1 *:border *:border-border *:text-muted-foreground'>
 				<Button
 					variant='secondary'
 					className='rounded-md'

@@ -89,9 +89,9 @@ export const Hud = () => {
 		<>
 			{/* Health */}
 			<Layout className="absolute bottom-0 left-0 -perspective-left-50">
-				<div className="flex items-end texttext-neutral-300">
+				<div className="flex items-end">
 					<p className="leading-tight text-fluid-2">{state.health}</p>
-					<p className="text-fluid-1.5 texttext-neutral-300/70">/{maxHealth}</p>
+					<p className="text-fluid-1.5">/{maxHealth}</p>
 				</div>
 				<div className="flex gap-px">
 					{[...Array(healthSegments).keys()].map(index => (
@@ -105,7 +105,7 @@ export const Hud = () => {
 										Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * 100),
 									)}%`,
 								}}
-								className="bgtext-neutral-300 h-full rounded-xs"
+								className="h-full rounded-xs"
 								transition={{
 									duration: 0.12,
 									delay: (decreasing ? healthSegments - 1 - index : index) * 0.12,
@@ -117,7 +117,7 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 -perspective-right-10 texttext-neutral-300">
+			<Layout className="absolute bottom-0 right-0 -perspective-right-10">
 				<div className="space-y-xs font-medium">
 					<div className="flex justify-between text-fluid-1.75">
 						{activeEquipment && (

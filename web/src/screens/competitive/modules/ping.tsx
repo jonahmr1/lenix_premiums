@@ -39,7 +39,7 @@ export const Ping = () => {
 		>
 			<p className="text-white text-fluid-1.5 text-shadow-md">{state.meter}m</p>
 			<div
-				className="size-2.5 rotate-45 rounded-xs opacity-75 ring-neutral-50 ring"
+				className="size-2.5 rotate-45 rounded-xs opacity-75 ring-foreground ring"
 				style={{
 					backgroundColor: state.color,
 				}}

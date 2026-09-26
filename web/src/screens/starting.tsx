@@ -76,7 +76,7 @@ export const Starting = () => {
               variant="default"
               onClick={() => button.onClick()}
               disabled={button.disabled}
-              className={`cursor-pointer bg-transparent text-v-2! text-neutral-300 uppercase drop-shadow-2xl duration-0 hover:bg-transparent hover:text-neutral-300 hover:drop-shadow-white/50 ${button.styles}`}
+              className={`cursor-pointer bg-transparent text-v-2! text-muted-foreground uppercase drop-shadow-2xl duration-0 hover:bg-transparent hover:drop-shadow-white/50 ${button.styles}`}
             >
               {button.label}
             </Button>
