@@ -31,7 +31,7 @@ export const Play = () => {
 						<p className="absolute top-0 bg-background/50 text-foreground w-full">Mode Selected</p>
 						<p className="absolute bottom-0 bg-background text-foreground w-full text-v-2 text-start tracking-normal px-w-1">{MODES[mode].label}</p>
 					</Button>
-					<Button size='lg' className="uppercase border-t text-v-4 py-h-4 font-black italic hover:text-foreground hover:bg-background">Start</Button>
+					<Button size='lg' className="uppercase border-t text-v-3.5 py-h-4 font-black italic hover:text-background hover:bg-foreground">Start</Button>
 				</ButtonGroup>
 			</motion.div>
 			<motion.div
@@ -52,7 +52,7 @@ export const Play = () => {
 					<CardFooter>
 						<MotionButton
 							{...anim}
-							variant="outline"
+							variant='foreground'
 							animate={{ width: 'auto' }}
 							whileHover={{ width: '100%' }}
 							className="group justify-between transition"

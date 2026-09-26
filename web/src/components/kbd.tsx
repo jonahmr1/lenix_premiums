@@ -35,12 +35,11 @@ export const NavKbd = ({
     >
       <Button
         onClick={onClick}
-        variant="secondary"
-        className="gap-w-0.5 py-h-2"
-				audioDisabled
+        variant='background'
+        className="gap-w-0.5 py-h-2 group"
       >
-        <Kbd>{Icon}</Kbd>
-        <span className="font-sans">{children}</span>
+        <Kbd className="bg-foreground text-background group-hover:invert font-bold">{Icon}</Kbd>
+        <span className="font-sans uppercase text-v-1.2">{children}</span>
       </Button>
     </motion.div>
   )

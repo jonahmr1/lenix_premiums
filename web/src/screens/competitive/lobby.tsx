@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { audiobility } from '@/lib'
-import { PreviousButton, NextButton } from '@/components/nav'
+import { NavButton } from '@/components/nav'
 import { Tabs, TabsList, TabsContent } from '@/components/ui/tabs'
 import type { Tab } from '@/types'
 import { Play } from './pages/play'
@@ -77,21 +77,23 @@ export const Lobby = () => {
               <p className="text-v-4 font-black italic">FightM</p>
             </div>
             <div className="flex flex-2 items-center">
-              <PreviousButton
-                tabs={tabs}
+							<NavButton
+								type='previous'
+								tabs={tabs}
                 value={tab}
                 onValueChange={setTab}
                 variant="ghost"
-              >
+								className='hover:bg-foreground!'
+							>
                 Q
-              </PreviousButton>
+							</NavButton>
               <TabsList className="w-full gap-w-0.5 bg-transparent p-0">
                 {tabs.map((self, i) => (
                   <Button
                     key={i}
                     disabled={self.disabled}
                     variant={tab === i ? 'default' : 'outline'}
-                    className="flex-1 font-sans text-v-2 font-black tracking-normal italic"
+                    className="flex-1 text-v-1.5 font-bold italic uppercase"
                     onClick={() => setTab(i)}
                     size="lg"
                   >
@@ -99,14 +101,16 @@ export const Lobby = () => {
                   </Button>
                 ))}
               </TabsList>
-              <NextButton
-                tabs={tabs}
+							<NavButton
+								type='next'
+								tabs={tabs}
                 value={tab}
                 onValueChange={setTab}
                 variant="ghost"
-              >
+								className='hover:bg-foreground!'
+							>
                 E
-              </NextButton>
+							</NavButton>
             </div>
             <div>{/* top right side */}</div>
           </motion.div>

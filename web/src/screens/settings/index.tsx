@@ -1,4 +1,4 @@
-import { NextButton, PreviousButton } from "@/components/nav"
+import { NavButton } from "@/components/nav"
 import type { Tab } from "@/types"
 import { Tabs, TabsList, TabsContent } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -124,16 +124,16 @@ export const Settings = () => {
         <Header>Settings</Header>
       </motion.div>
       <div className="*:text-v-2 gap-w-0.5 flex min-h-0 size-full justify-center">
-        <PreviousButton tabs={tabs} value={tab} onValueChange={setTab}>
-          Q
-        </PreviousButton>
+				<NavButton type='previous' tabs={tabs} value={tab} onValueChange={setTab}>
+					Q
+				</NavButton>
         <Tabs value={tab.toString()} className="flex-1 size-full">
           <TabsList className="gap-w-0.5 h-full w-full bg-transparent p-0">
             {tabs.map(({ disabled, label }, i) => (
               <Button
                 key={i}
                 disabled={disabled}
-                variant={tab === i ? "default" : "secondary"}
+                variant={tab === i ? "default" : "background"}
                 className="text-v-1.4 flex-1 font-bold italic uppercase"
                 onClick={() => setTab(i)}
                 size="lg"
@@ -152,9 +152,9 @@ export const Settings = () => {
             </TabsContent>
           ))}
         </Tabs>
-        <NextButton tabs={tabs} value={tab} onValueChange={setTab}>
+        <NavButton type='next' tabs={tabs} value={tab} onValueChange={setTab}>
           E
-        </NextButton>
+        </NavButton>
       </div>
     </PageScreen>
   )

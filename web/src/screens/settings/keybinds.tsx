@@ -134,8 +134,8 @@ export const Keybinds = () => {
 			<Dialog open={updating} onOpenChange={setUpdating}>
 				<DialogTrigger asChild>
 					<Button
-						variant='secondary'
-						className="w-1/4 border border-border cursor-pointer"
+						variant='background'
+						className="w-1/4 border border-border cursor-pointer bg-background/70"
 						onClick={() => setUpdating(true)}
 					>
 						{children}
@@ -179,14 +179,14 @@ export const Keybinds = () => {
 						{entries(data.items).map(([binding, label]) => (
 							<div
 								key={binding}
-								className="p-v-1 gap-w-1 flex items-center bg-background/50"
+								className="p-v-1 gap-w-1 flex items-center bg-background/60"
 							>
 								<div className="text-v-1.25 w-1/2 uppercase italic">
 									{label}
 								</div>
 								{keybinds[title][binding].map((key, i) => (
 									<KbdDialog key={key} binding={binding} order={i}>
-										{key.length ? <Kbd>{key}</Kbd> : <></>}
+										{key.length ? <Kbd className="[button:hover>&]:invert bg-foreground text-background">{key}</Kbd> : <></>}
 									</KbdDialog>
 								))}
 							</div>
