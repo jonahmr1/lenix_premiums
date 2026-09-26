@@ -45,7 +45,7 @@ export const KillFeed = () => {
 	if (!feeds) return null
 
 	return (
-		<Layout className="absolute w-fluid-30 uppercase h-4/100 top-1/100 right-0 text-fluid-1.5 font-normal perspective-right-50">
+		<Layout invert className="absolute w-w-15 h-h-4 uppercase top-0/100 right-0 text-v-1 font-normal perspective-right-66">
 			<AnimatePresence>
 				{feeds.map(feed => (
 					<motion.div
@@ -59,13 +59,13 @@ export const KillFeed = () => {
 						className={`flex size-full items-center justify-between italic px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
 					>
 						<p className={`${feed.killer === name && 'font-black tracking-normal'}`}>{feed.killer}</p>
-						<div className="flex h-2/5 gap-sm items-center">
+						<div className="flex h-2/5 gap-w-0.5 items-center">
 							<img src={feed.gun} className={`h-full ${feed.killer === name ? 'brightness-200' : 'brightness-0'}`} />
 							{feed.type === 'headshot'
-								? <SkullIcon className="size-sm" />
+								? <SkullIcon className="size-v-2" />
 								: feed.type === 'roll'
 									? <FontAwesomeIcon icon={['fas', 'arrows-turn-to-dots']} />
-									: <CrosshairIcon className="size-sm" />}
+									: <CrosshairIcon className="size-v-2" />}
 						</div>
 						<p className={`${feed.victim === name && 'font-black tracking-normal'}`}>{feed.victim}</p>
 					</motion.div>
