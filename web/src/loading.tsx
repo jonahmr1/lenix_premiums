@@ -4,8 +4,6 @@ import { Layout } from "./components/layout"
 import './index.css'
 import { Progress } from "./components/ui/progress"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./components/ui/card"
-import { Button } from "./components/ui/button"
-import { CaretDownIcon } from "@phosphor-icons/react"
 import { random } from "@lenix/lenix"
 
 export function Loading() {
@@ -13,27 +11,28 @@ export function Loading() {
 
   useEffect(() => {
     const handler = (e: MessageEvent) => {
+			console.log('data', e.data)
       switch (e.data?.eventName) {
         case "loadProgress": {
-          console.log(e.data.loadFraction, 'loadProgress.loadFraction')
+          console.log('loadProgress.loadFraction', e.data.loadFraction)
           break
         }
         case "onLogLine": {
-          console.log(e.data.message, 'onLogLine.loadFraction')
+          console.log('onLogLine.loadFraction', e.data.message)
           break
         }
         case "startDataFileEntries": {
-          console.log(e.data.count, 'startDataFileEntries.count')
+          console.log('startDataFileEntries.count', e.data.count)
           break
         }
         case "onDataFileEntry": {
-          console.log(e.data.name, 'onDataFileEntry.name')
-          console.log(e.data.type, 'onDataFileEntry.type')
-          console.log(e.data.isNew, 'onDataFileEntry.isNew')
+          console.log('onDataFileEntry.name', e.data.name)
+          console.log('onDataFileEntry.type', e.data.type)
+          console.log('onDataFileEntry.isNew', e.data.isNew)
           break
         }
         case "performMapLoadFunction": {
-          console.log(e.data.idx, 'performMapLoadFunction.idx')
+          console.log('performMapLoadFunction.idx', e.data.idx)
           break
         }
         case "endDataFileEntries": {
@@ -41,29 +40,33 @@ export function Loading() {
           break
         }
         case "startInitFunction": {
-          console.log(e.data.type, 'startInitFunction.type')
+          console.log('startInitFunction.type', e.data.type)
           break
         }
         case "startInitFunctionOrder": {
-          console.log(e.data.type, 'startInitFunctionOrder.type')
-          console.log(e.data.order, 'startInitFunctionOrder.order')
-          console.log(e.data.count, 'startInitFunctionOrder.count')
+          console.log('startInitFunctionOrder.type', e.data.type)
+          console.log('startInitFunctionOrder.order', e.data.order)
+          console.log('startInitFunctionOrder.count', e.data.count)
           break
         }
         case "initFunctionInvoking": {
-          console.log(e.data.type, 'initFunctionInvoking.type')
-          console.log(e.data.name, 'initFunctionInvoking.name')
-          console.log(e.data.idx, 'initFunctionInvoking.idx')
+          console.log('initFunctionInvoking.type', e.data.type)
+          console.log('initFunctionInvoking.name', e.data.name)
+          console.log('initFunctionInvoking.idx', e.data.idx)
           break
         }
         case "initFunctionInvoked": {
-          console.log(e.data.type, 'initFunctionInvoked.type')
-          console.log(e.data.name, 'initFunctionInvoked.name')
+          console.log('initFunctionInvoked.type', e.data.type)
+          console.log('initFunctionInvoked.name', e.data.name)
           break
         }
         case "endInitFunction": {
-          console.log(e.data.type, 'endInitFunction.type')
+          console.log('endInitFunction.type', e.data.type)
           break
+        }
+        case "fullyLoaded": {
+          console.log('fullyLoaded', e.data.message)
+					break
         }
       }
     }
