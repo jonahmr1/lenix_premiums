@@ -42,9 +42,7 @@ function panelClip(index: number, count: number, inset = 0) {
   const tilt = width / 10
   const edge = (boundary: number, angle: number, direction: number) => {
     const outside = boundary === 0 || boundary === count
-    const position = boundary * width + (outside ? 0 : angle)
-    const gap = outside ? 0 : direction * 0.25
-    return `calc(${position}% + ${gap}vw + ${direction * inset}px)`
+    return `calc(${boundary * width + (outside ? 0 : angle)}% + ${outside ? 0 : direction * 0.25}vw + ${direction * inset}px)`
   }
   const top = `${inset}px`
   const bottom = `calc(100% - ${inset}px)`
@@ -65,7 +63,7 @@ export const Select = () => {
 							key={mode.label}
 							onMouseOver={() => setSelected(mode)}
 							style={{ clipPath: panelClip(index, modes.length) }}
-							className={`relative col-start-1 row-start-1 min-w-0 cursor-pointer transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
+							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
 							{...audiobility}
 						>
 							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, modes.length, 2) }}>
@@ -74,7 +72,7 @@ export const Select = () => {
 									className='pointer-events-none absolute inset-0 size-full object-cover'
 								/>
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_3px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
+								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
 							</div>
 						</button>
 					))}
