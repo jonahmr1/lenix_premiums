@@ -25,13 +25,13 @@ export const Result = () => {
 	return (
 		<AnimatePresence>
 			{state && (
-				<div className="backdrop-blur-xs absolute-center place-content-center place-items-center size-full z-11">
+				<div className="absolute-center place-content-center place-items-center size-full z-11">
 					<motion.div
 						animate={{ opacity: 1 }}
 						transition={{ delay }}
-						className="size-full place-content-center place-items-center uppercase font-oxanium"
+						className="size-full place-content-center place-items-center uppercase"
 					>
-						<div className="flex w-full justify-evenly text-fluid-8 items-center font-semibold font-number">
+						<div className="flex w-full justify-evenly text-v-6 items-center font-semibold font-number">
 							<motion.p
 								initial={{ opacity: 0, x: -50 }}
 								exit={{ opacity: 0, x: -50, transition: { delay: 0.2, duration: 0.2 } }}
@@ -44,7 +44,7 @@ export const Result = () => {
 								exit={{ opacity: 0, scale: 0.5, transition: { delay: 0 } }}
 								animate={{ opacity: 1, scale: 1 }}
 								transition={{ delay: delay + 0.4, stiffness: 100, type: 'spring' }}
-								className="text-fluid-15 font-black font-oxanium text-neutral-300 opacity-80"
+								className="text-v-14 font-black italic font-sans text-primary-foreground opacity-80"
 							>{state.own > state.opponent ? 'Victory' : 'Defeat'}</motion.p>
 							<motion.p
 								initial={{ opacity: 0, x: 50 }}
@@ -59,7 +59,7 @@ export const Result = () => {
 							exit={{ opacity: 0, y: 50, transition: { delay: 0, duration: 0.7 } }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: delay + 1, duration: 0.7, ease: 'easeOut' }}
-							className="text-fluid-2"
+							className="text-v-1.5 font-semibold"
 						>{state.own === 100 || state.opponent === 100 ? 'Score limit reached' : 'Overtime concluded'}</motion.div>
 					</motion.div>
 				</div>
