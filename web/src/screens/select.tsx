@@ -5,6 +5,8 @@ import undercover from '@/assets/start/undercover.jpeg'
 import crime from '@/assets/start/crime.png'
 import pursuit from '@/assets/start/pursuit.png'
 import { audiobility } from '@/lib'
+import { PageScreen } from '@/components/screen'
+import { useRouter } from '@tanstack/react-router'
 
 const modes = [
   {
@@ -50,40 +52,55 @@ function panelClip(index: number, count: number, inset = 0) {
   return `polygon(${edge(index, tilt, 1)} ${top}, ${edge(index + 1, tilt, -1)} ${top}, ${edge(index + 1, -tilt, -1)} ${bottom}, ${edge(index, -tilt, 1)} ${bottom})`
 }
 
-export function Select() {
+export const Select = () => {
+	const router = useRouter()
   const [selected, setSelected] = useState(modes[0])
 
   return (
-    <div className="h-screen bg-background">
-      <div className="grid h-3/4 [-webkit-box-reflect:below_2vh_linear-gradient(transparent_60%,rgb(0_0_0/0.5))]">
-        {modes.map((mode, index) => (
-          <button
-            key={mode.label}
-            onMouseOver={() => setSelected(mode)}
-            style={{ clipPath: panelClip(index, modes.length) }}
-            className={`relative col-start-1 row-start-1 min-w-0 cursor-pointer transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
-						{...audiobility}
-          >
-            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, modes.length, 2) }}>
-              <img
-                src={selected.image}
-                className='pointer-events-none absolute inset-0 size-full object-cover'
-              />
-              <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-              <div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_3px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
-            </div>
-          </button>
-        ))}
-      </div>
-			<div className='absolute top-h-75 max-w-2/3 px-w-3 py-h-3 text-muted-foreground text-v-1.5'>
-				<span className="text-v-4 font-extrabold uppercase italic text-foreground">
-					{selected.label}
-				</span>
-				<p>
-					{selected.description}
-				</p>
+		<>
+			<div className='h-screen bg-background'>
+				<div className="grid h-3/4 [-webkit-box-reflect:below_2vh_linear-gradient(transparent_60%,rgb(0_0_0/0.5))]">
+					{modes.map((mode, index) => (
+						<button
+							key={mode.label}
+							onMouseOver={() => setSelected(mode)}
+							style={{ clipPath: panelClip(index, modes.length) }}
+							className={`relative col-start-1 row-start-1 min-w-0 cursor-pointer transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
+							{...audiobility}
+						>
+							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, modes.length, 2) }}>
+								<img
+									src={selected.image}
+									className='pointer-events-none absolute inset-0 size-full object-cover'
+								/>
+								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
+								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_3px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
+							</div>
+						</button>
+					))}
+				</div>
 			</div>
-    </div>
+			<PageScreen
+				className='absolute bottom-0 h-fit z-10 max-w-2/3 text-muted-foreground text-v-1.2 justify-end gap-h-1'
+				kbds={[
+					{
+						icon: 'ESC',
+						keybind: 'Escape',
+						onClick: () => router.history.back(),
+						children: 'Back'
+					}
+				]}
+			>
+				<div>
+					<span className="text-v-4 font-extrabold uppercase italic text-foreground">
+						{selected.label}
+					</span>
+					<p>
+						{selected.description}
+					</p>
+				</div>
+			</PageScreen>
+		</>
   )
 }
 
