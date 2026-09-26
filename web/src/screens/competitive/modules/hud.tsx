@@ -56,21 +56,21 @@ export const Hud = () => {
 						reserve: 4,
 						name: 'Grenade',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
-						className: 'max-w-[3.5vmin]',
+						className: 'max-w-w-2.5',
 					},
 					{
 						ammo: 3,
 						reserve: 3,
 						name: 'Flashbang',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
-						className: 'max-w-[3.5vmin]',
+						className: 'max-w-w-2.5',
 					},
 					{
 						ammo: 1,
 						reserve: 2,
 						name: 'Breach',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
-						className: 'max-w-[3.5vmin]',
+						className: 'max-w-w-2.5',
 					},
 				]
 			}
@@ -88,10 +88,10 @@ export const Hud = () => {
 	return (
 		<>
 			{/* Health */}
-			<Layout className="absolute bottom-0 left-0 -perspective-left-50">
+			<Layout invert className="absolute bottom-0 left-0 -perspective-left-25">
 				<div className="flex items-end">
-					<p className="leading-tight text-fluid-2">{state.health}</p>
-					<p className="text-fluid-1.5">/{maxHealth}</p>
+					<p className="leading-tight text-v-1.5">{state.health}</p>
+					<p className="text-v-1">/{maxHealth}</p>
 				</div>
 				<div className="flex gap-px">
 					{[...Array(healthSegments).keys()].map(index => (
@@ -117,9 +117,9 @@ export const Hud = () => {
 				</div>
 			</Layout>
 			{/* Weaponary */}
-			<Layout className="absolute bottom-0 right-0 -perspective-right-10">
-				<div className="space-y-xs font-medium">
-					<div className="flex justify-between text-fluid-1.75">
+			<Layout invert className="absolute bottom-0 right-0 -perspective-right-5">
+				<div className="space-y-h-0.5 font-medium">
+					<div className="flex justify-between text-v-1.25">
 						{activeEquipment && (
 							<>
 								<p>{activeEquipment.name}</p>
@@ -132,16 +132,16 @@ export const Hud = () => {
 							const equipment = state.weaponary.equipments[index]
 
 							return (
-								<div className="space-y-xs" key={index}>
-									<div className={`relative rounded-md size-2xl px-[0.5vmin] flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
+								<div className="space-y-h-0.5" key={index}>
+									<div className={`relative rounded-md size-w-4 px-w-0.5 flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
 										{equipment ? <>
 											<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
-											<span className="absolute top-0 right-[0.5vmin] text-fluid-1.5 text-white mix-blend-difference">{equipment.ammo}</span>
+											<span className="absolute top-0 right-w-0.5 text-v-1 text-white mix-blend-difference">{equipment.ammo}</span>
 										</> : <>
 											<CircleIcon className="size-xs" />
 										</>}
 									</div>
-									<div className="flex justify-center text-fluid-2">{index + 1}</div>
+									<div className="flex justify-center text-v-1.5">{index + 1}</div>
 								</div>
 							)
 						})}
