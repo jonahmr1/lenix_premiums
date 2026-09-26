@@ -37,6 +37,7 @@ export const NavKbd = ({
         onClick={onClick}
         variant="secondary"
         className="gap-w-0.5 py-h-2"
+				audioDisabled
       >
         <Kbd>{Icon}</Kbd>
         <span className="font-sans">{children}</span>
