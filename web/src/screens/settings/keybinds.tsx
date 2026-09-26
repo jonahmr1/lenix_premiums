@@ -145,7 +145,7 @@ export const Keybinds = () => {
 					showCloseButton={false}
 					className="sm:max-w-none justify-center bg-transparent ring-0"
 				>
-					<DialogTitle className="uppercase text-v-4 italic font-black font-sans">
+					<DialogTitle className="uppercase text-v-5 italic font-black font-sans">
 						Press a key or mouse button
 					</DialogTitle>
 					<DialogDescription className="italic text-v-1.5 flex font-normal justify-center">
@@ -157,7 +157,7 @@ export const Keybinds = () => {
 	}
 
 	return (
-		<Tabs value={tab} orientation="vertical" className="gap-w-1">
+		<Tabs value={tab} orientation="vertical" className="gap-w-1 h-full">
 			<TabsList className="w-1/4 cursor-default gap-1 bg-transparent">
 				{entries(labels).map(([title, data]) => (
 					<LabelItem
