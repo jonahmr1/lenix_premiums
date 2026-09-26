@@ -7,16 +7,16 @@ export const Credit = () => {
 
   const credits = [
     {
+      role: 'Lead Developer',
       names: ['Lenix'],
-      roles: ['Lead Developer'],
     },
     {
+      role: 'Gameplay Consultant',
       names: ['Mazen'],
-      roles: ['Gameplay Consultant'],
     },
     {
-      names: ['3mr'],
-      roles: ['Game Tester'],
+      role: 'Game Tester',
+      names: ['Abu 6s', 'iWelx', '3mr', 'Abdullah', 'Dark'],
     },
   ]
 
@@ -40,20 +40,15 @@ export const Credit = () => {
 				</div>
 			</div>
 			<div className="flex w-full flex-col justify-center gap-5 overflow-y-auto">
-				{credits.map(({ names, roles }, i) => (
+				{credits.map(({ names, role }, i) => (
 					<div key={i} className="flex gap-5">
 						<div className="flex flex-1 flex-col items-end justify-start">
-							{roles.map((role) => (
-								<div
-									key={role}
-									className="flex flex-wrap justify-end gap-x-3 tracking-widest font-normal text-white/80 uppercase"
-								>
-									{role.split(' ').map((word, index) => (
-										<span key={`${role}-${index}`}>{word}</span>
-									))}
-								</div>
-							))}
-						</div>
+							<div className="flex flex-wrap justify-end gap-x-3 tracking-widest font-normal text-white/80 uppercase">
+								{role.split(' ').map((word, index) => (
+									<span key={`${role}-${index}`}>{word}</span>
+								))}
+							</div>
+					</div>
 						<div className="flex-1">
 							{names.map((name) => (
 								<p key={name}>{name}</p>
