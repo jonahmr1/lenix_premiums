@@ -15,9 +15,16 @@ export default defineConfig({
 		react(), tailwindcss(), fivemTailwindFallback()],
   resolve: {
 		dedupe: ['react', 'react-dom'],
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: [
+      {
+				find: /^cn$/,
+				replacement: path.resolve(__dirname, 'src/lib/cn.ts'),
+			},
+			{
+				find: '@',
+				replacement: path.resolve(__dirname, 'src'),
+			},
+		],
   },
 	build: {
 		rolldownOptions: {
