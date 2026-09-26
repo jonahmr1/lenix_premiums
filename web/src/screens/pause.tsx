@@ -1,4 +1,3 @@
-import { audiobility } from "@/lib"
 import {
   fetchNuiServer,
   onKeyDown,
@@ -26,15 +25,14 @@ export const Pause = () => {
     {
       label: "Resume",
       onClick: () => {
-        audiobility.onMouseDown()
         unFocusNui()
-				nav({ to: '/', hash: '', replace: true })
+				nav({ to: '/', hash: '' })
       },
     },
     {
       label: "Settings",
       onClick: () => {
-				nav({ to: '/', hash: 'settings', replace: true })
+				nav({ to: '/', hash: 'settings' })
       },
     },
     {
