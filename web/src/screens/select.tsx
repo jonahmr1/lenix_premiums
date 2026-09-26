@@ -4,9 +4,10 @@ import law from '@/assets/start/law.png'
 import undercover from '@/assets/start/undercover.jpeg'
 import crime from '@/assets/start/crime.png'
 import pursuit from '@/assets/start/pursuit.png'
-import { audiobility } from '@/lib'
+import { anim, audiobility } from '@/lib'
 import { PageScreen } from '@/components/screen'
 import { useRouter } from '@tanstack/react-router'
+import { motion } from 'motion/react'
 
 const modes = [
   {
@@ -89,14 +90,14 @@ export const Select = () => {
 					}
 				]}
 			>
-				<div>
+				<motion.div {...anim} initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }}>
 					<span className="text-v-4 font-extrabold uppercase italic text-foreground">
 						{selected.label}
 					</span>
 					<p>
 						{selected.description}
 					</p>
-				</div>
+				</motion.div>
 			</PageScreen>
 		</>
   )
