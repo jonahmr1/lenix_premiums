@@ -45,12 +45,12 @@ export const Mode = () => {
         ]}
       >
         <div className="flex size-full h-9/10 flex-col justify-end gap-h-15">
-          <div className="flex h-2/4 w-full flex-col justify-end gap-h-2">
+          <div className="flex w-full flex-3 flex-col justify-end gap-h-2">
             <div>
-              <p className="text-v-10 leading-none font-black text-neutral-50 uppercase">
+              <p className="text-v-10 leading-none font-black uppercase">
                 {mode.label}
               </p>
-              <p className="text-neutral-300 text-shadow-lg">
+              <p className="text-muted-foreground text-shadow-lg">
                 {mode.description}
               </p>
             </div>
@@ -112,9 +112,12 @@ export const Mode = () => {
               })()}
             </div>
           </div>
-          <div className="flex items-end justify-between gap-w-1 pb-1 min-w-0 w-full overflow-hidden text-input">
+          <div className="flex min-h-0 w-full min-w-0 flex-1 items-end justify-between gap-w-1 overflow-x-auto pb-1 text-input">
             {entries(MODES).map(([mode, data]) => (
-              <div className={`flex flex-col`}>
+              <div
+                key={mode}
+                className={`flex h-full flex-col transition-all duration-300 ${preview === mode ? 'flex-2' : 'flex-1'}`}
+              >
                 <Button
                   onClick={() => {
                     if ('disabled' in data) {
@@ -128,13 +131,15 @@ export const Mode = () => {
                     audio.select()
                   }}
                   onMouseOver={() => setPreview(mode)}
-                  className="group relative h-full overflow-hidden border border-border p-0 hover:border-primary"
+                  className="group relative min-h-0 flex-1 w-full overflow-hidden border border-border p-0 transition-all duration-300 hover:border-primary"
                 >
                   <img
                     src={data.image}
-                    className={`pointer-events-none size-full group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`}
+                    className={`pointer-events-none h-full w-full object-cover transition-all duration-300 group-hover:brightness-100 ${preview !== mode && 'brightness-50'}`}
                   />
-                  <p className={`absolute bottom-2 font-light text-v-1.75 font-heading tracking-tighter uppercase transition-all ${preview === mode ? 'font-bold! text-neutral-50' : 'text-neutral-300'}`}>
+                  <p
+                    className={`absolute bottom-2 font-heading text-v-1.75 font-light tracking-tighter uppercase transition-all ${preview === mode ? 'font-bold!' : 'hidden'}`}
+                  >
                     {data.label}
                   </p>
                 </Button>
