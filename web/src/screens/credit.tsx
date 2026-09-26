@@ -1,7 +1,7 @@
 import { PageScreen } from '@/components/screen'
 import { useNavigate } from '@tanstack/react-router'
 
-/* TODO: audio, scrollup */
+/* TODO: audio, scrollup, bg */
 export const Credit = () => {
   const nav = useNavigate()
 

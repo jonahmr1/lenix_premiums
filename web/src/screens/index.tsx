@@ -10,7 +10,7 @@ export function App() {
   const hash = useLocation({ select: location => location.hash })
 
   useEffect(() => {
-    nav({ to: '/' })
+    nav({ to: '/starting', })
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })
@@ -28,7 +28,7 @@ export function App() {
   return (
     <>
       <img
-        src="lobby.png"
+        src="light.png"
         className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
       />
       {hash === "pause" && <Pause />}

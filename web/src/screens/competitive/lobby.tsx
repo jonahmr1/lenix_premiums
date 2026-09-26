@@ -42,6 +42,10 @@ export const Lobby = () => {
 
   return (
     <>
+			<img
+				src="lobby.png"
+				className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
+			/>
       <PageScreen
 				className="flex h-screen w-full flex-col"
 				kbds={[
