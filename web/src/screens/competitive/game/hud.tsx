@@ -94,7 +94,7 @@ export const Hud = () => {
 			<Layout invert className="absolute bottom-0 left-0 -perspective-left-25">
 				<div className="flex items-end">
 					<p className="leading-tight text-v-1.5">{state.health}</p>
-					<p className="text-v-1">/{maxHealth}</p>
+					<p className="text-v-1 text-foreground/50">/{maxHealth}</p>
 				</div>
 				<div className="flex gap-px">
 					{[...Array(healthSegments).keys()].map(index => (
