@@ -9,6 +9,9 @@ import { PageScreen } from '@/components/screen'
 import { useRouter } from '@tanstack/react-router'
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
+import { asserts } from '@lenix/lenix'
 
 const modes = [
   {
@@ -21,7 +24,7 @@ const modes = [
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
     image: law,
-		disabled: true
+		disabled: false
   },
   {
     label: 'Undercover',
@@ -59,7 +62,8 @@ function panelClip(index: number, count: number, inset = 0) {
 
 export const Select = () => {
 	const router = useRouter()
-  const [selected, setSelected] = useState(modes[0])
+  const [selected, setSelected] = useState(modes.find(self => !self.disabled))
+	asserts(selected)
 
   return (
 		<>
@@ -68,7 +72,7 @@ export const Select = () => {
 					{modes.map((mode, index) => (
 						<button
 							key={mode.label}
-							onMouseOver={() => setSelected(mode)}
+							onMouseOver={() => !mode.disabled && setSelected(mode)}
 							onClick={() => {
 								if (!mode.disabled) return
 								audio.unavailable()
@@ -76,7 +80,7 @@ export const Select = () => {
 							}}
 							style={{ clipPath: panelClip(index, modes.length) }}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
-							{...audiobility}
+							{...(mode.disabled ? {} : audiobility)}
 						>
 							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, modes.length, 2) }}>
 								<img
@@ -86,6 +90,15 @@ export const Select = () => {
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
 								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
 							</div>
+							{mode.disabled && (
+								<div
+									className="pointer-events-none absolute top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-md border bg-card px-w-1 py-h-1 uppercase"
+									style={{ left: `${((index + 0.5) / modes.length) * 100}%` }}
+								>
+									<FontAwesomeIcon icon={faLock} />
+									<span>Locked</span>
+								</div>
+							)}
 						</button>
 					))}
 				</div>
