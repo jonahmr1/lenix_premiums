@@ -27,26 +27,26 @@ const apps: Record<string, App> = {
     },
     element: Settings,
   },
-  // gang: {
-  // 	name: 'Gang',
-  // 	styles: 'bg-blue-950',
-  // 	icon: {
-  // 		element: SkullIcon,
-  // 		styles: 'text-blue-500',
-  // 	},
-  // 	disabled: true
-  // 	element: ,
-  // },
-  // leaderboard: {
-  // 	name: 'Leaderboard',
-  // 	styles: 'bg-yellow-950',
-  // 	icon: {
-  // 		element: TrophyIcon,
-  // 		styles: 'text-yellow-500',
-  // 	},
-  // 	disabled: true,
-  // 	element: ,
-  // },
+  gang: {
+  	name: 'Gang',
+  	styles: 'bg-blue-950',
+  	icon: {
+  		element: SkullIcon,
+  		styles: 'text-blue-500',
+  	},
+  	disabled: true,
+  	element: () => <></>,
+  },
+  leaderboard: {
+  	name: 'Leaderboard',
+  	styles: 'bg-yellow-950',
+  	icon: {
+  		element: TrophyIcon,
+  		styles: 'text-yellow-500',
+  	},
+  	disabled: true,
+  	element: () => <></>,
+  },
   spray: {
     name: 'Sprays War',
     styles: 'bg-red-950',
@@ -56,16 +56,16 @@ const apps: Record<string, App> = {
     },
     element: Spray,
   },
-  // war: {
-  // 	name: 'Gang War',
-  // 	styles: 'bg-green-950',
-  // 	icon: {
-  // 		element: HandFistIcon,
-  // 		styles: 'text-green-500',
-  // 	},
-  // 	disabled: true
-  // 	element: ,
-  // },
+  war: {
+  	name: 'Gang War',
+  	styles: 'bg-green-950',
+  	icon: {
+  		element: HandFistIcon,
+  		styles: 'text-green-500',
+  	},
+  	disabled: true,
+  	element: () => <></>,
+  },
 }
 
 export const Ipad = () => {
