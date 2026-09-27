@@ -21,7 +21,7 @@ export const Hud = () => {
 				reserve: number
 				name: string
 				image: string
-				className?: React.ComponentProps<'img'>['className']
+				isWeapon?: true
 			}[]
 		}
 	}>()
@@ -49,28 +49,32 @@ export const Hud = () => {
 						reserve: 125,
 						name: 'Assault Shotgun',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
-						className: '-scale-x-100 rotate-15'
+						isWeapon: true
+					},
+					{
+						ammo: 15,
+						reserve: 40,
+						name: 'Ceramic',
+						image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
+						isWeapon: true
 					},
 					{
 						ammo: 2,
 						reserve: 4,
 						name: 'Grenade',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
-						className: 'max-w-w-2.5',
 					},
 					{
 						ammo: 3,
 						reserve: 3,
 						name: 'Flashbang',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
-						className: 'max-w-w-2.5',
 					},
 					{
 						ammo: 1,
 						reserve: 2,
 						name: 'Breach',
 						image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
-						className: 'max-w-w-2.5',
 					},
 				]
 			}
@@ -95,7 +99,7 @@ export const Hud = () => {
 				</div>
 				<div className="flex gap-px">
 					{[...Array(healthSegments).keys()].map(index => (
-						<div key={index} className="w-7 h-4 bg-white/25 rounded-xs overflow-hidden">
+						<div key={index} className="w-7 h-4 bg-foreground/50 rounded-xs overflow-hidden">
 							<motion.div
 								{...anim}
 								initial={false}
@@ -105,7 +109,7 @@ export const Hud = () => {
 										Math.max(0, ((state.health - index * segmentHealth) / segmentHealth) * 100),
 									)}%`,
 								}}
-								className="h-full rounded-xs"
+								className="h-full rounded-xs bg-foreground"
 								transition={{
 									duration: 0.12,
 									delay: (decreasing ? healthSegments - 1 - index : index) * 0.12,
@@ -135,7 +139,7 @@ export const Hud = () => {
 								<div className="space-y-h-0.5" key={index}>
 									<div className={`relative rounded-md size-w-4 px-w-0.5 flex items-center justify-center ${state.weaponary.activeEquipment === index + 1 && 'bg-white'}`}>
 										{equipment ? <>
-											<img src={equipment.image} className={`-rotate-105 ${equipment.className} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
+											<img src={equipment.image} className={`${equipment.isWeapon ? '-scale-x-100 rotate-15 max-h-h-2.5 ' : '-rotate-105 max-w-w-2 '} ${state.weaponary.activeEquipment === index + 1 ? 'brightness-0' : 'brightness-200'}`} />
 											<span className="absolute top-0 right-w-0.5 text-v-1 text-white mix-blend-difference">{equipment.ammo}</span>
 										</> : <>
 											<CircleIcon className="size-xs" />
