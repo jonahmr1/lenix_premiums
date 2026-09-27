@@ -64,22 +64,23 @@ export const Hud = () => {
 			]
 		}
 	})
-	const previous = useRef(state?.health)
-	const decreasing =
-	state !== undefined &&
-	previous.current !== undefined &&
-	state.health < previous.current
+	const [decreasing, setDecreasing] = useState(false)
+	const previousHealth = useRef(state.health)
 	const activeEquipment = state?.weaponary.activeEquipment ? state.weaponary.equipments[state.weaponary.activeEquipment - 1] : null
 
 	useEffect(() => {
-		if (state?.health === undefined) return
-		previous.current = state.health
-	}, [state?.health])
-
-
-	useEffect(() => {
 		const interval = setInterval(() => {
-			setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4) } }) : prev)
+			const health = random(0, 100)
+			setDecreasing(health < previousHealth.current)
+			previousHealth.current = health
+
+			setState(prev => {
+				return {
+					...prev,
+					health,
+					weaponary: { ...prev.weaponary, activeEquipment: random(1, 4) },
+				}
+			})
 		}, 1000)
 
 		return () => clearInterval(interval)
