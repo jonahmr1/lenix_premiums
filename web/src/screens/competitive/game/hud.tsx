@@ -24,7 +24,46 @@ export const Hud = () => {
 				isWeapon?: true
 			}[]
 		}
-	}>()
+	}>({
+		health: 25,
+		weaponary: {
+			activeEquipment: 3,
+			equipments: [
+				{
+					ammo: 40,
+					reserve: 125,
+					name: 'Assault Shotgun',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
+					isWeapon: true
+				},
+				{
+					ammo: 15,
+					reserve: 40,
+					name: 'Ceramic',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
+					isWeapon: true
+				},
+				{
+					ammo: 2,
+					reserve: 4,
+					name: 'Grenade',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
+				},
+				{
+					ammo: 3,
+					reserve: 3,
+					name: 'Flashbang',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
+				},
+				{
+					ammo: 1,
+					reserve: 2,
+					name: 'Breach',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
+				},
+			]
+		}
+	})
 	const previous = useRef(state?.health)
 	const decreasing =
 	state !== undefined &&
@@ -39,47 +78,6 @@ export const Hud = () => {
 
 
 	useEffect(() => {
-		setState({
-			health: 25,
-			weaponary: {
-				activeEquipment: 3,
-				equipments: [
-					{
-						ammo: 40,
-						reserve: 125,
-						name: 'Assault Shotgun',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
-						isWeapon: true
-					},
-					{
-						ammo: 15,
-						reserve: 40,
-						name: 'Ceramic',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-						isWeapon: true
-					},
-					{
-						ammo: 2,
-						reserve: 4,
-						name: 'Grenade',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_GRENADE.png',
-					},
-					{
-						ammo: 3,
-						reserve: 3,
-						name: 'Flashbang',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_FLARE.png',
-					},
-					{
-						ammo: 1,
-						reserve: 2,
-						name: 'Breach',
-						image: 'https://docs-backend.fivem.net/weapons/WEAPON_STICKYBOMB.png',
-					},
-				]
-			}
-		})
-
 		const interval = setInterval(() => {
 			setState(prev => prev ? ({ health: random(0, 100), weaponary: { ...prev.weaponary, activeEquipment: random(1, 4) } }) : prev)
 		}, 1000)
