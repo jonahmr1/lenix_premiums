@@ -7,17 +7,18 @@ import { useEffect, useState } from "react"
 const delay = 1
 
 export const Result = () => {
-	const [state, setState] = useState<MatchScore>()
+	const [state, setState] = useState<MatchScore | null>(() => {
+		const winner = random(0, 1)
+		return { own: winner ? 99 : 67, opponent: winner ? 67 : 100 }
+	})
 
 	useEffect(() => {
-		const winner = random(0, 1)
-		setState({ own: winner ? 99 : 67, opponent: winner ? 67 : 100 })
 		setTimeout(() => {
 			audio.impact()
 		}, delay * 1000);
 		
 		const timeout = setTimeout(() => {
-			setState(undefined)
+			setState(null)
 			clearTimeout(timeout)
 		}, 10_000)
 	}, [])
