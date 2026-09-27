@@ -1,9 +1,6 @@
 import type { S } from "@lenix/lenix"
 import type { MODES } from "./constants"
 
-export interface Storage {
-	hudVariant: 'progress' | 'bar'
-}
 export interface Tab {
 	label: string
 	content: React.ReactNode

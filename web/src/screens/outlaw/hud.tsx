@@ -4,9 +4,12 @@ import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
 import type { Outlaw } from 'types'
 import { random, storage } from '@lenix/lenix'
-import type { Storage } from '@/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { zeroed } from '@/lib'
+
+interface Storage {
+	hudVariant: 'progress' | 'bar'
+}
 
 const hudVariants = ['health', 'armor', 'lungs'] as const
 
