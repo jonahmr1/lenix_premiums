@@ -15,12 +15,10 @@ const hudVariants = ['health', 'armor', 'lungs'] as const
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
-	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>()
+	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>({ vitals: true, weaponary: true })
 	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 	useEffect(() => {
-		setDisplay({ vitals: true, weaponary: true })
-
 		const interval = setInterval(() => {
 			setState({
 				health: random(0, 100),

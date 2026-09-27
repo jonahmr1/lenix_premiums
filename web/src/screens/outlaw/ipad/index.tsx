@@ -69,7 +69,7 @@ const apps: Record<string, App> = {
 }
 
 export const Ipad = () => {
-  const [display, setDisplay] = useState<boolean>()
+  const [display, setDisplay] = useState<boolean>(true)
   const [orientation, setOrientation] = useState<Orientation>(storage.get<Storage, 'orientation'>('orientation') || 'portrait')
   const page = useLocation({ select: (location) => location.hash })
   const navigate = useNavigate()
@@ -83,8 +83,6 @@ export const Ipad = () => {
   }, [orientation])
 
   useEffect(() => {
-    setDisplay(true)
-
     const disposes = [onNuiEmit<Outlaw.Events['displayIpad']>('ipad:display', () => setDisplay(true)), onKeyDown('Escape', () => setDisplay(false))]
 
     return () => disposes.forEach((dispose) => dispose())

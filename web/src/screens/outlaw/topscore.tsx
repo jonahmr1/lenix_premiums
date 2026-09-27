@@ -5,7 +5,50 @@ import type { Outlaw, Topscore } from 'types'
 import { ChartBarIcon, CrosshairIcon, CrownIcon, MedalIcon, MedalMilitaryIcon, SkullIcon, TrophyIcon } from '@phosphor-icons/react'
 
 export const TopScore = () => {
-	const [scores, setScores] = useState<Topscore.Data | null>(null)
+	const [scores, setScores] = useState<Topscore.Data | null>({
+		'1': {
+			scale: 1,
+			bottom: 250,
+			left: 650,
+			visible: true,
+			name: 'Lenix',
+			avatar: 'https://lenix.dev/icon.png',
+			stats: {
+				kills: 10,
+				deaths: 5,
+				wins: 3,
+				kd: 2,
+			},
+		},
+		'2': {
+			scale: 1,
+			bottom: 250,
+			left: 400,
+			visible: true,
+			name: 'Lenix',
+			avatar: 'https://lenix.dev/icon.png',
+			stats: {
+				kills: 10,
+				deaths: 5,
+				wins: 3,
+				kd: 2,
+			},
+		},
+		'3': {
+			scale: 1,
+			bottom: 250,
+			left: 150,
+			visible: true,
+			name: 'Lenix',
+			avatar: 'https://lenix.dev/icon.png',
+			stats: {
+				kills: 10,
+				deaths: 5,
+				wins: 3,
+				kd: 2,
+			},
+		},
+	})
 
 	const stats = {
 		ranks: {
@@ -55,52 +98,7 @@ export const TopScore = () => {
 		},
 	}
 
-	useEffect(() => {
-		setScores({
-			'1': {
-				scale: 1,
-				bottom: 250,
-				left: 650,
-				visible: true,
-				name: 'Lenix',
-				avatar: 'https://lenix.dev/icon.png',
-				stats: {
-					kills: 10,
-					deaths: 5,
-					wins: 3,
-					kd: 2,
-				},
-			},
-			'2': {
-				scale: 1,
-				bottom: 250,
-				left: 400,
-				visible: true,
-				name: 'Lenix',
-				avatar: 'https://lenix.dev/icon.png',
-				stats: {
-					kills: 10,
-					deaths: 5,
-					wins: 3,
-					kd: 2,
-				},
-			},
-			'3': {
-				scale: 1,
-				bottom: 250,
-				left: 150,
-				visible: true,
-				name: 'Lenix',
-				avatar: 'https://lenix.dev/icon.png',
-				stats: {
-					kills: 10,
-					deaths: 5,
-					wins: 3,
-					kd: 2,
-				},
-			},
-		})
-		
+	useEffect(() => {		
 		const off = onNuiEmit<Outlaw.Events['updateTopscoreData']>('topscore:updateData', setScores)
 
 		return off

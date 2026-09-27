@@ -38,23 +38,19 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 )
 
 export const Roster = () => {
-	const [display, setDisplay] = useState<boolean>()
-	const [officers, setOfficers] = useState<IRoster.Officers>({})
-	const [playerId, setPlayerId] = useState<number>()
+	const [display, setDisplay] = useState<boolean>(true)
+	const [officers, setOfficers] = useState<IRoster.Officers>({
+			1: {
+			playerId: 1,
+			name: 'Marwan Jonah',
+			callsign: 'D-35',
+			duty_state: 'on',
+			talk_state: 'off'
+		}
+	})
+	const [playerId, setPlayerId] = useState<number>(1)
 
 	useEffect(() => {
-		setDisplay(true)
-		setOfficers({
-			1: {
-				playerId: 1,
-				name: 'Marwan Jonah',
-				callsign: 'D-35',
-				duty_state: 'on',
-				talk_state: 'off'
-			}
-		})
-		setPlayerId(1)
-
 		const disposes = [
 			onNuiEmit<Outlaw.Events['displayRoster']>('roster:display', (state, playerId) => {
 				setDisplay(state)
