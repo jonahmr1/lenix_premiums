@@ -8,9 +8,10 @@ import { Settings } from "./settings"
 export function App() {
   const nav = useNavigate()
   const hash = useLocation({ select: location => location.hash })
+	const rootHash = useLocation({ select: (location) => location.pathname }) === '/' && hash
 
   useEffect(() => {
-    nav({ to: '/starting', })
+    nav({ to: '/outlaw/ipad' })
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })
@@ -31,8 +32,8 @@ export function App() {
         src="light.png"
         className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
       />
-      {hash === "pause" && <Pause />}
-      {hash === "settings" && <Settings />}
+      {rootHash === "pause" && <Pause />}
+      {rootHash === "settings" && <Settings />}
     </>
   )
 }

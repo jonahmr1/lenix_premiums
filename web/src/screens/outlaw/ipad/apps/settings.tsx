@@ -3,6 +3,7 @@ import type { Orientation } from '../types'
 import type { S } from '@lenix/lenix'
 import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
+import { useTheme } from '@/components/theme-provider'
 
 export const Settings = ({
 	orientation,
@@ -11,13 +12,13 @@ export const Settings = ({
 	orientation: Orientation
 	setOrientation: S<Orientation>
 }) => {
-	const { theme, toggle } = useTheme()
+	const { theme } = useTheme()
 	return (
 		<div className='size-full'>
 			<div className='p-10 gap-3 flex flex-col'>
 				<h1 className='font-black italic text-fluid-3'>Appearance</h1>
 				<Separator />
-				<div className='bg-muted p-2 rounded-xl gap-3 flex flex-col'>
+				<div className='bg-muted p-2 rounded-md gap-3 flex flex-col'>
 					<Field className='flex-row'>
 						<FieldContent>
 							<FieldLabel htmlFor='orientation'>Landscape orientation</FieldLabel>
@@ -33,7 +34,7 @@ export const Settings = ({
 						<FieldContent>
 							<FieldLabel htmlFor='theme'>Light mode</FieldLabel>
 						</FieldContent>
-						<Switch id='theme' defaultChecked={theme === 'light'} onCheckedChange={toggle} />
+						<Switch id='theme' disabled defaultChecked={theme === 'light'} />
 					</Field>
 				</div>
 			</div>
