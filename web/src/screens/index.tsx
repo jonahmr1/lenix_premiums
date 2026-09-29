@@ -11,7 +11,7 @@ export function App() {
 	const rootHash = useLocation({ select: (location) => location.pathname }) === '/' && hash
 
   useEffect(() => {
-    nav({ to: '/outlaw/ipad' })
+    // nav({ to: '/' })
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })
