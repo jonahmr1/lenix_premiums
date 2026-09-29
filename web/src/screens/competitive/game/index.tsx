@@ -11,13 +11,13 @@ import { Roundboard } from "./roundboard"
 
 export const Game = () => (
 	<>
+		<Hud />
 		<HitMarker />
 		<DamageEffect />
 		<Ping />
 		<Flashbang />
 		<DirectionalIndicator />
 		<DamageIndicator />
-		<Hud />
 		<KillFeed />
 		<Roundboard />
 		<Result />

@@ -11,7 +11,7 @@ export function Loading() {
 
   useEffect(() => {
     const handler = (e: MessageEvent) => {
-			console.log('data', e.data)
+			console.log('data', JSON.stringify(e.data))
       switch (e.data?.eventName) {
         case "loadProgress": {
           console.log('loadProgress.loadFraction', e.data.loadFraction)
