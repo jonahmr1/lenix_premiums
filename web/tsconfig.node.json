@@ -20,5 +20,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "postcss.config.ts", "types/postcss-color-converter.d.ts"]
+  "include": ["vite.config.ts", "postcss.config.ts", "postcss-color-converter.d.ts"]
 }

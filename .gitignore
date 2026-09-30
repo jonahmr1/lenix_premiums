@@ -4,3 +4,4 @@ node_modules
 /.yarn.installed
 .DS_Store
 *.d.ts
+!web/postcss-color-converter.d.ts
