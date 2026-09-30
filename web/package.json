@@ -21,6 +21,7 @@
     "@fortawesome/react-fontawesome": "^3.5.0",
     "@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.22",
     "@phosphor-icons/react": "^2.1.10",
+    "@shadcn/react": "^0.3.1",
     "@tailwindcss/vite": "^4",
     "@tanstack/react-router": "^1.170.39",
     "class-variance-authority": "^0.7.1",
