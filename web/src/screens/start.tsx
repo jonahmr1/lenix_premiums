@@ -41,7 +41,7 @@ export const Start = () => {
 
   return (
     <div className="relative h-screen flex-row justify-start overflow-hidden bg-linear-to-t from-neutral-950/50 to-transparent p-0">
-      <div className="absolute -z-1 size-full bg-linear-to-r from-black/50 to-transparent" />
+      <div className="absolute -z-1 size-full bg-linear-to-r from-neutral-950/50 to-transparent" />
       <Layout className="relative flex size-full flex-col justify-between">
         <div className="flex h-9/10 flex-col items-start justify-center gap-h-2">
           {buttons.map((button, i) => (

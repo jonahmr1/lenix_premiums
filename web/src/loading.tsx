@@ -12,6 +12,11 @@ import { MessageScroller, MessageScrollerButton, MessageScrollerContent, Message
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/ui/hover-card"
 import { ThemeProvider } from "./components/theme-provider"
 import { Spinner } from "./components/ui/spinner"
+import bg1 from '@/assets/loading/ls-1.png'
+import bg2 from '@/assets/loading/ls-2.png'
+import bg3 from '@/assets/loading/ls-3.png'
+import bg4 from '@/assets/loading/ls-4.png'
+import { AnimatePresence, motion } from "motion/react"
 
 const STAGES = {
 	loadingGameData: 'Loading Maps',
@@ -19,6 +24,8 @@ const STAGES = {
 	initializeSession: 'Preparing Session',
 	startingResources: 'Starting Resources'
 }
+const BACKGROUNDS = [bg1, bg2, bg3, bg4]
+const CROSSFADE_INTERVAL = 10
 
 type Log = Record<string, string | number | boolean>
 
@@ -32,11 +39,13 @@ export function Loading() {
 		data: [],
 		stage: 'loadingGameData'
 	})
+	const [backgroundIndex, setBackgroundIndex] = useState(0)
+
   useEffect(() => {
     const handler = (e: MessageEvent) => {
 			const data = e.data as Log
 			asserts(data.eventName, '(eventName) doesn\'t exist')
-
+			
 			data?.message === 'fullyLoaded' && console.log(e.data.message)
 
 			setState(prev => ({
@@ -55,9 +64,14 @@ export function Loading() {
 			}))
     }
 		
-		let i = 0
+		window.addEventListener("message", handler)
 
 		const interval = setInterval(() => {
+			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
+		}, CROSSFADE_INTERVAL * 1000)
+
+		let i = 0
+		const interval$ = setInterval(() => {
 			const data = log[i] as any
 			if (!data) {
 				clearInterval(interval)
@@ -81,9 +95,9 @@ export function Loading() {
 			i++
 		}, 50)
 
-		window.addEventListener("message", handler)
     return () => {
 			window.removeEventListener("message", handler)
+			clearInterval(interval$)
 			clearInterval(interval)
 		}
   }, [])
@@ -106,65 +120,82 @@ export function Loading() {
 			</div>
 		)
 	}
-	
+
   return (
-    <Layout className="h-screen w-full bg-background/90 flex items-end justify-center">
-			<div className="w-[67vw] space-y-[1vh]">
-				<div className="flex items-center justify-center gap-[0.5vw]">
-					<p>{STAGES[state.stage]}</p>
-					<Spinner />
+	<div className="h-screen bg-background">
+		<AnimatePresence>
+			<motion.img
+				key={backgroundIndex}
+				src={BACKGROUNDS[backgroundIndex]}
+				className="absolute inset-0 z-0 size-full object-cover"
+				initial={{ opacity: 0, scale: 1 }}
+				animate={{ opacity: 1, scale: 1.1 }}
+				exit={{ opacity: 0, scale: 1.1 }}
+				transition={{
+					opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
+					scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
+				}}
+			/>
+		</AnimatePresence>
+			<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
+				<div className="w-[67vw] space-y-[1vh]">
+					<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
+						<p>{STAGES[state.stage]}</p>
+						<Spinner />
+					</div>
+					<HoverCard openDelay={50}>
+						<HoverCardTrigger>
+							<Progress value={state.progress} className="outline outline-offset-1" />
+						</HoverCardTrigger>
+						<HoverCardContent className="w-[67vw]">
+							<Card className="h-[50vh] justify-between">
+								<CardHeader>
+									<CardTitle className="flex gap-[1vw]">
+										<TerminalIcon />
+										<p>{STAGES[state.stage]}</p>
+									</CardTitle>
+									<CardDescription className="uppercase">Do not close the game</CardDescription>
+									<CardAction>
+										<p className="text-v-1.5">{state.progress.toFixed(2)}%</p>
+									</CardAction>
+								</CardHeader>
+								<CardContent className="h-full overflow-y-hidden border-y">
+									<MessageScrollerProvider autoScroll>
+										<MessageScroller>
+											<MessageScrollerViewport>
+												<MessageScrollerContent className="gap-0">
+													{state.data.map(
+														({ time, eventName, ...data }, i) =>
+															eventName !== 'loadProgress' && (
+																<MessageScrollerItem key={i} className="space-x-[1vw] font-normal text-muted-foreground">
+																	<span className="text-muted-foreground/50">[{time}]</span>
+																	<span className="text-brand">[{eventName}]</span>
+																	<span className="space-x-[0.5vw]">
+																		{entries(data).map(([key, value], i) => (
+																			<span key={i}>
+																				<span>{key}: </span>
+																				<span className="font-semibold">{value.toString()}</span>
+																			</span>
+																		))}
+																	</span>
+																</MessageScrollerItem>
+															)
+													)}
+												</MessageScrollerContent>
+											</MessageScrollerViewport>
+											<MessageScrollerButton />
+										</MessageScroller>
+									</MessageScrollerProvider>
+								</CardContent>
+								<CardFooter>
+									<StagesRecord />
+								</CardFooter>
+							</Card>
+						</HoverCardContent>
+					</HoverCard>
 				</div>
-				<HoverCard openDelay={50}>
-					<HoverCardTrigger>
-						<Progress value={state.progress} />
-					</HoverCardTrigger>
-					<HoverCardContent className="w-[67vw]">
-						<Card className="h-[50vh] justify-between">
-							<CardHeader>
-								<CardTitle className="flex gap-[1vw]">
-									<TerminalIcon />
-									<p>{STAGES[state.stage]}</p>
-								</CardTitle>
-								<CardDescription className="uppercase">
-									Do not close the game
-								</CardDescription>
-								<CardAction>
-									<p className="text-v-1.5">{state.progress.toFixed(2)}%</p>
-								</CardAction>
-							</CardHeader>
-							<CardContent className="overflow-y-hidden h-full border-y">
-								<MessageScrollerProvider autoScroll>
-									<MessageScroller>
-										<MessageScrollerViewport>
-											<MessageScrollerContent className="gap-0">
-												{state.data.map(({ time, eventName, ...data}, i) => eventName !== 'loadProgress' && (
-													<MessageScrollerItem key={i} className="space-x-[1vw] text-muted-foreground font-normal">
-														<span className="text-muted-foreground/50">[{time}]</span>
-														<span className="text-brand">[{eventName}]</span>
-														<span className="space-x-[0.5vw]">
-															{entries(data).map(([key, value], i) => (
-																<span key={i}>
-																	<span>{key}: </span>
-																	<span className="font-semibold">{value.toString()}</span>
-																</span>
-															))}
-														</span>
-													</MessageScrollerItem>
-												))}
-											</MessageScrollerContent>
-										</MessageScrollerViewport>
-										<MessageScrollerButton />
-									</MessageScroller>
-								</MessageScrollerProvider>
-							</CardContent>
-							<CardFooter>
-								<StagesRecord />
-							</CardFooter>
-						</Card>
-					</HoverCardContent>
-				</HoverCard>
-			</div>
-		</Layout>
+			</Layout>
+	</div>
   )
 }
 
