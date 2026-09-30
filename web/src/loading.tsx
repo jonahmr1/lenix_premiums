@@ -17,6 +17,10 @@ import bg2 from '@/assets/loading/ls-2.png'
 import bg3 from '@/assets/loading/ls-3.png'
 import bg4 from '@/assets/loading/ls-4.png'
 import { AnimatePresence, motion } from "motion/react"
+import loading from '@/assets/loading/loading.mp3'
+import { Howl } from 'howler'
+
+type Log = Record<string, string | number | boolean>
 
 const STAGES = {
 	loadingGameData: 'Loading Maps',
@@ -27,7 +31,12 @@ const STAGES = {
 const BACKGROUNDS = [bg1, bg2, bg3, bg4]
 const CROSSFADE_INTERVAL = 10
 
-type Log = Record<string, string | number | boolean>
+
+const player = new Howl({
+	src: loading,
+	volume: 1
+})
+
 
 export function Loading() {
 	const [state, setState] = useState<{
@@ -70,6 +79,8 @@ export function Loading() {
 			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
 		}, CROSSFADE_INTERVAL * 1000)
 
+		player.play()
+
 		let i = 0
 		const interval$ = setInterval(() => {
 			const data = log[i] as any
@@ -100,7 +111,7 @@ export function Loading() {
 			clearInterval(interval$)
 			clearInterval(interval)
 		}
-  }, [])
+	}, [])
 
 	const stageOrder = Object.keys(STAGES) as (keyof typeof STAGES)[]
 
@@ -130,7 +141,7 @@ export function Loading() {
 				className="absolute size-full object-cover"
 				initial={{ opacity: 0, scale: 1 }}
 				animate={{ opacity: 1, scale: 1.1 }}
-				exit={{ opacity: 0, scale: 1.1 }}
+				exit={{ opacity: 0, scale: 1.15 }}
 				transition={{
 					opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
 					scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
