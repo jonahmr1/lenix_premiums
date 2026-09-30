@@ -24,7 +24,7 @@ const modes = [
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
     image: law,
-		disabled: true
+		disabled: false
   },
   {
     label: 'Undercover',
@@ -36,7 +36,7 @@ const modes = [
     label: 'Crime',
     description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
     image: crime,
-		disabled: true
+		disabled: false
   },
   {
     label: 'Pursuit',
