@@ -1,17 +1,9 @@
-import bg1 from '@/assets/start/ls-1.png'
-import bg2 from '@/assets/start/ls-2.png'
-import bg3 from '@/assets/start/ls-3.png'
-import bg4 from '@/assets/start/ls-4.png'
-import { random } from '@lenix/lenix'
 import { fetchNuiServer } from 'lenix/nui'
 import type { Start as Starting } from 'types'
 import { Button } from '@/components/ui/button'
 import { Layout } from '@/components/layout'
 import type { ButtonStart } from '@/types'
 import { useNavigate } from '@tanstack/react-router'
-
-const backgrounds = [bg1, bg2, bg3, bg4]
-const image = backgrounds[random(0, backgrounds.length - 1)]
 
 export const Start = () => {
   const nav = useNavigate()
@@ -49,7 +41,6 @@ export const Start = () => {
 
   return (
     <div className="relative h-screen flex-row justify-start overflow-hidden bg-linear-to-t from-neutral-950/50 to-transparent p-0">
-      <img src={image} className="absolute -z-1 size-full object-cover" />
       <div className="absolute -z-1 size-full bg-linear-to-r from-black/50 to-transparent" />
       <Layout className="relative flex size-full flex-col justify-between">
         <div className="flex h-9/10 flex-col items-start justify-center gap-h-2">
