@@ -12,6 +12,8 @@ import { toast } from 'sonner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { asserts } from '@lenix/lenix'
+import { fetchNui } from 'lenix/nui'
+import type { Start } from 'types'
 
 const modes = [
   {
@@ -80,6 +82,8 @@ export const Select = () => {
 									return
 								}
 								/* TODO */
+								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'outlaw' })
+								router.navigate({ to: '/outlaw' })
 							}}
 							style={{ clipPath: panelClip(index, modes.length) }}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}

@@ -34,7 +34,7 @@ const CROSSFADE_INTERVAL = 10
 
 const player = new Howl({
 	src: loading,
-	volume: 1
+	volume: 0.5
 })
 
 
@@ -133,80 +133,80 @@ export function Loading() {
 	}
 
   return (
-	<div className="h-screen bg-background relative overflow-hidden">
-		<AnimatePresence>
-			<motion.img
-				key={backgroundIndex}
-				src={BACKGROUNDS[backgroundIndex]}
-				className="absolute size-full object-cover"
-				initial={{ opacity: 0, scale: 1 }}
-				animate={{ opacity: 1, scale: 1.1 }}
-				exit={{ opacity: 0, scale: 1.15 }}
-				transition={{
-					opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
-					scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
-				}}
-			/>
-		</AnimatePresence>
-		<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
-			<div className="w-[67vw] space-y-[1vh]">
-				<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
-					<p>{STAGES[state.stage]}</p>
-					<Spinner />
+		<div className="h-screen bg-background relative overflow-hidden">
+			<AnimatePresence>
+				<motion.img
+					key={backgroundIndex}
+					src={BACKGROUNDS[backgroundIndex]}
+					className="absolute size-full object-cover"
+					initial={{ opacity: 0, scale: 1 }}
+					animate={{ opacity: 1, scale: 1.1 }}
+					exit={{ opacity: 0, scale: 1.15 }}
+					transition={{
+						opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
+						scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
+					}}
+				/>
+			</AnimatePresence>
+			<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
+				<div className="w-[67vw] space-y-[1vh]">
+					<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
+						<p>{STAGES[state.stage]}</p>
+						<Spinner />
+					</div>
+					<HoverCard openDelay={50}>
+						<HoverCardTrigger>
+							<Progress value={state.progress} className="outline outline-offset-1" />
+						</HoverCardTrigger>
+						<HoverCardContent className="w-[67vw]">
+							<Card className="h-[50vh] justify-between">
+								<CardHeader>
+									<CardTitle className="flex gap-[1vw]">
+										<TerminalIcon />
+										<p>{STAGES[state.stage]}</p>
+									</CardTitle>
+									<CardDescription className="uppercase">Do not close the game</CardDescription>
+									<CardAction>
+										<p className="text-v-1.5">{state.progress.toFixed(2)}%</p>
+									</CardAction>
+								</CardHeader>
+								<CardContent className="h-full overflow-y-hidden border-y">
+									<MessageScrollerProvider autoScroll>
+										<MessageScroller>
+											<MessageScrollerViewport>
+												<MessageScrollerContent className="gap-0">
+													{state.data.map(
+														({ time, eventName, ...data }, i) =>
+															eventName !== 'loadProgress' && (
+																<MessageScrollerItem key={i} className="space-x-[1vw] font-normal text-muted-foreground">
+																	<span className="text-muted-foreground/50">[{time}]</span>
+																	<span className="text-brand">[{eventName}]</span>
+																	<span className="space-x-[0.5vw]">
+																		{entries(data).map(([key, value], i) => (
+																			<span key={i}>
+																				<span>{key}: </span>
+																				<span className="font-semibold">{value.toString()}</span>
+																			</span>
+																		))}
+																	</span>
+																</MessageScrollerItem>
+															)
+													)}
+												</MessageScrollerContent>
+											</MessageScrollerViewport>
+											<MessageScrollerButton />
+										</MessageScroller>
+									</MessageScrollerProvider>
+								</CardContent>
+								<CardFooter>
+									<StagesRecord />
+								</CardFooter>
+							</Card>
+						</HoverCardContent>
+					</HoverCard>
 				</div>
-				<HoverCard openDelay={50}>
-					<HoverCardTrigger>
-						<Progress value={state.progress} className="outline outline-offset-1" />
-					</HoverCardTrigger>
-					<HoverCardContent className="w-[67vw]">
-						<Card className="h-[50vh] justify-between">
-							<CardHeader>
-								<CardTitle className="flex gap-[1vw]">
-									<TerminalIcon />
-									<p>{STAGES[state.stage]}</p>
-								</CardTitle>
-								<CardDescription className="uppercase">Do not close the game</CardDescription>
-								<CardAction>
-									<p className="text-v-1.5">{state.progress.toFixed(2)}%</p>
-								</CardAction>
-							</CardHeader>
-							<CardContent className="h-full overflow-y-hidden border-y">
-								<MessageScrollerProvider autoScroll>
-									<MessageScroller>
-										<MessageScrollerViewport>
-											<MessageScrollerContent className="gap-0">
-												{state.data.map(
-													({ time, eventName, ...data }, i) =>
-														eventName !== 'loadProgress' && (
-															<MessageScrollerItem key={i} className="space-x-[1vw] font-normal text-muted-foreground">
-																<span className="text-muted-foreground/50">[{time}]</span>
-																<span className="text-brand">[{eventName}]</span>
-																<span className="space-x-[0.5vw]">
-																	{entries(data).map(([key, value], i) => (
-																		<span key={i}>
-																			<span>{key}: </span>
-																			<span className="font-semibold">{value.toString()}</span>
-																		</span>
-																	))}
-																</span>
-															</MessageScrollerItem>
-														)
-												)}
-											</MessageScrollerContent>
-										</MessageScrollerViewport>
-										<MessageScrollerButton />
-									</MessageScroller>
-								</MessageScrollerProvider>
-							</CardContent>
-							<CardFooter>
-								<StagesRecord />
-							</CardFooter>
-						</Card>
-					</HoverCardContent>
-				</HoverCard>
-			</div>
-		</Layout>
-	</div>
+			</Layout>
+		</div>
   )
 }
 
