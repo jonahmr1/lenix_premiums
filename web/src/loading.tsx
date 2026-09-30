@@ -20,10 +20,12 @@ const STAGES = {
 	startingResources: 'Starting Resources'
 }
 
+type Log = Record<string, string | number | boolean>
+
 export function Loading() {
 	const [state, setState] = useState<{
 		progress: number
-		data: Record<string, string | number | boolean>[]
+		data: Log[]
 		stage: keyof typeof STAGES
 	}>({
 		progress: 0,
@@ -32,65 +34,38 @@ export function Loading() {
 	})
   useEffect(() => {
     const handler = (e: MessageEvent) => {
-			const data = e.data
+			const data = e.data as Log
 			asserts(data.eventName, '(eventName) doesn\'t exist')
 
-      switch (data.eventName) {
-        case "onDataFileEntry": {
-					console.log('onDataFileEntry.name', e.data.name)
-          console.log('onDataFileEntry.type', e.data.type)
-          console.log('onDataFileEntry.isNew', e.data.isNew)
-          break
-        }
-				case "performMapLoadFunction": {
-					console.log('performMapLoadFunction.idx', e.data.idx)
-					break
-				}
-				case "endDataFileEntries": {
+			data?.message === 'fullyLoaded' && console.log(e.data.message)
 
-					break
-				}
-				case "startInitFunction": {
-					console.log('startInitFunction.type', e.data.type)
-					break
-				}
-        case "startInitFunctionOrder": {
-					console.log('startInitFunctionOrder.type', e.data.type)
-          console.log('startInitFunctionOrder.order', e.data.order)
-          console.log('startInitFunctionOrder.count', e.data.count)
-          break
-        }
-        case "initFunctionInvoking": {
-					console.log('initFunctionInvoking.type', e.data.type)
-          console.log('initFunctionInvoking.name', e.data.name)
-          console.log('initFunctionInvoking.idx', e.data.idx)
-          break
-        }
-        case "initFunctionInvoked": {
-					console.log('initFunctionInvoked.type', e.data.type)
-          console.log('initFunctionInvoked.name', e.data.name)
-          break
-        }
-        case "endInitFunction": {
-					console.log('endInitFunction.type', e.data.type)
-          break
-        }
-				case "onLogLine": {
-					console.log('onLogLine.loadFraction', e.data.message)
-					break
-				}
-        case "fullyLoaded": {
-          console.log('fullyLoaded', e.data.message)
-					break
-        }
-      }
+			setState(prev => ({
+				progress: data.eventName === 'loadProgress' ? data.loadFraction as number * 100 : prev.progress,
+				data: [...prev.data, { ...data, time: dayjs().format("HH:mm:ss:SSS") }],
+				stage:
+					data.eventName === "startInitFunction"
+					? data.type === "INIT_AFTER_MAP_LOADED"
+						? "initializeMaps"
+						: data.type === "INIT_SESSION"
+							? "initializeSession"
+							: prev.stage
+					: data.eventName === "onLogLine"
+						? "startingResources"
+						: prev.stage
+			}))
     }
+		
 		let i = 0
 
 		const interval = setInterval(() => {
 			const data = log[i] as any
+			if (!data) {
+				clearInterval(interval)
+				return
+			}
+
 			setState(prev => ({
-				progress: data.eventName === 'loadProgress' ? (data.loadFraction ?? 0) * 100 : prev.progress,
+				progress: data.eventName === 'loadProgress' ? data.loadFraction as number * 100 : prev.progress,
 				data: [...prev.data, { ...data, time: dayjs().format("HH:mm:ss:SSS") }],
 				stage:
 					data.eventName === "startInitFunction"
