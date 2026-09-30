@@ -1,13 +1,13 @@
-export default {
-	plugins: {
-		'postcss-color-converter': {
-			outputColorFormat: 'rgb',
-			ignore: ['oklch']
-		},
-	},
-}
+// export default {
+// 	plugins: {
+// 		'postcss-color-converter': {
+// 			outputColorFormat: 'rgb',
+// 			// ignore: ['oklch']
+// 		},
+// 	},
+// }
 
-/* 
+
 import colorConverter from 'postcss-color-converter'
 
 const normalizeOklchHue = {
@@ -23,4 +23,3 @@ const normalizeOklchHue = {
 export default {
 	plugins: [normalizeOklchHue, colorConverter({ outputColorFormat: 'rgb' })],
 }
-*/

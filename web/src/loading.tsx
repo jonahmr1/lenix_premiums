@@ -5,7 +5,7 @@ import './index.css'
 import { Progress } from "./components/ui/progress"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./components/ui/card"
 import { asserts, entries } from "@lenix/lenix"
-import log from './log.json'
+// import log from './log.json'
 import dayjs from "dayjs"
 import { CheckCircleIcon, CircleIcon, TerminalIcon } from "@phosphor-icons/react"
 import { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from "./components/ui/message-scroller"
@@ -81,34 +81,34 @@ export function Loading() {
 
 		player.play()
 
-		let i = 0
-		const interval$ = setInterval(() => {
-			const data = log[i] as any
-			if (!data) {
-				clearInterval(interval)
-				return
-			}
+		// let i = 0
+		// const interval$ = setInterval(() => {
+		// 	const data = log[i] as any
+		// 	if (!data) {
+		// 		clearInterval(interval)
+		// 		return
+		// 	}
 
-			setState(prev => ({
-				progress: data.eventName === 'loadProgress' ? data.loadFraction as number * 100 : prev.progress,
-				data: [...prev.data, { ...data, time: dayjs().format("HH:mm:ss:SSS") }],
-				stage:
-					data.eventName === "startInitFunction"
-					? data.type === "INIT_AFTER_MAP_LOADED"
-						? "initializeMaps"
-						: data.type === "INIT_SESSION"
-							? "initializeSession"
-							: prev.stage
-					: data.eventName === "onLogLine"
-						? "startingResources"
-						: prev.stage
-			}))
-			i++
-		}, 50)
+		// 	setState(prev => ({
+		// 		progress: data.eventName === 'loadProgress' ? data.loadFraction as number * 100 : prev.progress,
+		// 		data: [...prev.data, { ...data, time: dayjs().format("HH:mm:ss:SSS") }],
+		// 		stage:
+		// 			data.eventName === "startInitFunction"
+		// 			? data.type === "INIT_AFTER_MAP_LOADED"
+		// 				? "initializeMaps"
+		// 				: data.type === "INIT_SESSION"
+		// 					? "initializeSession"
+		// 					: prev.stage
+		// 			: data.eventName === "onLogLine"
+		// 				? "startingResources"
+		// 				: prev.stage
+		// 	}))
+		// 	i++
+		// }, 50)
 
     return () => {
 			window.removeEventListener("message", handler)
-			clearInterval(interval$)
+			// clearInterval(interval$)
 			clearInterval(interval)
 		}
 	}, [])
