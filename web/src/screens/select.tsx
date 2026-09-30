@@ -24,7 +24,7 @@ const modes = [
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
     image: law,
-		disabled: false
+		disabled: true
   },
   {
     label: 'Undercover',
@@ -36,7 +36,7 @@ const modes = [
     label: 'Crime',
     description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
     image: crime,
-		disabled: false
+		disabled: true
   },
   {
     label: 'Pursuit',
@@ -74,9 +74,12 @@ export const Select = () => {
 							key={mode.label}
 							onMouseOver={() => !mode.disabled && setSelected(mode)}
 							onClick={() => {
-								if (!mode.disabled) return
-								audio.unavailable()
-								toast('This mode is locked', { toasterId: 'notify' })
+								if (mode.disabled) {
+									audio.unavailable()
+									toast('This mode is locked', { toasterId: 'notify' })
+									return
+								}
+								/* TODO */
 							}}
 							style={{ clipPath: panelClip(index, modes.length) }}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}

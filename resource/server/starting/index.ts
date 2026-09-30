@@ -1,14 +1,14 @@
 import './db'
 import { onClientCallback } from '@overextended/ox_lib/server'
 import type { Character } from '@overextended/ox_core'
-import type { Starting } from 'types/index'
+import type { Start } from 'types/index'
 import { oxmysql } from '@overextended/oxmysql'
 import { fullName } from './utils'
 import { asserts } from '@lenix/lenix'
 import { onNuiServer } from 'lenix/server'
 import { GetPlayer } from '@overextended/ox_core/server'
 
-const clientsWithNoCharacters = new Map<number, Starting.Mode>()
+const clientsWithNoCharacters = new Map<number, Start.Mode>()
 
 on('ox:createdCharacter', async (playerId: number, _userId: number, charId: number) => {
 	const mode = clientsWithNoCharacters.get(playerId)
@@ -21,7 +21,7 @@ on('ox:createdCharacter', async (playerId: number, _userId: number, charId: numb
 	clientsWithNoCharacters.delete(playerId)
 })
 
-onNuiServer<Starting.Requests['logout']>('start:logout', (client) => {
+onNuiServer<Start.Requests['logout']>('start:logout', (client) => {
 	const player = GetPlayer(client)
 	asserts(player, `Failed to get player<${client}> to logout`)
 
@@ -29,7 +29,7 @@ onNuiServer<Starting.Requests['logout']>('start:logout', (client) => {
 	return null
 })
 
-onNuiServer<Starting.Requests['exitGame']>('start:exitGame', (client) => {
+onNuiServer<Start.Requests['exitGame']>('start:exitGame', (client) => {
 	const player = GetPlayer(client)
 	asserts(player, `Failed to get player<${client}> to disconnect`)
 
@@ -39,7 +39,7 @@ onNuiServer<Starting.Requests['exitGame']>('start:exitGame', (client) => {
 	return null
 })
 
-onClientCallback('lenix:server:start:modeSelected', async (client, characters: Character[], mode: Starting.Mode): Promise<Character | undefined> => {
+onClientCallback('lenix:server:start:modeSelected', async (client, characters: Character[], mode: Start.Mode): Promise<Character | undefined> => {
 	if (!characters.length) {
 		clientsWithNoCharacters.set(client, mode)
 		return
