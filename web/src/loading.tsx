@@ -127,7 +127,7 @@ export function Loading() {
 			<motion.img
 				key={backgroundIndex}
 				src={BACKGROUNDS[backgroundIndex]}
-				className="absolute size-full"
+				className="absolute size-full object-cover"
 				initial={{ opacity: 0, scale: 1 }}
 				animate={{ opacity: 1, scale: 1.1 }}
 				exit={{ opacity: 0, scale: 1.1 }}
