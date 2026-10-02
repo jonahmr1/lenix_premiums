@@ -162,7 +162,7 @@ export namespace Start {
 		exitGame: Request<null, 'start:exitGame'>
 		logout: Request<null, 'start:logout'>
 	}
-	export type Mode = 'warzone' | 'police' | 'justice' | 'gang' | 'race'
+	export type Mode = 'warzone' | 'police' | 'gang' | 'justice' | 'race'
 }
 
 export namespace Outlaw {

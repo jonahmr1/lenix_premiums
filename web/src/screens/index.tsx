@@ -5,16 +5,22 @@ import { useLocation, useNavigate } from "@tanstack/react-router"
 import { Pause } from "./pause"
 import { Settings } from "./settings"
 import { Hud } from "./hud"
+import type { FileRoutesByTo } from "@/routeTree.gen"
 
 const dev = true
+
+const hudAllowedModes: ({
+	[K in keyof FileRoutesByTo]:
+		K extends `/${infer Segment}/${string}` ? Segment :
+		K extends `/${infer Segment}` ? Segment :
+		K
+}[keyof FileRoutesByTo])[] = ['gang', 'police']
 
 export function App() {
   const nav = useNavigate()
   const hash = useLocation({ select: location => location.hash })
 	const path = useLocation({ select: (location) => location.pathname })
 	const rootHash = path === '/' && hash
-
-	console.log(path)
 
   useEffect(() => {
     dev && nav({ to: '/starting' })
@@ -40,7 +46,7 @@ export function App() {
       />}
       {rootHash === "pause" && <Pause />}
       {rootHash === "settings" && <Settings />}
-      {path !== "warzone" && <Hud />}
+      {hudAllowedModes.some(route => route === path.split('/')[1]) && <Hud />}
     </>
   )
 }

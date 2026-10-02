@@ -12,7 +12,6 @@ interface Storage {
 }
 
 const hudVariants = ['health', 'armor', 'lungs'] as const
-const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
@@ -55,6 +54,8 @@ export const Hud = () => {
 	}, [])
 
 	if (!display || !state) return null
+
+	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 	return (
 		<>
