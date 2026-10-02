@@ -26,7 +26,7 @@
 
 @font-face {
 	font-family: 'Unispace';
-	src: url('./assets/fonts/Unispace Rg.otf') format('opentype');
+	src: url('/Unispace Rg.otf') format('opentype');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -34,7 +34,7 @@
 
 @font-face {
 	font-family: 'Unispace';
-	src: url('./assets/fonts/Unispace Bd.otf') format('opentype');
+	src: url('Unispace Bd.otf') format('opentype');
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
@@ -42,7 +42,7 @@
 
 @font-face {
 	font-family: 'Unispace';
-	src: url('./assets/fonts/Unispace It.otf') format('opentype');
+	src: url('Unispace It.otf') format('opentype');
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;
@@ -50,7 +50,7 @@
 
 @font-face {
 	font-family: 'Unispace';
-	src: url('./assets/fonts/Unispace Bd It.otf') format('opentype');
+	src: url('Unispace Bd It.otf') format('opentype');
 	font-weight: 700;
 	font-style: italic;
 	font-display: swap;

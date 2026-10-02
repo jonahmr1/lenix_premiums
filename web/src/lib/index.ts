@@ -1,17 +1,9 @@
 import type { MotionProps } from "motion/react";
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import hover from '../assets/audio/hover.wav'
-import click from '../assets/audio/click.wav'
-import error from '../assets/audio/error.wav'
-import unavailable from '../assets/audio/unavailable.ogg'
-import cannot from '../assets/audio/cannot.ogg'
-import select from '../assets/audio/select.wav'
-import orchestra from '../assets/audio/orchestra.wav'
-import impact from '../assets/audio/impact.mp3'
 
 export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
-	const audio = new Audio(src === 'hover' ? hover : src === 'click' ? click : customAudio)
+	const audio = new Audio(src === 'hover' ? cdn('assets/audio/hover.wav') : src === 'click' ? cdn('assets/audio/click.wav') : customAudio)
 	audio.volume = src === 'hover' ? 1.0 : src === 'click' ? 1.0 : customVolume
 	audio.play()
 }
@@ -22,12 +14,12 @@ export const audiobility = {
 }
 
 export const audio = {
-	error: () => playAudio('custom', error),
-	unavailable: () => playAudio('custom', unavailable, 0.4),
-	cannot: () => playAudio('custom', cannot),
-	select: () => playAudio('custom', select),
-	orchestra: () => playAudio('custom', orchestra),
-	impact: () => playAudio('custom', impact, 0.4),
+	error: () => playAudio('custom', cdn('assets/audio/error.wav')),
+	unavailable: () => playAudio('custom', cdn('assets/audio/unavailable.ogg'), 0.4),
+	cannot: () => playAudio('custom', cdn('assets/audio/cannot.ogg')),
+	select: () => playAudio('custom', cdn('assets/audio/select.wav')),
+	orchestra: () => playAudio('custom', cdn('assets/audio/orchestra.wav')),
+	impact: () => playAudio('custom', cdn('assets/audio/impact.mp3'), 0.4),
 }
 
 dayjs.extend(duration)
@@ -47,3 +39,5 @@ export const weaponImage = (weapon: string) => `https://docs-backend.fivem.net/w
 export const timestamp = (ms: number) => new Date(Date.now() + ms)
 
 export const formatTime = (ms: number) => dayjs.duration(ms).format('mm:ss')
+
+export const cdn = (src: string) => `https://pub-48f954db5920416a828313c03c49ed1f.r2.dev/${src}`

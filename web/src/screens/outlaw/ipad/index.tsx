@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { entries, storage } from '@lenix/lenix'
 import type { Orientation, Storage } from './types'
-import veritcalBg from '@/assets/ipad/portrait.jpg'
-import horizontalBg from '@/assets/ipad/landscape.jpg'
 import { onKeyDown, onNuiEmit } from 'lenix/nui'
 import type { Outlaw } from 'types'
 import { Button } from '@/components/ui/button'
@@ -16,6 +14,7 @@ import { Settings } from './apps/settings'
 import { useLocation, useNavigate, useRouter } from '@tanstack/react-router'
 import { cn } from 'cn'
 import { createElement } from 'react'
+import { cdn } from '@/lib'
 
 const apps: Record<string, App> = {
   settings: {
@@ -75,7 +74,7 @@ export const Ipad = () => {
   const navigate = useNavigate()
 	const router = useRouter()
 
-  const tabletBg = orientation === 'portrait' ? veritcalBg : horizontalBg
+  const tabletBg = orientation === 'portrait' ? cdn('assets/ipad/portrait.jpg') : cdn('assets/ipad/landscape.jpg')
   const nav = (app: string) => navigate({ to: '/outlaw/ipad', hash: app })
 
   useEffect(() => {

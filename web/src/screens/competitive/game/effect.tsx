@@ -1,12 +1,10 @@
 import { waste } from '@lenix/lenix'
 import { useEffect, useState } from 'react'
-import low from '@/assets/competitive/effect/low.png'
-import high from '@/assets/competitive/effect/high.png'
-import heartbeat from '@/assets/competitive/effect/heartbeat.mp3'
 import { Howl } from 'howler'
+import { cdn } from '@/lib'
 
 const player = new Howl({
-	src: heartbeat,
+	src: cdn('assets/competitive/effect/heartbeat.mp3'),
 	volume: 0.5
 })
 
@@ -41,9 +39,9 @@ export const DamageEffect = () => {
 
 	return (
 		<>
-			<img src={low} className="absolute size-full object-cover" style={{ opacity: strength / 100 }} />
+			<img src={cdn('assets/competitive/effect/low.png')} className="absolute size-full object-cover" style={{ opacity: strength / 100 }} />
 			<img
-				src={high}
+				src={cdn('assets/competitive/effect/high.png')}
 				className="absolute size-full object-cover transition-opacity duration-2000"
 				style={{ opacity: strength < 50 ? 0 : (strength - 50) / 50 }}
 			/>

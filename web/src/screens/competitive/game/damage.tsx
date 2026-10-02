@@ -1,5 +1,5 @@
+import { cdn } from "@/lib"
 import { useEffect, useState } from "react"
-import indicator from '@/assets/competitive/damage/damage-indicator.png'
 
 export const DamageIndicator = () => {
 	const [state, setState] = useState<number>()
@@ -22,7 +22,7 @@ export const DamageIndicator = () => {
 			}}
 		>
 			<img
-				src={indicator}
+				src={cdn('assets/competitive/damage/damage-indicator.png')}
 				className="w-1/2"
 			/>
 		</div>

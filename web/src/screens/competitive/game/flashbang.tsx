@@ -1,7 +1,5 @@
-import { playAudio } from "@/lib";
+import { cdn, playAudio } from "@/lib";
 import { useEffect, useState } from "react";
-import flashbang from '@/assets/competitive/flashbang/flashbang.wav'
-import flashbangEffect from '@/assets/competitive/flashbang/flashbang-effect.wav'
 import { waste } from "@lenix/lenix";
 
 export const Flashbang = () => {
@@ -10,8 +8,8 @@ export const Flashbang = () => {
 	useEffect(() => {
 		const timeout = setTimeout(async () => {
 			setProgress(0)
-			playAudio('custom', flashbang, 0.01)
-			playAudio('custom', flashbangEffect, 0.1)
+			playAudio('custom', cdn('assets/competitive/flashbang/flashbang.wav'), 0.01)
+			playAudio('custom', cdn('assets/competitive/flashbang/flashbang-effect.wav'), 0.1)
 			await waste(3000)
 
 			for (const i of Array(101).keys()) {

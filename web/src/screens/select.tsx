@@ -1,10 +1,5 @@
 import { useState } from 'react'
-import warzone from '@/assets/start/warzone.png'
-import law from '@/assets/start/law.png'
-import undercover from '@/assets/start/undercover.jpeg'
-import crime from '@/assets/start/crime.png'
-import pursuit from '@/assets/start/pursuit.png'
-import { anim, audio, audiobility } from '@/lib'
+import { anim, audio, audiobility, cdn } from '@/lib'
 import { PageScreen } from '@/components/screen'
 import { useRouter } from '@tanstack/react-router'
 import { motion } from 'motion/react'
@@ -19,31 +14,31 @@ const modes = [
   {
     label: 'Warzone',
     description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
-    image: warzone,
+    image: cdn('assets/start/warzone.png'),
 		disabled: true
   },
   {
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
-    image: law,
+    image: cdn('assets/start/law.png'),
 		disabled: false
   },
   {
     label: 'Undercover',
     description: 'Work in the shadows. Take on covert operations, investigate dangerous organizations, gather information, and operate undercover.',
-    image: undercover,
+    image: cdn('assets/start/undercover.jpeg'),
 		disabled: true
   },
   {
     label: 'Crime',
     description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
-    image: crime,
+    image: cdn('assets/start/crime.png'),
 		disabled: false
   },
   {
     label: 'Pursuit',
     description: 'Push your limits behind the wheel. Race through the streets, escape the law, chase targets, and compete in high-speed pursuits.',
-    image: pursuit,
+    image: cdn('assets/start/pursuit.png'),
 		disabled: true
   },
 ]
