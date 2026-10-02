@@ -1,5 +1,6 @@
 import { addRadialItem, checkDependency, notify, onCache, removeRadialItem } from '@overextended/ox_lib/client'
 import { onNetEvent } from 'lenix/client'
+import type { Start } from 'types/index'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('illenium-appearance', '5.7.0', true)
@@ -64,21 +65,26 @@ onCache('vehicle', vehicle => {
 	removeRadialItem('vehicle-menu')
 })
 
-export default [
-	addRadialItem(radiaItems),
-
-	() => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id)),
-
-	onNetEvent('ox:setGroup', (groupName: string, _grade: number) => {
-		if (groupName === 'police') {
+const load = (mode: Start.Mode) => {
+	switch (mode) {
+		case 'police': {
 			addRadialItem({
 				id: 'plist',
 				label: 'Roster',
 				icon: 'list-ul',
 				onSelect: () => emit('lenix:server:roster:toggleDisplay'),
 			})
-			return
+
+			return () => removeRadialItem('plist')
 		}
-		removeRadialItem('plist')
-	})
+		default: console.log(`Skipping police radial item on ${mode} mode, remove this debugging log`)
+	}
+}
+
+export default (mode: Start.Mode) => [
+	addRadialItem(radiaItems),
+
+	() => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id)),
+
+	load(mode),
 ]

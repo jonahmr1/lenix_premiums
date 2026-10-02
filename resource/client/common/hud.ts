@@ -102,7 +102,7 @@ export default [
 			}
 		})
 	}),
-	
+
 	onEvent('ox_inventory:itemCount', (itemName: string, reserveAmmo: number) => {
 		const weapon = api.ox_inventory?.getCurrentWeapon<OxWeapon>?.()
 		if (!weapon || weapon.ammo !== itemName) return

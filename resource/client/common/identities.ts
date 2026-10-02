@@ -84,6 +84,7 @@ export default [
 			shown = !shown
 		},
 	}),
+	
 	control.on({
 		event: 'release',
 		key: 'HOME',

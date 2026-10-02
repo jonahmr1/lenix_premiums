@@ -1,2 +1,2 @@
 import 'common'
-import './starting'
+import './start'

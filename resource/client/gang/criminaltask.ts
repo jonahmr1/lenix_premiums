@@ -1,6 +1,5 @@
-import { asserts, entries, random } from '@lenix/lenix'
+import { asserts, random } from '@lenix/lenix'
 import {
-	createPed as oxCreatePed,
 	notify,
 	requestAnimDict,
 	requestModel,
@@ -237,8 +236,8 @@ const crash = () => {
 	setPlayerStatus(false)
 }
 
-const load = async () => {
-	const disposes = await Promise.all([...config.peds].map(async ({ model, coords }, i) => {
+const load = () => {
+	const disposes = Promise.all([...config.peds].map(async ({ model, coords }) => {
 
 		const { handle } = await createPed(model, coords[0], coords[1], coords[2] - 0.85, coords[3])
 		behavior(handle, 'WORLD_HUMAN_CLIPBOARD')
@@ -263,8 +262,8 @@ const load = async () => {
 		return () => api.ox_target?.removeLocalEntity?.(handle)
 	}))
 
-	return () => {
-		for (const dispose of disposes) dispose()
+	return async () => {
+		for (const dispose of await disposes) dispose()
 		crash()
 	}
 }

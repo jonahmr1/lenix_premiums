@@ -1,19 +1,10 @@
-import "./wall";
 import emotes from "./emotes";
-// import rank from './rank'
 import identities from "./identities";
 import radialmenu from "./radialmenu";
-import criminaltask from "./criminaltask";
-import vehicles from "./vehicles";
-import robbery from "./robbery";
-import roster from "./roster";
-import elevators from "./elevators";
 import hud from "./hud";
 import safezones from "./safezones";
-// import topscore from './topscore'
-import locker from "./locker";
 import { asserts } from "@lenix/lenix";
-// import ipad from './ipad'
+import type { Start } from "types/index";
 
 let modifiers: string[] = [];
 let currentIndex = 0;
@@ -61,23 +52,15 @@ RegisterKeyMapping('blurnext', 'Next Timecycle Modifier', 'keyboard', 'PAGEUP');
 RegisterKeyMapping('blurprev', 'Previous Timecycle Modifier', 'keyboard', 'PAGEDOWN');
 RegisterKeyMapping('blurclear', 'Clear Timecycle Modifier', 'keyboard', 'PAGEDOWN');
 
-export const login = (logout: () => void) => {
+export default (logout: () => void, mode: Start.Mode) => {
   logout();
+	const radialmenuMod = radialmenu(mode)
   const modules = [
     emotes,
-    // rank,
     identities,
-    radialmenu,
-    criminaltask,
-    vehicles,
-    robbery,
-    roster,
-    elevators,
-    hud,
+    radialmenuMod,
+		hud,
     safezones,
-    // topscore,
-		locker,
-		// ipad,
   ];
 
   return () => {

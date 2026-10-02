@@ -3,8 +3,10 @@ import { triggerServerCallback } from "@overextended/ox_lib/client";
 import { repeat } from "@lenix/lenix";
 import { api, control, emitNui, isNuiReady, onNui, pool } from "lenix/client";
 import type { Start } from "types/index";
-import { login as competitive } from "../competitive";
-import { login as outlaw } from "../outlaw";
+import police from "../police";
+import warzone from "../warzone";
+import gang from "../gang";
+import common from "../common";
 
 let character: Character | undefined | null
 let characters: Character[]
@@ -16,15 +18,25 @@ onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode }) => {
 	character = characterSelected ?? undefined
 
 	switch (mode) {
-		case 'competitive': {
-			logout = competitive(logout)
+		case 'warzone': {
+			logout = warzone(logout)
 			break
 		}
-		case 'outlaw': {
-			logout = outlaw(logout)
+		case 'police': {
+			logout = () => {
+				police(logout)
+				common(logout, 'police')
+			}
 			break
 		}
-		default: throw `Wrong mode: ${mode}`
+		case 'gang': {
+			logout = () => {
+				gang(logout)
+				common(logout, 'gang')
+			}
+			break
+		}
+		default: throw `Unexcepected mode: ${mode}`
 	}
 
 	return null
@@ -34,8 +46,7 @@ control.on({
 	event: 'press',
 	key: 'ESCAPE',
 	onEvent: () => {
-		// emitNui<Start.Events['pause']>('start:pause')
-		console.log('pause')
+		emitNui<Start.Events['pause']>('start:pause')
 	}
 })
 
