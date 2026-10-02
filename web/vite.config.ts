@@ -24,6 +24,10 @@ export default defineConfig({
 				find: '@',
 				replacement: path.resolve(__dirname, 'src'),
 			},
+			{
+				find: /^common\//,
+				replacement: path.resolve(__dirname, '../resource/common') + '/',
+			}
 		],
   },
 	build: {

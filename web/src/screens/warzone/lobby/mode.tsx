@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { MAPS, MODES } from '@/constants'
+import { MODES } from '@/constants'
 import { entries } from '@lenix/lenix'
 import { Badge } from '@/components/ui/badge'
 import { AnimatePresence, motion } from 'motion/react'
@@ -10,6 +10,7 @@ import { useStates } from '@/hooks'
 import { toast } from 'sonner'
 import { useRouter } from '@tanstack/react-router'
 import { PageScreen } from '@/components/screen'
+import { Constants } from 'common/config/constants'
 
 export const Mode = () => {
   const router = useRouter()
@@ -66,7 +67,7 @@ export const Mode = () => {
                     <Badge>
                       <span className={classNames[0]}>Maps: </span>
                       <span className={classNames[1]}>
-                        {mode.maps.map((map) => MAPS[map].label).join(' / ')}
+                        {mode.maps.map(map => Constants.warzone.game_maps[map].label).join(' / ')}
                       </span>
                     </Badge>
                     {'scoreLimit' in mode && (

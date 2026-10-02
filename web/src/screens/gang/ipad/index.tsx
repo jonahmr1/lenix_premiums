@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { entries, storage } from '@lenix/lenix'
 import type { Orientation, Storage } from './types'
 import { onKeyDown, onNuiEmit } from 'lenix/nui'
-import type { Outlaw } from 'types'
+import type { Gang } from 'types'
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Separator } from '@/components/ui/separator'
@@ -82,7 +82,7 @@ export const Ipad = () => {
   }, [orientation])
 
   useEffect(() => {
-    const disposes = [onNuiEmit<Outlaw.Events['displayIpad']>('ipad:display', () => setDisplay(true)), onKeyDown('Escape', () => setDisplay(false))]
+    const disposes = [onNuiEmit<Gang.Events['displayIpad']>('ipad:display', () => setDisplay(true)), onKeyDown('Escape', () => setDisplay(false))]
 
     return () => disposes.forEach((dispose) => dispose())
   }, [])

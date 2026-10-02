@@ -1,7 +1,7 @@
 import { asserts, entries, random } from '@lenix/lenix'
 import { checkDependency, onClientCallback } from '@overextended/ox_lib/server'
 import { api } from 'lenix/server'
-import type { Outlaw } from 'types/index'
+import type { Gang } from 'types/index'
 
 checkDependency('ox_lib', '3.39.0', true)
 checkDependency('ox_inventory', '2.47.9', true)
@@ -13,7 +13,7 @@ const items = {
 	},
 }
 
-onClientCallback('lenix_criminiltasks:server:receiveItem', (source): Outlaw.Criminial => {
+onClientCallback('lenix_criminiltasks:server:receiveItem', (source): Gang.Criminial => {
 	const roll = random(1, 100)
 	let cumulative = 0
 	let selectedItem, selectedAmount

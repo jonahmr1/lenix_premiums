@@ -2,8 +2,8 @@ import { Separator } from '@/components/ui/separator'
 import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
-import type { Outlaw } from 'types'
-import { random, storage } from '@lenix/lenix'
+import type { Common } from 'types'
+import { storage } from '@lenix/lenix'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { zeroed } from '@/lib'
 
@@ -14,7 +14,7 @@ interface Storage {
 const hudVariants = ['health', 'armor', 'lungs'] as const
 
 export const Hud = () => {
-	const [state, setState] = useState<Outlaw.Hud>()
+	const [state, setState] = useState<Common.Hud>()
 	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>(
 		// { vitals: true, weaponary: true }
 	)
@@ -38,10 +38,10 @@ export const Hud = () => {
 		storage.set<Storage>('hudVariant', 'progress')
 
 		const disposes = [
-			onNuiEmit<Outlaw.Events['displayHud']>('hud:display', state => {
+			onNuiEmit<Common.Events['displayHud']>('hud:display', state => {
 				setDisplay(state)
 			}),
-			onNuiEmit<Outlaw.Events['updateHud']>('hud:update', state =>
+			onNuiEmit<Common.Events['updateHud']>('hud:update', state =>
 				setState(state),
 			),
 		]

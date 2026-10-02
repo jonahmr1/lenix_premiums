@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { focusNui, onNuiEmit, fetchNui, onKeyDown, unFocusNui } from 'lenix/nui'
-import type { Roster as IRoster, Outlaw } from 'types'
+import type { Police } from 'types'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -8,18 +8,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SmileySadIcon, WaveformIcon } from '@phosphor-icons/react'
 import { entries } from '@lenix/lenix'
 
-const TalkStates: Record<IRoster.TalkState, string> = {
+const TalkStates: Record<Police.Roster.TalkState, string> = {
 	on: 'text-blue-400',
 	off: 'text-gray-500',
 }
 
-const DutyStates: Record<IRoster.DutyState, string> = {
+const DutyStates: Record<Police.Roster.DutyState, string> = {
 	on: 'bg-green-500 text-green-500',
 	off: 'bg-red-500 text-red-500',
 	break: 'bg-orange-500 text-orange-500',
 }
 
-const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) => (
+const Officer = ({ callsign, name, duty_state, talk_state }: Police.Roster.Officer) => (
 	<div className='w-full min-h-1/10 flex justify-around text-muted-foreground items-center bg-card px-2 border rounded-md'>
 		<div className='flex-3.5 flex gap-1.5 items-center'>
 			<Badge className={`size-2 rounded-full p-0 shine-md ${DutyStates[duty_state]}`} />
@@ -40,7 +40,7 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 
 export const Roster = () => {
 	const [display, setDisplay] = useState<boolean>(/* true */)
-	const [officers, setOfficers] = useState<IRoster.Officers>(
+	const [officers, setOfficers] = useState<Police.Roster.Officers>(
 		// {
 		// 	1: {
 		// 		playerId: 1,
@@ -55,11 +55,11 @@ export const Roster = () => {
 
 	useEffect(() => {
 		const disposes = [
-			onNuiEmit<Outlaw.Events['displayRoster']>('roster:display', (state, playerId) => {
+			onNuiEmit<Police.Events['displayRoster']>('roster:display', (state, playerId) => {
 				setDisplay(state)
 				setPlayerId(playerId)
 			}),
-			onNuiEmit<Outlaw.Events['refreshOfficers']>('roster:refreshOfficers', setOfficers),
+			onNuiEmit<Police.Events['refreshOfficers']>('roster:refreshOfficers', setOfficers),
 			onKeyDown('Escape', () => {
 				unFocusNui()
 			})
@@ -74,8 +74,8 @@ export const Roster = () => {
 
 	const dutyState = officers[playerId].duty_state
 
-	const updateOfficer = (playerId: number, updates: IRoster.OfficerUpdates) => {
-		fetchNui<Outlaw.Requests['updateOfficer']>('roster:updateOfficer', {
+	const updateOfficer = (playerId: number, updates: Police.Roster.OfficerUpdates) => {
+		fetchNui<Police.Requests['updateOfficer']>('roster:updateOfficer', {
 			playerId,
 			...updates,
 		})
@@ -99,7 +99,7 @@ export const Roster = () => {
 
 	const handleCallsign = () => {
 		focusNui()
-		fetchNui<Outlaw.Requests['triggerCallsign']>('roster:callsign', {})
+		fetchNui<Police.Requests['triggerCallsign']>('roster:callsign', {})
 	}
 
 

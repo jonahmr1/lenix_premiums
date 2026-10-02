@@ -56,10 +56,10 @@ export const Constants = {
 				rounds: 5,
 				round_time: 60,
 				pre_and_post_round_time: 10,
-				maps_allowed: <(keyof typeof game_maps)[]>[
+				maps_allowed: [
 					'italien_street',
 					'cinema_studio'
-				]
+				] satisfies (keyof typeof game_maps)[]
 			}
 		},
 		score_weights: {

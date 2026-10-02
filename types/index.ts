@@ -165,20 +165,88 @@ export namespace Start {
   export type Mode = "warzone" | "police" | "gang" | "justice" | "race";
 }
 
-export namespace Outlaw {
+export namespace Common {
+  export type Hud = {
+    health: number;
+    armor: number;
+    lungs: number;
+    weapon: {
+      name: string;
+      image: string;
+      clipAmmo: number;
+      clipSize: number;
+      reserveAmmo: number;
+    };
+  };
   export interface Events {
     displayHud: Event<"hud:display", [{ vitals: boolean; weaponary: boolean }]>;
     updateHud: Event<"hud:update", [Hud]>;
+    updateTopscoreData: Event<"topscore:updateData", [Topscore.Data | null]>;
+  }
+
+	export namespace Topscore {
+		export type Data = Record<
+			1 | 2 | 3,
+			{
+				scale: number;
+				bottom: number;
+				left: number;
+				visible: boolean;
+				name: string;
+				avatar: string;
+				stats: {
+					kills: number;
+					deaths: number;
+					wins: number;
+					kd: number;
+				};
+			}
+		>;
+
+		export type ContextData = Record<1 | 2 | 3, Omit<Data[1], "scale" | "bottom" | "left" | "visible">>;
+	}
+
+}
+
+export namespace Police {
+  export interface Events {
+    displayHud: Event<"hud:display", [{ vitals: boolean; weaponary: boolean }]>;
+    updateHud: Event<"hud:update", [Common.Hud]>;
     addOfficer: Event<"roster:addOfficer", [Roster.Officer]>;
     refreshOfficers: Event<"roster:refreshOfficers", [Roster.Officers]>;
     displayRoster: Event<"roster:display", [boolean, number]>;
-    updateTopscoreData: Event<"topscore:updateData", [Topscore.Data | null]>;
-    displayIpad: Event<"ipad:display", []>;
   }
 
   export interface Requests {
     updateOfficer: Request<null, "roster:updateOfficer", Roster.PartialOfficer>;
     triggerCallsign: Request<null, "roster:callsign">;
+  }
+
+
+	export namespace Roster {
+		export type DutyState = "on" | "off" | "break";
+		export type TalkState = "on" | "off";
+
+		export interface Officer {
+			playerId: number;
+			callsign: string;
+			name: string;
+			duty_state: DutyState;
+			talk_state: TalkState;
+		}
+		export type Officers = Record<number, Officer>;
+
+		export type OfficerUpdates = AtLeastOne<Omit<Officer, "playerId">>;
+
+		export type PartialOfficer = {
+			playerId: Officer["playerId"];
+		} & OfficerUpdates;
+	}
+}
+
+export namespace Gang {
+  export interface Events {
+    displayIpad: Event<"ipad:display", []>;
   }
 
   export interface Criminial {
@@ -193,59 +261,4 @@ export namespace Outlaw {
     leader: number;
     members: number[];
   };
-
-  export type Hud = {
-    health: number;
-    armor: number;
-    lungs: number;
-    weapon: {
-      name: string;
-      image: string;
-      clipAmmo: number;
-      clipSize: number;
-      reserveAmmo: number;
-    };
-  };
-}
-
-export namespace Roster {
-  export type DutyState = "on" | "off" | "break";
-  export type TalkState = "on" | "off";
-
-  export interface Officer {
-    playerId: number;
-    callsign: string;
-    name: string;
-    duty_state: DutyState;
-    talk_state: TalkState;
-  }
-  export type Officers = Record<number, Officer>;
-
-  export type OfficerUpdates = AtLeastOne<Omit<Officer, "playerId">>;
-
-  export type PartialOfficer = {
-    playerId: Officer["playerId"];
-  } & OfficerUpdates;
-}
-
-export namespace Topscore {
-  export type Data = Record<
-    1 | 2 | 3,
-    {
-      scale: number;
-      bottom: number;
-      left: number;
-      visible: boolean;
-      name: string;
-      avatar: string;
-      stats: {
-        kills: number;
-        deaths: number;
-        wins: number;
-        kd: number;
-      };
-    }
-  >;
-
-  export type ContextData = Record<1 | 2 | 3, Omit<Data[1], "scale" | "bottom" | "left" | "visible">>;
 }

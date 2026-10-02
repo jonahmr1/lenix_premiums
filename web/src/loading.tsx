@@ -12,13 +12,10 @@ import { MessageScroller, MessageScrollerButton, MessageScrollerContent, Message
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/ui/hover-card"
 import { ThemeProvider } from "./components/theme-provider"
 import { Spinner } from "./components/ui/spinner"
-import bg1 from '@/assets/loading/ls-1.png'
-import bg2 from '@/assets/loading/ls-2.png'
-import bg3 from '@/assets/loading/ls-3.png'
-import bg4 from '@/assets/loading/ls-4.png'
+
 import { AnimatePresence, motion } from "motion/react"
-import loading from '@/assets/loading/loading.mp3'
 import { Howl } from 'howler'
+import { cdn } from "./lib"
 
 type Log = Record<string, string | number | boolean>
 
@@ -28,12 +25,16 @@ const STAGES = {
 	initializeSession: 'Preparing Session',
 	startingResources: 'Starting Resources'
 }
-const BACKGROUNDS = [bg1, bg2, bg3, bg4]
+const BACKGROUNDS = [
+	'assets/loading/ls-1.png',
+	'assets/loading/ls-2.png',
+	'assets/loading/ls-3.png',
+	'assets/loading/ls-4.png',
+]
 const CROSSFADE_INTERVAL = 10
 
-
 const player = new Howl({
-	src: loading,
+	src: cdn('assets/loading/loading.mp3'),
 	volume: 0.5
 })
 
@@ -137,7 +138,7 @@ export function Loading() {
 			<AnimatePresence>
 				<motion.img
 					key={backgroundIndex}
-					src={BACKGROUNDS[backgroundIndex]}
+					src={cdn(BACKGROUNDS[backgroundIndex])}
 					className="absolute size-full object-cover"
 					initial={{ opacity: 0, scale: 1 }}
 					animate={{ opacity: 1, scale: 1.1 }}
