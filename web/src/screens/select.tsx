@@ -41,7 +41,7 @@ const modes = {
     image: cdn('assets/start/pursuit.png'),
 		disabled: true
   },
-} as const
+} satisfies Record<Start.Mode, object>
 
 // Shared boundaries keep every diagonal parallel and leave a 0.5vw gap.
 function panelClip(index: number, count: number, inset = 0) {
@@ -59,19 +59,19 @@ function panelClip(index: number, count: number, inset = 0) {
 
 export const Select = () => {
 	const router = useRouter()
-  const [mode, setMode] = useState<keyof typeof modes>(entries(modes).find(([, self]) => !self.disabled)![0])
-	asserts(mode)
+  const [modeState, setMode] = useState<keyof typeof modes>(entries(modes).find(([, self]) => !self.disabled)![0])
+	asserts(modeState)
 
-	const selected = modes[mode]
+	const selected = modes[modeState]
 
   return (
 		<>
 			<div className='h-screen bg-background'>
 				<div className="grid h-3/4 [-webkit-box-reflect:below_2vh_linear-gradient(transparent_60%,rgb(0_0_0/0.5))]">
-					{entries(modes).map(([thisMode, config], index) => (
+					{entries(modes).map(([mode, config], index) => (
 						<button
 							key={config.label}
-							onMouseOver={() => setMode(thisMode)}
+							onMouseOver={() => setMode(mode)}
 							onClick={() => {
 								if (config.disabled) {
 									audio.unavailable()
@@ -79,11 +79,11 @@ export const Select = () => {
 									return
 								}
 								/* TODO */
-								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'outlaw' })
+								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode })
 								router.navigate({ to: '/outlaw' })
 							}}
 							style={{ clipPath: panelClip(index, entries(modes).length) }}
-							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${thisMode === mode ? 'bg-primary' : 'bg-border grayscale'}`}
+							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${mode === modeState ? 'bg-primary' : 'bg-border grayscale'}`}
 							{...audiobility}
 						>
 							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, entries(modes).length, 2) }}>
@@ -92,7 +92,7 @@ export const Select = () => {
 									className='pointer-events-none absolute inset-0 size-full object-cover'
 								/>
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${thisMode === mode ? 'opacity-100' : 'opacity-0'}`} />
+								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${mode === modeState ? 'opacity-100' : 'opacity-0'}`} />
 							</div>
 							{config.disabled && (
 								<div
