@@ -16,7 +16,7 @@ export const Credit = () => {
     },
     {
       role: 'Game Tester',
-      names: ['Abu 6s', 'iWelx', '3mr', 'Abdullah', 'Dark'],
+      names: ['Abu 6s', 'Abu Mut3b', 'iWelx', '3mr', 'Abdullah', 'Dark'],
     },
   ]
 
