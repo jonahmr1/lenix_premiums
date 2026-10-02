@@ -1,4 +1,5 @@
 import 'common'
-import './competitive'
-import './starting'
-import './outlaw'
+import './warzone'
+import './start'
+import './gang'
+import './police'

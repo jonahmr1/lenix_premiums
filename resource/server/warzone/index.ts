@@ -1,4 +1,3 @@
-import { addCommand } from '@overextended/ox_lib/server';
 import { Matches } from './match';
 import './nui'
 import { Parties } from './party';

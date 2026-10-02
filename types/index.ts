@@ -1,5 +1,5 @@
 import type { Event, Request } from 'lenix'
-import type { Public } from './public'
+import type { Constants } from '../resource/common/config/constants'
 
 export type AtLeastOne<T> = {
 	[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
@@ -142,8 +142,8 @@ export namespace Competitive {
 		avatar: GamerProfile['avatar']
 	}[]
 
-	export type GameModes = Public['public/config.outlaw.json']['rank']['game_modes']
-	export type GameMaps = Public['public/config.outlaw.json']['rank']['game_maps']
+	export type GameModes = typeof Constants.warzone.game_modes
+	export type GameMaps = typeof Constants.warzone.game_maps
 	export type GameMode = keyof GameModes
 	export type GameMap = keyof GameMaps
 
