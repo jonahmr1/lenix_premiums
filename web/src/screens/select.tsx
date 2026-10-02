@@ -6,42 +6,42 @@ import { motion } from 'motion/react'
 import { toast } from 'sonner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
-import { asserts } from '@lenix/lenix'
+import { asserts, entries } from '@lenix/lenix'
 import { fetchNui } from 'lenix/nui'
 import type { Start } from 'types'
 
-const modes = [
-  {
+const modes = {
+  warzone: {
     label: 'Warzone',
     description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
     image: cdn('assets/start/warzone.png'),
 		disabled: true
   },
-  {
+  police: {
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
     image: cdn('assets/start/law.png'),
 		disabled: false
   },
-  {
+  justice: {
     label: 'Undercover',
     description: 'Work in the shadows. Take on covert operations, investigate dangerous organizations, gather information, and operate undercover.',
     image: cdn('assets/start/undercover.jpeg'),
 		disabled: true
   },
-  {
+  gang: {
     label: 'Crime',
     description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
     image: cdn('assets/start/crime.png'),
 		disabled: false
   },
-  {
+  race: {
     label: 'Pursuit',
     description: 'Push your limits behind the wheel. Race through the streets, escape the law, chase targets, and compete in high-speed pursuits.',
     image: cdn('assets/start/pursuit.png'),
 		disabled: true
   },
-]
+} as const
 
 // Shared boundaries keep every diagonal parallel and leave a 0.5vw gap.
 function panelClip(index: number, count: number, inset = 0) {
@@ -59,19 +59,21 @@ function panelClip(index: number, count: number, inset = 0) {
 
 export const Select = () => {
 	const router = useRouter()
-  const [selected, setSelected] = useState(modes.find(self => !self.disabled))
-	asserts(selected)
+  const [mode, setMode] = useState<keyof typeof modes>(entries(modes).find(([, self]) => !self.disabled)![0])
+	asserts(mode)
+
+	const selected = modes[mode]
 
   return (
 		<>
 			<div className='h-screen bg-background'>
 				<div className="grid h-3/4 [-webkit-box-reflect:below_2vh_linear-gradient(transparent_60%,rgb(0_0_0/0.5))]">
-					{modes.map((mode, index) => (
+					{entries(modes).map(([thisMode, config], index) => (
 						<button
-							key={mode.label}
-							onMouseOver={() => !mode.disabled && setSelected(mode)}
+							key={config.label}
+							onMouseOver={() => setMode(thisMode)}
 							onClick={() => {
-								if (mode.disabled) {
+								if (config.disabled) {
 									audio.unavailable()
 									toast('This mode is locked', { toasterId: 'notify' })
 									return
@@ -80,22 +82,22 @@ export const Select = () => {
 								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: 'outlaw' })
 								router.navigate({ to: '/outlaw' })
 							}}
-							style={{ clipPath: panelClip(index, modes.length) }}
-							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${selected === mode ? 'bg-primary' : 'bg-border grayscale'}`}
-							{...(mode.disabled ? {} : audiobility)}
+							style={{ clipPath: panelClip(index, entries(modes).length) }}
+							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${thisMode === mode ? 'bg-primary' : 'bg-border grayscale'}`}
+							{...audiobility}
 						>
-							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, modes.length, 2) }}>
+							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, entries(modes).length, 2) }}>
 								<img
 									src={selected.image}
 									className='pointer-events-none absolute inset-0 size-full object-cover'
 								/>
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${selected === mode ? 'opacity-100' : 'opacity-0'}`} />
+								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${thisMode === mode ? 'opacity-100' : 'opacity-0'}`} />
 							</div>
-							{mode.disabled && (
+							{config.disabled && (
 								<div
 									className="pointer-events-none absolute top-1/2 z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-md border bg-card px-w-1 py-h-1 uppercase"
-									style={{ left: `${((index + 0.5) / modes.length) * 100}%` }}
+									style={{ left: `${((index + 0.5) / entries(modes).length) * 100}%` }}
 								>
 									<FontAwesomeIcon icon={faLock} />
 									<span>Locked</span>
