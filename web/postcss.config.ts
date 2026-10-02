@@ -2,7 +2,7 @@
 // 	plugins: {
 // 		'postcss-color-converter': {
 // 			outputColorFormat: 'rgb',
-// 			// ignore: ['oklch']
+// 			ignore: ['oklch']
 // 		},
 // 	},
 // }

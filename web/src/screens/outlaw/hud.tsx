@@ -12,27 +12,29 @@ interface Storage {
 }
 
 const hudVariants = ['health', 'armor', 'lungs'] as const
+const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
 export const Hud = () => {
 	const [state, setState] = useState<Outlaw.Hud>()
-	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>({ vitals: true, weaponary: true })
-	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
+	const [display, setDisplay] = useState<{ vitals: boolean, weaponary: boolean }>(
+		// { vitals: true, weaponary: true }
+	)
 
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setState({
-				health: random(0, 100),
-				armor: random(0, 100),
-				lungs: random(0, 100),
-				weapon: {
-					name: 'Glock 17',
-					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-					clipAmmo: random(0, 17),
-					clipSize: 17,
-					reserveAmmo: random(40, 10000)
-				}
-			})
-		}, 1000)
+		// const interval = setInterval(() => {
+		// 	setState({
+		// 		health: random(0, 100),
+		// 		armor: random(0, 100),
+		// 		lungs: random(0, 100),
+		// 		weapon: {
+		// 			name: 'Glock 17',
+		// 			image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
+		// 			clipAmmo: random(0, 17),
+		// 			clipSize: 17,
+		// 			reserveAmmo: random(40, 10000)
+		// 		}
+		// 	})
+		// }, 1000)
 
 		storage.set<Storage>('hudVariant', 'progress')
 
@@ -48,7 +50,7 @@ export const Hud = () => {
 		return () => {
 			disposes.forEach(dispose => dispose())
 			storage.destroy<Storage>('hudVariant')
-			clearInterval(interval)
+			// clearInterval(interval)
 		}
 	}, [])
 

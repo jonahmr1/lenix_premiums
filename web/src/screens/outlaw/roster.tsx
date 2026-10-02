@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { SmileySadIcon, WaveformIcon } from '@phosphor-icons/react'
+import { entries } from '@lenix/lenix'
 
 const TalkStates: Record<IRoster.TalkState, string> = {
 	on: 'text-blue-400',
@@ -38,17 +39,19 @@ const Officer = ({ callsign, name, duty_state, talk_state }: IRoster.Officer) =>
 )
 
 export const Roster = () => {
-	const [display, setDisplay] = useState<boolean>(true)
-	const [officers, setOfficers] = useState<IRoster.Officers>({
-			1: {
-			playerId: 1,
-			name: 'Marwan Jonah',
-			callsign: 'D-35',
-			duty_state: 'on',
-			talk_state: 'off'
-		}
-	})
-	const [playerId, setPlayerId] = useState<number>(1)
+	const [display, setDisplay] = useState<boolean>(/* true */)
+	const [officers, setOfficers] = useState<IRoster.Officers>(
+		// {
+		// 	1: {
+		// 		playerId: 1,
+		// 		name: 'Marwan Jonah',
+		// 		callsign: 'D-35',
+		// 		duty_state: 'on',
+		// 		talk_state: 'off'
+		// 	}
+		// }
+	)
+	const [playerId, setPlayerId] = useState<number>(/* 1 */)
 
 	useEffect(() => {
 		const disposes = [
@@ -67,7 +70,9 @@ export const Roster = () => {
 		}
 	}, [])
 
-	if (!playerId) return
+	if (!playerId || !officers) return
+
+	const dutyState = officers[playerId].duty_state
 
 	const updateOfficer = (playerId: number, updates: IRoster.OfficerUpdates) => {
 		fetchNui<Outlaw.Requests['updateOfficer']>('roster:updateOfficer', {
@@ -97,9 +102,6 @@ export const Roster = () => {
 		fetchNui<Outlaw.Requests['triggerCallsign']>('roster:callsign', {})
 	}
 
-	if (!playerId) return
-
-	const dutyState = officers[playerId].duty_state
 
 	return (
 		<div
@@ -114,14 +116,14 @@ export const Roster = () => {
 							<div>
 								<Separator orientation='vertical' className='h-4' />
 							</div>
-							<p className='text-muted-foreground cursor-default text-v-1.5'>{Object.entries(officers).length}</p>
+							<p className='text-muted-foreground cursor-default text-v-1.5'>{entries(officers).length}</p>
 						</div>
 					</div>
 				</div>
 				<Separator />
 				<div className='flex-1 min-h-0 overflow-y-auto scrollbar-none flex flex-col items-center'>
-					{Object.entries(officers).length ? (
-						Object.entries(officers).map(([playerId, officer]) => <Officer key={playerId} {...officer} />)
+					{entries(officers).length ? (
+						entries(officers).map(([playerId, officer]) => <Officer key={playerId} {...officer} />)
 					) : (
 						<div className='h-full flex flex-col justify-center items-center gap-5'>
 							<SmileySadIcon className='text-muted-foreground' size={60} />
