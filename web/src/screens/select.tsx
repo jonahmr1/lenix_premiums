@@ -15,7 +15,7 @@ const modes = {
     label: 'Warzone',
     description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
     image: cdn('assets/start/warzone.png'),
-		disabled: true
+		disabled: false
   },
   police: {
     label: 'Law Enforcement',
@@ -78,9 +78,8 @@ export const Select = () => {
 									toast('This mode is locked', { toasterId: 'notify' })
 									return
 								}
-								/* TODO */
+								router.navigate({ to: `/${mode}` })
 								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode })
-								router.navigate({ to: '/outlaw' })
 							}}
 							style={{ clipPath: panelClip(index, entries(modes).length) }}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${mode === modeState ? 'bg-primary' : 'bg-border grayscale'}`}

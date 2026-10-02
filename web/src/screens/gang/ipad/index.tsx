@@ -75,7 +75,7 @@ export const Ipad = () => {
 	const router = useRouter()
 
   const tabletBg = orientation === 'portrait' ? cdn('assets/ipad/portrait.jpg') : cdn('assets/ipad/landscape.jpg')
-  const nav = (app: string) => navigate({ to: '/outlaw/ipad', hash: app })
+  const nav = (app: string) => navigate({ to: '/gang/ipad', hash: app })
 
   useEffect(() => {
     storage.set<Storage>('orientation', orientation)

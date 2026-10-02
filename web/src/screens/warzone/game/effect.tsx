@@ -5,6 +5,7 @@ import { cdn } from '@/lib'
 
 const player = new Howl({
 	src: cdn('assets/competitive/effect/heartbeat.mp3'),
+	html5: true,
 	volume: 0.5
 })
 

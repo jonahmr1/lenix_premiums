@@ -25,7 +25,7 @@ export const Play = () => {
 				<ButtonGroup orientation='vertical' className="h-full justify-end">
 					<Button
 						className="h-auto p-0 relative hover:brightness-75"
-						onClick={() => nav({ to: '/competitive/lobby/mode' })}
+						onClick={() => nav({ to: '/warzone/mode' })}
 					>
 						<img src={MODES[mode].image} className="max-w-w-20 pointer-events-none" />
 						<p className="absolute top-0 bg-background/50 text-foreground w-full">Mode Selected</p>

@@ -4,14 +4,20 @@ import type { Start } from "types"
 import { useLocation, useNavigate } from "@tanstack/react-router"
 import { Pause } from "./pause"
 import { Settings } from "./settings"
+import { Hud } from "./hud"
+
+const dev = true
 
 export function App() {
   const nav = useNavigate()
   const hash = useLocation({ select: location => location.hash })
-	const rootHash = useLocation({ select: (location) => location.pathname }) === '/' && hash
+	const path = useLocation({ select: (location) => location.pathname })
+	const rootHash = path === '/' && hash
+
+	console.log(path)
 
   useEffect(() => {
-    // nav({ to: '/' })
+    dev && nav({ to: '/starting' })
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })
@@ -28,12 +34,13 @@ export function App() {
 
   return (
     <>
-      <img
+      {dev && <img
         src="light.png"
         className="pointer-events-none absolute inset-0 -z-1 size-full object-cover"
-      />
+      />}
       {rootHash === "pause" && <Pause />}
       {rootHash === "settings" && <Settings />}
+      {path !== "warzone" && <Hud />}
     </>
   )
 }
