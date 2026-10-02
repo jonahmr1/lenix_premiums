@@ -1,7 +1,7 @@
 import { oxmysql } from '@overextended/oxmysql'
 import { fullName } from './utils'
 import { database, db } from '../db'
-import type { Competitive } from 'types/index'
+import type { Warzone } from 'types/index'
 
 
 const create = (
@@ -14,7 +14,7 @@ const tables = [
 	create('profiles', table => {
 		table.string('profile_id', 64).primary()
 		table.string('name', 32).notNullable()
-		table.enum('status', ['online', 'offline', 'dnd'] satisfies Competitive.Profile['status'][]).notNullable().defaultTo('online')
+		table.enum('status', ['online', 'offline', 'dnd'] satisfies Warzone.Profile['status'][]).notNullable().defaultTo('online')
 	}),
 	create('friends', table => {
 		table.string('sender_id', 64).notNullable()
@@ -31,7 +31,7 @@ const tables = [
 	create('performances', table => {
 		table.integer('match_id').unsigned().notNullable()
 		table.string('profile_id', 64).notNullable()
-		table.enum('result', ['win', 'loss'] satisfies Competitive.Performance['result'][]).notNullable()
+		table.enum('result', ['win', 'loss'] satisfies Warzone.Performance['result'][]).notNullable()
 		table.integer('kills').unsigned().notNullable().defaultTo(0)
 		table.integer('deaths').unsigned().notNullable().defaultTo(0)
 		table.integer('assists').unsigned().notNullable().defaultTo(0)

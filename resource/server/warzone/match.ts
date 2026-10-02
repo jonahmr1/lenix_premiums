@@ -2,15 +2,15 @@ import { asserts } from "@lenix/lenix";
 import { sleep, triggerClientCallback } from "@overextended/ox_lib/server";
 import { Constants } from "common/config/constants";
 import type { Vec3, Vec4 } from "lenix";
-import type { Competitive } from "types/index";
+import type { Warzone } from "types/index";
 import { Parties } from "./party";
 import { getSpawnPoints, getWallPoints } from "./utils";
 
 export abstract class MatchRegistry {
-  protected static readonly matches = new Set<Competitive.Match>();
+  protected static readonly matches = new Set<Warzone.Match>();
 
-  protected static getClientMatch(client: number): Competitive.Match;
-  protected static getClientMatch(client: number, dontThrow: true): Competitive.Match | undefined;
+  protected static getClientMatch(client: number): Warzone.Match;
+  protected static getClientMatch(client: number, dontThrow: true): Warzone.Match | undefined;
   protected static getClientMatch(client: number, dontThrow = false) {
     for (const match of this.matches) {
       const isClientInMatch = match.teams.some((team) => team.players.some((player) => player.sessionId === client));
@@ -20,7 +20,7 @@ export abstract class MatchRegistry {
     asserts(dontThrow, `Failed to get client<${client}>'s match`);
   }
 
-  protected static getClientTeam(client: number, from?: Competitive.Match["teams"]) {
+  protected static getClientTeam(client: number, from?: Warzone.Match["teams"]) {
     const teams = from ?? this.getClientMatch(client).teams;
     const team = teams.find((team) => team.players.some((player) => player.sessionId === client));
     asserts(team, `Failed to get client<${client}>'s team`);
@@ -28,7 +28,7 @@ export abstract class MatchRegistry {
     return team;
   }
 
-  protected static getPlayerByMatch(client: number, from?: Competitive.Match) {
+  protected static getPlayerByMatch(client: number, from?: Warzone.Match) {
     const match = from ?? this.getClientMatch(client);
     const player = match.teams.flatMap((team) => team.players).find((player) => player.sessionId === client);
     asserts(player, `Failed to get client<${client}>'s match player`);
@@ -36,7 +36,7 @@ export abstract class MatchRegistry {
     return player;
   }
 
-  protected static getClientRoundTeams(client: number, teams: Competitive.Match["teams"]) {
+  protected static getClientRoundTeams(client: number, teams: Warzone.Match["teams"]) {
     const own = teams.find((team) => team.players.some((self) => self.sessionId === client));
 
     const opponent = teams.find((team) => !team.players.some((self) => self.sessionId === client));
@@ -46,13 +46,13 @@ export abstract class MatchRegistry {
     return { own, opponent };
   }
 
-  protected static refreshTeams(teams: Competitive.Match["teams"]) {
+  protected static refreshTeams(teams: Warzone.Match["teams"]) {
     for (const team of teams)
       for (const player of team.players)
         emitNet(
-          "lenix:server:competitive:updateRound",
+          "lenix:server:warzone:updateRound",
           player.sessionId,
-          this.getClientRoundTeams(player.sessionId, teams) satisfies Competitive.CasualMatch,
+          this.getClientRoundTeams(player.sessionId, teams) satisfies Warzone.CasualMatch,
         );
   }
 
@@ -63,8 +63,8 @@ export abstract class MatchRegistry {
   }
 
   protected static getPlayerSpawnPoint(
-    player: Competitive.Match["teams"][number]["players"][number],
-    match: Competitive.Match,
+    player: Warzone.Match["teams"][number]["players"][number],
+    match: Warzone.Match,
   ): Vec4 {
     for (const [i, team] of match.teams.entries()) {
       const playerIndex = team.players.findIndex((self) => self.sessionId === player.sessionId);
@@ -89,7 +89,7 @@ export abstract class MatchRegistry {
 export abstract class Matches extends MatchRegistry {
   private static bucketId = 1;
 
-  static async new(mode: Competitive.Match["mode"], map: Competitive.Match["map"], parties: Competitive.Party[]) {
+  static async new(mode: Warzone.Match["mode"], map: Warzone.Match["map"], parties: Warzone.Party[]) {
     const bucket = this.bucketId++;
     const match = {
       bucket,
@@ -114,7 +114,7 @@ export abstract class Matches extends MatchRegistry {
     for (const team of match.teams)
       for (const player of team.players) {
         SetPlayerRoutingBucket(player.sessionId.toString(), bucket);
-        emitNet("lenix:server:competitive:updateStage", player.sessionId, "loading" satisfies Competitive.Stage);
+        emitNet("lenix:server:warzone:updateStage", player.sessionId, "loading" satisfies Warzone.Stage);
       }
 
     try {
@@ -122,21 +122,21 @@ export abstract class Matches extends MatchRegistry {
         for (const player of team.players) {
           const coords = this.getPlayerSpawnPoint(player, match);
 
-          const loaded = await triggerClientCallback<boolean>(
-            "lenix:server:competitive:getPrepared",
-            player.sessionId,
-            [coords[0], coords[1], coords[2]] satisfies Vec3,
-          );
+          const loaded = await triggerClientCallback<boolean>("lenix:server:warzone:getPrepared", player.sessionId, [
+            coords[0],
+            coords[1],
+            coords[2],
+          ] satisfies Vec3);
           asserts(loaded, `client<${player.sessionId}> was not ready to play this match`);
 
-          emitNet("lenix:server:competitive:updateStage", player.sessionId, "in-game" satisfies Competitive.Stage);
+          emitNet("lenix:server:warzone:updateStage", player.sessionId, "in-game" satisfies Warzone.Stage);
         }
     } catch (error) {
       for (const team of match.teams)
         for (const player of team.players) {
           SetPlayerRoutingBucket(player.sessionId.toString(), 0);
 
-          emitNet("lenix:server:competitive:updateStage", player.sessionId, "lobby" satisfies Competitive.Stage);
+          emitNet("lenix:server:warzone:updateStage", player.sessionId, "lobby" satisfies Warzone.Stage);
         }
       throw error;
     }
@@ -151,13 +151,13 @@ export abstract class Matches extends MatchRegistry {
     this.nextRound(match);
   }
 
-  private static abort(match: Competitive.Match) {
+  private static abort(match: Warzone.Match) {
     if (!this.matches.delete(match)) return;
 
     for (const team of match.teams) {
       for (const player of team.players) {
         SetPlayerRoutingBucket(player.sessionId.toString(), 0);
-        emitNet("lenix:server:competitive:updateStage", player.sessionId, "lobby" satisfies Competitive.Stage);
+        emitNet("lenix:server:warzone:updateStage", player.sessionId, "lobby" satisfies Warzone.Stage);
       }
     }
 
@@ -174,7 +174,7 @@ export abstract class Matches extends MatchRegistry {
     }
   }
 
-  private static startRound(match: Competitive.Match) {
+  private static startRound(match: Warzone.Match) {
     const round = ++match.currentRound;
     const gameMode = Constants.warzone.game_modes[match.mode];
 
@@ -188,10 +188,10 @@ export abstract class Matches extends MatchRegistry {
 
         player.isDead = false;
         emitNet(
-          "lenix:server:competitive:newRound",
+          "lenix:server:warzone:newRound",
           player.sessionId,
-          match.mode satisfies Competitive.Match["mode"],
-          this.getClientRoundTeams(player.sessionId, match.teams) satisfies Competitive.CasualMatch,
+          match.mode satisfies Warzone.Match["mode"],
+          this.getClientRoundTeams(player.sessionId, match.teams) satisfies Warzone.CasualMatch,
           coords satisfies Vec4,
           walls satisfies Vec4[],
         );
@@ -202,7 +202,7 @@ export abstract class Matches extends MatchRegistry {
     setTimeout(() => this.nextRound(match, round), (gameMode.round_time + gameMode.pre_and_post_round_time) * 1000);
   }
 
-  private static nextRound(match: Competitive.Match, lastRound?: number) {
+  private static nextRound(match: Warzone.Match, lastRound?: number) {
     const currentMatch = lastRound ? this.getMatchByBucketId(match.bucket) : match;
     asserts(currentMatch);
 

@@ -1,4 +1,4 @@
-import type { Competitive } from "types/index";
+import type { Warzone } from "types/index";
 import { oxmysql } from "@overextended/oxmysql";
 import { Parties } from "./party";
 import { palette } from "lenix";
@@ -23,68 +23,68 @@ const defaultStats = {
   losses: 0,
 };
 
-onNuiServer<Competitive.Requests["getProfile"]>("competitive:getProfile", async (client) => {
+onNuiServer<Warzone.Requests["getProfile"]>("warzone:getProfile", async (client) => {
   return {
     ...(await fetchProfile(client)),
     sessionId: client,
   };
 });
 
-onNuiServer<Competitive.Requests["getProfiles"]>("competitive:getProfiles", async () => {
+onNuiServer<Warzone.Requests["getProfiles"]>("warzone:getProfiles", async () => {
   return await getProfiles();
 });
 
-onNuiServer<Competitive.Requests["getParty"]>("competitive:getParty", async (client) => {
+onNuiServer<Warzone.Requests["getParty"]>("warzone:getParty", async (client) => {
   return Parties.getParty(client);
 });
 
-onNuiServer<Competitive.Requests["getGamerProfile"]>("competitive:getGamerProfile", async (client) => {
+onNuiServer<Warzone.Requests["getGamerProfile"]>("warzone:getGamerProfile", async (client) => {
   return (
     Parties.getProfileFromParties(client, undefined, true) ?? { ...(await fetchProfile(client)), sessionId: client }
   );
 });
 
-onNuiServer<Competitive.Requests["acceptInvite"]>("competitive:acceptInvite", (client, { inviter }) => {
+onNuiServer<Warzone.Requests["acceptInvite"]>("warzone:acceptInvite", (client, { inviter }) => {
   return (Parties.acceptInvite(client, inviter), null);
 });
 
-onNuiServer<Competitive.Requests["setPartySize"]>("competitive:setPartySize", (client, { size }) => {
+onNuiServer<Warzone.Requests["setPartySize"]>("warzone:setPartySize", (client, { size }) => {
   return (Parties.setSize(client, size), null);
 });
 
-onNuiServer<Competitive.Requests["updateReadiness"]>("competitive:updateReadiness", async (client, { status }) => {
+onNuiServer<Warzone.Requests["updateReadiness"]>("warzone:updateReadiness", async (client, { status }) => {
   return (await Parties.updateReadiness(client, status), null);
 });
 
-onNuiServer<Competitive.Requests["leaveParty"]>("competitive:leaveParty", async (client) => {
+onNuiServer<Warzone.Requests["leaveParty"]>("warzone:leaveParty", async (client) => {
   return (await Parties.leaveParty(client), null);
 });
 
-onNuiServer<Competitive.Requests["invitePlayer"]>("competitive:invitePlayer", (client, { invited }) => {
+onNuiServer<Warzone.Requests["invitePlayer"]>("warzone:invitePlayer", (client, { invited }) => {
   return (Parties.invite(client, invited), null);
 });
 
-onNuiServer<Competitive.Requests["ignoreInvites"]>("competitive:ignoreInvites", (client, { inviter }) => {
+onNuiServer<Warzone.Requests["ignoreInvites"]>("warzone:ignoreInvites", (client, { inviter }) => {
   return (Parties.ignoreInvites(client, inviter), null);
 });
 
-onNuiServer<Competitive.Requests["kickProfile"]>("competitive:kickProfile", async (client, { profile }) => {
+onNuiServer<Warzone.Requests["kickProfile"]>("warzone:kickProfile", async (client, { profile }) => {
   return (await Parties.kick(client, profile), null);
 });
 
-onNuiServer<Competitive.Requests["updateMatchmaking"]>("competitive:updateMatchmaking", async (client, { status }) => {
+onNuiServer<Warzone.Requests["updateMatchmaking"]>("warzone:updateMatchmaking", async (client, { status }) => {
   return (await Parties.updateMatchmaking(client, status), null);
 });
 
-onNuiServer<Competitive.Requests["transferLeadership"]>("competitive:transferPartyLeadership", (client, { leader }) => {
+onNuiServer<Warzone.Requests["transferLeadership"]>("warzone:transferPartyLeadership", (client, { leader }) => {
   return (Parties.transferLeadership(client, leader), null);
 });
 
-onNuiServer<Competitive.Requests["updatePartyGameMode"]>("competitive:updatePartyGameMode", (client, { mode }) => {
+onNuiServer<Warzone.Requests["updatePartyGameMode"]>("warzone:updatePartyGameMode", (client, { mode }) => {
   return (Parties.updateGameMode(client, mode), null);
 });
 
-onNuiServer<Competitive.Requests["getMatches"]>("competitive:getMatches", async (client) => {
+onNuiServer<Warzone.Requests["getMatches"]>("warzone:getMatches", async (client) => {
   const profileId = getProfileId(client);
 
   const selectedCols = ["match_id", "result", "kills", "deaths", "assists"] as const;
@@ -124,7 +124,9 @@ onNuiServer<Competitive.Requests["getMatches"]>("competitive:getMatches", async 
           matchPerformance.assists * Constants.warzone.score_weights.assist +
           matchPerformance.deaths * Constants.warzone.score_weights.death +
           matchPerformance.kills * Constants.warzone.score_weights.kill +
-          (matchPerformance.result === "win" ? Constants.warzone.score_weights.win : Constants.warzone.score_weights.loss),
+          (matchPerformance.result === "win"
+            ? Constants.warzone.score_weights.win
+            : Constants.warzone.score_weights.loss),
         result: matchPerformance.result,
         stats: {
           kills: matchPerformance.kills,
@@ -138,7 +140,7 @@ onNuiServer<Competitive.Requests["getMatches"]>("competitive:getMatches", async 
   }
 });
 
-onNuiServer<Competitive.Requests["getFriends"]>("competitive:getFriends", async (client) => {
+onNuiServer<Warzone.Requests["getFriends"]>("warzone:getFriends", async (client) => {
   const selectedCols = ["sender_id", "receiver_id", "status"] as const;
   const profile_id = getProfileId(client);
 
@@ -176,7 +178,7 @@ onNuiServer<Competitive.Requests["getFriends"]>("competitive:getFriends", async 
   }
 });
 
-onNuiServer<Competitive.Requests["setStatus"]>("competitive:setStatus", async (client, { status }) => {
+onNuiServer<Warzone.Requests["setStatus"]>("warzone:setStatus", async (client, { status }) => {
   const profileId = getProfileId(client);
 
   try {
@@ -192,7 +194,7 @@ onNuiServer<Competitive.Requests["setStatus"]>("competitive:setStatus", async (c
   }
 });
 
-onNuiServer<Competitive.Requests["getStats"]>("competitive:getStats", async (client) => {
+onNuiServer<Warzone.Requests["getStats"]>("warzone:getStats", async (client) => {
   const profile_id = getProfileId(client);
 
   const performances = (await oxmysql.query<
@@ -209,7 +211,7 @@ onNuiServer<Competitive.Requests["getStats"]>("competitive:getStats", async (cli
   return getStatsDetails(performances);
 });
 
-onNuiServer<Competitive.Requests["party"]["getStats"]>("competitive:party:getStats", async (_client, { profiles }) => {
+onNuiServer<Warzone.Requests["party"]["getStats"]>("warzone:party:getStats", async (_client, { profiles }) => {
   const selectedCols = ["profile_id", ...performancesCols] as const;
   try {
     const performances = (await oxmysql.query<
@@ -245,9 +247,9 @@ onNuiServer<Competitive.Requests["party"]["getStats"]>("competitive:party:getSta
   }
 });
 
-onNuiServer<Competitive.Requests["getLeaderboard"]>("competitive:getLeaderboard", async () => {
+onNuiServer<Warzone.Requests["getLeaderboard"]>("warzone:getLeaderboard", async () => {
   const selectedCols = ["match_id", "profile_id", "result", "kills", "deaths", "assists"] as const;
-  const performances: Competitive.Performance[] = (await oxmysql.query<
+  const performances: Warzone.Performance[] = (await oxmysql.query<
     {
       match_id: number;
       profile_id: string;
@@ -266,8 +268,8 @@ onNuiServer<Competitive.Requests["getLeaderboard"]>("competitive:getLeaderboard"
   const profiles = await getProfiles();
 
   const statsByProfile = new Map<
-    Competitive.Profile["profile_id"],
-    Pick<Competitive.Stats, "kills" | "deaths" | "assists" | "wins" | "losses">
+    Warzone.Profile["profile_id"],
+    Pick<Warzone.Stats, "kills" | "deaths" | "assists" | "wins" | "losses">
   >();
 
   //@ts-expect-error

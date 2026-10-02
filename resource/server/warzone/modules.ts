@@ -1,13 +1,13 @@
 import { oxmysql } from "@overextended/oxmysql"
 import { fullName, getProfileId } from "./utils"
-import type { Competitive } from "types/index"
+import type { Warzone } from "types/index"
 import { asserts } from "@lenix/lenix"
 
 
 export const profileCols = ['profile_id', 'name', 'status'] as const
 
 
-export const fetchProfile = async (client: number): Promise<Competitive.Profile> => {
+export const fetchProfile = async (client: number): Promise<Warzone.Profile> => {
 	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
 	const profileId = getProfileId(client)
 
@@ -15,7 +15,7 @@ export const fetchProfile = async (client: number): Promise<Competitive.Profile>
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? LIMIT 1`
 
 	try {
-		const profile = await oxmysql.single<Pick<Competitive.Profile, typeof selectedCols[number]>>(
+		const profile = await oxmysql.single<Pick<Warzone.Profile, typeof selectedCols[number]>>(
 			selectProfile,
 			[profileId]
 		)
@@ -40,12 +40,12 @@ export const fetchProfile = async (client: number): Promise<Competitive.Profile>
 	}
 }
 
-export const getBucketProfiles = (profiles: Omit<Competitive.Profile, 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
+export const getBucketProfiles = (profiles: Omit<Warzone.Profile, 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
 	...profile,
 	avatar: null
 })))
 
-export const getProfiles = async (): Promise<Competitive.Profile[]> => {
+export const getProfiles = async (): Promise<Warzone.Profile[]> => {
 	const profiles = await oxmysql.query<{
 		profile_id: string;
 		name: string;
@@ -57,7 +57,7 @@ export const getProfiles = async (): Promise<Competitive.Profile[]> => {
 	return await getBucketProfiles(profiles)
 }
 
-export const getStatsDetails = (stats: Competitive.APIs['getStats']) => {
+export const getStatsDetails = (stats: Warzone.APIs['getStats']) => {
 	const totals = stats.reduce(
 		(acc, stat) => {
 			acc.kills += stat.kills

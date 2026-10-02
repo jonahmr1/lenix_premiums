@@ -1,251 +1,251 @@
-import type { Event, Request } from 'lenix'
-import type { Constants } from '../resource/common/config/constants'
+import type { Event, Request } from "lenix";
+import type { Constants } from "../resource/common/config/constants";
 
 export type AtLeastOne<T> = {
-	[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
-}[keyof T]
+  [K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>;
+}[keyof T];
 
-export namespace Competitive {
-	export interface Events {
-		open: Event<'competitive:open', []>
-		playerInvited: Event<'competitive:playerInvited', [GamerProfile]>
-		updateParty: Event<'competitive:updateParty', [Party]>
-		updateStage: Event<'competitive:updateStage', [Stage]>
-		newRound: Event<'competitive:newRound', [Party['gameMode'], CasualMatch]>
-		updateRound: Event<'competitive:updateRound', [CasualMatch]>
-	}
+export namespace Warzone {
+  export interface Events {
+    open: Event<"warzone:open", []>;
+    playerInvited: Event<"warzone:playerInvited", [GamerProfile]>;
+    updateParty: Event<"warzone:updateParty", [Party]>;
+    updateStage: Event<"warzone:updateStage", [Stage]>;
+    newRound: Event<"warzone:newRound", [Party["gameMode"], CasualMatch]>;
+    updateRound: Event<"warzone:updateRound", [CasualMatch]>;
+  }
 
-	export interface Requests {
-		getProfile: Request<Profile, 'competitive:getProfile'>
-		getGamerProfile: Request<GamerProfile, 'competitive:getGamerProfile'>
-		getLeaderboard: Request<Leaderboard, 'competitive:getLeaderboard'>
-		getParty: Request<Party, 'competitive:getParty'>
-		setPartySize: Request<null, 'competitive:setPartySize', { size: number }>
-		party: {
-			getStats: Request<Record<string, Stats>, 'competitive:party:getStats', { profiles: string[] }>
-		}
-		getMatches: Request<Player['Match'][], 'competitive:getMatches'>
-		getStats: Request<Stats, 'competitive:getStats'>
-		getFriends: Request<Profile[], 'competitive:getFriends'>
-		setStatus: Request<true, 'competitive:setStatus', { status: GamerProfile['status'] }>
-		getProfiles: Request<Profile[], 'competitive:getProfiles'>
-		invitePlayer: Request<null, 'competitive:invitePlayer', { invited: number }>
-		acceptInvite: Request<null, 'competitive:acceptInvite', { inviter: number }>
-		ignoreInvites: Request<null, 'competitive:ignoreInvites', { inviter: number }>
-		updateReadiness: Request<null, 'competitive:updateReadiness', { status: boolean }>
-		leaveParty: Request<null, 'competitive:leaveParty'>
-		kickProfile: Request<null, 'competitive:kickProfile', { profile: number }>
-		updateMatchmaking: Request<null, 'competitive:updateMatchmaking', { status: Party['status'] }>
-		transferLeadership: Request<null, 'competitive:transferPartyLeadership', { leader: number }>
-		updatePartyGameMode: Request<null, 'competitive:updatePartyGameMode', { mode: Party['gameMode'] }>
-	}
+  export interface Requests {
+    getProfile: Request<Profile, "warzone:getProfile">;
+    getGamerProfile: Request<GamerProfile, "warzone:getGamerProfile">;
+    getLeaderboard: Request<Leaderboard, "warzone:getLeaderboard">;
+    getParty: Request<Party, "warzone:getParty">;
+    setPartySize: Request<null, "warzone:setPartySize", { size: number }>;
+    party: {
+      getStats: Request<Record<string, Stats>, "warzone:party:getStats", { profiles: string[] }>;
+    };
+    getMatches: Request<Player["Match"][], "warzone:getMatches">;
+    getStats: Request<Stats, "warzone:getStats">;
+    getFriends: Request<Profile[], "warzone:getFriends">;
+    setStatus: Request<true, "warzone:setStatus", { status: GamerProfile["status"] }>;
+    getProfiles: Request<Profile[], "warzone:getProfiles">;
+    invitePlayer: Request<null, "warzone:invitePlayer", { invited: number }>;
+    acceptInvite: Request<null, "warzone:acceptInvite", { inviter: number }>;
+    ignoreInvites: Request<null, "warzone:ignoreInvites", { inviter: number }>;
+    updateReadiness: Request<null, "warzone:updateReadiness", { status: boolean }>;
+    leaveParty: Request<null, "warzone:leaveParty">;
+    kickProfile: Request<null, "warzone:kickProfile", { profile: number }>;
+    updateMatchmaking: Request<null, "warzone:updateMatchmaking", { status: Party["status"] }>;
+    transferLeadership: Request<null, "warzone:transferPartyLeadership", { leader: number }>;
+    updatePartyGameMode: Request<null, "warzone:updatePartyGameMode", { mode: Party["gameMode"] }>;
+  }
 
-	export interface APIs {
-		getStats: (Pick<Stats, 'kills' | 'assists' | 'deaths'> & { result: 'win' | 'loss' })[]
-		getProfilesStats: Record<string, APIs['getStats'][number]>
-		prepareForMatch: boolean
-	}
+  export interface APIs {
+    getStats: (Pick<Stats, "kills" | "assists" | "deaths"> & { result: "win" | "loss" })[];
+    getProfilesStats: Record<string, APIs["getStats"][number]>;
+    prepareForMatch: boolean;
+  }
 
-	export interface Player {
-		Friend: GamerProfile['profile_id']
-		Match: {
-			match_id: number
-			playedAt: number
-			map: GameMap
-			result: Performance['result']
-			delta: number
-			stats: {
-				kills: Stats['kills']
-				deaths: Stats['deaths']
-				assits: Stats['assists']
-			}
-		}
-	}
+  export interface Player {
+    Friend: GamerProfile["profile_id"];
+    Match: {
+      match_id: number;
+      playedAt: number;
+      map: GameMap;
+      result: Performance["result"];
+      delta: number;
+      stats: {
+        kills: Stats["kills"];
+        deaths: Stats["deaths"];
+        assits: Stats["assists"];
+      };
+    };
+  }
 
-	export type Stats = {
-		kills: number
-		deaths: number
-		assists: number
-		wins: number
-		losses: number
-		winRate: number
-		killsDeathsRatio: number
-		matches: number
-	}
+  export type Stats = {
+    kills: number;
+    deaths: number;
+    assists: number;
+    wins: number;
+    losses: number;
+    winRate: number;
+    killsDeathsRatio: number;
+    matches: number;
+  };
 
-	export interface Notification {
-		id: string
-		type: 'party_invite'
-		title: string
-		description: string
-		createdAt: number
-		author: {
-			avatar: GamerProfile['avatar']
-		}
-	}
-	export interface Performance {
-		match_id: number
-		profile_id: string
-		result: 'win' | 'loss'
-		kills: number
-		deaths: number
-		assists: number
-	}
+  export interface Notification {
+    id: string;
+    type: "party_invite";
+    title: string;
+    description: string;
+    createdAt: number;
+    author: {
+      avatar: GamerProfile["avatar"];
+    };
+  }
+  export interface Performance {
+    match_id: number;
+    profile_id: string;
+    result: "win" | "loss";
+    kills: number;
+    deaths: number;
+    assists: number;
+  }
 
-	export type GamerProfile = Omit<Profile, 'status'> & {
-		sessionId: number
-		status: Profile['status'] | 'in_game'
-	}
+  export type GamerProfile = Omit<Profile, "status"> & {
+    sessionId: number;
+    status: Profile["status"] | "in_game";
+  };
 
-	export type Profile = {
-		profile_id: string
-		name: string
-		avatar: string | null
-		status: 'online' | 'offline' | 'dnd'
-	}
+  export type Profile = {
+    profile_id: string;
+    name: string;
+    avatar: string | null;
+    status: "online" | "offline" | "dnd";
+  };
 
-	export type Party = {
-		profiles: (GamerProfile & {
-			ready: boolean
-		})[]
-		leader: GamerProfile['sessionId']
-		roomAvailable: number
-		status: 'searching' | 'idle' | 'found'
-		gameMode: Match['mode']
-	}
+  export type Party = {
+    profiles: (GamerProfile & {
+      ready: boolean;
+    })[];
+    leader: GamerProfile["sessionId"];
+    roomAvailable: number;
+    status: "searching" | "idle" | "found";
+    gameMode: Match["mode"];
+  };
 
-	export type Match = {
-		bucket: number
-		mode: GameMode
-		map: GameMap
-		playedAt: number
-		currentRound: number
-		teams: {
-			roundsWon: number
-			players: {
-				isDead: boolean
-				avatar: string | null
-				sessionId: number
-			}[]
-		}[]
-		parties: {
-			party: Party
-			lastStatus: Record<string, GamerProfile['status']>
-		}[]
-	}
+  export type Match = {
+    bucket: number;
+    mode: GameMode;
+    map: GameMap;
+    playedAt: number;
+    currentRound: number;
+    teams: {
+      roundsWon: number;
+      players: {
+        isDead: boolean;
+        avatar: string | null;
+        sessionId: number;
+      }[];
+    }[];
+    parties: {
+      party: Party;
+      lastStatus: Record<string, GamerProfile["status"]>;
+    }[];
+  };
 
-	export type Leaderboard = {
-		place: number
-		score: number
-		profile_id: GamerProfile['profile_id']
-		name: GamerProfile['name']
-		avatar: GamerProfile['avatar']
-	}[]
+  export type Leaderboard = {
+    place: number;
+    score: number;
+    profile_id: GamerProfile["profile_id"];
+    name: GamerProfile["name"];
+    avatar: GamerProfile["avatar"];
+  }[];
 
-	export type GameModes = typeof Constants.warzone.game_modes
-	export type GameMaps = typeof Constants.warzone.game_maps
-	export type GameMode = keyof GameModes
-	export type GameMap = keyof GameMaps
+  export type GameModes = typeof Constants.warzone.game_modes;
+  export type GameMaps = typeof Constants.warzone.game_maps;
+  export type GameMode = keyof GameModes;
+  export type GameMap = keyof GameMaps;
 
-	export type Stage = 'lobby' | 'loading' | 'in-game'
+  export type Stage = "lobby" | "loading" | "in-game";
 
-	export type CasualMatch = Record<'own' | 'opponent', Match['teams'][number]>
+  export type CasualMatch = Record<"own" | "opponent", Match["teams"][number]>;
 }
 
 export namespace Start {
-	export interface Events {
-		modeSelection: Event<'start:modeSelection', []>
-		pause: Event<'start:pause', []>
-	}
-	export interface Requests {
-		selectMode: Request<null, 'start:selectMode', { mode: Mode }>
-		exitGame: Request<null, 'start:exitGame'>
-		logout: Request<null, 'start:logout'>
-	}
-	export type Mode = 'warzone' | 'police' | 'gang' | 'justice' | 'race'
+  export interface Events {
+    modeSelection: Event<"start:modeSelection", []>;
+    pause: Event<"start:pause", []>;
+  }
+  export interface Requests {
+    selectMode: Request<null, "start:selectMode", { mode: Mode }>;
+    exitGame: Request<null, "start:exitGame">;
+    logout: Request<null, "start:logout">;
+  }
+  export type Mode = "warzone" | "police" | "gang" | "justice" | "race";
 }
 
 export namespace Outlaw {
-	export interface Events {
-		displayHud: Event<'hud:display', [{ vitals: boolean, weaponary: boolean }]>
-		updateHud: Event<'hud:update', [Hud]>
-		addOfficer: Event<'roster:addOfficer', [Roster.Officer]>
-		refreshOfficers: Event<'roster:refreshOfficers', [Roster.Officers]>
-		displayRoster: Event<'roster:display', [boolean, number]>
-		updateTopscoreData: Event<'topscore:updateData', [Topscore.Data | null]>
-		displayIpad: Event<'ipad:display', []>
-	}
+  export interface Events {
+    displayHud: Event<"hud:display", [{ vitals: boolean; weaponary: boolean }]>;
+    updateHud: Event<"hud:update", [Hud]>;
+    addOfficer: Event<"roster:addOfficer", [Roster.Officer]>;
+    refreshOfficers: Event<"roster:refreshOfficers", [Roster.Officers]>;
+    displayRoster: Event<"roster:display", [boolean, number]>;
+    updateTopscoreData: Event<"topscore:updateData", [Topscore.Data | null]>;
+    displayIpad: Event<"ipad:display", []>;
+  }
 
-	export interface Requests {
-		updateOfficer: Request<null, 'roster:updateOfficer', Roster.PartialOfficer>
-		triggerCallsign: Request<null, 'roster:callsign'>
-	}
+  export interface Requests {
+    updateOfficer: Request<null, "roster:updateOfficer", Roster.PartialOfficer>;
+    triggerCallsign: Request<null, "roster:callsign">;
+  }
 
-	export interface Criminial {
-		success: boolean
-		error?: string
-		item?: string
-		amount?: number
-		response?: string
-	}
+  export interface Criminial {
+    success: boolean;
+    error?: string;
+    item?: string;
+    amount?: number;
+    response?: string;
+  }
 
-	export type Robbery = {
-		leader: number
-		members: number[]
-	}
+  export type Robbery = {
+    leader: number;
+    members: number[];
+  };
 
-	export type Hud = {
-		health: number
-		armor: number
-		lungs: number
-		weapon: {
-			name: string,
-			image: string,
-			clipAmmo: number,
-			clipSize: number,
-			reserveAmmo: number
-		}
-	}
+  export type Hud = {
+    health: number;
+    armor: number;
+    lungs: number;
+    weapon: {
+      name: string;
+      image: string;
+      clipAmmo: number;
+      clipSize: number;
+      reserveAmmo: number;
+    };
+  };
 }
 
 export namespace Roster {
-	export type DutyState = 'on' | 'off' | 'break'
-	export type TalkState = 'on' | 'off'
+  export type DutyState = "on" | "off" | "break";
+  export type TalkState = "on" | "off";
 
-	export interface Officer {
-		playerId: number
-		callsign: string
-		name: string
-		duty_state: DutyState
-		talk_state: TalkState
-	}
-	export type Officers = Record<number, Officer>
+  export interface Officer {
+    playerId: number;
+    callsign: string;
+    name: string;
+    duty_state: DutyState;
+    talk_state: TalkState;
+  }
+  export type Officers = Record<number, Officer>;
 
-	export type OfficerUpdates = AtLeastOne<Omit<Officer, 'playerId'>>
+  export type OfficerUpdates = AtLeastOne<Omit<Officer, "playerId">>;
 
-	export type PartialOfficer = {
-		playerId: Officer['playerId']
-	} & OfficerUpdates
+  export type PartialOfficer = {
+    playerId: Officer["playerId"];
+  } & OfficerUpdates;
 }
 
 export namespace Topscore {
-	export type Data = Record<
-		1 | 2 | 3,
-		{
-			scale: number
-			bottom: number
-			left: number
-			visible: boolean
-			name: string
-			avatar: string
-			stats: {
-				kills: number
-				deaths: number
-				wins: number
-				kd: number
-			}
-		}
-	>
+  export type Data = Record<
+    1 | 2 | 3,
+    {
+      scale: number;
+      bottom: number;
+      left: number;
+      visible: boolean;
+      name: string;
+      avatar: string;
+      stats: {
+        kills: number;
+        deaths: number;
+        wins: number;
+        kd: number;
+      };
+    }
+  >;
 
-	export type ContextData = Record<1 | 2 | 3, Omit<Data[1], 'scale' | 'bottom' | 'left' | 'visible'>>
+  export type ContextData = Record<1 | 2 | 3, Omit<Data[1], "scale" | "bottom" | "left" | "visible">>;
 }

@@ -2,6 +2,7 @@ import { oxmysql } from "@overextended/oxmysql"
 import { database, db } from "../db"
 import { fullName } from "./utils"
 import { asserts } from "@lenix/lenix"
+import type { Start } from "types/index"
 
 
 const create = (
@@ -12,7 +13,7 @@ const create = (
 const tables = [
 	create('modes', table => {
 		table.integer('charId').unsigned().primary()
-		table.enum('type', ['competitive', 'outlaw']).notNullable()
+		table.enum('type', ['warzone', 'police', 'gang', 'justice', 'race'] satisfies Start.Mode[]).notNullable()
 
 		// table
 		// 	.foreign('charId')

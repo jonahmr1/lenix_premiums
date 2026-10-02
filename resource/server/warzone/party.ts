@@ -1,11 +1,11 @@
 import { asserts, random } from "@lenix/lenix";
-import type { Competitive } from "types/index";
+import type { Warzone } from "types/index";
 import { fetchProfile } from "./modules";
 import { Constants } from "common/config/constants";
 import { palette } from "lenix";
 import { Matches } from "./match";
 
-type Party = Competitive.Party;
+type Party = Warzone.Party;
 
 abstract class PartyRegistry {
   private static readonly parties = new Set<Party>();
@@ -80,7 +80,7 @@ abstract class PartyRegistry {
   }
 
   public static refreshPartyProfiles(party: Party) {
-    for (const profile of party.profiles) emitNet("lenix:server:competitive:updateParty", profile.sessionId, party);
+    for (const profile of party.profiles) emitNet("lenix:server:warzone:updateParty", profile.sessionId, party);
   }
 }
 
@@ -121,7 +121,7 @@ abstract class FriendShip extends PartyRegistry {
         invites.delete(invited);
       }, Constants.warzone.invites_spam_period * 1000);
 
-      emitNet("lenix:server:competitive:getInvited", invited, profile satisfies Competitive.GamerProfile);
+      emitNet("lenix:server:warzone:getInvited", invited, profile satisfies Warzone.GamerProfile);
     } catch (e) {
       console.log(palette("red", String(e)));
     }
@@ -181,7 +181,7 @@ abstract class FriendShip extends PartyRegistry {
 }
 
 export abstract class Parties extends FriendShip {
-  private static partiesInQueue = new Map<Competitive.Party["gameMode"], Party | null>();
+  private static partiesInQueue = new Map<Warzone.Party["gameMode"], Party | null>();
 
   static async getParty(client: number) {
     try {
@@ -302,7 +302,7 @@ export abstract class Parties extends FriendShip {
 
     const gameMode = Constants.warzone.game_modes[partyInQueue.gameMode];
     const allowedMaps = gameMode.maps_allowed;
-    const map = allowedMaps[random(0, allowedMaps.length - 1)] as Competitive.GameMap;
+    const map = allowedMaps[random(0, allowedMaps.length - 1)] as Warzone.GameMap;
     asserts(map, `Failed to find a map for a found match, expected 'string', got ${map}`);
 
     const parties = [partyInQueue, party];
