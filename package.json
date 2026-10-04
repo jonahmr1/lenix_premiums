@@ -34,7 +34,7 @@
 		"obf.s": "bunx javascript-obfuscator dist/server.js --output dist/server.js --config obfuscator.config.json",
 		"obf.n": "for f in dist/web/assets/index-*.js; do bunx javascript-obfuscator \"$f\" --output \"$f\" --config obfuscator.config.json; done",
 		"obf": "bun obf.c && bun obf.s && bun obf.n",
-		"i": "bun i && cd web && bun run i"
+		"i": "bun i && cd web && bun i"
 	},
 	"dependencies": {
 		"@lenix/lenix": "npm:@jsr/lenix__lenix@1.8.22",

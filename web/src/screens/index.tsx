@@ -7,7 +7,7 @@ import { Settings } from "./settings"
 import { Hud } from "./hud"
 import type { FileRoutesByTo } from "@/routeTree.gen"
 
-const dev = true
+const dev = false
 
 const hudAllowedModes: ({
 	[K in keyof FileRoutesByTo]:
