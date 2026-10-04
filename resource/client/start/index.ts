@@ -61,6 +61,4 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 	return repeat(() => character, character => character !== null, 500)
 })
 
-api.lenix_premiums?.chartselect?.([])
-
 pool(DisableFrontendThisFrame)
