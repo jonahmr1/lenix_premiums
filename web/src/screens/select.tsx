@@ -23,17 +23,17 @@ const modes = {
     image: cdn('assets/start/law.png'),
 		disabled: false
   },
+	gang: {
+		label: 'Crime',
+		description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
+		image: cdn('assets/start/crime.png'),
+		disabled: false
+	},
   justice: {
     label: 'Undercover',
     description: 'Work in the shadows. Take on covert operations, investigate dangerous organizations, gather information, and operate undercover.',
     image: cdn('assets/start/undercover.jpeg'),
 		disabled: true
-  },
-  gang: {
-    label: 'Crime',
-    description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
-    image: cdn('assets/start/crime.png'),
-		disabled: false
   },
   race: {
     label: 'Pursuit',
