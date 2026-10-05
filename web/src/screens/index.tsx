@@ -47,7 +47,6 @@ export function App() {
       {rootHash === "pause" && <Pause />}
       {rootHash === "settings" && <Settings />}
       {hudAllowedModes.some(route => route === path.split('/')[1]) && <Hud />}
-			<div className="h-screen w-full bg-background/70">Abu 6s</div>
     </>
   )
 }
