@@ -6,6 +6,7 @@ import { Pause } from "./pause"
 import { Settings } from "./settings"
 import { Hud } from "./hud"
 import type { FileRoutesByTo } from "@/routeTree.gen"
+import { blurNui } from "@/lib"
 
 const dev = false
 
@@ -19,11 +20,12 @@ const hudAllowedModes: ({
 export function App() {
   const nav = useNavigate()
   const hash = useLocation({ select: location => location.hash })
-	const path = useLocation({ select: (location) => location.pathname })
+	const path = useLocation({ select: location => location.pathname })
 	const rootHash = path === '/' && hash
 
   useEffect(() => {
-    dev && nav({ to: '/starting' })
+    if (dev) nav({ to: '/starting' })
+		
     const disposes = [
       onNuiEmit<Start.Events["modeSelection"]>("start:modeSelection", () => {
         nav({ to: "/starting" })
@@ -37,6 +39,11 @@ export function App() {
 
     return () => disposes.forEach((dispose) => dispose())
   }, [])
+
+	useEffect(() => {
+		if (rootHash === 'pause') blurNui()
+		if (rootHash === 'settings') blurNui()
+	}, [rootHash])
 
   return (
     <>

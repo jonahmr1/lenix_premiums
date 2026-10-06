@@ -13,7 +13,7 @@ import { Layout } from "@/components/layout"
 import { ButtonGroup } from "@/components/ui/button-group"
 import { Header } from "@/components/header"
 import { motion } from "motion/react"
-import { anim, blurNui, unBlueNui } from "@/lib"
+import { anim, unBlueNui } from "@/lib"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useNavigate } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
@@ -27,6 +27,7 @@ export const Pause = () => {
       onClick: () => {
         unFocusNui()
 				nav({ to: '/', hash: '' })
+				unBlueNui()
       },
     },
     {
@@ -45,15 +46,7 @@ export const Pause = () => {
     },
   ]
 
-  useEffect(() => {
-		const dispose = onKeyDown("Escape", () => {
-			buttons[0].onClick()
-			unBlueNui()
-		})
-		blurNui()
-		
-		return dispose
-	}, [])
+  useEffect(() => onKeyDown("Escape", buttons[0].onClick), [])
 
   return (
     <motion.div
