@@ -15,7 +15,7 @@ const modes = {
     label: 'Warzone',
     description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
     image: cdn('assets/start/warzone.png'),
-		disabled: true
+		disabled: false
   },
   police: {
     label: 'Law Enforcement',
