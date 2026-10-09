@@ -50,13 +50,13 @@ export function Loading() {
 		stage: 'loadingGameData'
 	})
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
-	const [preloaded, setPreloaded] = useState({ asset: 'init', done: false })
+	const [preloaded, setPreloaded] = useState({ asset: 'Starting downloads…', loaded: 0, done: false })
 
   useEffect(() => {
 		focusNui()
 
 		if (!preloaded.done) {
-			setTimeout(async () => {
+			const timeout = setTimeout(async () => {
 				await Promise.allSettled(
 					assets.map(async src => {
 						const response = await fetch(cdn(src), { cache: 'reload' })
@@ -64,13 +64,13 @@ export function Loading() {
 						if (!response.ok) throw `Failed to preload: ${src}`
 						
 						await response.arrayBuffer()
-						console.log(src)
-						setPreloaded({ asset: src, done: false })
+						setPreloaded(prev => ({ ...prev, asset: src, loaded: prev.loaded + 1 }))
+							console.log(src)
 					}),
 				)
 				setPreloaded(prev => ({ ...prev, done: true }))
 			})
-			return
+			return () => clearTimeout(timeout)
 		}
 
 		const interval = setInterval(() => {
@@ -109,16 +109,34 @@ export function Loading() {
 		}
 	}, [preloaded.done])
 
+	const preloadProgress = assets.length ? preloaded.loaded / assets.length * 100 : 100
+
 	if (!preloaded.done) return (
-		<div className="h-screen bg-background relative overflow-hidden">
-			<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
-				<div className="w-[67vw] space-y-[1vh] flex flex-col items-center">
-					<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
-						<p>{preloaded.asset}</p>
-						<Spinner />
+		<div className="relative h-screen overflow-hidden bg-neutral-950 text-neutral-100">
+			<Layout className="relative flex size-full items-center justify-center bg-[radial-gradient(ellipse_at_center,#17191b_0%,transparent_70%)]">
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					// transition={{ duration: 2, delay: 1 }}
+					className="w-full max-w-2xl text-center"
+				>
+					<h1 className="text-v-4 leading-tight font-extrabold uppercase italic">Preloading the assets</h1>
+					<p className="mt-h-2 text-sm font-normal tracking-wide text-neutral-400">Downloading the files needed to get started.</p>
+					<div className="mt-h-5 space-y-h-1.5">
+						<div className="flex items-center justify-between gap-4 text-sm font-normal">
+							<p className="truncate">{preloaded.asset.split('/').pop()}</p>
+							<Spinner className="size-v-2" />
+						</div>
+						<Progress value={preloadProgress} className="h-h-0.5 bg-neutral-800 **:data-[slot=progress-indicator]:bg-neutral-100" />
+						<div className="flex justify-between text-xs font-normal tracking-wide text-neutral-400">
+							<p>{preloaded.loaded} / {assets.length} files</p>
+							<p>{Math.floor(preloadProgress)}%</p>
+						</div>
 					</div>
-					<p className="text-v-1 font-medium italic uppercase">Please keep the game open while assets load.</p>
-				</div>
+					<p className="mt-h-5 text-v-1 font-normal tracking-wide text-neutral-400" role="status">
+						Please keep the game open while assets load.
+					</p>
+				</motion.div>
 			</Layout>
 		</div>
 	)
