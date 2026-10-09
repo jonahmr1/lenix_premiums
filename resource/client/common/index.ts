@@ -5,8 +5,7 @@ import hud from "./hud";
 import safezones from "./safezones";
 import type { Start } from "types/index";
 
-export default (logout: () => void, mode: Start.Mode) => {
-  logout();
+export default (mode: Start.Mode) => {
 	const radialmenuMod = radialmenu(mode)
   const modules = [
     emotes,

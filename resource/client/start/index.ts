@@ -22,26 +22,32 @@ onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode }) => {
 
 	switch (mode) {
 		case 'warzone': {
-			logout = warzone(logout)
+			logout = warzone()
 			break
 		}
 		case 'police': {
 			logout = () => {
-				police(logout)
-				common(logout, 'police')
+				police()
+				common('police')
 			}
 			break
 		}
 		case 'gang': {
 			logout = () => {
-				gang(logout)
-				common(logout, 'gang')
+				gang()
+				common('gang')
 			}
 			break
 		}
 		default: throw `Unexcepected mode: ${mode}`
 	}
 
+
+	return null
+})
+
+onNui<Start.Requests['logout']>('start:logout', () => {
+	logout()
 	return null
 })
 

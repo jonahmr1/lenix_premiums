@@ -1,7 +1,6 @@
 import lobby from "./lobby";
 
-export default (logout: () => void) => {
-	logout();
+export default () => {
 	const modules = [
 		lobby
 	];

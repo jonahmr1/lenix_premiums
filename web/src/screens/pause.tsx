@@ -1,4 +1,4 @@
-import { fetchNuiServer, onKeyDown, unFocusNui } from 'lenix/nui'
+import { fetchNui, fetchNuiServer, onKeyDown, unFocusNui } from 'lenix/nui'
 import type { Start } from 'types'
 import { Fragment, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
@@ -35,7 +35,7 @@ export const Pause = () => {
     {
       label: 'Leave',
       onClick: async () => {
-        /* TODO: run the client logout also and not just logout */
+				await fetchNui<Start.Requests['logout']>('start:logout', {})
         await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
         nav({ to: '/starting' })
       },

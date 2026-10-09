@@ -1,8 +1,7 @@
 import locker from "./locker";
 import roster from "./roster";
 
-export default (logout: () => void) => {
-	logout();
+export default () => {
 	const modules = [
 		locker,
 		roster

@@ -1,8 +1,7 @@
 import criminaltask from "./criminaltask";
 import ipad from "./ipad";
 
-export default (logout: () => void) => {
-	logout();
+export default () => {
 	const modules = [
 		criminaltask,
 		ipad
