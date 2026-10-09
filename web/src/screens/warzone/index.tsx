@@ -90,7 +90,7 @@ export const Lobby = () => {
       </PageScreen>
 			<AlertDialog>
 				<AlertDialogTrigger ref={dialogTrigger} className="hidden" />
-				<AlertDialogContent>
+				<AlertDialogContent onEscapeKeyDown={e => e.stopPropagation()}>
 					<AlertDialogHeader>
 						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
 						<AlertDialogDescription>
