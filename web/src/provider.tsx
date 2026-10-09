@@ -2,7 +2,7 @@ import { StatesContext } from "./context";
 import { useState } from "react";
 import type { DeepPartial, SetStatesOverload, States } from "./types";
 import { entries } from "@lenix/lenix";
-import { MODES } from "./constants";
+import { WARZONE_MODES } from "./constants";
 
 const deepMerge = <T,>(current: T, patch: DeepPartial<T>): T => {
 	if (patch === null || typeof patch !== 'object' || Array.isArray(patch)) return patch as T
@@ -21,7 +21,7 @@ const deepMerge = <T,>(current: T, patch: DeepPartial<T>): T => {
 export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, setRawState] = useState<States>({
 		lobby: {
-			mode: entries(MODES)[0][0]
+			mode: entries(WARZONE_MODES)[0][0]
 		},
 		settings: {
 			keyboardMouse: {

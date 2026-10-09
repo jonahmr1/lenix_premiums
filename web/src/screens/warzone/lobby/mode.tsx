@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { MODES } from '@/constants'
+import { WARZONE_MODES } from '@/constants'
 import { entries } from '@lenix/lenix'
 import { Badge } from '@/components/ui/badge'
 import { AnimatePresence, motion } from 'motion/react'
@@ -18,7 +18,7 @@ export const Mode = () => {
   const [{ lobby }, setState] = useStates()
   const [preview, setPreview] = useState(lobby.mode)
 
-  const mode = MODES[preview]
+  const mode = WARZONE_MODES[preview]
 
   return (
     <div className="relative isolate h-screen w-full">
@@ -114,7 +114,7 @@ export const Mode = () => {
             </div>
           </div>
           <div className="flex min-h-0 w-full min-w-0 flex-1 items-end justify-between gap-w-1 overflow-x-auto pb-1 text-input">
-            {entries(MODES).map(([mode, data]) => (
+            {entries(WARZONE_MODES).map(([mode, data]) => (
               <div
                 key={mode}
                 className={`flex h-full flex-col transition-all duration-300 ${preview === mode ? 'flex-2' : 'flex-1'}`}

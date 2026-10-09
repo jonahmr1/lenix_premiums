@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import { Progress } from '@/components/ui/progress'
 import { Layout } from "@/components/layout"
 import { formatTime, timestamp, zeroed } from "@/lib"
-import { MODES } from "@/constants"
+import { WARZONE_MODES } from "@/constants"
 import { useTimer } from 'react-timer-hook'
 import type { MatchScore } from "@/types"
 
-const target = MODES.team_deathmatch.scoreLimit
-const duration = MODES.team_deathmatch.duration
+const target = WARZONE_MODES.team_deathmatch.scoreLimit
+const duration = WARZONE_MODES.team_deathmatch.duration
 
 export const Roundboard = () => {
 	const [state, setState] = useState<MatchScore>()

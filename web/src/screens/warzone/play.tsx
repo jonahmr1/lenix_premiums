@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ButtonGroup } from "@/components/ui/button-group"
-import { MODES } from "@/constants"
+import { WARZONE_MODES } from "@/constants"
 import { Xbox } from "@/components/xbox"
 import { audio } from "@/lib"
 import { motion } from "motion/react"
@@ -27,9 +27,9 @@ export const Play = () => {
 						className="h-auto p-0 relative hover:brightness-75"
 						onClick={() => nav({ to: '/warzone/mode' })}
 					>
-						<img src={MODES[mode].image} className="max-w-w-20 pointer-events-none" />
+						<img src={WARZONE_MODES[mode].image} className="max-w-w-20 pointer-events-none" />
 						<p className="absolute top-0 bg-background/50 text-foreground w-full">Mode Selected</p>
-						<p className="absolute bottom-0 bg-background text-foreground w-full text-v-2 text-start tracking-normal px-w-1">{MODES[mode].label}</p>
+						<p className="absolute bottom-0 bg-background text-foreground w-full text-v-2 text-start tracking-normal px-w-1">{WARZONE_MODES[mode].label}</p>
 					</Button>
 					<Button size='lg' className="uppercase border-t text-v-3.5 py-h-4 font-black italic hover:text-background hover:bg-foreground">Start</Button>
 				</ButtonGroup>

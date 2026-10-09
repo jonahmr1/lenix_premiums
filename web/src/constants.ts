@@ -1,9 +1,43 @@
-import type { Warzone } from 'types'
+import type { Start, Warzone } from 'types'
 import { cdn } from './lib'
 
 export const MAPS_IMAGES = {
   default: cdn('./assets/ipad/map.jpeg'),
 }
+
+export const MODES = {
+  warzone: {
+    label: 'Warzone',
+    description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
+    image: cdn('assets/start/warzone.png'),
+    disabled: false,
+  },
+  police: {
+    label: 'Law Enforcement',
+    description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
+    image: cdn('assets/start/law.png'),
+    disabled: false,
+  },
+  gang: {
+    label: 'Crime',
+    description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
+    image: cdn('assets/start/crime.png'),
+    disabled: false,
+  },
+  justice: {
+    label: 'Undercover',
+    description: 'Work in the shadows. Take on covert operations, investigate dangerous organizations, gather information, and operate undercover.',
+    image: cdn('assets/start/undercover.jpeg'),
+    disabled: true,
+  },
+  race: {
+    label: 'Pursuit',
+    description: 'Push your limits behind the wheel. Race through the streets, escape the law, chase targets, and compete in high-speed pursuits.',
+    image: cdn('assets/start/pursuit.png'),
+    disabled: true,
+  },
+} satisfies Record<Start.Mode, object>
+
 
 interface ModeDataBase {
   label: string
@@ -25,7 +59,7 @@ type ModeData =
       points: string[]
     })
 
-export const MODES = {
+export const WARZONE_MODES = {
   team_deathmatch: {
     label: 'Team Deathmatch',
     description: 'Teams battle for the highest score. Reach the kill limit or have the most eliminations when the timer expires to win.',

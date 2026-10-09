@@ -1,5 +1,5 @@
 import type { S } from "@lenix/lenix"
-import type { MODES } from "./constants"
+import type { WARZONE_MODES } from "./constants"
 
 export interface Tab {
 	label: string
@@ -15,7 +15,7 @@ export interface ButtonStart {
 
 export interface States {
 	lobby: {
-		mode: keyof typeof MODES
+		mode: keyof typeof WARZONE_MODES
 	}
 	settings: {
 		keyboardMouse: {
