@@ -5,13 +5,12 @@ import { Tabs, TabsList, TabsContent } from '@/components/ui/tabs'
 import type { Tab } from '@/types'
 import { Play } from './play'
 import { motion } from 'motion/react'
-import { anim } from '@/lib'
+import { anim, cdn } from '@/lib'
 import { PageScreen } from '@/components/screen'
 import { useNavigate } from '@tanstack/react-router'
 import { fetchNui, fetchNuiServer } from 'lenix/nui'
 import type { Start } from 'types'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
-// import logo from '@/assets/ui/competitive/lobby/logo.png'
 
 export const Lobby = () => {
   const [tab, setTab] = useState(0)
@@ -60,9 +59,12 @@ export const Lobby = () => {
       >
         <Tabs value={tab.toString()} onValueChange={($) => setTab(Number($))} className="h-full w-full">
           <motion.div className="flex w-full flex-row" {...anim} initial={{ opacity: 0, y: '-40%' }} animate={{ opacity: 1, y: 0 }}>
-            <div className="flex flex-1 items-center justify-center">
-              {/* <img src={logo} className="size-5xl" /> */}
-              <p className="text-v-4 font-black italic">FightM</p>
+            <div className="flex flex-1 items-center justify-start gap-[2vw]">
+              <img src={cdn('assets/competitive/lobby/logo.png')} className="w-1/7" />
+              <p className="text-v-4 font-black italic">
+								<span>Fight</span>
+								<span className='text-primary'>M</span>
+							</p>
             </div>
             <div className="flex flex-2 items-center">
               <NavButton type="previous" tabs={tabs} value={tab} onValueChange={setTab} variant="ghost" className="hover:bg-foreground!">
