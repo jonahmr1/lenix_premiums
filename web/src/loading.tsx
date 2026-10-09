@@ -5,17 +5,16 @@ import './index.css'
 import { Progress } from "./components/ui/progress"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./components/ui/card"
 import { asserts, entries } from "@lenix/lenix"
-// import log from './log.json'
 import dayjs from "dayjs"
 import { CheckCircleIcon, CircleIcon, TerminalIcon } from "@phosphor-icons/react"
 import { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport } from "./components/ui/message-scroller"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/ui/hover-card"
 import { ThemeProvider } from "./components/theme-provider"
 import { Spinner } from "./components/ui/spinner"
-
 import { AnimatePresence, motion } from "motion/react"
 import { Howl } from 'howler'
 import { cdn } from "./lib"
+import assets from './lib/assets.json'
 import { focusNui } from "lenix/nui"
 
 type Log = Record<string, string | number | boolean>
@@ -24,7 +23,7 @@ const STAGES = {
 	loadingGameData: 'Loading Maps',
 	initializeMaps: 'Preparing Maps',
 	initializeSession: 'Preparing Session',
-	startingResources: 'Starting Resources'
+	startingResources: 'Starting Resources',
 }
 const BACKGROUNDS = [
 	'assets/loading/ls-1.png',
@@ -51,9 +50,34 @@ export function Loading() {
 		stage: 'loadingGameData'
 	})
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
+	const [preloaded, setPreloaded] = useState({ asset: 'init', done: false })
 
   useEffect(() => {
 		focusNui()
+
+		if (!preloaded.done) {
+			setTimeout(async () => {
+				await Promise.allSettled(
+					assets.map(async src => {
+						const response = await fetch(cdn(src), { cache: 'reload' })
+						
+						if (!response.ok) throw `Failed to preload: ${src}`
+						
+						await response.arrayBuffer()
+						console.log(src)
+						setPreloaded({ asset: src, done: false })
+					}),
+				)
+				setPreloaded(prev => ({ ...prev, done: true }))
+			})
+			return
+		}
+
+		const interval = setInterval(() => {
+			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
+		}, CROSSFADE_INTERVAL * 1000)
+
+		player.play()
 		
     const handler = (e: MessageEvent) => {
 			const data = e.data as Log
@@ -79,43 +103,25 @@ export function Loading() {
 		
 		window.addEventListener("message", handler)
 
-		const interval = setInterval(() => {
-			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
-		}, CROSSFADE_INTERVAL * 1000)
-
-		player.play()
-
-		// let i = 0
-		// const interval$ = setInterval(() => {
-		// 	const data = log[i] as any
-		// 	if (!data) {
-		// 		clearInterval(interval)
-		// 		return
-		// 	}
-
-		// 	setState(prev => ({
-		// 		progress: data.eventName === 'loadProgress' ? data.loadFraction as number * 100 : prev.progress,
-		// 		data: [...prev.data, { ...data, time: dayjs().format("HH:mm:ss:SSS") }],
-		// 		stage:
-		// 			data.eventName === "startInitFunction"
-		// 			? data.type === "INIT_AFTER_MAP_LOADED"
-		// 				? "initializeMaps"
-		// 				: data.type === "INIT_SESSION"
-		// 					? "initializeSession"
-		// 					: prev.stage
-		// 			: data.eventName === "onLogLine"
-		// 				? "startingResources"
-		// 				: prev.stage
-		// 	}))
-		// 	i++
-		// }, 50)
-
     return () => {
 			window.removeEventListener("message", handler)
-			// clearInterval(interval$)
 			clearInterval(interval)
 		}
-	}, [])
+	}, [preloaded.done])
+
+	if (!preloaded.done) return (
+		<div className="h-screen bg-background relative overflow-hidden">
+			<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
+				<div className="w-[67vw] space-y-[1vh] flex flex-col items-center">
+					<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
+						<p>{preloaded.asset}</p>
+						<Spinner />
+					</div>
+					<p className="text-v-1 font-medium italic uppercase">Please keep the game open while assets load.</p>
+				</div>
+			</Layout>
+		</div>
+	)
 
 	const stageOrder = Object.keys(STAGES) as (keyof typeof STAGES)[]
 

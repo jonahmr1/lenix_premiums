@@ -41,8 +41,7 @@ export const timestamp = (ms: number) => new Date(Date.now() + ms)
 
 export const formatTime = (ms: number) => dayjs.duration(ms).format('mm:ss')
 
-/* ُTODO: early load */
-export const cdn = (src: string) => `https://pub-48f954db5920416a828313c03c49ed1f.r2.dev/${src}`
-
 export const blurNui = () => fetchNui('blur', {})
 export const unBlurNui = () => fetchNui('unBlur', {})
+
+export const cdn = (src: string) => `https://pub-48f954db5920416a828313c03c49ed1f.r2.dev/${src}`
