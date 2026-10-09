@@ -18,10 +18,9 @@ export function App() {
   const nav = useNavigate()
   const hash = useLocation({ select: (location) => location.hash })
   const path = useLocation({ select: (location) => location.pathname })
-  const rootHash = path === '/' && hash
 
   useEffect(() => {
-    if (dev) nav({ to: '/starting' })
+    if (dev) nav({ to: '/police', hash: 'pause' })
 
     const disposes = [
       onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
@@ -38,16 +37,16 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    if (rootHash === 'pause') blurNui()
-    else if (rootHash === 'settings') blurNui()
+    if (hash === 'pause') blurNui()
+    else if (hash === 'settings') blurNui()
     else unBlurNui()
-  }, [rootHash])
+  }, [hash])
 
   return (
     <>
       {dev && <img src="light.png" className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />}
-      {rootHash === 'pause' && <Pause />}
-      {rootHash === 'settings' && <Settings />}
+      {hash === 'pause' && <Pause path={path} />}
+      {hash === 'settings' && <Settings />}
       {hudAllowedModes.some((route) => route === path.split('/')[1]) && <Hud />}
     </>
   )
