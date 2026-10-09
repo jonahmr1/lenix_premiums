@@ -16,6 +16,7 @@ import { Spinner } from "./components/ui/spinner"
 import { AnimatePresence, motion } from "motion/react"
 import { Howl } from 'howler'
 import { cdn } from "./lib"
+import { focusNui } from "lenix/nui"
 
 type Log = Record<string, string | number | boolean>
 
@@ -52,6 +53,8 @@ export function Loading() {
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
 
   useEffect(() => {
+		focusNui()
+		
     const handler = (e: MessageEvent) => {
 			const data = e.data as Log
 			asserts(data.eventName, '(eventName) doesn\'t exist')

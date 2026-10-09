@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { asserts, entries } from '@lenix/lenix'
-import { fetchNui } from 'lenix/nui'
+import { fetchNui, unFocusNui } from 'lenix/nui'
 import type { Start } from 'types'
 
 const modes = {
@@ -80,6 +80,7 @@ export const Select = () => {
 								}
 								router.navigate({ to: `/${mode}` })
 								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode })
+								unFocusNui()
 							}}
 							style={{ clipPath: panelClip(index, entries(modes).length) }}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${mode === modeState ? 'bg-primary' : 'bg-border grayscale'}`}
