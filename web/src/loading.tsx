@@ -59,7 +59,7 @@ export function Loading() {
 			const timeout = setTimeout(async () => {
 				await Promise.allSettled(
 					assets.map(async src => {
-						const response = await fetch(cdn(src), { cache: 'reload' })
+						const response = await fetch(cdn(src), { cache: 'force-cache' })
 						
 						if (!response.ok) throw `Failed to preload: ${src}`
 						
