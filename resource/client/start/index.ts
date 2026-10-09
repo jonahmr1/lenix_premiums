@@ -9,6 +9,8 @@ import gang from "../gang";
 import common from "../common";
 import type { Vec4 } from "lenix";
 
+const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
+
 let character: Character | undefined | null
 let characters: Character[]
 let logout: () => void = () => {}
@@ -50,8 +52,6 @@ control.on({
 		emitNui<Start.Events['pause']>('start:pause')
 	}
 })
-
-const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
 
 globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
 	character = null
