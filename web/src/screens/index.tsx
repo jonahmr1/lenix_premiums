@@ -8,7 +8,7 @@ import { Hud } from './hud'
 import type { FileRoutesByTo } from '@/routeTree.gen'
 import { blurNui, unBlurNui } from '@/lib'
 
-const dev = false
+const dev = true
 
 const hudAllowedModes: {
   [K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}` ? Segment : K extends `/${infer Segment}` ? Segment : K

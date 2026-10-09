@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
-import { audiobility } from '@/lib'
+import { useRef, useState } from 'react'
 import { NavButton } from '@/components/nav'
 import { Tabs, TabsList, TabsContent } from '@/components/ui/tabs'
 import type { Tab } from '@/types'
@@ -8,10 +7,16 @@ import { Play } from './play'
 import { motion } from 'motion/react'
 import { anim } from '@/lib'
 import { PageScreen } from '@/components/screen'
+import { useNavigate } from '@tanstack/react-router'
+import { fetchNui, fetchNuiServer } from 'lenix/nui'
+import type { Start } from 'types'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 // import logo from '@/assets/ui/competitive/lobby/logo.png'
 
 export const Lobby = () => {
   const [tab, setTab] = useState(0)
+	const nav = useNavigate()
+	const dialogTrigger = useRef<HTMLButtonElement>(null)
 
   const tabs: Tab[] = [
     {
@@ -47,11 +52,7 @@ export const Lobby = () => {
         kbds={[
           {
             icon: 'ESC',
-            onClick: () => {
-              audiobility.onMouseDown()
-              // nav({ to: '' })
-              /* TODO */
-            },
+            onClick: () => dialogTrigger.current?.click(),
             keybind: 'Escape',
             children: 'Exit',
           },
@@ -87,6 +88,27 @@ export const Lobby = () => {
           ))}
         </Tabs>
       </PageScreen>
+			<AlertDialog>
+				<AlertDialogTrigger ref={dialogTrigger} className="hidden" />
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+						<AlertDialogDescription>
+							This action will redirect you to the main menu and leave from the <b className='text-chart-1'>WARZONE</b> mode
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Cancel</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={async () => {
+								await fetchNui<Start.Requests['logout']>('start:logout', {})
+								await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
+								nav({ to: '/starting' })
+							}}
+						>Leave</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
     </>
   )
 }
