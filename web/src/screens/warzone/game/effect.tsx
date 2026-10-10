@@ -5,15 +5,16 @@ import { cdn } from '@/lib'
 
 const player = new Howl({
 	src: cdn('assets/competitive/effect/heartbeat.mp3'),
-	html5: true,
-	volume: 0.5
+	loop: true,
+	volume: 0.5,
 })
 
 export const DamageEffect = () => {
 	const [strength, setStrength] = useState(0)
+	const active = strength > 0
 
 	useEffect(() => {
-		setTimeout(async () => {
+		const timer = setTimeout(async () => {
 			for (const i of Array(100).keys()) {
 				await waste(50)
 				setStrength(i)
@@ -25,18 +26,20 @@ export const DamageEffect = () => {
 				setStrength(99 - i)
 			}
 		})
+
+		return () => clearTimeout(timer)
 	}, [])
 
 	useEffect(() => {
 		player.rate(0.7 + strength * 0.011)
-		if (strength > 0) {
-			player.loop(true)
-
-			if (!player.playing()) player.play()
-		} else {
-			player.stop()
-		}
 	}, [strength])
+
+	useEffect(() => {
+		if (!active) return
+		const id = player.play()
+
+		return () => { player.stop(id) }
+	}, [active])
 
 	return (
 		<>
