@@ -1,4 +1,4 @@
-[
+export default [
   "assets/audio/cannot.ogg",
   "assets/audio/click.wav",
   "assets/audio/countdown.wav",
@@ -45,4 +45,4 @@
   "assets/start/pursuit.png",
   "assets/start/undercover.jpeg",
   "assets/start/warzone.png"
-]
+] as const

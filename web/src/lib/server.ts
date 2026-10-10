@@ -12,7 +12,7 @@ for await (const object of client.r2.buckets.objects.list(
 	}
 )) if (object.key !== undefined) assets.add(object.key)
 
-	await writeFile(
-	new URL('./assets.json', import.meta.url),
-	JSON.stringify([...assets], null, 2),
+await writeFile(
+	new URL('./assets.ts', import.meta.url),
+	`export default ${JSON.stringify([...assets], null, 2)} as const\n`,
 )
