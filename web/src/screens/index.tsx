@@ -20,7 +20,7 @@ export function App() {
   const path = useLocation({ select: (location) => location.pathname })
 
   useEffect(() => {
-    if (dev) nav({ to: '/police', hash: 'pause' })
+    if (dev) nav({ to: '/starting' })
 
     const disposes = [
       onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {

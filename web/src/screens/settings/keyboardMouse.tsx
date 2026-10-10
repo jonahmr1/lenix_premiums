@@ -177,11 +177,11 @@ export const KeyboardMouse = () => {
 										max={8}
 										value={[value]}
 										onValueChange={value => handle(value[0])}
-										className="group-hover:invert"
+										className="**:data-[slot=slider-range]:bg-foreground"
 									/>
 								) : setting.options && (
 									<div className="w-full">
-										<p className="text-center italic uppercase">{setting.options[value]}</p>
+										<p className="text-center italic uppercase text-v-1.25">{setting.options[value]}</p>
 										<div className="flex gap-4">
 											{entries(setting.options).map(([option], i) => (
 												<div
