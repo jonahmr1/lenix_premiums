@@ -101,7 +101,7 @@ const tabs: Tab[] = [
 ]
 
 export const Settings = () => {
-  const [tab, setTab] = useState(2)
+  const [tab, setTab] = useState(0)
 	const router = useRouter()
 
   return (
@@ -134,7 +134,7 @@ export const Settings = () => {
                 key={i}
                 disabled={disabled}
                 variant={tab === i ? "default" : "background"}
-                className="text-v-1.4 flex-1 font-bold italic uppercase"
+                className="text-v-1.4 flex-1 font-bold italic uppercase px-w-1"
                 onClick={() => setTab(i)}
                 size="lg"
               >
