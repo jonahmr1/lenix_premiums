@@ -106,7 +106,7 @@ export const Settings = () => {
 
   return (
     <PageScreen
-			className="gap-h-1 flex h-screen w-full flex-col"
+			className="gap-h-1 absolute z-2 flex h-screen w-full flex-col"
 			kbds={[
 				{
 					onClick: () => router.history.back(),

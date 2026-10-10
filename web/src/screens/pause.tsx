@@ -25,14 +25,14 @@ export const Pause = ({ path }: { path: string }) => {
       label: 'Resume',
       onClick: () => {
         unFocusNui()
-        nav({ to: '/', hash: '' })
+        nav({ hash: '' })
         unBlurNui()
       },
     },
     {
       label: 'Settings',
       onClick: () => {
-        nav({ to: '/', hash: 'settings' })
+        nav({ hash: 'settings' })
       },
     },
     {
@@ -45,7 +45,7 @@ export const Pause = ({ path }: { path: string }) => {
 
   return (
     <motion.div {...anim} initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }}>
-      <Layout className="absolute z-1 flex h-screen w-full flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
+      <Layout className="absolute z-2 flex h-screen w-full flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
         <div className="flex items-center gap-w-1">
           <div className="mt-h-1 h-2/3 w-0.5 bg-foreground" />
           <Header>Paused</Header>
