@@ -11,11 +11,11 @@ export const Start = () => {
     <div className="relative h-screen flex-row justify-start overflow-hidden bg-linear-to-t from-neutral-950/50 to-transparent p-0">
       <div className="absolute -z-1 size-full bg-linear-to-r from-neutral-950/50 to-transparent" />
       <Layout className="flex flex-col size-full
-				*:flex *:flex-col *:items-start
-				[&>*>*]:bg-transparent [&>*>*]:text-v-2! [&>*>*]:text-muted-foreground [&>*>*]:uppercase [&>*>*]:duration-0 [&>*>*]:hover:bg-current/20"
+				*:flex *:flex-col *:items-start *:justify-center *:-perspective-left-5
+				[&>*>*]:bg-transparent [&>*>*]:text-v-2 [&>*>*]:text-muted-foreground [&>*>*]:uppercase [&>*>*]:duration-0 [&>*>*]:hover:bg-current/20"
 			>
 				<div className='flex-1'></div>
-				<div className='flex-1'>
+				<div className='flex-1 *:text-v-3! *:py-h-2 gap-h-2'>
 					<Button
 						variant="default"
 						onClick={() => nav({ to: '/starting/select' })}
