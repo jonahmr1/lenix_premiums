@@ -2,7 +2,7 @@ import type { Start, Warzone } from 'types'
 import { cdn } from './lib'
 
 export const MAPS_IMAGES = {
-  default: cdn('./assets/ipad/map.jpeg'),
+  default: cdn('assets/ipad/map.jpeg'),
 }
 
 export const MODES = {
@@ -63,7 +63,7 @@ export const WARZONE_MODES = {
   team_deathmatch: {
     label: 'Team Deathmatch',
     description: 'Teams battle for the highest score. Reach the kill limit or have the most eliminations when the timer expires to win.',
-    image: cdn('./assets/competitive/lobby/team_deathmatch.png'),
+    image: cdn('assets/competitive/lobby/team_deathmatch.png'),
     maps: ['italien_street', 'cinema_studio'],
     duration: 90_000,
     teams: 2,
