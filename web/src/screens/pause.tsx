@@ -45,7 +45,7 @@ export const Pause = ({ path }: { path: string }) => {
 
   return (
     <motion.div {...anim} initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }}>
-      <Layout className="flex h-screen flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
+      <Layout className="absolute z-1 flex h-screen w-full flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent">
         <div className="flex items-center gap-w-1">
           <div className="mt-h-1 h-2/3 w-0.5 bg-foreground" />
           <Header>Paused</Header>
@@ -77,7 +77,7 @@ export const Pause = ({ path }: { path: string }) => {
 					<AlertDialogHeader>
 						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
 						<AlertDialogDescription>
-							This action will redirect you to the main menu and leave from the <b className='text-chart-1'>{MODES[path.slice(1) as keyof typeof MODES].label}</b> mode
+							This action will redirect you to the main menu and leave from the <b className='text-chart-1'>{MODES[path.split('/')[1] as keyof typeof MODES].label}</b> mode
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
