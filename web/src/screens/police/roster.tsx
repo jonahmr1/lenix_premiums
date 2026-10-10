@@ -111,7 +111,7 @@ export const Roster = () => {
 			<div className='flex-1 min-h-0 px-3 pt-3 flex flex-col gap-1'>
 				<div className='flex flex-col'>
 					<div className='w-full flex justify-between items-center'>
-						<p className='text-foreground cursor-default text-v-1.5 uppercase italic font-black'>Active Officers</p>
+						<p className='text-foreground cursor-default text-v-1.5 uppercase italic font-bold'>Active Officers</p>
 						<div className='flex items-center gap-3'>
 							<div>
 								<Separator orientation='vertical' className='h-4' />

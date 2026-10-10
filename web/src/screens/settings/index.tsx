@@ -35,7 +35,7 @@ export const LabelItem = ({
   >
     <ItemContent>
       <ItemTitle
-        className='text-v-1.25 uppercase font-bold'
+        className='text-v-1.5 uppercase font-bold'
       >
         {title}
       </ItemTitle>
@@ -123,18 +123,18 @@ export const Settings = () => {
       >
         <Header>Settings</Header>
       </motion.div>
-      <div className="*:text-v-2 gap-w-0.5 flex min-h-0 size-full justify-center">
+      <div className="gap-w-0.5 flex min-h-0 size-full justify-center">
 				<NavButton type='previous' tabs={tabs} value={tab} onValueChange={setTab}>
 					Q
 				</NavButton>
         <Tabs value={tab.toString()} className="flex-1 size-full">
-          <TabsList className="gap-w-0.5 h-full w-full bg-transparent p-0">
+          <TabsList className="size-full bg-transparent p-0 gap-w-0.5">
             {tabs.map(({ disabled, label }, i) => (
               <Button
                 key={i}
                 disabled={disabled}
                 variant={tab === i ? "default" : "background"}
-                className="text-v-1.4 flex-1 font-bold italic uppercase px-w-1"
+                className="text-v-1.6 flex-auto font-semibold italic uppercase"
                 onClick={() => setTab(i)}
                 size="lg"
               >

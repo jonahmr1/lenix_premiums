@@ -181,7 +181,7 @@ export const Keybinds = () => {
 								key={binding}
 								className="p-v-1 gap-w-1 flex items-center bg-background/60"
 							>
-								<div className="text-v-1.25 w-1/2 uppercase italic">
+								<div className="text-v-1.5 w-1/2 uppercase italic">
 									{label}
 								</div>
 								{keybinds[title][binding].map((key, i) => (

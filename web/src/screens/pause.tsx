@@ -4,7 +4,6 @@ import { Fragment, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { KbdGroup } from '@/components/ui/kbd'
 import { NavKbd } from '@/components/kbd'
-import type { ButtonStart } from '@/types'
 import { Layout } from '@/components/layout'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { Header } from '@/components/header'
@@ -20,7 +19,7 @@ export const Pause = ({ path }: { path: string }) => {
   const nav = useNavigate()
 	const dialogTrigger = useRef<HTMLButtonElement>(null)
 
-  const buttons: ButtonStart[] = [
+  const buttons = [
     {
       label: 'Resume',
       onClick: () => {

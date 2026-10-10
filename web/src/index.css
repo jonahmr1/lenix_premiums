@@ -3,27 +3,58 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/source-sans-3";
 @import "@fontsource-variable/oxanium";
-@import '@fontsource/barlow/100.css';
-@import '@fontsource/barlow/200.css';
-@import '@fontsource/barlow/300.css';
-@import '@fontsource/barlow/400.css';
-@import '@fontsource/barlow/500.css';
-@import '@fontsource/barlow/600.css';
-@import '@fontsource/barlow/700.css';
-@import '@fontsource/barlow/800.css';
-@import '@fontsource/barlow/900.css';
-@import '@fontsource/barlow/100-italic.css';
-@import '@fontsource/barlow/200-italic.css';
-@import '@fontsource/barlow/300-italic.css';
-@import '@fontsource/barlow/400-italic.css';
-@import '@fontsource/barlow/500-italic.css';
-@import '@fontsource/barlow/600-italic.css';
-@import '@fontsource/barlow/700-italic.css';
-@import '@fontsource/barlow/800-italic.css';
-@import '@fontsource/barlow/900-italic.css';
-@import "./fonts.css";
+@import '@fontsource/barlow-condensed/100.css';
+@import '@fontsource/barlow-condensed/200.css';
+@import '@fontsource/barlow-condensed/300.css';
+@import '@fontsource/barlow-condensed/400.css';
+@import '@fontsource/barlow-condensed/500.css';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
+@import '@fontsource/barlow-condensed/800.css';
+@import '@fontsource/barlow-condensed/900.css';
+@import '@fontsource/barlow-condensed/100-italic.css';
+@import '@fontsource/barlow-condensed/200-italic.css';
+@import '@fontsource/barlow-condensed/300-italic.css';
+@import '@fontsource/barlow-condensed/400-italic.css';
+@import '@fontsource/barlow-condensed/500-italic.css';
+@import '@fontsource/barlow-condensed/600-italic.css';
+@import '@fontsource/barlow-condensed/700-italic.css';
+@import '@fontsource/barlow-condensed/800-italic.css';
+@import '@fontsource/barlow-condensed/900-italic.css';
 
 @plugin "./viewport-utilities.mjs";
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('/fonts/unispace/Unispace Rg.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('/fonts/unispace/Unispace Bd.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('/fonts/unispace/Unispace It.otf') format('opentype');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Unispace';
+	src: url('/fonts/unispace/Unispace Bd It.otf') format('opentype');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -101,7 +132,7 @@
 	--color-opposite: #ff2900;
 	
 	--font-number: 'Unispace', sans-serif;
-	--font-sans: 'Barlow', 'Source Sans 3 Variable', sans-serif;
+	--font-sans: 'Barlow Condensed', 'Source Sans 3 Variable', sans-serif;
 	
 	--font-heading: 'Oxanium Variable', sans-serif;
 	--color-sidebar-ring: var(--sidebar-ring);
@@ -150,7 +181,7 @@
 	}
 
 	body {
-		@apply text-foreground font-bold cursor-default selection:bg-transparent;
+		@apply text-foreground font-semibold tracking-wide cursor-default selection:bg-transparent;
 	}
 
 	html {
@@ -194,27 +225,27 @@
 	@apply absolute left-1/2 top-1/2 -translate-1/2;
 }
 
-.glow-sm {
+@utility glow-sm {
 	@apply text-shadow-current text-shadow-[0_0_6px_blue]
 }
 
-.glow-md {
+@utility glow-md {
 	@apply text-shadow-current text-shadow-[0_0_16px_blue]
 }
 
-.glow-lg {
+@utility glow-lg {
 	@apply text-shadow-current text-shadow-[0_0_26px_blue]
 }
 
-.shine-sm {
+@utility shine-sm {
 	@apply shadow-[0_0_2px_currentColor]
 }
 
-.shine-md {
+@utility shine-md {
 	@apply shadow-[0_0_4px_currentColor]
 }
 
-.shine-lg {
+@utility shine-lg {
 	@apply shadow-[0_0_6px_currentColor]
 }
 

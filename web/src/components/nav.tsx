@@ -36,7 +36,7 @@ export const NavButton = ({ children, type, tabs, value, onValueChange, variant 
 			className={cn('px-w-0.5 group', className)}
 			audioDisabled
 		>
-			<Kbd className="bg-foreground text-background group-hover:invert font-bold">{children}</Kbd>
+			<Kbd className="bg-foreground text-background group-hover:invert font-bold text-v-1">{children}</Kbd>
 		</Button>
 	)
 }
