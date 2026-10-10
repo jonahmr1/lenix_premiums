@@ -22,6 +22,7 @@ export const audio = {
 	select: () => playAudio('custom', cdn('assets/audio/select.wav')),
 	orchestra: () => playAudio('custom', cdn('assets/audio/orchestra.wav')),
 	impact: () => playAudio('custom', cdn('assets/audio/impact.mp3'), 0.4),
+	hit: () => playAudio('custom', cdn('assets/competitive/hit/bullet-impact.wav'), 0.4),
 }
 
 dayjs.extend(duration)

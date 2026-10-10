@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { motion, type MotionProps } from 'motion/react'
+import { audio } from "@/lib"
 
 type HitVariant = typeof hitVariants[number]
 type MarkerConfig = {
@@ -45,6 +46,7 @@ export const HitMarker = () => {
 		const interval = setInterval(() => {
 			setVariant(prev => {
 				const id = prev.id + 1
+				audio.hit()
 				return { id, variant: hitVariants[id % hitVariants.length] }
 			})
 		}, 150)
