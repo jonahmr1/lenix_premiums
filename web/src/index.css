@@ -192,22 +192,22 @@
 
 
 @utility perspective-left-* {
-	transform: perspective(200px) rotateY(1deg);
+	transform: perspective(200px) rotateY(2deg);
 	transform-origin: left calc((--value(integer)) * 10%);
 }
 
 @utility -perspective-left-* {
-	transform: perspective(200px) rotateY(1deg);
+	transform: perspective(200px) rotateY(2deg);
 	transform-origin: left calc((--value(integer)) * -10%);
 }
 
 @utility perspective-right-* {
-	transform: perspective(200px) rotateY(-1deg);
+	transform: perspective(200px) rotateY(-2deg);
 	transform-origin: right calc((--value(integer)) * 10%);
 }
 
 @utility -perspective-right-* {
-	transform: perspective(200px) rotateY(-1deg);
+	transform: perspective(200px) rotateY(-2deg);
 	transform-origin: right calc((--value(integer)) * -10%);
 }
 

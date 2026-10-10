@@ -1,4 +1,4 @@
-import { audio } from "@/lib"
+import { audio, blurNui, unBlurNui } from "@/lib"
 import type { MatchScore } from "@/types"
 import { random } from "@lenix/lenix"
 import { AnimatePresence, motion } from "motion/react"
@@ -13,12 +13,14 @@ export const Result = () => {
 	})
 
 	useEffect(() => {
+		blurNui()
 		setTimeout(() => {
 			audio.impact()
 		}, delay * 1000);
 		
 		const timeout = setTimeout(() => {
 			setState(null)
+			unBlurNui()
 			clearTimeout(timeout)
 		}, 10_000)
 	}, [])

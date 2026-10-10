@@ -41,7 +41,7 @@ export const Roundboard = () => {
 				<Progress value={state.opponent} className="rotate-180 h-h-0.5 bg-deep-destructive **:data-[slot=progress-indicator]:bg-opposite"  />
 				<p className="bg-deep-destructive text-opposite px-w-0.5 perspective-right-20 glow-sm">{zeroed(state.opponent, 3)}</p>
 			</div>
-			<p className={`text-v-1 uppercase font-sans font-bold italic text-center text-shadow-lg glow-sm ${winning ? 'text-chart-3' : 'text-opposite'}`}>
+			<p className={`text-v-1 uppercase font-sans font-bold italic text-center text-shadow-lg ${winning ? 'text-chart-3' : 'text-opposite'}`}>
 				{winning ? 'Winning' : 'Losing'}
 			</p>
 		</Layout>
