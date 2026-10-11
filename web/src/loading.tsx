@@ -14,7 +14,7 @@ import { Spinner } from "./components/ui/spinner"
 import { AnimatePresence, motion } from "motion/react"
 import { Howl } from 'howler'
 import { cdn } from "./lib"
-import assets from './lib/assets.json'
+import assets from './lib/assets'
 import { focusNui } from "lenix/nui"
 
 type Log = Record<string, string | number | boolean>
@@ -30,7 +30,7 @@ const BACKGROUNDS = [
 	'assets/loading/ls-2.png',
 	'assets/loading/ls-3.png',
 	'assets/loading/ls-4.png',
-]
+] as const
 const CROSSFADE_INTERVAL = 10
 
 const player = new Howl({
