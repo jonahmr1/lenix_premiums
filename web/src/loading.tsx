@@ -65,7 +65,6 @@ export function Loading() {
 						
 						await response.arrayBuffer()
 						setPreloaded(prev => ({ ...prev, asset: src, loaded: prev.loaded + 1 }))
-							console.log(src)
 					}),
 				)
 				setPreloaded(prev => ({ ...prev, done: true }))
