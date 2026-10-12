@@ -29,7 +29,7 @@ export function App() {
       }),
       onNuiEmit<Start.Events['pause']>('start:pause', () => {
         focusNui()
-        nav({ to: '/', hash: 'pause', replace: true })
+				nav({ hash: 'pause' })
       }),
     ]
 

@@ -74,11 +74,12 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
 	
 	const firstChar = characters[0]
-	asserts(firstChar)
-	const appearance = await triggerServerCallback('lenix:server:appearance:getappearance', null, firstChar.charId)
-	if (!appearance) console.error(`Failed to get character<${firstChar.charId}> appearance`)
-	
-	api['illenium-appearance']?.setPedAppearance?.(ped.handle, appearance)
+	if (firstChar) {
+		const appearance = await triggerServerCallback('lenix:server:appearance:getappearance', null, firstChar.charId)
+		if (!appearance) console.error(`Failed to get character<${firstChar.charId}> appearance`)
+		
+		api['illenium-appearance']?.setPedAppearance?.(ped.handle, appearance)
+	}
 
 
 	const [dispose] = cam.create({
@@ -93,6 +94,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 		}
 	})
 
+	ShutdownLoadingScreen()
 	const selected = await repeat(() => character, character => character !== null, 500)
 
 
