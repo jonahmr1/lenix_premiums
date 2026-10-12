@@ -83,7 +83,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
-		offset: [0.75, 2.5, 0.25, -5],
+		offset: [1, 2.5, 0.25, -5],
 		details: {
 			fov: 35,
 			rotationOrder: 0,
