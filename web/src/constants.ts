@@ -11,30 +11,35 @@ export const MODES = {
     description: 'Pure high-intensity FPS combat. Team-based firefights, tactical battles, and competitive gunplay with no roleplay.',
     image: cdn('assets/start/warzone.png'),
     disabled: false,
+		color: '573D33',
   },
   police: {
     label: 'Law Enforcement',
     description: 'Step into the role of law enforcement. Patrol the streets, respond to incidents, and serve as Police, SWAT, Sheriff, and other units.',
     image: cdn('assets/start/law.png'),
     disabled: false,
+		color: '40363C',
   },
   gang: {
     label: 'Crime',
     description: 'Build your criminal life. Join gangs, plan robberies, run illegal businesses, make money, and fight for control of the streets.',
     image: cdn('assets/start/crime.png'),
     disabled: false,
+		color: '433538',
   },
   justice: {
     label: 'Undercover',
     description: 'Work in the shadows. Take on covert operations, investigate dangerous organizations, gather information, and operate undercover.',
     image: cdn('assets/start/undercover.jpeg'),
     disabled: true,
+		color: '332B2D',
   },
   race: {
     label: 'Pursuit',
     description: 'Push your limits behind the wheel. Race through the streets, escape the law, chase targets, and compete in high-speed pursuits.',
     image: cdn('assets/start/pursuit.png'),
     disabled: true,
+		color: '654E54',
   },
 } satisfies Record<Start.Mode, object>
 

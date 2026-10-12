@@ -9,8 +9,11 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { Toaster } from "./components/ui/sonner"
 import { StatesProvider } from "./provider"
+import { storage } from "@lenix/lenix"
 
 library.add(fas, far)
+
+storage.set('theme', 'dark')
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

@@ -49,8 +49,11 @@ export const Select = () => {
 								fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode })
 								unFocusNui()
 							}}
-							style={{ clipPath: panelClip(index, entries(MODES).length) }}
-							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-600 ${mode === modeState ? 'bg-primary' : 'bg-border grayscale'}`}
+							style={{
+								clipPath: panelClip(index, entries(MODES).length),
+								backgroundColor: mode === modeState ? `#${selected.color}` : undefined
+							}}
+							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${mode !== modeState && 'bg-border grayscale'}`}
 							{...audiobility}
 						>
 							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, entries(MODES).length, 2) }}>
@@ -59,7 +62,12 @@ export const Select = () => {
 									className='pointer-events-none absolute inset-0 size-full object-cover'
 								/>
 								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-								<div className={`pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_var(--primary)] transition-opacity duration-300 ${mode === modeState ? 'opacity-100' : 'opacity-0'}`} />
+								<div
+									className='pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_rgb(78,47,28)] transition-opacity duration-300'
+									style={{
+										boxShadow: `inset 0 0 5px 5px #${selected.color}`,
+									}}
+								/>
 							</div>
 							{config.disabled && (
 								<div
