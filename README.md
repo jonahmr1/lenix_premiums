@@ -7,6 +7,7 @@
 - [x] implement d/l themes
 - [ ] add delay to prevent spamming server
 - [ ] add stealth as a setting option
+- [ ] black instead of falling after shutdownloading
 
 
 ## Installation
