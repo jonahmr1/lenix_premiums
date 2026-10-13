@@ -26,17 +26,19 @@ onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode }) => {
 			break
 		}
 		case 'police': {
-			logout = () => {
-				police()
+			const modules = [
+				police(),
 				common('police')
-			}
+			]
+			logout = () => modules.forEach(mod => mod())
 			break
 		}
 		case 'gang': {
-			logout = () => {
-				gang()
+			const modules = [
+				gang(),
 				common('gang')
-			}
+			]
+			logout = () => modules.forEach(mod => mod())
 			break
 		}
 		default: throw `Unexcepected mode: ${mode}`
