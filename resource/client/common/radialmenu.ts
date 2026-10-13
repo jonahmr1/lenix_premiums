@@ -1,5 +1,4 @@
 import { addRadialItem, checkDependency, notify, onCache, removeRadialItem } from '@overextended/ox_lib/client'
-import { onNetEvent } from 'lenix/client'
 import type { Start } from 'types/index'
 
 checkDependency('ox_lib', '3.39.0', true)
@@ -72,7 +71,7 @@ const load = (mode: Start.Mode) => {
 				id: 'plist',
 				label: 'Roster',
 				icon: 'list-ul',
-				onSelect: () => emit('lenix:server:roster:toggleDisplay'),
+				onSelect: () => emit('lenix:client:roster:toggleDisplay'),
 			})
 
 			return () => removeRadialItem('plist')
