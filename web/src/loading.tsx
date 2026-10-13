@@ -80,7 +80,7 @@ export function Loading() {
 		
     const handler = (e: MessageEvent) => {
 			const data = e.data as Log
-			asserts(data.eventName, '(eventName) doesn\'t exist')
+			asserts(data.eventName, `(eventName) doesn't exist, found: ${JSON.stringify(data)}`)
 			
 			data?.message === 'fullyLoaded' && console.log(e.data.message)
 

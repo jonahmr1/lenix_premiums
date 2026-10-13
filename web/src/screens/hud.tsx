@@ -38,12 +38,8 @@ export const Hud = () => {
 		storage.set<Storage>('hudVariant', 'progress')
 
 		const disposes = [
-			onNuiEmit<Common.Events['displayHud']>('hud:display', state => {
-				setDisplay(state)
-			}),
-			onNuiEmit<Common.Events['updateHud']>('hud:update', state =>
-				setState(state),
-			),
+			onNuiEmit<Common.Events['displayHud']>('hud:display', setDisplay),
+			onNuiEmit<Common.Events['updateHud']>('hud:update', setState),
 		]
 
 		return () => {

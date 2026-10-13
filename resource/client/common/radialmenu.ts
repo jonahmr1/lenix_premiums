@@ -65,6 +65,9 @@ onCache('vehicle', vehicle => {
 })
 
 const load = (mode: Start.Mode) => {
+	addRadialItem(radiaItems)
+	radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id))
+
 	switch (mode) {
 		case 'police': {
 			addRadialItem({
@@ -81,9 +84,5 @@ const load = (mode: Start.Mode) => {
 }
 
 export default (mode: Start.Mode) => [
-	addRadialItem(radiaItems),
-
-	() => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id)),
-
 	load(mode),
 ]
