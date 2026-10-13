@@ -6,13 +6,12 @@ import safezones from "./safezones";
 import type { Start } from "types/index";
 
 export default (mode: Start.Mode) => {
-	const radialmenuMod = radialmenu(mode)
   const modules = [
-    emotes,
-    identities,
-    radialmenuMod,
-		hud,
-    safezones,
+    emotes(),
+    identities(),
+    radialmenu(mode),
+		hud(),
+    safezones(),
   ];
 
   return () => {

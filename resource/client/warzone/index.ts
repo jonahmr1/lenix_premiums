@@ -2,7 +2,7 @@ import lobby from "./lobby";
 
 export default () => {
 	const modules = [
-		lobby
+		lobby()
 	];
 
 	return () => {

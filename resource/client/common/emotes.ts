@@ -7,7 +7,7 @@ const state = new State({ handsUp: false as boolean })
 
 const animDict = 'missminuteman_1ig_2'
 
-export default [
+export default () => [
 	control.on({
 		event: 'press',
 		key: 'X',

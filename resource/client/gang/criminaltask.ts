@@ -277,4 +277,4 @@ on("onResourceStop", (resourceName: string) => {
   crash();
 });
 
-export default [load(), crash];
+export default () => [load(), crash];

@@ -91,7 +91,7 @@ const load = () => {
   return () => updateDisplay({ vitals: false, weaponary: false });
 };
 
-export default [
+export default () => [
   onEvent("ox_inventory:currentWeapon", (weapon: OxWeapon) => {
     if (!weapon) return;
 

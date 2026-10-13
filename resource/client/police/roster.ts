@@ -2,7 +2,7 @@ import { cache, checkDependency, inputDialog, notify } from "@overextended/ox_li
 import { GetPlayer } from "@overextended/ox_core/client";
 import { control, emitNui, onEvent, onNetEvent, onNui } from "lenix/client";
 import { State } from "@lenix/lenix";
-import type { Gang, Roster } from "types/index";
+import type { Police } from "types/index";
 import { Constants } from "common/config/constants";
 
 checkDependency("ox_lib", "3.39.0", true);
@@ -37,29 +37,29 @@ const changeCallsign = async () => {
   emitNet("lenix:server:roster:updateOfficer", {
     playerId: cache.serverId,
     callsign,
-  } satisfies Roster.PartialOfficer);
+  } satisfies Police.Roster.PartialOfficer);
 };
 
-onNui<Gang.Requests["updateOfficer"]>("roster:updateOfficer", (partialData) => {
+onNui<Police.Requests["updateOfficer"]>("roster:updateOfficer", (partialData) => {
   emitNet("lenix:server:roster:updateOfficer", partialData);
   return null;
 });
 
-onNui<Gang.Requests["triggerCallsign"]>("roster:callsign", () => {
+onNui<Police.Requests["triggerCallsign"]>("roster:callsign", () => {
   changeCallsign();
   return null;
 });
 
-export default [
-  onNetEvent("lenix:client:roster:refreshOfficers", (officers: Roster.Officers) => {
-    emitNui<Gang.Events["refreshOfficers"]>("roster:refreshOfficers", officers);
+export default () => [
+  onNetEvent("lenix:client:roster:refreshOfficers", (officers: Police.Roster.Officers) => {
+    emitNui<Police.Events["refreshOfficers"]>("roster:refreshOfficers", officers);
   }),
 
   onEvent("lenix:client:roster:toggleDisplay", () => {
     const player = GetPlayer();
     if (typeof player.getGroup("police") !== "number") return;
 
-    emitNui<Gang.Events["displayRoster"]>("roster:display", state.display, cache.serverId);
+    emitNui<Police.Events["displayRoster"]>("roster:display", state.display, cache.serverId);
     state.display = !state.display;
   }),
 

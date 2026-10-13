@@ -3,8 +3,8 @@ import roster from "./roster";
 
 export default () => {
 	const modules = [
-		locker,
-		roster
+		locker(),
+		roster()
 	];
 
 	return () => {

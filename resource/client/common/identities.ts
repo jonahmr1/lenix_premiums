@@ -76,7 +76,7 @@ const displayThisFrame = () => {
 	}
 }
 
-export default [
+export default () => [
 	control.on({
 		event: 'press',
 		key: 'HOME',

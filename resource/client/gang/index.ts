@@ -3,8 +3,8 @@ import ipad from "./ipad";
 
 export default () => {
 	const modules = [
-		criminaltask,
-		ipad
+		criminaltask(),
+		ipad()
 	];
 
 	return () => {

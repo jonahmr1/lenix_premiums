@@ -12,6 +12,6 @@ const load = () => {
 	return dispose
 }
 
-export default [
+export default () => [
 	load()
 ]

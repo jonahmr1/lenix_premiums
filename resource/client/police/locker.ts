@@ -13,4 +13,4 @@ const load = () => {
   return () => api.ox_target?.removeZone?.(id);
 };
 
-export default [load()];
+export default () => [load()];
