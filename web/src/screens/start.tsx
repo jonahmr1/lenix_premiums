@@ -12,18 +12,18 @@ export const Start = () => {
       <div className="absolute -z-1 size-full bg-linear-to-r from-neutral-950/50 to-transparent" />
       <Layout className="flex flex-col size-full
 				*:flex *:flex-col *:items-start *:justify-center
-				[&>*>*]:bg-transparent [&>*>*]:text-v-2 [&>*>*]:text-muted-foreground [&>*>*]:uppercase [&>*>*]:duration-0 [&>*>*]:hover:bg-current/20"
+				[&>*>*]:bg-transparent [&>*>*]:text-v-2 [&>*>*]:text-muted-foreground [&>*>*]:uppercase [&>*>*]:duration-0"
 			>
 				<div className='flex-1'></div>
 				<div className='flex-1 *:text-v-3! *:py-h-2 gap-h-2'>
 					<Button
-						variant="default"
+						variant="ghost"
 						onClick={() => nav({ to: '/starting/select' })}
 					>
 						Multiplayer
 					</Button>
 					<Button
-						variant="default"
+						variant="ghost"
 						disabled
 					>
 						Campaign
@@ -31,19 +31,19 @@ export const Start = () => {
 				</div>
 				<div className='flex-1 -perspective-left-2'>
 					<Button
-						variant="default"
+						variant="ghost"
 						onClick={() => nav({ to: '/', hash: 'settings' })}
 					>
 						Settings
 					</Button>
 					<Button
-						variant="default"
+						variant="ghost"
 						onClick={() => nav({ to: '/starting/credit' })}
 					>
 						Credit
 					</Button>
 					<Button
-						variant="default"
+						variant="ghost"
 						onClick={() => fetchNuiServer<Starting.Requests['exitGame']>('start:exitGame', {})}
 						className='text-red-700! hover:text-red-500! text-shadow-red-700! hover:drop-shadow-red-500/50! mt-h-2!'
 					>

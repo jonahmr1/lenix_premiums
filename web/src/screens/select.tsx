@@ -16,7 +16,7 @@ function panelClip(index: number, count: number, inset = 0) {
   const tilt = width / 10
   const edge = (boundary: number, angle: number, direction: number) => {
     const outside = boundary === 0 || boundary === count
-    return `calc(${boundary * width + (outside ? 0 : angle)}% + ${outside ? 0 : direction * 0.25}vw + ${direction * inset}px)`
+    return `calc(${boundary * width + (outside ? 0 : angle)}% + ${outside ? 0 : direction * 0.1}vw + ${direction * inset}px)`
   }
   const top = `${inset}px`
   const bottom = `calc(100% - ${inset}px)`
@@ -58,14 +58,17 @@ export const Select = () => {
 						>
 							<div className="absolute inset-0 overflow-hidden" style={{ clipPath: panelClip(index, entries(MODES).length, 2) }}>
 								<img
-									src={selected.image}
+									src={MODES[mode].image}
 									className='pointer-events-none absolute inset-0 size-full object-cover'
-								/>
-								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
-								<div
-									className='pointer-events-none absolute inset-0 shadow-[inset_0_0_5px_5px_rgb(78,47,28)] transition-opacity duration-300'
 									style={{
-										boxShadow: `inset 0 0 5px 5px #${selected.color}`,
+										translate: `${MODES[mode].translate}% 0`
+									}}
+								/>
+								<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/50 to-transparent" />
+								<div
+									className='pointer-events-none absolute inset-0 transition-opacity duration-300'
+									style={{
+										boxShadow: `inset 0 0 10px 5px #${MODES[mode].color}`,
 									}}
 								/>
 							</div>

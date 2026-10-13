@@ -12,6 +12,7 @@ export const MODES = {
     image: cdn('assets/start/warzone.png'),
     disabled: false,
 		color: '573D33',
+		translate: -20,
   },
   police: {
     label: 'Law Enforcement',
@@ -19,6 +20,7 @@ export const MODES = {
     image: cdn('assets/start/law.png'),
     disabled: false,
 		color: '40363C',
+		translate: 0,
   },
   gang: {
     label: 'Crime',
@@ -26,6 +28,7 @@ export const MODES = {
     image: cdn('assets/start/crime.png'),
     disabled: false,
 		color: '433538',
+		translate: 15,
   },
   justice: {
     label: 'Undercover',
@@ -33,6 +36,7 @@ export const MODES = {
     image: cdn('assets/start/undercover.jpeg'),
     disabled: true,
 		color: '332B2D',
+		translate: 20,
   },
   race: {
     label: 'Pursuit',
@@ -40,6 +44,7 @@ export const MODES = {
     image: cdn('assets/start/pursuit.png'),
     disabled: true,
 		color: '654E54',
+		translate: 10,
   },
 } satisfies Record<Start.Mode, object>
 
