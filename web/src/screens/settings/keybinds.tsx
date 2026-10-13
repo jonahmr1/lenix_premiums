@@ -104,10 +104,8 @@ export const Keybinds = () => {
 				event.preventDefault()
 				event.stopImmediatePropagation()
 
-				const key = event.key
-				if (key !== 'Escape') {
-					updateBind(key === ' ' ? event.code : key)
-				}
+				const key = event.code
+				if (key !== 'Escape') updateBind(key.replace(/^Key/, ''))
 				setUpdating(false)
 			}
 
