@@ -1,7 +1,7 @@
 import type { Character } from "@overextended/ox_core";
 import { createPed, triggerServerCallback } from "@overextended/ox_lib/client";
-import { asserts, repeat } from "@lenix/lenix";
-import { api, cam, control, emitNui, entity, isNuiReady, onNui, player, pool } from "lenix/client";
+import { repeat } from "@lenix/lenix";
+import { api, cam, control, emitNetEvent, emitNui, isNuiReady, onNui, player, pool } from "lenix/client";
 import type { Start } from "types/index";
 import police from "../police";
 import warzone from "../warzone";
@@ -11,14 +11,12 @@ import type { Vec4 } from "lenix";
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
 
-let character: Character | undefined | null
+let character: Start.CharacterRespose | null
 let characters: Character[]
 let logout: () => void = () => {}
 
-onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode }) => {
-	const characterSelected = await triggerServerCallback<Character | undefined>('lenix:server:start:modeSelected', 5000, characters, mode)
-
-	character = characterSelected ?? undefined
+onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode, character: selectedChar }) => {
+	character = selectedChar
 
 	switch (mode) {
 		case 'warzone': {
@@ -61,20 +59,19 @@ control.on({
 	}
 })
 
-globalThis.exports('charselect', async (chars: Character[]): Promise<Character | undefined> => {
+globalThis.exports('charselect', async (chars: Character[]): Promise<Start.CharacterRespose> => {
 	character = null
 	characters = chars
 
 	await repeat(() => isNuiReady(), true, 500)
-	emitNui<Start.Events['modeSelection']>('start:modeSelection')
+	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters)
+
 
 	DoScreenFadeIn(0)
 	SetEntityCoords(player.entity(), PED_COORDS[0], PED_COORDS[1], PED_COORDS[2], false, false, false, false)
 	SetEntityHeading(player.entity(), PED_COORDS[3])
 	SetEntityVisible(player.entity(), false, false)
-
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
-	
 	const firstChar = characters[0]
 	if (firstChar) {
 		const appearance = await triggerServerCallback('lenix:server:appearance:getappearance', null, firstChar.charId)
@@ -82,8 +79,6 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 		
 		api['illenium-appearance']?.setPedAppearance?.(ped.handle, appearance)
 	}
-
-
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
 		offset: [1, 2.5, 0.25, -5],
@@ -95,9 +90,12 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Character |
 			delay: 0
 		}
 	})
-
 	ShutdownLoadingScreen()
-	const selected = await repeat(() => character, character => character !== null, 500)
+
+	
+	const selected = await repeat(
+		() => character, character => character !== null, 500
+	)
 
 
 	dispose()

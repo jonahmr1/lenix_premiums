@@ -1,9 +1,14 @@
 import type { Event, Request } from "lenix";
 import type { Constants } from "../resource/common/config/constants";
+import type { Character } from "@overextended/ox_core";
 
 export type AtLeastOne<T> = {
   [K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>;
 }[keyof T];
+
+type Mapped<T> = {
+	[K in keyof T]: T[K]
+}
 
 export namespace Warzone {
   export interface Events {
@@ -154,15 +159,19 @@ export namespace Warzone {
 
 export namespace Start {
   export interface Events {
-    modeSelection: Event<"start:modeSelection", []>;
+    modeSelection: Event<"start:modeSelection", [Character[]]>;
     pause: Event<"start:pause", []>;
   }
   export interface Requests {
-    selectMode: Request<null, "start:selectMode", { mode: Mode }>;
+    selectMode: Request<null, "start:selectMode", { mode: Mode, character: Mapped<Start.CharacterRespose> }>;
+    createCharacter: Request<null, "start:createCharacter", { mode: Mode, character: Mapped<Character> }>;
     exitGame: Request<null, "start:exitGame">;
     logout: Request<null, "start:logout">;
+    getModeCharacter: Request<number | null, "start:getModeCharacter", { mode: Mode, characters: Mapped<Character>[] }>;
   }
   export type Mode = "warzone" | "police" | "gang" | "justice" | "race";
+
+	export type CharacterRespose = [Mapped<Character>, null] | [null, [string, string, string, number]]
 }
 
 export namespace Common {

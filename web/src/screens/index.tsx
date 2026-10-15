@@ -7,14 +7,16 @@ import { Settings } from './settings'
 import { Hud } from './hud'
 import type { FileRoutesByTo } from '@/routeTree.gen'
 import { blurNui, unBlurNui } from '@/lib'
+import { useStates } from '@/hooks'
 
-const dev = false
+const dev = true
 
 const hudAllowedModes: {
   [K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}` ? Segment : K extends `/${infer Segment}` ? Segment : K
 }[keyof FileRoutesByTo][] = ['gang', 'police']
 
 export function App() {
+	const [, setStates] = useStates()
   const nav = useNavigate()
   const hash = useLocation({ select: (location) => location.hash })
   const path = useLocation({ select: (location) => location.pathname })
@@ -23,8 +25,9 @@ export function App() {
     if (dev) nav({ to: '/starting' })
 
     const disposes = [
-      onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', () => {
-        nav({ to: '/starting' })
+      onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
+				setStates(null, { start: { characters }})
+        nav({ to: '/starting',  })
         focusNui()
       }),
       onNuiEmit<Start.Events['pause']>('start:pause', () => {
