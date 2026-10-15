@@ -1,1 +1,1 @@
-export const fullName = (table?: 'modes') => `lenix_starting${table && `_${table}`}` as const
+export const table = (table?: "modes") => `lenix_starting${table && `_${table}`}` as const;
