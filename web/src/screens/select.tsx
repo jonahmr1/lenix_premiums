@@ -29,7 +29,7 @@ export const Select = () => {
   const [modeState, setMode] = useState<keyof typeof MODES>(entries(MODES).find(([, self]) => !self.disabled)![0])
 	asserts(modeState)
 
-	const selected = MODES[modeState]
+	const hovered = MODES[modeState]
 
   return (
 		<>
@@ -51,7 +51,7 @@ export const Select = () => {
 							}}
 							style={{
 								clipPath: panelClip(index, entries(MODES).length),
-								backgroundColor: mode === modeState ? `#${selected.color}` : undefined
+								backgroundColor: mode === modeState ? `#${hovered.color}` : undefined
 							}}
 							className={`relative col-start-1 row-start-1 min-w-0 transition-[filter,background-color] duration-300 ${mode !== modeState && 'bg-border grayscale'}`}
 							{...audiobility}
@@ -98,10 +98,10 @@ export const Select = () => {
 			>
 				<motion.div {...anim} initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }}>
 					<span className="text-v-4 font-extrabold uppercase italic text-foreground">
-						{selected.label}
+						{hovered.label}
 					</span>
 					<p>
-						{selected.description}
+						{hovered.description}
 					</p>
 				</motion.div>
 			</PageScreen>
