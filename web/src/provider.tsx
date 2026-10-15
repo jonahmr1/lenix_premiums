@@ -1,5 +1,4 @@
-import { StatesContext } from "./context";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import type { DeepPartial, SetStatesOverload, States } from "./types";
 import { entries } from "@lenix/lenix";
 import { WARZONE_MODES } from "./constants";
@@ -17,6 +16,8 @@ const deepMerge = <T,>(current: T, patch: DeepPartial<T>): T => {
 
 	return result as T
 }
+
+export const StatesContext = createContext<[States, SetStatesOverload] | null>(null)
 
 export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, setRawState] = useState<States>({
@@ -66,6 +67,9 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 				},
 			}
 		},
+		start: {
+			characters: []
+		}
 	})
 
 	if (!state) return null/* loading? */

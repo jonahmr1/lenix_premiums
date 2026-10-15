@@ -1,5 +1,6 @@
 import type { S } from "@lenix/lenix"
 import type { WARZONE_MODES } from "./constants"
+import type { Character } from "@overextended/ox_core"
 
 export interface Tab {
 	label: string
@@ -64,6 +65,9 @@ export interface States {
 			// gtaOnlineVehicles: []
 			// fivem: []
 		}
+	}
+	start: {
+		characters: Character[]
 	}
 }
 
