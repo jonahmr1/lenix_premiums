@@ -10,7 +10,6 @@
         "@overextended/ox_core": "^1.5.14",
         "@overextended/ox_lib": "^3.35.0",
         "@overextended/oxmysql": "^2.14.1",
-        "@polar-sh/sdk": "^1.0.0-alpha.16",
         "knex": "^3.3.0",
         "lenix": "^1.8.19",
       },
@@ -362,8 +361,6 @@
     "@oxlint/binding-win32-x64-msvc": ["@oxlint/binding-win32-x64-msvc@1.66.0", "", { "os": "win32", "cpu": "x64" }, "sha512-/DbBvw8UFBhja6PqudUjV4UtfsJr0Oa7jUjWVKB0g86lj/VwnPrkngn0sFql3c9RDA0O16dh7ozsXb6GjNAzBQ=="],
 
     "@phosphor-icons/react": ["@phosphor-icons/react@2.1.10", "", { "peerDependencies": { "react": ">= 16.8", "react-dom": ">= 16.8" } }, "sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA=="],
-
-    "@polar-sh/sdk": ["@polar-sh/sdk@1.0.0-alpha.16", "", {}, "sha512-cOuuahJxPupFnSLOq3atJOXbjJY26jDhWA0QQKD/4fAql7Py937UtKFGbAn0FTB6VAN7Gm1LP/74w9t0E/wMYg=="],
 
     "@quansync/fs": ["@quansync/fs@1.0.0", "", { "dependencies": { "quansync": "^1.0.0" } }, "sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ=="],
 
