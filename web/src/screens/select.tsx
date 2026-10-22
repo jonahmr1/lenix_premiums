@@ -43,7 +43,7 @@ export const Selection = () => {
 
   const handleSelect = async (mode: Start.Mode) => {
     const characters = states.start.characters
-    const charId = await fetchNuiServer<Start.Requests['getModeCharacter']>('start:getModeCharacter', { mode, characters })
+    const charId = characters.length ? await fetchNuiServer<Start.Requests['getModeCharacter']>('start:getModeCharacter', { mode, characters }) : null
     if (charId) {
       const character = characters.find((self) => self.charId === charId)
       asserts(character)
