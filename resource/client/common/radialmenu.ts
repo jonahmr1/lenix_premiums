@@ -71,7 +71,6 @@ const load = (mode: Start.Mode) => {
 
 			return () => removeRadialItem('plist')
 		}
-		default: console.log(`Skipping police radial item on ${mode} mode, remove this debugging log`)
 	}
 
 	return () => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id))

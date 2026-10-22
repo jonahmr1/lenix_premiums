@@ -40,10 +40,15 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    if (hash === 'pause') blurNui()
-    else if (hash === 'settings') blurNui()
+		switch (hash) {
+			case 'pause': blurNui()
+			break
+			
+			case 'settings': blurNui()
+			break
 
-		return () => { unBlurNui() }
+			default: unBlurNui()
+		}
   }, [hash])
 
   return (

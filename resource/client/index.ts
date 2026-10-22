@@ -3,14 +3,14 @@ import './start'
 import { onNui } from 'lenix/client'
 
 onNui('blur', () => {
-	TriggerScreenblurFadeIn(500)
+	TriggerScreenblurFadeIn(0)
 	SetTimecycleModifier('v_dark')
 
 	return null
 })
 
 onNui('unBlur', () => {
-	TriggerScreenblurFadeOut(500)
+	TriggerScreenblurFadeOut(0)
 	ClearTimecycleModifier()
 
 	return null
