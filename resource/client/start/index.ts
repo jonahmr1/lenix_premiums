@@ -73,13 +73,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	SetEntityHeading(player.entity(), PED_COORDS[3])
 	SetEntityVisible(player.entity(), false, false)
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
-	const firstChar = characters[0]
-	if (firstChar) {
-		const appearance = await triggerServerCallback('lenix:server:appearance:getappearance', null, firstChar.charId)
-		if (!appearance) console.error(`Failed to get character<${firstChar.charId}> appearance`)
-		
-		api['illenium-appearance']?.setPedAppearance?.(ped.handle, appearance)
-	}
+
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
 		offset: CAM_OFFSET,
