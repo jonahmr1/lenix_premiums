@@ -20,6 +20,7 @@ import { focusNui } from "lenix/nui"
 type Log = Record<string, string | number | boolean>
 
 const STAGES = {
+	preloadingAssets: 'Preloading the assets',
 	loadingGameData: 'Loading Maps',
 	initializeMaps: 'Preparing Maps',
 	initializeSession: 'Preparing Session',
@@ -54,11 +55,9 @@ export function Loading() {
 		stage: 'loadingGameData'
 	})
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
-	const [preloaded, setPreloaded] = useState({ asset: 'Starting downloads…', loaded: 0, done: false })
+	const [preloaded, setPreloaded] = useState({ asset: 'Starting downloads…', loaded: 0, done: false, data: [] as Log[] })
 
   useEffect(() => {
-		focusNui()
-
 		if (!preloaded.done) {
 			prePlayer.play()
 			const timeout = setTimeout(async () => {
@@ -69,16 +68,29 @@ export function Loading() {
 						if (!response.ok) throw `Failed to preload: ${src}`
 						
 						await response.arrayBuffer()
-						setPreloaded(prev => ({ ...prev, asset: src, loaded: prev.loaded + 1 }))
+						setPreloaded(prev => ({
+							...prev,
+							asset: src,
+							loaded: prev.loaded + 1,
+							data: [...prev.data, { eventName: 'preloadingAssets', asset: src, time: dayjs().format("HH:mm:ss:SSS") }],
+						}))
 					}),
 				)
 				setPreloaded(prev => ({ ...prev, done: true }))
 			})
-			return () => clearTimeout(timeout)
+			return () => {
+				clearTimeout(timeout)
+				prePlayer.stop()
+			}
 		}
 
 		prePlayer.stop()
 		player.play()
+		return () => { player.stop() }
+	}, [preloaded.done])
+
+	useEffect(() => {
+		focusNui()
 
 		const interval = setInterval(() => {
 			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
@@ -112,44 +124,19 @@ export function Loading() {
 			window.removeEventListener("message", handler)
 			clearInterval(interval)
 		}
-	}, [preloaded.done])
+	}, [])
 
 	const preloadProgress = assets.length ? preloaded.loaded / assets.length * 100 : 100
+	const progress = preloaded.done ? state.progress : preloadProgress
+	const currentStage = preloaded.done ? state.stage : 'preloadingAssets'
+	const phase = preloaded.done ? 'Step 2 of 2: Loading game' : 'Step 1 of 2: Downloading assets'
+	const logs = preloaded.done ? state.data : preloaded.data
 
-	if (!preloaded.done) return (
-		<div className="relative h-screen overflow-hidden bg-neutral-950 text-neutral-100">
-			<Layout className="relative flex size-full items-center justify-center bg-[radial-gradient(ellipse_at_center,#17191b_0%,transparent_70%)]">
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					// transition={{ duration: 2, delay: 1 }}
-					className="w-full max-w-2xl text-center"
-				>
-					<h1 className="text-v-4 leading-tight font-bold uppercase italic">Preloading the assets</h1>
-					<p className="mt-h-2 text-sm font-normal tracking-wide text-neutral-400">Downloading the files needed to get started.</p>
-					<div className="mt-h-5 space-y-h-1.5">
-						<div className="flex items-center justify-between gap-4 text-sm font-normal">
-							<p className="truncate">{preloaded.asset.split('/').pop()}</p>
-							<Spinner className="size-v-2" />
-						</div>
-						<Progress value={preloadProgress} className="h-h-0.5 bg-neutral-800 **:data-[slot=progress-indicator]:bg-neutral-100" />
-						<div className="flex justify-between text-xs font-normal tracking-wide text-neutral-400">
-							<p>{preloaded.loaded} / {assets.length} files</p>
-							<p>{Math.floor(preloadProgress)}%</p>
-						</div>
-					</div>
-					<p className="mt-h-5 text-v-1 font-normal tracking-wide text-neutral-400" role="status">
-						Please keep the game open while assets load.
-					</p>
-				</motion.div>
-			</Layout>
-		</div>
-	)
-
-	const stageOrder = Object.keys(STAGES) as (keyof typeof STAGES)[]
+	const stageOrder = (Object.keys(STAGES) as (keyof typeof STAGES)[])
+		.filter(stage => preloaded.done ? stage !== 'preloadingAssets' : stage === 'preloadingAssets')
 
 	const StagesRecord = () => {
-		const currentIndex = stageOrder.indexOf(state.stage)
+		const currentIndex = stageOrder.indexOf(currentStage)
 
 		return (
 			<div className="space-y-1">
@@ -184,23 +171,25 @@ export function Loading() {
 			<Layout className="relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent">
 				<div className="w-[67vw] space-y-[1vh]">
 					<div className="flex items-center justify-center gap-[0.5vw] uppercase italic">
-						<p>{STAGES[state.stage]}</p>
+						<p>{phase}</p>
 						<Spinner />
 					</div>
 					<HoverCard openDelay={50}>
 						<HoverCardTrigger>
-							<Progress value={state.progress} className="outline outline-offset-1" />
+							<Progress value={progress} className="outline outline-offset-1" />
 						</HoverCardTrigger>
 						<HoverCardContent className="w-[67vw]">
 							<Card className="h-[50vh] justify-between">
 								<CardHeader>
 									<CardTitle className="flex gap-[1vw]">
 										<TerminalIcon />
-										<p>{STAGES[state.stage]}</p>
+										<p>{phase}</p>
 									</CardTitle>
-									<CardDescription className="uppercase">Do not close the game</CardDescription>
+									<CardDescription className="uppercase">
+										{preloaded.done ? 'Asset preloading finished. Please keep the game open.' : 'Downloading files. Game loading follows this step.'}
+									</CardDescription>
 									<CardAction>
-										<p className="text-v-1.5">{state.progress.toFixed(2)}%</p>
+										<p className="text-v-1.5">{progress.toFixed(2)}%</p>
 									</CardAction>
 								</CardHeader>
 								<CardContent className="h-full overflow-y-hidden border-y">
@@ -208,7 +197,7 @@ export function Loading() {
 										<MessageScroller>
 											<MessageScrollerViewport>
 												<MessageScrollerContent className="gap-0">
-													{state.data.map(
+													{logs.map(
 														({ time, eventName, ...data }, i) =>
 															eventName !== 'loadProgress' && (
 																<MessageScrollerItem key={i} className="space-x-[1vw] font-normal text-muted-foreground">
