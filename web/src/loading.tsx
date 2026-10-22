@@ -39,7 +39,7 @@ const prePlayer = new Howl({
 })
 const player = new Howl({
 	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
-	volume: 0.5
+	volume: 0.0
 })
 
 
@@ -77,6 +77,7 @@ export function Loading() {
 			return () => clearTimeout(timeout)
 		}
 
+		prePlayer.stop()
 		player.play()
 
 		const interval = setInterval(() => {
@@ -124,7 +125,7 @@ export function Loading() {
 					// transition={{ duration: 2, delay: 1 }}
 					className="w-full max-w-2xl text-center"
 				>
-					<h1 className="text-v-4 leading-tight font-extrabold uppercase italic">Preloading the assets</h1>
+					<h1 className="text-v-4 leading-tight font-bold uppercase italic">Preloading the assets</h1>
 					<p className="mt-h-2 text-sm font-normal tracking-wide text-neutral-400">Downloading the files needed to get started.</p>
 					<div className="mt-h-5 space-y-h-1.5">
 						<div className="flex items-center justify-between gap-4 text-sm font-normal">
@@ -217,7 +218,7 @@ export function Loading() {
 																		{entries(data).map(([key, value], i) => (
 																			<span key={i}>
 																				<span>{key}: </span>
-																				<span className="font-semibold">{value.toString()}</span>
+																				<span className="font-medium">{value.toString()}</span>
 																			</span>
 																		))}
 																	</span>

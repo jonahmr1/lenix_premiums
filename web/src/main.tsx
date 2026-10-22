@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
 					expand={false}
 					toastOptions={{
 						classNames: {
-							default: 'bg-transparent! border-transparent! shadow-none! text-foreground! font-semibold text-shadow-sm! text-v-1.5! text-center'
+							default: 'bg-transparent! border-transparent! shadow-none! text-foreground! font-medium text-shadow-sm! text-v-1.5! text-center'
 						}
 					}}
 				/>

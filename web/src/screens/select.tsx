@@ -177,7 +177,7 @@ export const Selection = () => {
         ]}
       >
         <motion.div {...anim} initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }}>
-          <span className="text-v-4 font-extrabold text-foreground uppercase italic">{hovered.label}</span>
+          <span className="text-v-4 font-bold text-foreground uppercase italic">{hovered.label}</span>
           <p>{hovered.description}</p>
         </motion.div>
       </PageScreen>

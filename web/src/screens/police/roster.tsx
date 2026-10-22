@@ -23,7 +23,7 @@ const Officer = ({ callsign, name, duty_state, talk_state }: Police.Roster.Offic
 	<div className='w-full min-h-1/10 flex justify-around text-muted-foreground items-center bg-card px-2 border rounded-md'>
 		<div className='flex-3.5 flex gap-1.5 items-center'>
 			<Badge className={`size-2 rounded-full p-0 shine-md ${DutyStates[duty_state]}`} />
-			<p className='whitespace-nowrap font-extralight text-v-1.5 pt-px'>{callsign}</p>
+			<p className='whitespace-nowrap font-normal text-v-1.5 pt-px'>{callsign}</p>
 		</div>
 		<div className='p-1 flex-1 flex justify-center'>
 			<Separator orientation='vertical' className='h-4' />
