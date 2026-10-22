@@ -36,7 +36,7 @@ const CROSSFADE_INTERVAL = 10
 
 const player = new Howl({
 	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
-	volume: 0.0
+	volume: 0.5
 })
 
 
