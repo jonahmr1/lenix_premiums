@@ -3,6 +3,7 @@ import { notify } from '@overextended/ox_lib/client'
 import { checkDependency } from '@overextended/ox_lib'
 import { oxmysql } from '@overextended/oxmysql'
 import type { Police } from 'types/index'
+import { table } from '../utils'
 
 checkDependency('oxmysql', '2.14.1', true)
 checkDependency('ox_lib', '3.39.0', true)
@@ -57,7 +58,7 @@ abstract class Officers {
 				return
 			}
 
-			const affectedRows = await oxmysql.update('UPDATE lenix SET callsign = ? WHERE charId = ?', [
+			const affectedRows = await oxmysql.update(`UPDATE ${table('police')} SET callsign = ? WHERE charId = ?`, [
 				props.callsign,
 				charId,
 			])

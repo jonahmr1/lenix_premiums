@@ -1,16 +1,8 @@
-import { oxmysql } from "@overextended/oxmysql";
-import { database, db } from "../db";
-import { table } from "../utils";
-import { asserts } from "@lenix/lenix";
+import { createTable, db, queryTables } from "../db";
 import type { Start } from "types/index";
 
-const create = (
-  tableName: Parameters<typeof table>[0],
-  cb: Parameters<ReturnType<typeof db.schema.withSchema>["createTableIfNotExists"]>[1],
-) => db.schema.withSchema(database).createTableIfNotExists(table(tableName), cb);
-
 const tables = [
-  create('start', (table) => {
+  createTable('start', (table) => {
     table.integer("charId").unsigned().primary();
     table.enum("type", ["warzone", "police", "gang", "justice", "race"] satisfies Start.Mode[]).notNullable();
 
@@ -22,9 +14,4 @@ const tables = [
   }),
 ];
 
-setImmediate(async () => {
-  for (const table of tables) {
-    const result = await oxmysql.query(table.toQuery());
-    asserts(result, "Failed to create a table");
-  }
-});
+queryTables(tables)

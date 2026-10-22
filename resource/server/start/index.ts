@@ -1,10 +1,10 @@
 import "./db";
 import type { Start } from "types/index";
 import { oxmysql } from "@overextended/oxmysql";
-import { table } from "../utils";
 import { asserts } from "@lenix/lenix";
 import { onNuiServer } from "lenix/server";
 import { GetPlayer } from "@overextended/ox_core/server";
+import { table } from "../db";
 
 on("ox:createdCharacter", async (charId: number, mode: Start.Mode) => {
   await oxmysql.insert(`INSERT INTO ${table("start")} (charId, type) VALUES(?, ?)`, [charId, mode]);
