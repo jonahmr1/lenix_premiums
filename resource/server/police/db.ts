@@ -4,7 +4,11 @@ import { createTable, queryTables } from "../db";
 const tables = [
 	createTable('start', (table) => {
 		table.integer("charId").unsigned().primary();
-		table.string('callsign', Constants.roster.max_callsign_length).nullable().unique()
+		table.specificType(
+      'callsign',
+      `VARCHAR(${Constants.roster.max_callsign_length}) UNIQUE`,
+    )
+    .nullable()
 
 		// table
 		// 	.foreign('charId')
