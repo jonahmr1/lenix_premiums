@@ -34,10 +34,6 @@ const BACKGROUNDS = [
 ] as const
 const CROSSFADE_INTERVAL = 10
 
-const prePlayer = new Howl({
-	src: cdn('assets/loading/loading.mp3'),
-	volume: 0.5
-})
 const player = new Howl({
 	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
 	volume: 0.0
@@ -59,7 +55,6 @@ export function Loading() {
 
   useEffect(() => {
 		if (!preloaded.done) {
-			prePlayer.play()
 			const timeout = setTimeout(async () => {
 				await Promise.allSettled(
 					assets.map(async src => {
@@ -78,15 +73,10 @@ export function Loading() {
 				)
 				setPreloaded(prev => ({ ...prev, done: true }))
 			})
-			return () => {
-				clearTimeout(timeout)
-				prePlayer.stop()
-			}
+			return () => clearTimeout(timeout)
 		}
 
-		prePlayer.stop()
 		player.play()
-		return () => { player.stop() }
 	}, [preloaded.done])
 
 	useEffect(() => {

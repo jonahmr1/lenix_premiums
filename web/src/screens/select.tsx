@@ -50,6 +50,7 @@ export const Selection = () => {
 
       await fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode, character: [character, null] })
       router.navigate({ to: `/${mode}` })
+			unFocusNui()
     } else setDialog(true)
   }
 
@@ -68,7 +69,6 @@ export const Selection = () => {
                   return
                 }
                 handleSelect(mode)
-                unFocusNui()
               }}
               style={{
                 clipPath: panelClip(index, entries(MODES).length),
@@ -119,6 +119,7 @@ export const Selection = () => {
 
 							await fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: modeState, character: [null, [first, last, gender, 946684800000]] })
 							router.navigate({ to: `/${modeState}` })
+							unFocusNui()
 						}}
 						className='contents'
 					>
