@@ -18,7 +18,7 @@ export const table = (
 	| 'warzone_matches'
 	| 'warzone_friends'
 	| 'warzone_performances'
-) => `lenix${table ? `_${table}` : ''}` as const;
+) => `lenix_${table}` as const;
 
 export const createTable = (
 	tableName: Parameters<typeof table>[0],
