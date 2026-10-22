@@ -3,7 +3,7 @@ import { notify } from '@overextended/ox_lib/client'
 import { checkDependency } from '@overextended/ox_lib'
 import { oxmysql } from '@overextended/oxmysql'
 import type { Police } from 'types/index'
-import { table } from '../utils'
+import { table } from '../db'
 
 checkDependency('oxmysql', '2.14.1', true)
 checkDependency('ox_lib', '3.39.0', true)
