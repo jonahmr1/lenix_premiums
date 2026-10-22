@@ -6,21 +6,32 @@ import { onNuiServer } from "lenix/server";
 import { GetPlayer } from "@overextended/ox_core/server";
 import { table } from "../db";
 
-on("ox:createdCharacter", async (charId: number, mode: Start.Mode) => {
+const pendingCreations = new Map<number, Start.Mode>()
+
+on("ox:createdCharacter", async (playerId: number, _userId: number, charId: number) => {
+	const mode = pendingCreations.get(playerId)
+	asserts(mode)
   await oxmysql.insert(`INSERT INTO ${table("start")} (charId, type) VALUES(?, ?)`, [charId, mode]);
+	pendingCreations.delete(playerId)
 });
 
 onNuiServer<Start.Requests["getModeCharacter"]>("start:getModeCharacter", async (client, { mode, characters }) => {
   const player = GetPlayer(client);
   asserts(player, `Failed to get player<${client}> while fetching his mode characters`);
 
-  const re = await oxmysql.single(`SELECT charId FROM ${table("start")} WHERE type = ? AND charId IN (?)`, [
-    mode,
-    characters.map((char) => char.charId),
-  ]);
+  const re = characters.length
+		? await oxmysql.single(`SELECT charId FROM ${table("start")} WHERE type = ? AND charId IN (?)`, [
+			mode,
+			characters.map((char) => char.charId),
+		])
+		: null
+	if (!re) pendingCreations.set(client, mode)
+	else pendingCreations.delete(client)
 
   return (re?.charId as number) ?? re;
 });
+
+on('playerDropped', () => pendingCreations.delete(Number(source)))
 
 onNuiServer<Start.Requests["logout"]>("start:logout", (client) => {
   const player = GetPlayer(client);
