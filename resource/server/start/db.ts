@@ -1,6 +1,6 @@
 import { oxmysql } from "@overextended/oxmysql";
 import { database, db } from "../db";
-import { table } from "./utils";
+import { table } from "../utils";
 import { asserts } from "@lenix/lenix";
 import type { Start } from "types/index";
 
@@ -10,7 +10,7 @@ const create = (
 ) => db.schema.withSchema(database).createTableIfNotExists(table(tableName), cb);
 
 const tables = [
-  create("modes", (table) => {
+  create('start', (table) => {
     table.integer("charId").unsigned().primary();
     table.enum("type", ["warzone", "police", "gang", "justice", "race"] satisfies Start.Mode[]).notNullable();
 
