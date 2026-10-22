@@ -10,7 +10,7 @@ import common from "../common";
 import type { Vec4 } from "lenix";
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
-const CAM_OFFSET: Vec4 = [2, 2.5, 30, -5]
+const CAM_OFFSET: Vec4 = [2, 2.5, 1, -12.5]
 
 let character: Start.CharacterRespose | null
 let characters: Character[]
@@ -83,12 +83,13 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
 		offset: CAM_OFFSET,
+		rotation: [-5, 0],
 		details: {
-			fov: 30,
+			fov: 45,
 			rotationOrder: 0,
 			fadeIn: 0,
 			fadeOut: 0,
-			delay: 0
+			delay: 0,
 		}
 	})
 	ShutdownLoadingScreen()

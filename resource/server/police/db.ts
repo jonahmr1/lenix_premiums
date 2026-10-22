@@ -2,7 +2,7 @@ import { Constants } from 'common/config/constants'
 import { createTable, queryTables } from "../db";
 
 const tables = [
-	createTable('start', (table) => {
+	createTable('police', (table) => {
 		table.integer("charId").unsigned().primary();
 		table.specificType(
       'callsign',
