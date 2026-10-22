@@ -39,6 +39,7 @@ export default [
   "assets/loading/ls-2.png",
   "assets/loading/ls-3.png",
   "assets/loading/ls-4.png",
+  "assets/loading/welcome_to_los_santos.mp3",
   "assets/rank/avatar.png",
   "assets/start/crime.png",
   "assets/start/law.png",

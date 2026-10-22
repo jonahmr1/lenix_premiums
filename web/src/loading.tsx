@@ -33,6 +33,10 @@ const BACKGROUNDS = [
 ] as const
 const CROSSFADE_INTERVAL = 10
 
+const prePlayer = new Howl({
+	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
+	volume: 0.5
+})
 const player = new Howl({
 	src: cdn('assets/loading/loading.mp3'),
 	volume: 0.5
@@ -56,6 +60,7 @@ export function Loading() {
 		focusNui()
 
 		if (!preloaded.done) {
+			prePlayer.play()
 			const timeout = setTimeout(async () => {
 				await Promise.allSettled(
 					assets.map(async src => {
@@ -72,12 +77,12 @@ export function Loading() {
 			return () => clearTimeout(timeout)
 		}
 
+		player.play()
+
 		const interval = setInterval(() => {
 			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
 		}, CROSSFADE_INTERVAL * 1000)
 
-		player.play()
-		
     const handler = (e: MessageEvent) => {
 			const data = e.data as Log
 			asserts(data.eventName, `(eventName) doesn't exist, found: ${JSON.stringify(data)}`)
