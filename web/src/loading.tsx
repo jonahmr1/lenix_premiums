@@ -54,32 +54,32 @@ export function Loading() {
 	const [preloaded, setPreloaded] = useState({ asset: 'Starting downloads…', loaded: 0, done: false, data: [] as Log[] })
 
   useEffect(() => {
-		if (!preloaded.done) {
-			const timeout = setTimeout(async () => {
-				await Promise.allSettled(
-					assets.map(async src => {
-						const response = await fetch(cdn(src), { cache: 'force-cache' })
-						
-						if (!response.ok) throw `Failed to preload: ${src}`
-						
-						await response.arrayBuffer()
-						setPreloaded(prev => ({
-							...prev,
-							asset: src,
-							loaded: prev.loaded + 1,
-							data: [...prev.data, { eventName: 'preloadingAssets', asset: src, time: dayjs().format("HH:mm:ss:SSS") }],
-						}))
-					}),
-				)
-				setPreloaded(prev => ({ ...prev, done: true }))
-			})
-			return () => clearTimeout(timeout)
-		}
+		if (preloaded.done) return
 
-		player.play()
+		const timeout = setTimeout(async () => {
+			await Promise.allSettled(
+				assets.map(async src => {
+					const response = await fetch(cdn(src), { cache: 'force-cache' })
+					
+					if (!response.ok) throw `Failed to preload: ${src}`
+					
+					await response.arrayBuffer()
+					setPreloaded(prev => ({
+						...prev,
+						asset: src,
+						loaded: prev.loaded + 1,
+						data: [...prev.data, { eventName: 'preloadingAssets', asset: src, time: dayjs().format("HH:mm:ss:SSS") }],
+					}))
+				}),
+			)
+			setPreloaded(prev => ({ ...prev, done: true }))
+		})
+		
+		return () => clearTimeout(timeout)
 	}, [preloaded.done])
 
 	useEffect(() => {
+		player.play()
 		focusNui()
 
 		const interval = setInterval(() => {
@@ -113,6 +113,7 @@ export function Loading() {
     return () => {
 			window.removeEventListener("message", handler)
 			clearInterval(interval)
+			player.stop()
 		}
 	}, [])
 
