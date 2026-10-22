@@ -2,7 +2,6 @@ import { addRadialItem, checkDependency, notify, onCache, removeRadialItem } fro
 import type { Start } from 'types/index'
 
 checkDependency('ox_lib', '3.39.0', true)
-checkDependency('illenium-appearance', '5.7.0', true)
 checkDependency('ox_core', '1.5.14', true)
 
 const radiaItems: Parameters<typeof addRadialItem>[0] = [
@@ -23,12 +22,6 @@ const radiaItems: Parameters<typeof addRadialItem>[0] = [
 		label: 'Take out of vehicle',
 		icon: 'arrow-right-from-bracket',
 		onSelect: () => emit('lenix:client:interaction:takeOutVehicle'),
-	},
-	{
-		id: 'reload',
-		label: 'Reload',
-		icon: 'shirt',
-		onSelect: () => emit('illenium-appearance:client:reloadSkin'),
 	},
 	{
 		id: 'settings',
