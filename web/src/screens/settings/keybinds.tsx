@@ -184,7 +184,7 @@ export const Keybinds = () => {
 								</div>
 								{keybinds[title][binding].map((key, i) => (
 									<KbdDialog key={key} binding={binding} order={i}>
-										{key.length ? <Kbd className="[button:hover>&]:invert bg-foreground text-background">{key}</Kbd> : <></>}
+										{key.length ? <Kbd className="[button:hover>&]:invert text-md font-bold bg-foreground text-background">{key}</Kbd> : <></>}
 									</KbdDialog>
 								))}
 							</div>

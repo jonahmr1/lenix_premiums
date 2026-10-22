@@ -42,7 +42,8 @@ export function App() {
   useEffect(() => {
     if (hash === 'pause') blurNui()
     else if (hash === 'settings') blurNui()
-    else unBlurNui()
+
+		return () => { unBlurNui() }
   }, [hash])
 
   return (

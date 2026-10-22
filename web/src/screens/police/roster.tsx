@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { focusNui, onNuiEmit, fetchNui, onKeyDown, unFocusNui } from 'lenix/nui'
+import { focusNui, onNuiEmit, fetchNui } from 'lenix/nui'
 import type { Police } from 'types'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
@@ -60,9 +60,6 @@ export const Roster = () => {
 				setPlayerId(playerId)
 			}),
 			onNuiEmit<Police.Events['refreshOfficers']>('roster:refreshOfficers', setOfficers),
-			onKeyDown('Escape', () => {
-				unFocusNui()
-			})
 		]
 
 		return () => {
