@@ -34,11 +34,11 @@ const BACKGROUNDS = [
 const CROSSFADE_INTERVAL = 10
 
 const prePlayer = new Howl({
-	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
+	src: cdn('assets/loading/loading.mp3'),
 	volume: 0.5
 })
 const player = new Howl({
-	src: cdn('assets/loading/loading.mp3'),
+	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
 	volume: 0.5
 })
 

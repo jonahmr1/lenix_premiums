@@ -5,9 +5,9 @@ import { asserts } from "@lenix/lenix";
 import type { Start } from "types/index";
 
 const create = (
-  table: Parameters<typeof table>[0],
+  tableName: Parameters<typeof table>[0],
   cb: Parameters<ReturnType<typeof db.schema.withSchema>["createTableIfNotExists"]>[1],
-) => db.schema.withSchema(database).createTableIfNotExists(table(table), cb);
+) => db.schema.withSchema(database).createTableIfNotExists(table(tableName), cb);
 
 const tables = [
   create("modes", (table) => {
