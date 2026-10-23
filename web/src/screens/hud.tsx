@@ -3,7 +3,7 @@ import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
 import type { Common } from 'types'
-import { random, storage } from '@lenix/lenix'
+import { storage } from '@lenix/lenix'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { zeroed } from '@/lib'
 
