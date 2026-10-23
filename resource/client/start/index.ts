@@ -1,7 +1,7 @@
 import type { Character } from '@overextended/ox_core'
-import { createPed, triggerServerCallback } from '@overextended/ox_lib/client'
+import { createPed } from '@overextended/ox_lib/client'
 import { repeat } from '@lenix/lenix'
-import { api, cam, control, emitNui, isNuiReady, onNui, player, pool } from 'lenix/client'
+import { cam, emitNui, isNuiReady, onNui, player } from 'lenix/client'
 import type { Start } from 'types/index'
 import police from '../police'
 import warzone from '../warzone'
@@ -47,14 +47,6 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 	return null
 })
 
-control.on({
-	event: 'press',
-	key: 'ESCAPE',
-	onEvent: () => {
-		emitNui<Start.Events['pause']>('start:pause')
-	},
-})
-
 globalThis.exports('charselect', async (chars: Character[]): Promise<Start.CharacterRespose> => {
 	character = null
 	characters = chars
@@ -68,7 +60,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	SetEntityVisible(player.entity(), false, false)
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
 
-	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]],  ped.handle), true, 1000)
+	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]],  ped.handle), 1, 1000)
 
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
@@ -96,5 +88,3 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 
 	return selected
 })
-
-pool(DisableFrontendThisFrame)

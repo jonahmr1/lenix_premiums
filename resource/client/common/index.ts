@@ -1,3 +1,4 @@
+import './pause'
 import emotes from './emotes'
 import identities from './identities'
 import radialmenu from './radialmenu'
