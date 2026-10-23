@@ -97,7 +97,7 @@ node_version '22'
 
 client_script 'dist/client.js'
 server_script 'dist/server.js'
-${web ? `ui_page 'dist/web/index.html'\nloadscreen 'dist/web/loading.html'\nloadscreen_manual_shutdown 'yes'` : ``}
+${web ? `ui_page 'dist/web/index.html'\nloadscreen 'dist/web/loading.html'\nloadscreen_manual_shutdown 'yes'\nloadscreen_cursor 'yes'` : ``}
 ${reduceArray('files', files)}`
 
 	if (body === fxmanifest) return

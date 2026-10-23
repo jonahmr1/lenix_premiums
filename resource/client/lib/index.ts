@@ -1,7 +1,15 @@
+import type { Vec3 } from "lenix"
+
 export const behavior = (pedHandle: number, scenario: Scenario, freeze = true, oblivious = true) => {
 	TaskStartScenarioInPlace(pedHandle, scenario, -1, true)
 	freeze && FreezeEntityPosition(pedHandle, true)
 	oblivious && SetBlockingOfNonTemporaryEvents(pedHandle, true)
+}
+
+export const hasCollided = (coords: Vec3, entity: number) => {
+	RequestCollisionAtCoord(...coords)
+
+	return HasCollisionLoadedAroundEntity(entity)
 }
 
 export type Scenario =

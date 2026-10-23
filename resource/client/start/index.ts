@@ -8,6 +8,7 @@ import warzone from '../warzone'
 import gang from '../gang'
 import common from '../common'
 import type { Vec4 } from 'lenix'
+import { hasCollided } from '../lib'
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
 const CAM_OFFSET: Vec4 = [2, 2.5, 1, -12.5]
@@ -67,12 +68,14 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	SetEntityVisible(player.entity(), false, false)
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
 
+	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]],  ped.handle), true, 1000)
+
 	const [dispose] = cam.create({
 		coords: PED_COORDS,
 		offset: CAM_OFFSET,
-		rotation: [-5, 0],
+		rotation: [-7.5, 0],
 		details: {
-			fov: 45,
+			fov: 40,
 			rotationOrder: 0,
 			fadeIn: 0,
 			fadeOut: 0,
