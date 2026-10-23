@@ -62,7 +62,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 
 	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]],  ped.handle), 1, 1000)
 
-	const [dispose] = cam.create({
+	const [dispose, camHandle] = cam.create({
 		coords: PED_COORDS,
 		offset: CAM_OFFSET,
 		rotation: [-7.5, 0],
@@ -74,6 +74,8 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 			delay: 0,
 		},
 	})
+
+	await repeat(() => IsCamRendering(camHandle), true, 50);
 	ShutdownLoadingScreen()
 
 	const selected = await repeat(
