@@ -5,17 +5,20 @@ import { audiobility } from '@/lib'
 import { onKeyDown } from 'lenix/nui'
 import { motion } from 'motion/react'
 import { useEffect } from 'react'
+import { cn } from '@/lib/cn'
 
 export const NavKbd = ({
 	children,
 	icon: Icon,
 	onClick,
 	keybind,
+	className
 }: {
 	children: React.ReactNode
 	icon: React.ReactNode
 	onClick: () => void
 	keybind: string
+	className?: string
 }) => {
 	useEffect(() => {
 		const dispose = onKeyDown(keybind, () => {
@@ -33,7 +36,7 @@ export const NavKbd = ({
 			animate={{ opacity: 1, y: 0 }}
 			className='group flex items-center'
 		>
-			<Button onClick={onClick} variant='background' className='gap-w-0.5 py-h-2 group'>
+			<Button onClick={onClick} variant='background' className={cn('gap-w-0.5 py-h-2 group', className)}>
 				<Kbd className='bg-foreground text-background font-bold uppercase group-hover:invert'>{Icon}</Kbd>
 				<span className='text-v-1.2 font-sans uppercase'>{children}</span>
 			</Button>

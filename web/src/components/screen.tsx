@@ -7,18 +7,20 @@ export const PageScreen = ({
 	children,
 	className,
 	kbds,
+	navClass,
 	...props
 }: {
 	children: React.ReactNode
 	className?: React.ComponentProps<typeof Layout>['className']
 	kbds?: (React.ComponentProps<typeof NavKbd> & { children: React.ReactNode })[]
+	navClass?: string
 } & React.ComponentProps<typeof Layout>) => (
 	<Layout className={cn('flex size-full flex-col justify-between', className)} {...props}>
 		{children}
 		{kbds && (
 			<KbdGroup>
 				{kbds.map(({ children, ...kbd }, i) => (
-					<NavKbd key={i} {...kbd}>
+					<NavKbd key={i} {...kbd} className={navClass}>
 						{children}
 					</NavKbd>
 				))}

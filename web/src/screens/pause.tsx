@@ -24,6 +24,7 @@ import {
 	AlertDialogAction,
 } from '@/components/ui/alert-dialog'
 import { MODES } from '@/constants'
+import { PageScreen } from '@/components/screen'
 
 export const Pause = ({ path }: { path: string }) => {
 	const nav = useNavigate()
@@ -54,7 +55,18 @@ export const Pause = ({ path }: { path: string }) => {
 
 	return (
 		<motion.div {...anim} initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }}>
-			<Layout className='absolute z-2 flex h-screen w-full flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent'>
+			<PageScreen
+				className='absolute z-2 flex h-screen w-full flex-col justify-between bg-linear-to-r from-neutral-950 to-transparent'
+				kbds={[
+					{
+						children: buttons[0].label,
+						icon: 'Esc',
+						keybind: 'Escape',
+						onClick: buttons[0].onClick
+					}
+				]}
+				navClass='invert'
+			>
 				<div className='gap-w-1 flex items-center'>
 					<div className='mt-h-1 bg-foreground h-2/3 w-0.5' />
 					<Header>Paused</Header>
@@ -78,12 +90,7 @@ export const Pause = ({ path }: { path: string }) => {
 						</Fragment>
 					))}
 				</ButtonGroup>
-				<KbdGroup className='flex w-full'>
-					<NavKbd onClick={() => buttons[0].onClick()} keybind='Escape' icon='Esc'>
-						{buttons[0].label}
-					</NavKbd>
-				</KbdGroup>
-			</Layout>
+			</PageScreen>
 
 			<AlertDialog>
 				<AlertDialogTrigger ref={dialogTrigger} className='hidden' />
