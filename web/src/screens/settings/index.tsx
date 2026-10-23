@@ -124,7 +124,7 @@ export const Settings = () => {
 								key={i}
 								disabled={disabled}
 								variant={tab === i ? 'default' : 'background'}
-								className={`text-v-1.6 flex-auto font-medium uppercase italic ${tab !== i && 'bg-background/70'}`}
+								className={`text-v-1.6 py-h-2.2 flex-auto font-semibold uppercase italic ${tab !== i && 'bg-background/70'}`}
 								onClick={() => setTab(i)}
 								size='lg'
 							>
