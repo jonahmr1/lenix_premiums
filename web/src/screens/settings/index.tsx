@@ -31,7 +31,7 @@ export const LabelItem = ({
 		{...props}
 	>
 		<ItemContent>
-			<ItemTitle className='text-v-1.5 font-semibold uppercase'>{title}</ItemTitle>
+			<ItemTitle className='text-v-1.5 font-bold uppercase'>{title}</ItemTitle>
 		</ItemContent>
 		<ItemActions>{children}</ItemActions>
 	</Item>
