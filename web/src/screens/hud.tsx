@@ -49,7 +49,7 @@ export const Hud = () => {
 		}
 	}, [])
 
-	if (!display || !state) return null
+	if ((!display?.vitals && !display?.weaponary) || !state) return null
 
 	const hudVariant = storage.get<Storage, 'hudVariant'>('hudVariant')
 
