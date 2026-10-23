@@ -6,4 +6,7 @@ export default defineConfig({
 	arrowParens: 'avoid',
 	jsxSingleQuote: true,
 	useTabs: true,
+	sortTailwindcss: {
+		functions: ['cn', 'clsx', 'cva']
+	}
 })
