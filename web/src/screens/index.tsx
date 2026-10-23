@@ -9,7 +9,7 @@ import type { FileRoutesByTo } from '@/routeTree.gen'
 import { blurNui, unBlurNui } from '@/lib'
 import { useStates } from '@/hooks'
 
-const dev = true
+const dev = false
 
 const hudAllowedModes: {
 	[K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}`
