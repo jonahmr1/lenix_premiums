@@ -3,6 +3,7 @@ import type { Start as Starting } from 'types'
 import { Button } from '@/components/ui/button'
 import { Layout } from '@/components/layout'
 import { useNavigate } from '@tanstack/react-router'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 
 export const Start = () => {
 	const nav = useNavigate()
@@ -29,13 +30,30 @@ export const Start = () => {
 					<Button variant='ghost' onClick={() => nav({ to: '/starting/credit' })}>
 						Credit
 					</Button>
-					<Button
-						variant='ghost'
-						onClick={() => fetchNuiServer<Starting.Requests['exitGame']>('start:exitGame', {})}
-						className='mt-h-2! text-red-700! text-shadow-red-700! hover:text-red-500! hover:drop-shadow-red-500/50!'
-					>
-						Quit
-					</Button>
+					<AlertDialog>
+						<AlertDialogTrigger asChild>
+							<Button
+								variant='ghost'
+								className='mt-h-2! text-red-700! text-shadow-red-700! hover:text-red-500! hover:drop-shadow-red-500/50!'
+							>
+								Quit
+							</Button>
+						</AlertDialogTrigger>
+						<AlertDialogContent>
+							<AlertDialogHeader>
+								<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+								<AlertDialogDescription>
+									This will disconnect you from the server and send you back to the FiveM main menu.
+								</AlertDialogDescription>
+							</AlertDialogHeader>
+							<AlertDialogFooter>
+								<AlertDialogCancel>Cancel</AlertDialogCancel>
+								<AlertDialogAction
+									onClick={() => fetchNuiServer<Starting.Requests['exitGame']>('start:exitGame', {})}
+								>Disconnect</AlertDialogAction>
+							</AlertDialogFooter>
+						</AlertDialogContent>
+					</AlertDialog>
 				</div>
 			</Layout>
 		</div>
