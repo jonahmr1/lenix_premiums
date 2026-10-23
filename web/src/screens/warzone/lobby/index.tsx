@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavButton } from '@/components/nav'
 import { Tabs, TabsList, TabsContent } from '@/components/ui/tabs'
 import type { Tab } from '@/types'
@@ -8,8 +8,8 @@ import { motion } from 'motion/react'
 import { anim, cdn } from '@/lib'
 import { PageScreen } from '@/components/screen'
 import { useNavigate } from '@tanstack/react-router'
-import { fetchNui, fetchNuiServer } from 'lenix/nui'
-import type { Start } from 'types'
+import { fetchNui, fetchNuiServer, onNuiEmit } from 'lenix/nui'
+import type { Start, Warzone } from 'types'
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/alert-dialog'
 
 export const Lobby = () => {
+	const [display, setDisplay] = useState(false)
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
 	const dialogTrigger = useRef<HTMLButtonElement>(null)
@@ -53,6 +54,13 @@ export const Lobby = () => {
 			disabled: true,
 		},
 	]
+
+	useEffect(() => {
+		const dispose = onNuiEmit<Warzone.Events['open']>('warzone:open', () => setDisplay(true))
+		return dispose
+	}, [])
+
+	if (!display) return null
 
 	return (
 		<>
@@ -146,7 +154,7 @@ export const Lobby = () => {
 							onClick={async () => {
 								await fetchNui<Start.Requests['logout']>('start:logout', {})
 								await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
-								nav({ to: '/starting' })
+								nav({ to: '/start' })
 							}}
 						>
 							Leave
