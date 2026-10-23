@@ -11,7 +11,7 @@ import type { Vec4 } from 'lenix'
 import { hasCollided } from '../lib'
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
-const CAM_OFFSET: Vec4 = [2, 2.5, 1, -12.5]
+const CAM_OFFSET: Vec4 = [2, 2.5, 0.75, -12.5]
 
 let character: Start.CharacterRespose | null
 let characters: Character[]
@@ -48,13 +48,15 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 })
 
 globalThis.exports('charselect', async (chars: Character[]): Promise<Start.CharacterRespose> => {
-	character = null
-	characters = chars
+	let keepBlack = true;
 
-	await repeat(() => isNuiReady(), true, 500)
-	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters)
+  const blackScreen = repeat(() => {
+    if (!keepBlack) return true;
 
-	DoScreenFadeIn(0)
+    DoScreenFadeOut(0);
+    return false;
+  }, true)
+
 	SetEntityCoords(player.entity(), PED_COORDS[0], PED_COORDS[1], PED_COORDS[2], false, false, false, false)
 	SetEntityHeading(player.entity(), PED_COORDS[3])
 	SetEntityVisible(player.entity(), false, false)
@@ -65,7 +67,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	const [dispose, camHandle] = cam.create({
 		coords: PED_COORDS,
 		offset: CAM_OFFSET,
-		rotation: [-7.5, 0],
+		rotation: [-2.5, 0],
 		details: {
 			fov: 40,
 			rotationOrder: 0,
@@ -75,8 +77,17 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 		},
 	})
 
-	await repeat(() => IsCamRendering(camHandle), true, 50);
-	ShutdownLoadingScreen()
+	await repeat(() => IsCamRendering(camHandle) as unknown as number, 1, 1000);
+
+	await repeat(() => isNuiReady(), true, 500)
+
+  keepBlack = false;
+  await blackScreen;
+  DoScreenFadeIn(500);
+
+	character = null
+	characters = chars
+	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters)
 
 	const selected = await repeat(
 		() => character,
