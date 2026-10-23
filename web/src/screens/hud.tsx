@@ -95,7 +95,7 @@ export const Hud = () => {
 				))}
 			</Layout>
 			{/* Weaponary */}
-			<Layout className='h-h-15 w-w-20 gap-w-1 absolute right-0 bottom-0 flex items-start justify-end bg-radial-[at_66%] from-black/10 to-transparent to-66% pt-0 pr-10 pl-0'>
+			<Layout hidden={!display.weaponary} className='h-h-15 w-w-20 gap-w-1 absolute right-0 bottom-0 flex items-start justify-end bg-radial-[at_66%] from-black/10 to-transparent to-66% pt-0 pr-10 pl-0'>
 				<img src={state.weapon.image} className='w-1/4 -scale-x-100 brightness-200' />
 				<div className='flex h-full w-3/4 flex-col items-end justify-between gap-2 text-neutral-300 text-shadow-md'>
 					<div className='font-number flex h-1/2 w-full items-start gap-1'>

@@ -52,47 +52,37 @@ const updateValues = (values: Omit<typeof state, 'display'>) => {
 
 	state.armor = values.armor
 	state.health = values.health
+	state.lungs = values.lungs
 	state.weapon = values.weapon
 }
 
 const updateThisFrame = () => {
 	const weaponHash = GetSelectedPedWeapon(cache.ped)
 	const hasWeapon = GetMaxAmmo(cache.ped, weaponHash)[1] > 0
+	const entity = player.entity()
 	
-	DisplayHud(false)
 	if (hasWeapon === state.display.weaponary) {
 		updateDisplay({ ...state.display, weaponary: hasWeapon })
-		updateValues({
-			...state,
-			weapon: {
-				...state.weapon,
-				clipSize: GetWeaponClipSize(weaponHash),
-			},
-		})
 		state.display.weaponary = !hasWeapon
 	}
 
-	if (IsPedShooting(cache.ped)) {
-		updateValues({
-			...state,
-			weapon: {
-				...state.weapon,
-				clipAmmo: GetAmmoInClip(cache.ped, weaponHash)[1],
-			},
-		})
-	}
-
-	const entity = player.entity()
 	updateValues({
 		...state,
 		health: GetEntityHealth(entity) / 2,
 		armor: GetPedArmour(entity),
 		lungs: 100 - GetPlayerSprintStaminaRemaining(player.id()),
+		weapon: {
+			...state.weapon,
+			clipAmmo: GetAmmoInClip(cache.ped, weaponHash)[1],
+			clipSize: GetWeaponClipSize(weaponHash),
+		},
 	})
+
+	DisplayHud(false)
 }
 
 const load = () => {
-	const dispose = onEvent('ox:playerLoaded', () => updateDisplay({ vitals: true, weaponary: true }))
+	const dispose = onEvent('ox:playerLoaded', () => updateDisplay({ ...state.display, vitals: true }))
 
 	return () => {
 		updateDisplay({ vitals: false, weaponary: false })
