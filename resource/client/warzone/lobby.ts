@@ -1,5 +1,5 @@
-import type { Vec4 } from "lenix"
-import { cam, entity } from "lenix/client"
+import type { Vec4 } from 'lenix'
+import { cam, entity } from 'lenix/client'
 
 const PED_COORDS: Vec4 = [0, 0, 0, 0]
 
@@ -12,6 +12,4 @@ const load = () => {
 	return () => {} /* dispose */
 }
 
-export default () => [
-	load()
-]
+export default () => [load()]

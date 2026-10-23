@@ -1,13 +1,13 @@
-import { createContext, useState } from "react";
-import type { DeepPartial, SetStatesOverload, States } from "./types";
-import { entries } from "@lenix/lenix";
-import { WARZONE_MODES } from "./constants";
+import { createContext, useState } from 'react'
+import type { DeepPartial, SetStatesOverload, States } from './types'
+import { entries } from '@lenix/lenix'
+import { WARZONE_MODES } from './constants'
 
 const deepMerge = <T,>(current: T, patch: DeepPartial<T>): T => {
 	if (patch === null || typeof patch !== 'object' || Array.isArray(patch)) return patch as T
 
 	const result: Record<string, unknown> = {
-		...(current as Record<string, unknown>)
+		...(current as Record<string, unknown>),
 	}
 
 	for (const [key, value] of Object.entries(patch)) {
@@ -22,7 +22,7 @@ export const StatesContext = createContext<[States, SetStatesOverload] | null>(n
 export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, setRawState] = useState<States>({
 		lobby: {
-			mode: entries(WARZONE_MODES)[0][0]
+			mode: entries(WARZONE_MODES)[0][0],
 		},
 		settings: {
 			keyboardMouse: {
@@ -65,14 +65,14 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 					rockstarGamesOverlay: ['E', ''],
 					contextAction: ['E', ''],
 				},
-			}
+			},
 		},
 		start: {
-			characters: []
-		}
+			characters: [],
+		},
 	})
 
-	if (!state) return null/* loading? */
+	if (!state) return null /* loading? */
 
 	const setState: SetStatesOverload = (...args) => {
 		const [value, patch] = args
@@ -86,9 +86,5 @@ export const StatesProvider = ({ children }: { children: React.ReactNode }) => {
 		})
 	}
 
-	return (
-		<StatesContext.Provider value={[state, setState]}>
-			{children}
-		</StatesContext.Provider>
-	)
+	return <StatesContext.Provider value={[state, setState]}>{children}</StatesContext.Provider>
 }

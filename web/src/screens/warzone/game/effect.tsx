@@ -38,15 +38,21 @@ export const DamageEffect = () => {
 		if (!active) return
 		const id = player.play()
 
-		return () => { player.stop(id) }
+		return () => {
+			player.stop(id)
+		}
 	}, [active])
 
 	return (
 		<>
-			<img src={cdn('assets/competitive/effect/low.png')} className="absolute size-full object-cover" style={{ opacity: strength / 100 }} />
+			<img
+				src={cdn('assets/competitive/effect/low.png')}
+				className='absolute size-full object-cover'
+				style={{ opacity: strength / 100 }}
+			/>
 			<img
 				src={cdn('assets/competitive/effect/high.png')}
-				className="absolute size-full object-cover transition-opacity duration-2000"
+				className='absolute size-full object-cover transition-opacity duration-2000'
 				style={{ opacity: strength < 50 ? 0 : (strength - 50) / 50 }}
 			/>
 		</>

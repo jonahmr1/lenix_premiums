@@ -1,10 +1,10 @@
-import { Layout } from "@/components/layout"
-import { anim } from "@/lib"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { random } from "@lenix/lenix"
-import { CrosshairIcon, SkullIcon } from "@phosphor-icons/react"
-import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useState } from "react"
+import { Layout } from '@/components/layout'
+import { anim } from '@/lib'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { random } from '@lenix/lenix'
+import { CrosshairIcon, SkullIcon } from '@phosphor-icons/react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useState } from 'react'
 
 interface KillFeed {
 	killer: string
@@ -31,9 +31,24 @@ export const KillFeed = () => {
 
 	useEffect(() => {
 		const samples = [
-			{ killer: 'Abdullah', gun: 'https://docs-backend.fivem.net/weapons/WEAPON_COMBATSHOTGUN.png', victim: 'Lenix', type: 'headshot' },
-			{ killer: 'Lenix', gun: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png', victim: 'Abdullah', type: 'roll' },
-			{ killer: 'Abdullah', gun: 'https://docs-backend.fivem.net/weapons/WEAPON_PISTOL_MK2.png', victim: 'Mazen', type: 'body' },
+			{
+				killer: 'Abdullah',
+				gun: 'https://docs-backend.fivem.net/weapons/WEAPON_COMBATSHOTGUN.png',
+				victim: 'Lenix',
+				type: 'headshot',
+			},
+			{
+				killer: 'Lenix',
+				gun: 'https://docs-backend.fivem.net/weapons/WEAPON_ASSAULTSHOTGUN.png',
+				victim: 'Abdullah',
+				type: 'roll',
+			},
+			{
+				killer: 'Abdullah',
+				gun: 'https://docs-backend.fivem.net/weapons/WEAPON_PISTOL_MK2.png',
+				victim: 'Mazen',
+				type: 'body',
+			},
 		] as const
 
 		const interval = setInterval(() => {
@@ -45,7 +60,10 @@ export const KillFeed = () => {
 	if (!feeds) return null
 
 	return (
-		<Layout invert className="absolute w-w-15 h-h-4 uppercase top-0/100 right-0 text-v-1 font-normal perspective-right-66">
+		<Layout
+			invert
+			className='w-w-15 h-h-4 text-v-1 perspective-right-66 absolute top-0/100 right-0 font-normal uppercase'
+		>
 			<AnimatePresence>
 				{feeds.map(feed => (
 					<motion.div
@@ -56,16 +74,18 @@ export const KillFeed = () => {
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: 30 }}
 						transition={{ duration: 0.2, ease: 'easeOut' }}
-						className={`flex size-full items-center justify-between italic px-2 border-l-2 ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
+						className={`flex size-full items-center justify-between border-l-2 px-2 italic ${feed.killer === name ? 'bg-background border-foreground' : 'bg-foreground border-background text-background'}`}
 					>
 						<p className={`${feed.killer === name && 'font-black tracking-normal'}`}>{feed.killer}</p>
-						<div className="flex h-2/5 gap-w-0.5 items-center">
+						<div className='gap-w-0.5 flex h-2/5 items-center'>
 							<img src={feed.gun} className={`h-full ${feed.killer === name ? 'brightness-200' : 'brightness-0'}`} />
-							{feed.type === 'headshot'
-								? <SkullIcon className="size-v-2" />
-								: feed.type === 'roll'
-									? <FontAwesomeIcon icon={['fas', 'arrows-turn-to-dots']} />
-									: <CrosshairIcon className="size-v-2" />}
+							{feed.type === 'headshot' ? (
+								<SkullIcon className='size-v-2' />
+							) : feed.type === 'roll' ? (
+								<FontAwesomeIcon icon={['fas', 'arrows-turn-to-dots']} />
+							) : (
+								<CrosshairIcon className='size-v-2' />
+							)}
 						</div>
 						<p className={`${feed.victim === name && 'font-black tracking-normal'}`}>{feed.victim}</p>
 					</motion.div>

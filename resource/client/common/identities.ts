@@ -46,7 +46,7 @@ const drawText3D = ({
 
 const displayThisFrame = () => {
 	if (!shown) return
-	
+
 	const players = GetActivePlayers()
 
 	for (const player of players) {
@@ -84,7 +84,7 @@ export default () => [
 			shown = !shown
 		},
 	}),
-	
+
 	control.on({
 		event: 'release',
 		key: 'HOME',
@@ -92,5 +92,5 @@ export default () => [
 			shown = !shown
 		},
 	}),
-	pool(displayThisFrame)
+	pool(displayThisFrame),
 ]

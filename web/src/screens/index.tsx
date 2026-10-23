@@ -12,53 +12,60 @@ import { useStates } from '@/hooks'
 const dev = false
 
 const hudAllowedModes: {
-  [K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}` ? Segment : K extends `/${infer Segment}` ? Segment : K
+	[K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}`
+		? Segment
+		: K extends `/${infer Segment}`
+			? Segment
+			: K
 }[keyof FileRoutesByTo][] = ['gang', 'police']
 
 export function App() {
 	const [, setStates] = useStates()
-  const nav = useNavigate()
-  const hash = useLocation({ select: (location) => location.hash })
-  const path = useLocation({ select: (location) => location.pathname })
+	const nav = useNavigate()
+	const hash = useLocation({ select: location => location.hash })
+	const path = useLocation({ select: location => location.pathname })
 
-  useEffect(() => {
-    if (dev) nav({ to: '/starting' })
+	useEffect(() => {
+		if (dev) nav({ to: '/starting' })
 
-    const disposes = [
-      onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
-				setStates(null, { start: { characters }})
-        nav({ to: '/starting',  })
-        focusNui()
-      }),
-      onNuiEmit<Start.Events['pause']>('start:pause', () => {
-        focusNui()
+		const disposes = [
+			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
+				setStates(null, { start: { characters } })
+				nav({ to: '/starting' })
+				focusNui()
+			}),
+			onNuiEmit<Start.Events['pause']>('start:pause', () => {
+				focusNui()
 				nav({ hash: 'pause' })
-      }),
-    ]
+			}),
+		]
 
-    return () => disposes.forEach((dispose) => dispose())
-  }, [])
+		return () => disposes.forEach(dispose => dispose())
+	}, [])
 
-  useEffect(() => {
+	useEffect(() => {
 		switch (hash) {
-			case 'pause': blurNui()
-			break
-			
-			case 'settings': blurNui()
-			break
+			case 'pause':
+				blurNui()
+				break
 
-			default: unBlurNui()
+			case 'settings':
+				blurNui()
+				break
+
+			default:
+				unBlurNui()
 		}
-  }, [hash])
+	}, [hash])
 
-  return (
-    <>
-      {dev && <img src="light.png" className="pointer-events-none absolute inset-0 -z-1 size-full object-cover" />}
-      {hash === 'pause' && <Pause path={path} />}
-      {hash === 'settings' && <Settings />}
-      {hudAllowedModes.some((route) => route === path.split('/')[1]) && <Hud />}
-    </>
-  )
+	return (
+		<>
+			{dev && <img src='light.png' className='pointer-events-none absolute inset-0 -z-1 size-full object-cover' />}
+			{hash === 'pause' && <Pause path={path} />}
+			{hash === 'settings' && <Settings />}
+			{hudAllowedModes.some(route => route === path.split('/')[1]) && <Hud />}
+		</>
+	)
 }
 
 export default App

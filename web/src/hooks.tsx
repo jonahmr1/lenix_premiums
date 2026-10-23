@@ -1,6 +1,6 @@
-import { useContext } from "react"
-import { asserts } from "@lenix/lenix"
-import { StatesContext } from "./provider"
+import { useContext } from 'react'
+import { asserts } from '@lenix/lenix'
+import { StatesContext } from './provider'
 
 export const useStates = () => {
 	const context = useContext(StatesContext)

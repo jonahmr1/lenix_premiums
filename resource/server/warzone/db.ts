@@ -6,7 +6,10 @@ const tables = [
 	createTable('warzone_profiles', table => {
 		table.string('profile_id', 64).primary()
 		table.string('name', 32).notNullable()
-		table.enum('status', ['online', 'offline', 'dnd'] satisfies Warzone.Profile['status'][]).notNullable().defaultTo('online')
+		table
+			.enum('status', ['online', 'offline', 'dnd'] satisfies Warzone.Profile['status'][])
+			.notNullable()
+			.defaultTo('online')
 	}),
 	createTable('warzone_friends', table => {
 		table.string('sender_id', 64).notNullable()
@@ -29,7 +32,7 @@ const tables = [
 		table.integer('assists').unsigned().notNullable().defaultTo(0)
 
 		table.primary(['match_id', 'profile_id'])
-	})
+	}),
 ]
 
 queryTables(tables)

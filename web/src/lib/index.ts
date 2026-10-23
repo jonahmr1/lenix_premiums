@@ -1,18 +1,20 @@
-import type { MotionProps } from "motion/react";
+import type { MotionProps } from 'motion/react'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import { fetchNui } from "lenix/nui";
+import { fetchNui } from 'lenix/nui'
 import assets from './assets'
 
 export const playAudio = (src: 'hover' | 'click' | 'custom', customAudio?: string, customVolume = 1.0) => {
-	const audio = new Audio(src === 'hover' ? cdn('assets/audio/hover.wav') : src === 'click' ? cdn('assets/audio/click.wav') : customAudio)
+	const audio = new Audio(
+		src === 'hover' ? cdn('assets/audio/hover.wav') : src === 'click' ? cdn('assets/audio/click.wav') : customAudio,
+	)
 	audio.volume = src === 'hover' ? 1.0 : src === 'click' ? 1.0 : customVolume
 	audio.play()
 }
 
 export const audiobility = {
 	onMouseEnter: () => playAudio('hover'),
-	onMouseDown: () => playAudio('click')
+	onMouseDown: () => playAudio('click'),
 }
 
 export const audio = {
@@ -46,4 +48,4 @@ export const formatTime = (ms: number) => dayjs.duration(ms).format('mm:ss')
 export const blurNui = () => fetchNui('blur', {})
 export const unBlurNui = () => fetchNui('unBlur', {})
 
-export const cdn = (src: typeof assets[number]) => `https://pub-48f954db5920416a828313c03c49ed1f.r2.dev/${src}`
+export const cdn = (src: (typeof assets)[number]) => `https://pub-48f954db5920416a828313c03c49ed1f.r2.dev/${src}`

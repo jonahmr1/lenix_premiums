@@ -82,6 +82,4 @@ const load = () => {
 	return () => disposes.forEach(dispose => dispose())
 }
 
-export default () => [
-	load()
-]
+export default () => [load()]

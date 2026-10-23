@@ -1,11 +1,9 @@
-import { oxmysql } from "@overextended/oxmysql"
-import { fullName, getProfileId } from "./utils"
-import type { Warzone } from "types/index"
-import { asserts } from "@lenix/lenix"
-
+import { oxmysql } from '@overextended/oxmysql'
+import { fullName, getProfileId } from './utils'
+import type { Warzone } from 'types/index'
+import { asserts } from '@lenix/lenix'
 
 export const profileCols = ['profile_id', 'name', 'status'] as const
-
 
 export const fetchProfile = async (client: number): Promise<Warzone.Profile> => {
 	asserts(GetPlayerPed(client.toString()), `Could not find client<${client}>`)
@@ -15,22 +13,22 @@ export const fetchProfile = async (client: number): Promise<Warzone.Profile> => 
 	const selectProfile = `SELECT ${selectedCols.join(', ')} FROM ${fullName('profiles')} WHERE profile_id = ? LIMIT 1`
 
 	try {
-		const profile = await oxmysql.single<Pick<Warzone.Profile, typeof selectedCols[number]>>(
-			selectProfile,
-			[profileId]
-		)
+		const profile = await oxmysql.single<Pick<Warzone.Profile, (typeof selectedCols)[number]>>(selectProfile, [
+			profileId,
+		])
 
-		if (profile) return {
-			...profile,
-			avatar: null
-		}
+		if (profile)
+			return {
+				...profile,
+				avatar: null,
+			}
 
 		// create new player
 		const name = GetPlayerName(client.toString())
 		const re = await oxmysql.insert(
 			`INSERT INTO ${fullName('profiles')} (${selectedCols.join(', ')}) VALUES (?, ?, ?)
 				ON DUPLICATE KEY UPDATE profile_id = profile_id`,
-			[profileId, name, 'online']
+			[profileId, name, 'online'],
 		)
 		asserts(re !== null && re !== undefined, `Failed to create a new profile for player<${client}>`)
 
@@ -40,19 +38,25 @@ export const fetchProfile = async (client: number): Promise<Warzone.Profile> => 
 	}
 }
 
-export const getBucketProfiles = (profiles: Omit<Warzone.Profile, 'avatar'>[]) => Promise.all(profiles.map(async profile => ({
-	...profile,
-	avatar: null
-})))
+export const getBucketProfiles = (profiles: Omit<Warzone.Profile, 'avatar'>[]) =>
+	Promise.all(
+		profiles.map(async profile => ({
+			...profile,
+			avatar: null,
+		})),
+	)
 
 export const getProfiles = async (): Promise<Warzone.Profile[]> => {
-	const profiles = await oxmysql.query<{
-		profile_id: string;
-		name: string;
-		status: "offline" | "online" | "dnd"
-	}[]>(
-		`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`
-	) satisfies Record<(typeof profileCols)[number], any>[]
+	const profiles = (await oxmysql.query<
+		{
+			profile_id: string
+			name: string
+			status: 'offline' | 'online' | 'dnd'
+		}[]
+	>(`SELECT ${profileCols.join(', ')} FROM ${fullName('profiles')}`)) satisfies Record<
+		(typeof profileCols)[number],
+		any
+	>[]
 
 	return await getBucketProfiles(profiles)
 }

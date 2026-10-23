@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export const Ping = () => {
 	const [state, setState] = useState<{
@@ -10,19 +10,24 @@ export const Ping = () => {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setState(prev => prev ? (
-				prev.left < 100 && prev.top === 0
-					? { ...prev, left: prev.left + 1, meter: prev.meter + 1 }
-					: prev.left === 100 && prev.top < 100
-						? { ...prev, top: prev.top + 1, meter: prev.meter + 1 }
-						: prev.top === 100 && prev.left > 0
-							? { ...prev, left: prev.left - 1, meter: prev.meter + 1 }
-							: prev.top > 0
-								? { ...prev, top: prev.top - 1, meter: prev.meter + 1 }
-								: { ...prev, left: prev.left + 1, meter: prev.meter + 1 }
-			) : {
-				top: 0, left: 0, color: 'blue', meter: 0
-			})
+			setState(prev =>
+				prev
+					? prev.left < 100 && prev.top === 0
+						? { ...prev, left: prev.left + 1, meter: prev.meter + 1 }
+						: prev.left === 100 && prev.top < 100
+							? { ...prev, top: prev.top + 1, meter: prev.meter + 1 }
+							: prev.top === 100 && prev.left > 0
+								? { ...prev, left: prev.left - 1, meter: prev.meter + 1 }
+								: prev.top > 0
+									? { ...prev, top: prev.top - 1, meter: prev.meter + 1 }
+									: { ...prev, left: prev.left + 1, meter: prev.meter + 1 }
+					: {
+							top: 0,
+							left: 0,
+							color: 'blue',
+							meter: 0,
+						},
+			)
 		}, 50)
 		return () => clearInterval(interval)
 	}, [])
@@ -31,15 +36,15 @@ export const Ping = () => {
 
 	return (
 		<div
-			className="absolute-center"
+			className='absolute-center'
 			style={{
 				top: `${Math.min(95, Math.max(5, state.top))}%`,
-				left: `${Math.min(95, Math.max(5, state.left))}%`
+				left: `${Math.min(95, Math.max(5, state.left))}%`,
 			}}
 		>
-			<p className="text-white text-fluid-1.5 text-shadow-md">{state.meter}m</p>
+			<p className='text-fluid-1.5 text-white text-shadow-md'>{state.meter}m</p>
 			<div
-				className="size-2.5 rotate-45 rounded-xs opacity-75 ring-foreground ring"
+				className='ring-foreground size-2.5 rotate-45 rounded-xs opacity-75 ring'
 				style={{
 					backgroundColor: state.color,
 				}}

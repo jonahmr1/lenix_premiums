@@ -7,6 +7,6 @@ export default defineConfig({
 	jsxSingleQuote: true,
 	useTabs: true,
 	sortTailwindcss: {
-		functions: ['cn', 'clsx', 'cva']
-	}
+		functions: ['cn', 'clsx', 'cva'],
+	},
 })

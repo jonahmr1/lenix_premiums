@@ -1,6 +1,6 @@
-import type { S } from "@lenix/lenix"
-import type { WARZONE_MODES } from "./constants"
-import type { Character } from "@overextended/ox_core"
+import type { S } from '@lenix/lenix'
+import type { WARZONE_MODES } from './constants'
+import type { Character } from '@overextended/ox_core'
 
 export interface Tab {
 	label: string
@@ -14,27 +14,27 @@ export interface States {
 	}
 	settings: {
 		keyboardMouse: {
-			mouseInputMethod: 'raw' | 'other',
-			mouseLookSensitivity: 3,
-			mouseSmoothingScale: 3,
-			fineAimingControl: 'on' | 'off',
-			invertMouseLook: 'on' | 'off',
-			toggleAim: 'on' | 'off',
-			firstPersonAimType: 'normal' | 'other',
-			defaultMouseDrivingControl: 'camera' | 'other',
-			defaultMouseFlyingControl: 'camera' | 'other',
-			defaultMouseSubmarineControl: 'camera' | 'other',
-			mouseDrivingSensitivity: 4,
-			mousePlaneSensitivity: 5,
-			mouseHeliSensitivity: 6,
-			mouseSubmarineSensitivity: 8,
-			invertMouseFlying: 'on' | 'off',
-			invertMouseSubmarine: 'on' | 'off',
-			mouseFlyingControlType: 'roll' | 'pitch' | 'other',
-			autoCenterMouseOnBikes: 2,
-			autoCenterMouseInCars: 5,
-			autoCenterMouseInAircraft: 5,
-		},
+			mouseInputMethod: 'raw' | 'other'
+			mouseLookSensitivity: 3
+			mouseSmoothingScale: 3
+			fineAimingControl: 'on' | 'off'
+			invertMouseLook: 'on' | 'off'
+			toggleAim: 'on' | 'off'
+			firstPersonAimType: 'normal' | 'other'
+			defaultMouseDrivingControl: 'camera' | 'other'
+			defaultMouseFlyingControl: 'camera' | 'other'
+			defaultMouseSubmarineControl: 'camera' | 'other'
+			mouseDrivingSensitivity: 4
+			mousePlaneSensitivity: 5
+			mouseHeliSensitivity: 6
+			mouseSubmarineSensitivity: 8
+			invertMouseFlying: 'on' | 'off'
+			invertMouseSubmarine: 'on' | 'off'
+			mouseFlyingControlType: 'roll' | 'pitch' | 'other'
+			autoCenterMouseOnBikes: 2
+			autoCenterMouseInCars: 5
+			autoCenterMouseInAircraft: 5
+		}
 		keybinds: {
 			general: Record<
 				| 'pause'
@@ -51,8 +51,9 @@ export interface States {
 				| 'startStopActionReplayRecording'
 				| 'cancelRecording'
 				| 'rockstarGamesOverlay'
-				| 'contextAction'
-			, [string, string]>
+				| 'contextAction',
+				[string, string]
+			>
 			// movement: []
 			// combat: []
 			// weaponSelect: []
@@ -71,15 +72,14 @@ export interface States {
 	}
 }
 
-export type DeepPartial<T> =
-	T extends readonly unknown[] ? T :
-	T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } :
-	T
+export type DeepPartial<T> = T extends readonly unknown[]
+	? T
+	: T extends object
+		? { [K in keyof T]?: DeepPartial<T[K]> }
+		: T
 
 export type SetStatesOverload = (
-	...args:
-		| [value: Parameters<S<States>>[0]]
-		| [value: null, patch: DeepPartial<States>]
+	...args: [value: Parameters<S<States>>[0]] | [value: null, patch: DeepPartial<States>]
 ) => void
 
 export interface MatchScore {

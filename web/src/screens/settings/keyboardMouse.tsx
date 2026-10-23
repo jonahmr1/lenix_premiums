@@ -1,12 +1,12 @@
-import { Slider } from "@/components/ui/slider"
-import { asserts, entries } from "@lenix/lenix"
-import { Xbox } from "@/components/xbox"
-import { useStates } from "@/hooks"
-import type { States } from "@/types"
-import { audiobility } from "@/lib"
-import { LabelItem } from "."
-import { Button } from "@/components/ui/button"
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
+import { Slider } from '@/components/ui/slider'
+import { asserts, entries } from '@lenix/lenix'
+import { Xbox } from '@/components/xbox'
+import { useStates } from '@/hooks'
+import type { States } from '@/types'
+import { audiobility } from '@/lib'
+import { LabelItem } from '.'
+import { Button } from '@/components/ui/button'
+import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react'
 
 type Value = `${States['settings']['keyboardMouse'][keyof States['settings']['keyboardMouse']]}` | number
 
@@ -15,139 +15,144 @@ const labels: {
 	title: string
 	options?: Partial<Record<Value, string>>
 }[] = [
-		{
-			key: 'mouseInputMethod',
-			title: 'Mouse Input Method',
-			options: {
-				raw: 'Raw Input',
-				other: 'Something Else'
-			}
+	{
+		key: 'mouseInputMethod',
+		title: 'Mouse Input Method',
+		options: {
+			raw: 'Raw Input',
+			other: 'Something Else',
 		},
-		{
-			key: 'mouseLookSensitivity',
-			title: 'Mouse Look Sensitivity',
+	},
+	{
+		key: 'mouseLookSensitivity',
+		title: 'Mouse Look Sensitivity',
+	},
+	{
+		key: 'mouseSmoothingScale',
+		title: 'Mouse Smoothing Scale',
+	},
+	{
+		key: 'fineAimingControl',
+		title: 'Fine Aiming Control',
+		options: {
+			off: 'Off',
+			on: 'On',
 		},
-		{
-			key: 'mouseSmoothingScale',
-			title: 'Mouse Smoothing Scale',
+	},
+	{
+		key: 'invertMouseLook',
+		title: 'Invert Mouse Look',
+		options: {
+			off: 'Off',
+			on: 'On',
 		},
-		{
-			key: 'fineAimingControl',
-			title: 'Fine Aiming Control',
-			options: {
-				off: 'Off',
-				on: 'On',
-			}
+	},
+	{
+		key: 'toggleAim',
+		title: 'Toggle Aim',
+		options: {
+			off: 'Off',
+			on: 'On',
 		},
-		{
-			key: 'invertMouseLook',
-			title: 'Invert Mouse Look',
-			options: {
-				off: 'Off',
-				on: 'On',
-			}
+	},
+	{
+		key: 'firstPersonAimType',
+		title: 'First Person Aim Type',
+		options: {
+			normal: 'Normal',
+			other: 'Something Else',
 		},
-		{
-			key: 'toggleAim',
-			title: 'Toggle Aim',
-			options: {
-				off: 'Off',
-				on: 'On',
-			}
+	},
+	{
+		key: 'defaultMouseDrivingControl',
+		title: 'Default Mouse Driving Control',
+		options: {
+			camera: 'Camera',
+			other: 'Something Else',
 		},
-		{
-			key: 'firstPersonAimType',
-			title: 'First Person Aim Type',
-			options: {
-				normal: 'Normal',
-				other: 'Something Else'
-			}
+	},
+	{
+		key: 'defaultMouseFlyingControl',
+		title: 'Default Mouse Flying Control',
+		options: {
+			camera: 'Camera',
+			other: 'Something Else',
 		},
-		{
-			key: 'defaultMouseDrivingControl',
-			title: 'Default Mouse Driving Control',
-			options: {
-				camera: 'Camera',
-				other: 'Something Else'
-			}
+	},
+	{
+		key: 'defaultMouseSubmarineControl',
+		title: 'Default Mouse Submarine Control',
+		options: {
+			camera: 'Camera',
+			other: 'Something Else',
 		},
-		{
-			key: 'defaultMouseFlyingControl',
-			title: 'Default Mouse Flying Control',
-			options: {
-				camera: 'Camera',
-				other: 'Something Else'
-			}
+	},
+	{
+		key: 'mouseDrivingSensitivity',
+		title: 'Mouse Driving Sensitivity',
+	},
+	{
+		key: 'mousePlaneSensitivity',
+		title: 'Mouse Plane Sensitivity',
+	},
+	{
+		key: 'mouseHeliSensitivity',
+		title: 'Mouse Heli Sensitivity',
+	},
+	{
+		key: 'mouseSubmarineSensitivity',
+		title: 'Mouse Submarine Sensitivity',
+	},
+	{
+		key: 'invertMouseFlying',
+		title: 'Invert Mouse Flying',
+		options: {
+			off: 'Off',
+			on: 'On',
 		},
-		{
-			key: 'defaultMouseSubmarineControl',
-			title: 'Default Mouse Submarine Control',
-			options: {
-				camera: 'Camera',
-				other: 'Something Else'
-			}
+	},
+	{
+		key: 'invertMouseSubmarine',
+		title: 'Invert Mouse Submarine',
+		options: {
+			off: 'Off',
+			on: 'On',
 		},
-		{
-			key: 'mouseDrivingSensitivity',
-			title: 'Mouse Driving Sensitivity',
+	},
+	{
+		key: 'mouseFlyingControlType',
+		title: 'Mouse Flying Control Type',
+		options: {
+			roll: 'Roll',
+			pitch: 'Pitch',
+			other: 'Other',
 		},
-		{
-			key: 'mousePlaneSensitivity',
-			title: 'Mouse Plane Sensitivity',
-		},
-		{
-			key: 'mouseHeliSensitivity',
-			title: 'Mouse Heli Sensitivity',
-		},
-		{
-			key: 'mouseSubmarineSensitivity',
-			title: 'Mouse Submarine Sensitivity',
-		},
-		{
-			key: 'invertMouseFlying',
-			title: 'Invert Mouse Flying',
-			options: {
-				off: 'Off',
-				on: 'On',
-			}
-		},
-		{
-			key: 'invertMouseSubmarine',
-			title: 'Invert Mouse Submarine',
-			options: {
-				off: 'Off',
-				on: 'On',
-			}
-		},
-		{
-			key: 'mouseFlyingControlType',
-			title: 'Mouse Flying Control Type',
-			options: {
-				roll: 'Roll',
-				pitch: 'Pitch',
-				other: 'Other'
-			}
-		},
-		{
-			key: 'autoCenterMouseOnBikes',
-			title: 'Auto Center Mouse On Bikes',
-		},
-		{
-			key: 'autoCenterMouseInCars',
-			title: 'Auto-Center Mouse In Cars',
-		},
-		{
-			key: 'autoCenterMouseInAircraft',
-			title: 'Auto-Center Mouse In Aircraft',
-		},
-	]
+	},
+	{
+		key: 'autoCenterMouseOnBikes',
+		title: 'Auto Center Mouse On Bikes',
+	},
+	{
+		key: 'autoCenterMouseInCars',
+		title: 'Auto-Center Mouse In Cars',
+	},
+	{
+		key: 'autoCenterMouseInAircraft',
+		title: 'Auto-Center Mouse In Aircraft',
+	},
+]
 
 export const KeyboardMouse = () => {
-	const [{ settings: { keyboardMouse } }, setStates] = useStates()
+	const [
+		{
+			settings: { keyboardMouse },
+		},
+		setStates,
+	] = useStates()
 
 	return (
-		<div className="size-full flex gap-w-1">
-			<div className="w-3/5 overflow-y-scroll scrollbar pr-w-0.5 space-y-h-0.5">
+		<div className='gap-w-1 flex size-full'>
+			<div className='scrollbar pr-w-0.5 space-y-h-0.5 w-3/5 overflow-y-scroll'>
 				{labels.map(setting => {
 					const value = keyboardMouse[setting.key]
 					const handle = (value: Value) => {
@@ -159,53 +164,65 @@ export const KeyboardMouse = () => {
 							<Button
 								variant='ghost'
 								onClick={() => {
-									if (typeof value === 'number') setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 } } })
+									if (typeof value === 'number')
+										setStates(null, { settings: { keyboardMouse: { [setting.key]: value ? value - 1 : 0 } } })
 									else {
 										asserts(setting.options)
 										const values = entries(setting.options).map(([key]) => key)
 										const index = values.indexOf(value)
-										setStates(null, { settings: { keyboardMouse: { [setting.key]: index === 0 ? values[values.length - 1] : values[index - 1] } } })
+										setStates(null, {
+											settings: {
+												keyboardMouse: { [setting.key]: index === 0 ? values[values.length - 1] : values[index - 1] },
+											},
+										})
 									}
 								}}
 							>
 								<CaretLeftIcon />
 							</Button>
-							<div className="w-w-20">
+							<div className='w-w-20'>
 								{typeof value === 'number' ? (
 									<Slider
 										step={1}
 										max={8}
 										value={[value]}
 										onValueChange={value => handle(value[0])}
-										className="**:data-[slot=slider-range]:bg-foreground"
+										className='**:data-[slot=slider-range]:bg-foreground'
 									/>
-								) : setting.options && (
-									<div className="w-full">
-										<p className="text-center italic uppercase text-v-1.25">{setting.options[value]}</p>
-										<div className="flex gap-4">
-											{entries(setting.options).map(([option], i) => (
-												<div
-													key={i}
-													className={`w-full h-0.5 ${option === value ? 'bg-foreground' : 'bg-muted hover:bg-foreground/50'}`}
-													onClick={() => {
-														setStates(null, { settings: { keyboardMouse: { [setting.key]: option } } })
-														audiobility.onMouseDown()
-													}}
-												/>
-											))}
+								) : (
+									setting.options && (
+										<div className='w-full'>
+											<p className='text-v-1.25 text-center uppercase italic'>{setting.options[value]}</p>
+											<div className='flex gap-4'>
+												{entries(setting.options).map(([option], i) => (
+													<div
+														key={i}
+														className={`h-0.5 w-full ${option === value ? 'bg-foreground' : 'bg-muted hover:bg-foreground/50'}`}
+														onClick={() => {
+															setStates(null, { settings: { keyboardMouse: { [setting.key]: option } } })
+															audiobility.onMouseDown()
+														}}
+													/>
+												))}
+											</div>
 										</div>
-									</div>
+									)
 								)}
 							</div>
 							<Button
 								variant='ghost'
 								onClick={() => {
-									if (typeof value === 'number') setStates(null, { settings: { keyboardMouse: { [setting.key]: value < 8 ? value + 1 : 8 } } })
+									if (typeof value === 'number')
+										setStates(null, { settings: { keyboardMouse: { [setting.key]: value < 8 ? value + 1 : 8 } } })
 									else {
 										asserts(setting.options)
 										const values = entries(setting.options).map(([key]) => key)
 										const index = values.indexOf(value)
-										setStates(null, { settings: { keyboardMouse: { [setting.key]: index === values.length - 1 ? values[0] : values[index + 1] } } })
+										setStates(null, {
+											settings: {
+												keyboardMouse: { [setting.key]: index === values.length - 1 ? values[0] : values[index + 1] },
+											},
+										})
 									}
 								}}
 							>
@@ -216,7 +233,7 @@ export const KeyboardMouse = () => {
 				})}
 				<LabelItem title='Restore Defaults' {...audiobility}></LabelItem>
 			</div>
-			<div className="w-2/5">
+			<div className='w-2/5'>
 				<Xbox />
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-import { checkDependency } from "@overextended/ox_lib";
+import { checkDependency } from '@overextended/ox_lib'
 import './init'
 
 checkDependency('ox_lib', '3.39.0', true)

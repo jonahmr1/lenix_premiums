@@ -20,16 +20,16 @@ const DutyStates: Record<Police.Roster.DutyState, string> = {
 }
 
 const Officer = ({ callsign, name, duty_state, talk_state }: Police.Roster.Officer) => (
-	<div className='w-full min-h-1/10 flex justify-around text-muted-foreground items-center bg-card px-2 border rounded-md'>
-		<div className='flex-3.5 flex gap-1.5 items-center'>
-			<Badge className={`size-2 rounded-full p-0 shine-md ${DutyStates[duty_state]}`} />
-			<p className='whitespace-nowrap font-normal text-v-1.5 pt-px'>{callsign}</p>
+	<div className='text-muted-foreground bg-card flex min-h-1/10 w-full items-center justify-around rounded-md border px-2'>
+		<div className='flex-3.5 flex items-center gap-1.5'>
+			<Badge className={`shine-md size-2 rounded-full p-0 ${DutyStates[duty_state]}`} />
+			<p className='text-v-1.5 pt-px font-normal whitespace-nowrap'>{callsign}</p>
 		</div>
-		<div className='p-1 flex-1 flex justify-center'>
+		<div className='flex flex-1 justify-center p-1'>
 			<Separator orientation='vertical' className='h-4' />
 		</div>
-		<div className='flex-8 flex justify-between'>
-			<p className='text-left text-v-1.5 truncate'>{name}</p>
+		<div className='flex flex-8 justify-between'>
+			<p className='text-v-1.5 truncate text-left'>{name}</p>
 			<Badge className='hidden'>
 				{/* TODO */}
 				<WaveformIcon className={`${TalkStates[talk_state]}`} />
@@ -99,30 +99,29 @@ export const Roster = () => {
 		fetchNui<Police.Requests['triggerCallsign']>('roster:callsign', {})
 	}
 
-
 	return (
 		<div
 			inert={!display}
-			className={`absolute top-1/5 right-1/10 w-2/10 h-2/5 border flex flex-col bg-background rounded-md ${display ? 'opacity-100' : 'opacity-0'}`}
+			className={`bg-background absolute top-1/5 right-1/10 flex h-2/5 w-2/10 flex-col rounded-md border ${display ? 'opacity-100' : 'opacity-0'}`}
 		>
-			<div className='flex-1 min-h-0 px-3 pt-3 flex flex-col gap-1'>
+			<div className='flex min-h-0 flex-1 flex-col gap-1 px-3 pt-3'>
 				<div className='flex flex-col'>
-					<div className='w-full flex justify-between items-center'>
-						<p className='text-foreground cursor-default text-v-1.5 uppercase italic font-bold'>Active Officers</p>
+					<div className='flex w-full items-center justify-between'>
+						<p className='text-foreground text-v-1.5 cursor-default font-bold uppercase italic'>Active Officers</p>
 						<div className='flex items-center gap-3'>
 							<div>
 								<Separator orientation='vertical' className='h-4' />
 							</div>
-							<p className='text-muted-foreground cursor-default text-v-1.5'>{entries(officers).length}</p>
+							<p className='text-muted-foreground text-v-1.5 cursor-default'>{entries(officers).length}</p>
 						</div>
 					</div>
 				</div>
 				<Separator />
-				<div className='flex-1 min-h-0 overflow-y-auto scrollbar-none flex flex-col items-center'>
+				<div className='flex min-h-0 flex-1 scrollbar-none flex-col items-center overflow-y-auto'>
 					{entries(officers).length ? (
 						entries(officers).map(([playerId, officer]) => <Officer key={playerId} {...officer} />)
 					) : (
-						<div className='h-full flex flex-col justify-center items-center gap-5'>
+						<div className='flex h-full flex-col items-center justify-center gap-5'>
 							<SmileySadIcon className='text-muted-foreground' size={60} />
 							<p className='text-muted-foreground'>No officer found!</p>
 						</div>
@@ -130,32 +129,22 @@ export const Roster = () => {
 				</div>
 			</div>
 			<Separator />
-			<div className='flex w-full min-w-0 p-1 gap-1 *:flex-1 *:min-w-0 *:bg-card *:text-v-1 *:border *:border-border *:text-muted-foreground'>
-				<Button
-					variant='secondary'
-					className='rounded-md'
-					onClick={handleSignin}
-				>
-					<FontAwesomeIcon className='text-v-1.2' icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]} />
+			<div className='*:bg-card *:text-v-1 *:border-border *:text-muted-foreground flex w-full min-w-0 gap-1 p-1 *:min-w-0 *:flex-1 *:border'>
+				<Button variant='secondary' className='rounded-md' onClick={handleSignin}>
+					<FontAwesomeIcon
+						className='text-v-1.2'
+						icon={['fas', `right-${dutyState === 'off' ? 'to' : 'from'}-bracket`]}
+					/>
 					{dutyState === 'off' ? 'Sign-in' : 'Sign-off'}
 				</Button>
-				<Button
-					variant='secondary'
-					className='rounded-md'
-					onClick={handleBreak}
-				>
-					<FontAwesomeIcon className='text-v-1.2' icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]} />
-					{dutyState === 'on'
-						? 'Take Break'
-						: dutyState === 'off'
-							? 'Take Break'
-							: 'Sign-in'}
+				<Button variant='secondary' className='rounded-md' onClick={handleBreak}>
+					<FontAwesomeIcon
+						className='text-v-1.2'
+						icon={['fas', `${dutyState === 'break' ? 'right-to-bracket' : 'pause'}`]}
+					/>
+					{dutyState === 'on' ? 'Take Break' : dutyState === 'off' ? 'Take Break' : 'Sign-in'}
 				</Button>
-				<Button
-					variant='secondary'
-					className='rounded-md'
-					onClick={handleCallsign}
-				>
+				<Button variant='secondary' className='rounded-md' onClick={handleCallsign}>
 					<FontAwesomeIcon className='text-fluid-1.5' icon={['far', 'id-badge']} />
 					Callsign
 				</Button>

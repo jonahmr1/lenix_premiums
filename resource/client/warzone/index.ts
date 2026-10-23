@@ -1,11 +1,9 @@
-import lobby from "./lobby";
+import lobby from './lobby'
 
 export default () => {
-	const modules = [
-		lobby()
-	];
+	const modules = [lobby()]
 
 	return () => {
-		for (const disposes of modules) for (const dispose of disposes) dispose();
-	};
-};
+		for (const disposes of modules) for (const dispose of disposes) dispose()
+	}
+}

@@ -1,6 +1,6 @@
-import { cdn, playAudio } from "@/lib";
-import { useEffect, useState } from "react";
-import { waste } from "@lenix/lenix";
+import { cdn, playAudio } from '@/lib'
+import { useEffect, useState } from 'react'
+import { waste } from '@lenix/lenix'
 
 export const Flashbang = () => {
 	const [progress, setProgress] = useState(0)
@@ -23,10 +23,10 @@ export const Flashbang = () => {
 
 	return (
 		<div
-			className='absolute size-full z-10'
+			className='absolute z-10 size-full'
 			style={{
-				backgroundImage: `radial-gradient(circle, transparent ${(progress * 2) - 100}%, white ${progress * 2}%)`,
+				backgroundImage: `radial-gradient(circle, transparent ${progress * 2 - 100}%, white ${progress * 2}%)`,
 			}}
 		/>
-	);
+	)
 }

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 import { motion, type MotionProps } from 'motion/react'
-import { audio } from "@/lib"
+import { audio } from '@/lib'
 
-type HitVariant = typeof hitVariants[number]
+type HitVariant = (typeof hitVariants)[number]
 type MarkerConfig = {
 	lines: 1 | 2
 	color: string
@@ -40,7 +40,7 @@ const armAnimation = (x: number, y: number, rotate: number): MotionProps => ({
 })
 
 export const HitMarker = () => {
-	const [state, setVariant] = useState<{ id: number, variant: HitVariant }>({ id: 0, variant: 'hit' })
+	const [state, setVariant] = useState<{ id: number; variant: HitVariant }>({ id: 0, variant: 'hit' })
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -57,10 +57,7 @@ export const HitMarker = () => {
 	const config = variants[state.variant]
 
 	return (
-		<div
-			key={state.id}
-			className={`absolute left-1/2 top-1/2 ${size.wrapper}`}
-		>
+		<div key={state.id} className={`absolute top-1/2 left-1/2 ${size.wrapper}`}>
 			{arms.map((arm, index) => (
 				<motion.div
 					key={arm.id}

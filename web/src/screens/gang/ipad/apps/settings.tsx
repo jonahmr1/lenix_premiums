@@ -15,10 +15,10 @@ export const Settings = ({
 	const { theme } = useTheme()
 	return (
 		<div className='size-full'>
-			<div className='p-10 gap-3 flex flex-col'>
-				<h1 className='font-black italic text-fluid-3'>Appearance</h1>
+			<div className='flex flex-col gap-3 p-10'>
+				<h1 className='text-fluid-3 font-black italic'>Appearance</h1>
 				<Separator />
-				<div className='bg-muted p-2 rounded-md gap-3 flex flex-col'>
+				<div className='bg-muted flex flex-col gap-3 rounded-md p-2'>
 					<Field className='flex-row'>
 						<FieldContent>
 							<FieldLabel htmlFor='orientation'>Landscape orientation</FieldLabel>

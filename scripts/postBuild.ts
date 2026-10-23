@@ -78,7 +78,7 @@ export default async function () {
 			{ interval: 6500, timeout: 1200000 },
 		)
 	} catch {}
-	
+
 	if (web) files.push(...web)
 
 	files.unshift('locales/*.json')

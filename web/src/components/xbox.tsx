@@ -1,6 +1,6 @@
 export const Xbox = () => (
 	<div
-		className="size-full border border-foreground text-foreground"
+		className='border-foreground text-foreground size-full border'
 		style={{
 			backgroundImage: `
 				linear-gradient(to top right,

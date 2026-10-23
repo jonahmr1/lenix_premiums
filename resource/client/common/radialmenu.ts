@@ -43,7 +43,6 @@ const radiaItems: Parameters<typeof addRadialItem>[0] = [
 	},
 ]
 
-
 onCache('vehicle', vehicle => {
 	if (vehicle) {
 		addRadialItem({
@@ -76,6 +75,4 @@ const load = (mode: Start.Mode) => {
 	return () => radiaItems.forEach(radiaItem => removeRadialItem(radiaItem.id))
 }
 
-export default (mode: Start.Mode) => [
-	load(mode),
-]
+export default (mode: Start.Mode) => [load(mode)]

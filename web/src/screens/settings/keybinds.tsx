@@ -1,13 +1,13 @@
-import { entries } from "@lenix/lenix"
-import { LabelItem } from "."
-import { audiobility } from "@/lib"
-import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs"
-import { useEffect, useState } from "react"
-import type { States } from "@/types"
-import { Button } from "@/components/ui/button"
-import { useStates } from "@/hooks"
-import { Kbd } from "@/components/ui/kbd"
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { entries } from '@lenix/lenix'
+import { LabelItem } from '.'
+import { audiobility } from '@/lib'
+import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs'
+import { useEffect, useState } from 'react'
+import type { States } from '@/types'
+import { Button } from '@/components/ui/button'
+import { useStates } from '@/hooks'
+import { Kbd } from '@/components/ui/kbd'
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 const labels = {
 	general: {
@@ -28,7 +28,7 @@ const labels = {
 			cancelRecording: 'Cancel Recording',
 			rockstarGamesOverlay: 'Rockstar Games Overlay',
 			contextAction: 'Context Action',
-		}
+		},
 	},
 	// movement: {
 	// 	label: 'Movement',
@@ -67,9 +67,18 @@ const labels = {
 
 export const Keybinds = () => {
 	const [tab, setTab] = useState<keyof States['settings']['keybinds']>(entries(labels)[0][0])
-	const [{ settings: { keybinds } }, setStates] = useStates()
+	const [
+		{
+			settings: { keybinds },
+		},
+		setStates,
+	] = useStates()
 
-	const KbdDialog = ({ children, binding, order }: {
+	const KbdDialog = ({
+		children,
+		binding,
+		order,
+	}: {
 		children: React.ReactNode
 		binding: keyof States['settings']['keybinds'][keyof States['settings']['keybinds']]
 		order: number
@@ -125,7 +134,6 @@ export const Keybinds = () => {
 				window.removeEventListener('keydown', handleKey, true)
 				window.removeEventListener('mousedown', handleMouse, true)
 			}
-
 		}, [updating])
 
 		return (
@@ -133,20 +141,17 @@ export const Keybinds = () => {
 				<DialogTrigger asChild>
 					<Button
 						variant='background'
-						className="w-1/4 border border-border cursor-pointer bg-background/70"
+						className='border-border bg-background/70 w-1/4 cursor-pointer border'
 						onClick={() => setUpdating(true)}
 					>
 						{children}
 					</Button>
 				</DialogTrigger>
-				<DialogContent
-					showCloseButton={false}
-					className="sm:max-w-none justify-center bg-transparent ring-0"
-				>
-					<DialogTitle className="uppercase text-v-5 italic font-black font-sans">
+				<DialogContent showCloseButton={false} className='justify-center bg-transparent ring-0 sm:max-w-none'>
+					<DialogTitle className='text-v-5 font-sans font-black uppercase italic'>
 						Press a key or mouse button
 					</DialogTitle>
-					<DialogDescription className="italic text-v-1.5 flex font-normal justify-center">
+					<DialogDescription className='text-v-1.5 flex justify-center font-normal italic'>
 						Press Esc to cancel
 					</DialogDescription>
 				</DialogContent>
@@ -155,8 +160,8 @@ export const Keybinds = () => {
 	}
 
 	return (
-		<Tabs value={tab} orientation="vertical" className="gap-w-1 h-full">
-			<TabsList className="w-1/4 cursor-default gap-1 bg-transparent">
+		<Tabs value={tab} orientation='vertical' className='gap-w-1 h-full'>
+			<TabsList className='w-1/4 cursor-default gap-1 bg-transparent'>
 				{entries(labels).map(([title, data]) => (
 					<LabelItem
 						key={title}
@@ -167,24 +172,21 @@ export const Keybinds = () => {
 					/>
 				))}
 			</TabsList>
-			<div className="scrollbar pr-w-0.5 w-3/4 overflow-y-auto">
+			<div className='scrollbar pr-w-0.5 w-3/4 overflow-y-auto'>
 				{entries(labels).map(([title, data]) => (
-					<TabsContent
-						key={title}
-						value={title}
-						className="gap-h-0.5 flex flex-col"
-					>
+					<TabsContent key={title} value={title} className='gap-h-0.5 flex flex-col'>
 						{entries(data.items).map(([binding, label]) => (
-							<div
-								key={binding}
-								className="p-v-1 gap-w-1 flex items-center bg-background/60"
-							>
-								<div className="text-v-1.5 w-1/2 uppercase italic">
-									{label}
-								</div>
+							<div key={binding} className='p-v-1 gap-w-1 bg-background/60 flex items-center'>
+								<div className='text-v-1.5 w-1/2 uppercase italic'>{label}</div>
 								{keybinds[title][binding].map((key, i) => (
 									<KbdDialog key={key} binding={binding} order={i}>
-										{key.length ? <Kbd className="[button:hover>&]:invert text-md font-bold bg-foreground text-background">{key}</Kbd> : <></>}
+										{key.length ? (
+											<Kbd className='text-md bg-foreground text-background font-bold [button:hover>&]:invert'>
+												{key}
+											</Kbd>
+										) : (
+											<></>
+										)}
 									</KbdDialog>
 								))}
 							</div>
@@ -193,5 +195,5 @@ export const Keybinds = () => {
 				))}
 			</div>
 		</Tabs>
-  )
+	)
 }
