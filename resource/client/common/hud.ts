@@ -45,6 +45,8 @@ const state = new State<
 
 const updateDisplay = (newState: typeof state.display) => {
 	emitNui<Common.Events['displayHud']>('hud:display', newState)
+
+	state.display = newState
 }
 
 const updateValues = (values: Omit<typeof state, 'display'>) => {
