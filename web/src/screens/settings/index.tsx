@@ -26,7 +26,7 @@ export const LabelItem = ({
 	digest?: true
 } & React.ComponentProps<typeof Item>) => (
 	<Item
-		className={cn('group bg-background/50 px-w-1 text-foreground hover:bg-background italic hover:invert', className)}
+		className={cn('group bg-background/60 px-w-1 text-foreground hover:bg-background italic hover:invert', className)}
 		onMouseEnter={audiobility.onMouseEnter}
 		{...props}
 	>
@@ -113,7 +113,7 @@ export const Settings = () => {
 				<Header>Settings</Header>
 			</motion.div>
 			<div className='gap-w-0.5 flex size-full min-h-0 justify-center'>
-				<NavButton type='previous' tabs={tabs} value={tab} onValueChange={setTab}>
+				<NavButton className='bg-background/60' type='previous' tabs={tabs} value={tab} onValueChange={setTab}>
 					Q
 				</NavButton>
 				<Tabs value={tab.toString()} className='size-full flex-1'>
@@ -123,7 +123,7 @@ export const Settings = () => {
 								key={i}
 								disabled={disabled}
 								variant={tab === i ? 'default' : 'background'}
-								className='text-v-1.6 flex-auto font-medium uppercase italic'
+								className={`text-v-1.6 flex-auto font-medium uppercase italic ${tab !== i && 'bg-background/60'}`}
 								onClick={() => setTab(i)}
 								size='lg'
 							>

@@ -184,9 +184,7 @@ export const Keybinds = () => {
 											<Kbd className='text-md bg-foreground text-background font-bold [button:hover>&]:invert'>
 												{key}
 											</Kbd>
-										) : (
-											<></>
-										)}
+										) : <></>}
 									</KbdDialog>
 								))}
 							</div>
