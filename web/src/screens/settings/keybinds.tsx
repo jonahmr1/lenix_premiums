@@ -167,7 +167,7 @@ export const Keybinds = () => {
 						key={title}
 						title={data.label}
 						onClick={() => setTab(title)}
-						className={`${tab === title && 'bg-background invert'}`}
+						className={`${tab === title && 'bg-background invert'} py-h-0.5`}
 						{...audiobility}
 					/>
 				))}

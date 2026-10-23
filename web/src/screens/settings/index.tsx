@@ -26,7 +26,7 @@ export const LabelItem = ({
 	digest?: true
 } & React.ComponentProps<typeof Item>) => (
 	<Item
-		className={cn('group bg-background/70 px-w-1 text-foreground py-h-0.5 hover:bg-background italic hover:invert', className)}
+		className={cn('group bg-background/70 px-w-1 text-foreground hover:bg-background italic hover:invert', className)}
 		onMouseEnter={audiobility.onMouseEnter}
 		{...props}
 	>
