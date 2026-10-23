@@ -9,7 +9,7 @@ export const behavior = (pedHandle: number, scenario: Scenario, freeze = true, o
 export const hasCollided = (coords: Vec3, entity: number) => {
 	RequestCollisionAtCoord(...coords)
 
-	return HasCollisionLoadedAroundEntity(entity)
+	return HasCollisionLoadedAroundEntity(entity) as unknown as number
 }
 
 export type Scenario =
