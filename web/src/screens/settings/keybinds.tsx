@@ -176,7 +176,7 @@ export const Keybinds = () => {
 				{entries(labels).map(([title, data]) => (
 					<TabsContent key={title} value={title} className='gap-h-0.5 flex flex-col'>
 						{entries(data.items).map(([binding, label]) => (
-							<div key={binding} className='p-v-1 gap-w-1 bg-background/60 flex items-center'>
+							<div key={binding} className='p-v-1 gap-w-1 bg-background/70 flex items-center'>
 								<div className='text-v-1.5 w-1/2 uppercase italic'>{label}</div>
 								{keybinds[title][binding].map((key, i) => (
 									<KbdDialog key={key} binding={binding} order={i}>
