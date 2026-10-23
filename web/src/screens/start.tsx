@@ -16,7 +16,7 @@ export const Start = () => {
 			>
 				<div className='flex-1'></div>
 				<div className='*:text-v-3! *:py-h-2 gap-h-2 flex-1'>
-					<Button variant='ghost' onClick={() => nav({ to: '/starting/select' })}>
+					<Button variant='ghost' onClick={() => nav({ to: '/start/select' })}>
 						Multiplayer
 					</Button>
 					<Button variant='ghost' disabled>
@@ -27,7 +27,7 @@ export const Start = () => {
 					<Button variant='ghost' onClick={() => nav({ to: '/', hash: 'settings' })}>
 						Settings
 					</Button>
-					<Button variant='ghost' onClick={() => nav({ to: '/starting/credit' })}>
+					<Button variant='ghost' onClick={() => nav({ to: '/start/credit' })}>
 						Credit
 					</Button>
 					<AlertDialog>

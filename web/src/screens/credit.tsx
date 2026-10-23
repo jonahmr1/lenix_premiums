@@ -25,7 +25,7 @@ export const Credit = () => {
 			className='bg-background flex h-screen flex-col'
 			kbds={[
 				{
-					onClick: () => nav({ to: '/starting' }),
+					onClick: () => nav({ to: '/start' }),
 					icon: 'ESC',
 					keybind: 'Escape',
 					children: 'Back',

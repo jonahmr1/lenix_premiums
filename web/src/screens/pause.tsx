@@ -105,7 +105,7 @@ export const Pause = ({ path }: { path: string }) => {
 							onClick={async () => {
 								await fetchNui<Start.Requests['logout']>('start:logout', {})
 								await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
-								nav({ to: '/starting' })
+								nav({ to: '/start' })
 							}}
 						>
 							Leave

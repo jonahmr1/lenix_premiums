@@ -9,7 +9,7 @@ import type { FileRoutesByTo } from '@/routeTree.gen'
 import { blurNui, unBlurNui } from '@/lib'
 import { useStates } from '@/hooks'
 
-const dev = false
+const dev = true
 
 const hudAllowedModes: {
 	[K in keyof FileRoutesByTo]: K extends `/${infer Segment}/${string}`
@@ -26,12 +26,12 @@ export function App() {
 	const path = useLocation({ select: location => location.pathname })
 
 	useEffect(() => {
-		if (dev) nav({ to: '/starting' })
+		if (dev) nav({ to: '/start' })
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
 				setStates(null, { start: { characters } })
-				nav({ to: '/starting' })
+				nav({ to: '/start' })
 				focusNui()
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
