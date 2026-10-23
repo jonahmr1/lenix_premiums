@@ -3,7 +3,7 @@ import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
 import type { Common } from 'types'
-import { storage } from '@lenix/lenix'
+import { random, storage } from '@lenix/lenix'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { zeroed } from '@/lib'
 
@@ -70,7 +70,7 @@ export const Hud = () => {
 								)}
 							</div>
 							<div
-								className={`bgtext-neutral-300 absolute bottom-0 w-full rounded-b-md`}
+								className={`bg-neutral-400 absolute bottom-0 w-full rounded-b-md`}
 								style={{
 									height: `${state[variant]}%`,
 								}}

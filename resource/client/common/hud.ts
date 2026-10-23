@@ -58,7 +58,8 @@ const updateValues = (values: Omit<typeof state, 'display'>) => {
 const updateThisFrame = () => {
 	const weaponHash = GetSelectedPedWeapon(cache.ped)
 	const hasWeapon = GetMaxAmmo(cache.ped, weaponHash)[1] > 0
-
+	
+	DisplayHud(false)
 	if (hasWeapon === state.display.weaponary) {
 		updateDisplay({ ...state.display, weaponary: hasWeapon })
 		updateValues({
