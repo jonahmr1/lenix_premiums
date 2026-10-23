@@ -57,13 +57,13 @@ const updateValues = (values: Omit<typeof state, 'display'>) => {
 }
 
 const updateThisFrame = () => {
+	const entity = player.entity()
 	const weaponHash = GetSelectedPedWeapon(cache.ped)
 	const hasWeapon = GetMaxAmmo(cache.ped, weaponHash)[1] > 0
-	const entity = player.entity()
 	
-	if (hasWeapon === state.display.weaponary) {
+	if (hasWeapon !== state.display.weaponary) {
 		updateDisplay({ ...state.display, weaponary: hasWeapon })
-		state.display.weaponary = !hasWeapon
+		state.display.weaponary = hasWeapon
 	}
 
 	updateValues({
