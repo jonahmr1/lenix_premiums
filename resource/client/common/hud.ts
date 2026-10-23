@@ -1,6 +1,6 @@
-import { repeat, State } from '@lenix/lenix'
+import { State } from '@lenix/lenix'
 import { cache, checkDependency } from '@overextended/ox_lib'
-import { emitNui, isNuiReady, onEvent, player, pool } from 'lenix/client'
+import { emitNui, onEvent, player, pool } from 'lenix/client'
 import { api } from 'lenix/client'
 import type { Common } from 'types/index'
 
@@ -84,9 +84,9 @@ const updateThisFrame = () => {
 	const entity = player.entity()
 	updateValues({
 		...state,
-		health: GetEntityHealth(entity),
+		health: GetEntityHealth(entity) / 2,
 		armor: GetPedArmour(entity),
-		lungs: GetPlayerUnderwaterTimeRemaining(entity),
+		lungs: 100 - GetPlayerSprintStaminaRemaining(player.id()),
 	})
 }
 
