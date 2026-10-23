@@ -12,7 +12,7 @@ export const Credit = () => {
 		},
 		{
 			role: 'Gameplay Consultant',
-			names: ['Mazen'],
+			names: ['Mazen_kl'],
 		},
 		{
 			role: 'Game Tester',
