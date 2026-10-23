@@ -160,8 +160,8 @@ export const Keybinds = () => {
 	}
 
 	return (
-		<Tabs value={tab} orientation='vertical' className='gap-w-1 h-full'>
-			<TabsList className='w-1/4 cursor-default gap-1 bg-transparent'>
+		<Tabs value={tab} orientation='vertical' className='gap-w-2 h-full'>
+			<TabsList className='w-1/4 cursor-default gap-1 bg-transparent p-0'>
 				{entries(labels).map(([title, data]) => (
 					<LabelItem
 						key={title}
@@ -176,8 +176,8 @@ export const Keybinds = () => {
 				{entries(labels).map(([title, data]) => (
 					<TabsContent key={title} value={title} className='gap-h-0.5 flex flex-col'>
 						{entries(data.items).map(([binding, label]) => (
-							<div key={binding} className='p-v-1 gap-w-1 bg-background/70 flex items-center'>
-								<div className='text-v-1.5 w-1/2 uppercase italic'>{label}</div>
+							<div key={binding} className='p-v-1.5 gap-w-1 bg-background/70 flex items-center'>
+								<div className='text-v-1.5 font-bold w-1/2 uppercase italic'>{label}</div>
 								{keybinds[title][binding].map((key, i) => (
 									<KbdDialog key={key} binding={binding} order={i}>
 										{key.length ? (

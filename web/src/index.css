@@ -175,7 +175,7 @@
 	}
 
 	body {
-		@apply text-foreground cursor-default font-medium tracking-wide selection:bg-transparent;
+		@apply text-foreground cursor-default font-semibold tracking-wide selection:bg-transparent;
 	}
 
 	html {

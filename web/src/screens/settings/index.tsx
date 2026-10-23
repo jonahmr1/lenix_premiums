@@ -26,12 +26,12 @@ export const LabelItem = ({
 	digest?: true
 } & React.ComponentProps<typeof Item>) => (
 	<Item
-		className={cn('group bg-background/70 px-w-1 text-foreground hover:bg-background italic hover:invert', className)}
+		className={cn('group bg-background/70 px-w-1 text-foreground py-h-0.5 hover:bg-background italic hover:invert', className)}
 		onMouseEnter={audiobility.onMouseEnter}
 		{...props}
 	>
 		<ItemContent>
-			<ItemTitle className='text-v-1.5 font-bold uppercase'>{title}</ItemTitle>
+			<ItemTitle className='text-v-1.5 font-semibold uppercase'>{title}</ItemTitle>
 		</ItemContent>
 		<ItemActions>{children}</ItemActions>
 	</Item>
@@ -94,7 +94,7 @@ const tabs: Tab[] = [
 ]
 
 export const Settings = () => {
-	const [tab, setTab] = useState(0)
+	const [tab, setTab] = useState(2)
 	const router = useRouter()
 
 	return (
@@ -117,7 +117,7 @@ export const Settings = () => {
 				<NavButton className='bg-background/70' type='previous' tabs={tabs} value={tab} onValueChange={setTab}>
 					Q
 				</NavButton>
-				<Tabs value={tab.toString()} className='size-full flex-1'>
+				<Tabs value={tab.toString()} className='size-full flex-1 gap-h-3'>
 					<TabsList className='gap-w-0.5 size-full bg-transparent p-0'>
 						{tabs.map(({ disabled, label }, i) => (
 							<Button
