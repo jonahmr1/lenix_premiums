@@ -111,13 +111,23 @@ export const Selection = () => {
 							const last = data.get('last') as string
 							const gender = data.get('gender') as string
 							
-							if (!first.trim() || !last.trim()) {
+							if (modeState !== 'warzone' && !first.trim() || !last.trim()) {
 								toast('Name cannot be empty', { toasterId: 'notify' })
 								audio.error()
 								return
 							}
 
-							await fetchNui<Start.Requests['selectMode']>('start:selectMode', { mode: modeState, character: [null, [first, last, gender, 946684800000]] })
+							await fetchNui<Start.Requests['selectMode']>('start:selectMode', {
+								mode: modeState,
+								character: [
+									null,
+									[
+										...(modeState == 'warzone' ? ['placeholder', 'placeholder'] as const : [first, last] as const),
+										gender,
+										946684800000
+									]
+								]
+							})
 							router.navigate({ to: `/${modeState}` })
 							unFocusNui()
 						}}
@@ -128,18 +138,22 @@ export const Selection = () => {
               <DialogDescription>Please double check your information before you submit, this action cannot be undone or modified later.</DialogDescription>
             </DialogHeader>
             <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="first">
-                  First Name <Star />
-                </FieldLabel>
-                <Input name="first" id="first" autoComplete="off" placeholder="Jonah" required />
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="last">
-                  Last Name <Star />
-                </FieldLabel>
-                <Input name='last' id="last" autoComplete="off" placeholder="Marwan" required />
-              </Field>
+              {modeState !== 'warzone' && (
+								<>
+									<Field>
+										<FieldLabel htmlFor="first">
+											First Name <Star />
+										</FieldLabel>
+										<Input name="first" id="first" autoComplete="off" placeholder="Jonah" required />
+									</Field>
+									<Field>
+										<FieldLabel htmlFor="last">
+											Last Name <Star />
+										</FieldLabel>
+										<Input name='last' id="last" autoComplete="off" placeholder="Marwan" required />
+									</Field>
+								</>
+							)}
               <Field>
                 <FieldLabel htmlFor="gender">
                   Gender <Star />
