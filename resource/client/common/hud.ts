@@ -83,12 +83,12 @@ const updateThisFrame = () => {
 };
 
 const load = () => {
-  setTimeout(async () => {
-    await repeat(isNuiReady);
-    updateDisplay({ vitals: true, weaponary: true });
-  });
+  const dispose = onEvent("ox:playerLoaded", () => updateDisplay({ vitals: true, weaponary: true }));
 
-  return () => updateDisplay({ vitals: false, weaponary: false });
+  return () => {
+    updateDisplay({ vitals: false, weaponary: false });
+    dispose();
+  };
 };
 
 export default () => [
