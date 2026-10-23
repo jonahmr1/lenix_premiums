@@ -128,7 +128,7 @@ export const Selection = () => {
 							const last = data.get('last') as string
 							const gender = data.get('gender') as string
 
-							if ((modeState !== 'warzone' && !first.trim()) || !last.trim()) {
+							if (modeState !== 'warzone' && (!first.trim() || !last.trim())) {
 								toast('Name cannot be empty', { toasterId: 'notify' })
 								audio.error()
 								return
