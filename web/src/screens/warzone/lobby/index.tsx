@@ -96,7 +96,7 @@ export const Lobby = () => {
 								<span className='text-primary'>M</span>
 							</p>
 						</div>
-						<div className='flex flex-2 items-center blurred-5 h-fit'>
+						<div className='flex flex-2 items-center blurred-20'>
 							<NavButton
 								type='previous'
 								tabs={tabs}
