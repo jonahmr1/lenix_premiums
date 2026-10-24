@@ -84,7 +84,7 @@ export const Lobby = () => {
 			>
 				<Tabs value={tab.toString()} onValueChange={$ => setTab(Number($))} className='h-full w-full'>
 					<motion.div
-						className='flex w-full flex-row'
+						className='flex w-full flex-row items-center'
 						{...anim}
 						initial={{ opacity: 0, y: '-40%' }}
 						animate={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ export const Lobby = () => {
 								<span className='text-primary'>M</span>
 							</p>
 						</div>
-						<div className='flex flex-2 items-center blurred-5'>
+						<div className='flex flex-2 items-center blurred-5 h-fit'>
 							<NavButton
 								type='previous'
 								tabs={tabs}
