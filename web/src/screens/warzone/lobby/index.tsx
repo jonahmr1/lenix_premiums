@@ -7,8 +7,8 @@ import { Play } from '../play'
 import { motion } from 'motion/react'
 import { anim, cdn } from '@/lib'
 import { PageScreen } from '@/components/screen'
-import { useNavigate } from '@tanstack/react-router'
-import { fetchNui, fetchNuiServer, onNuiEmit } from 'lenix/nui'
+import { useLocation, useNavigate } from '@tanstack/react-router'
+import { fetchNui, fetchNuiServer, focusNui, onNuiEmit } from 'lenix/nui'
 import type { Start, Warzone } from 'types'
 import {
 	AlertDialog,
@@ -26,6 +26,9 @@ export const Lobby = () => {
 	const [display, setDisplay] = useState(false)
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
+	const isRelative = useLocation({
+		select: location => location.hash === 'relative',
+  })
 	const dialogTrigger = useRef<HTMLButtonElement>(null)
 
 	const tabs: Tab[] = [
@@ -56,7 +59,11 @@ export const Lobby = () => {
 	]
 
 	useEffect(() => {
-		const dispose = onNuiEmit<Warzone.Events['open']>('warzone:open', () => setDisplay(true))
+		if (isRelative) setDisplay(true)
+		const dispose = onNuiEmit<Warzone.Events['open']>('warzone:open', () => {
+			setDisplay(true)
+			focusNui()
+		})
 		return dispose
 	}, [])
 

@@ -8,13 +8,12 @@ import { anim } from '@/lib'
 import { audio } from '@/lib'
 import { useStates } from '@/hooks'
 import { toast } from 'sonner'
-import { useRouter } from '@tanstack/react-router'
 import { PageScreen } from '@/components/screen'
 import { Constants } from 'common/config/constants'
+import { useNavigate } from '@tanstack/react-router'
 
 export const Mode = () => {
-	const router = useRouter()
-
+	const nav = useNavigate()
 	const [{ lobby }, setState] = useStates()
 	const [preview, setPreview] = useState(lobby.mode)
 
@@ -38,7 +37,7 @@ export const Mode = () => {
 				className='items-start'
 				kbds={[
 					{
-						onClick: () => router.history.back(),
+						onClick: () => nav({ to: '/warzone', hash: 'relative' }),
 						keybind: 'Escape',
 						icon: 'ESC',
 						children: 'Back',
