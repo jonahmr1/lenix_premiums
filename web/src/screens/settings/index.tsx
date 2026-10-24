@@ -71,16 +71,16 @@ const tabs: Tab[] = [
 		content: '',
 		disabled: true,
 	},
-	{
-		label: 'Brief',
-		content: '',
-		disabled: true,
-	},
-	{
-		label: 'Stats',
-		content: '',
-		disabled: true,
-	},
+	// {
+	// 	label: 'Brief',
+	// 	content: '',
+	// 	disabled: true,
+	// },
+	// {
+	// 	label: 'Stats',
+	// 	content: '',
+	// 	disabled: true,
+	// },
 	{
 		label: 'Gallery',
 		content: '',
