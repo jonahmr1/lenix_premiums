@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 import { fivemTailwindFallback } from './fivem-tailwind-fallback.ts'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
 	base: './',
 	plugins: [
 		tanstackRouter({
@@ -34,10 +34,6 @@ export default defineConfig(({ mode }) => ({
 		],
 	},
 	build: {
-		minify: mode !== 'development',
-		// The FiveM fallback plugin expects minified CSS, including in watch mode.
-		cssMinify: true,
-		reportCompressedSize: false,
 		rolldownOptions: {
 			input: {
 				main: path.resolve(import.meta.dirname, 'index.html'),
@@ -45,4 +41,4 @@ export default defineConfig(({ mode }) => ({
 			},
 		},
 	},
-}))
+})
