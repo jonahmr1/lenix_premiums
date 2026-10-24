@@ -14,7 +14,6 @@ uniform sampler2D game;
 uniform vec4 region;
 uniform vec2 viewport;
 uniform float radius;
-uniform vec4 tint;
 varying vec2 uv;
 void main() {
 	vec2 screenUV = vec2(
@@ -33,8 +32,8 @@ void main() {
 			total += weight;
 		}
 	}
-	// The element's normal CSS background supplies the tint, including its alpha.
-	gl_FragColor = vec4(mix(color / total, tint.rgb, tint.a), 1.0);
+	// CSS backgrounds and gradients are composited above this game-only layer.
+	gl_FragColor = vec4(color / total, 1.0);
 }`
 
 export const isFiveM = () => typeof window !== 'undefined' && 'invokeNative' in window
@@ -107,10 +106,9 @@ export function createGameBlur(canvas: HTMLCanvasElement, resolutionScale = 0.5)
 		const region = gl.getUniformLocation(program, 'region')
 		const viewport = gl.getUniformLocation(program, 'viewport')
 		const radius = gl.getUniformLocation(program, 'radius')
-		const tint = gl.getUniformLocation(program, 'tint')
 
 		return {
-			draw(blur: number, color: Float32Array) {
+			draw(blur: number) {
 				const rect = canvas.getBoundingClientRect()
 				if (!rect.width || !rect.height) return
 				// Deliberately use CSS pixels, not devicePixelRatio, to bound GPU work.
@@ -124,7 +122,6 @@ export function createGameBlur(canvas: HTMLCanvasElement, resolutionScale = 0.5)
 				gl.uniform4f(region, rect.left, rect.top, rect.width, rect.height)
 				gl.uniform2f(viewport, window.innerWidth, window.innerHeight)
 				gl.uniform1f(radius, blur)
-				gl.uniform4fv(tint, color)
 				gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
 			},
 			dispose,

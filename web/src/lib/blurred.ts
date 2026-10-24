@@ -7,8 +7,6 @@ type Panel = {
 	visible: boolean
 	failed: boolean
 	lost: boolean
-	background: string
-	color: Float32Array
 	renderer?: ReturnType<typeof createGameBlur>
 	cleanup: () => void
 }
@@ -20,7 +18,10 @@ export function installBlurred() {
 	let frame = 0
 	let queued = false
 	let disposed = false
-	let colorContext: CanvasRenderingContext2D | null = null
+	const layer = document.createElement('div')
+	layer.dataset.gameBlurLayer = ''
+	layer.setAttribute('aria-hidden', 'true')
+	if (native) document.body.prepend(layer)
 	document.documentElement.dataset.gameBlur = native ? 'native' : 'browser'
 
 	const stop = () => {
@@ -44,29 +45,15 @@ export function installBlurred() {
 				continue
 			}
 			try {
-				if (style.backgroundColor !== panel.background) {
-					if (!colorContext) {
-						const swatch = document.createElement('canvas')
-						swatch.width = swatch.height = 1
-						colorContext = swatch.getContext('2d', { willReadFrequently: true })
-					}
-					if (!colorContext) throw new Error('Cannot read background colour')
-					colorContext.clearRect(0, 0, 1, 1)
-					colorContext.fillStyle = style.backgroundColor
-					colorContext.fillRect(0, 0, 1, 1)
-					const rgba = colorContext.getImageData(0, 0, 1, 1).data
-					panel.color.set(rgba)
-					for (let i = 0; i < 4; i++) panel.color[i] /= 255
-					panel.background = style.backgroundColor
-				}
-				// An opaque background completely covers the blur.
-				if (panel.color[3] === 1) {
+				// The game texture must sit behind ALL page backgrounds, including ancestors.
+				// Keeping it inside the panel would paint over their gradients and tints.
+				if (!positionCanvas(element, panel.canvas, style)) {
 					panel.canvas.hidden = true
 					continue
 				}
 				panel.renderer ??= createGameBlur(panel.canvas)
 				panel.canvas.hidden = false
-				panel.renderer.draw(strength, panel.color)
+				panel.renderer.draw(strength)
 			} catch (error) {
 				panel.failed = true
 				panel.canvas.hidden = true
@@ -96,10 +83,11 @@ export function installBlurred() {
 	const sync = () => {
 		queued = false
 		if (disposed) return
+		if (native && !layer.isConnected) document.body.prepend(layer)
 		for (const [element, panel] of panels) {
 			if (!element.isConnected || !hasBlurClass(element)) remove(element, panel)
-			// React can replace textContent and remove an injected canvas.
-			else if (native && panel.canvas.parentElement !== element) element.prepend(panel.canvas)
+			// Restore the layer if a page replaced body content.
+			else if (native && panel.canvas.parentElement !== layer) layer.append(panel.canvas)
 		}
 		for (const element of document.querySelectorAll<HTMLElement>(selector)) {
 			if (panels.has(element) || !hasBlurClass(element)) continue
@@ -115,8 +103,6 @@ export function installBlurred() {
 				visible: false,
 				failed: false,
 				lost: false,
-				background: '',
-				color: new Float32Array(4),
 				cleanup: () => {
 					canvas.removeEventListener('webglcontextlost', onLost)
 					canvas.removeEventListener('webglcontextrestored', onRestored)
@@ -142,7 +128,7 @@ export function installBlurred() {
 			if (native) {
 				canvas.addEventListener('webglcontextlost', onLost)
 				canvas.addEventListener('webglcontextrestored', onRestored)
-				element.prepend(canvas)
+				layer.append(canvas)
 				intersection.observe(element)
 			}
 		}
@@ -167,6 +153,50 @@ export function installBlurred() {
 		intersection.disconnect()
 		document.removeEventListener('visibilitychange', visibilityChanged)
 		for (const [element, panel] of panels) remove(element, panel)
+		layer.remove()
 		delete document.documentElement.dataset.gameBlur
 	}
+}
+
+/** Follow the panel in viewport space while its game layer lives behind the UI. */
+function positionCanvas(element: HTMLElement, canvas: HTMLCanvasElement, style: CSSStyleDeclaration) {
+	const rect = element.getBoundingClientRect()
+	if (!rect.width || !rect.height || !element.getClientRects().length) return false
+
+	let opacity = Number(style.opacity)
+	let top = Math.max(0, rect.top)
+	let right = Math.min(window.innerWidth, rect.right)
+	let bottom = Math.min(window.innerHeight, rect.bottom)
+	let left = Math.max(0, rect.left)
+	for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+		const parentStyle = getComputedStyle(ancestor)
+		opacity *= Number(parentStyle.opacity)
+		if (!opacity || parentStyle.display === 'none') return false
+		const clipX = /^(hidden|clip|scroll|auto)$/.test(parentStyle.overflowX)
+		const clipY = /^(hidden|clip|scroll|auto)$/.test(parentStyle.overflowY)
+		if (!clipX && !clipY) continue
+		const bounds = ancestor.getBoundingClientRect()
+		if (clipX) {
+			left = Math.max(left, bounds.left)
+			right = Math.min(right, bounds.right)
+		}
+		if (clipY) {
+			top = Math.max(top, bounds.top)
+			bottom = Math.min(bottom, bounds.bottom)
+		}
+	}
+	if (right <= left || bottom <= top) return false
+
+	const target = canvas.style
+	target.left = `${rect.left}px`
+	target.top = `${rect.top}px`
+	target.width = `${rect.width}px`
+	target.height = `${rect.height}px`
+	target.opacity = String(opacity)
+	target.borderTopLeftRadius = style.borderTopLeftRadius
+	target.borderTopRightRadius = style.borderTopRightRadius
+	target.borderBottomRightRadius = style.borderBottomRightRadius
+	target.borderBottomLeftRadius = style.borderBottomLeftRadius
+	target.clipPath = `inset(${top - rect.top}px ${rect.right - right}px ${rect.bottom - bottom}px ${left - rect.left}px)`
+	return true
 }

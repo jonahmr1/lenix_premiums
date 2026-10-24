@@ -180,14 +180,20 @@
 		backdrop-filter: blur(calc(var(--game-blur) * 1px));
 	}
 
-	canvas[data-game-blur-canvas] {
-		position: absolute;
+	[data-game-blur='native'] body {
+		isolation: isolate;
+	}
+
+	[data-game-blur-layer] {
+		position: fixed;
 		inset: 0;
-		width: 100%;
-		height: 100%;
-		border-radius: inherit;
 		pointer-events: none;
 		z-index: -1;
+	}
+
+	canvas[data-game-blur-canvas] {
+		position: absolute;
+		pointer-events: none;
 	}
 
 	* {
