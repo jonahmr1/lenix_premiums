@@ -17,6 +17,7 @@ type OxWeapon =
 	  }
 	| undefined
 
+const minimap = RequestScaleformMovie('minimap')
 const nativeImage = (name: string) => `https://docs-backend.fivem.net/weapons/${name}.png`
 
 const state = new State<
@@ -80,7 +81,14 @@ const updateThisFrame = () => {
 		},
 	})
 
-	DisplayHud(false)
+
+  setImmediate(() => {
+		if (!HasScaleformMovieLoaded(minimap)) return
+
+		BeginScaleformMovieMethod(minimap, 'SETUP_HEALTH_ARMOUR')
+		ScaleformMovieMethodAddParamInt(3)
+		EndScaleformMovieMethod()
+  })
 }
 
 const load = () => {
