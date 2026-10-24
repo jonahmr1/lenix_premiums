@@ -161,7 +161,7 @@ export const Lobby = () => {
 							onClick={async () => {
 								await fetchNui<Start.Requests['logout']>('start:logout', {})
 								await fetchNuiServer<Start.Requests['logout']>('start:logout', {})
-								nav({ to: '/start' })
+								nav({ to: '/' })
 							}}
 						>
 							Leave

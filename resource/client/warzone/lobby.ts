@@ -1,6 +1,6 @@
 import { repeat } from '@lenix/lenix'
 import type { Vec2, Vec4 } from 'lenix'
-import { cam, emitNui, entity, onEvent } from 'lenix/client'
+import { cam, emitNui, entity, onEvent, pool } from 'lenix/client'
 import type { Warzone } from 'types/index'
 
 const PED_COORDS: Vec4 = [-2279.71, 3177.63, 32.80, 240.4]
@@ -38,4 +38,9 @@ const load = () => {
 	}
 }
 
-export default () => [load()]
+export default () => [
+	load(),
+
+	// TODO: enable in game
+	pool(HideHudAndRadarThisFrame)
+]
