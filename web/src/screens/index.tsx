@@ -26,7 +26,7 @@ export function App() {
 	const path = useLocation({ select: location => location.pathname })
 
 	useEffect(() => {
-		if (dev) nav({ to: '/start' })
+		if (dev) nav({ to: '/warzone' })
 
 		const disposes = [
 			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
@@ -60,7 +60,7 @@ export function App() {
 
 	return (
 		<>
-			{dev && <img src='light.png' className='pointer-events-none absolute inset-0 -z-1 size-full object-cover' />}
+			{dev && <img src='night.png' className='pointer-events-none absolute inset-0 -z-1 size-full object-cover' />}
 			{hash === 'pause' && <Pause path={path} />}
 			{hash === 'settings' && <Settings />}
 			{hudAllowedModes.some(route => route === path.split('/')[1]) && <Hud />}
