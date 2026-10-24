@@ -10,6 +10,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { Toaster } from './components/ui/sonner'
 import { StatesProvider } from './provider'
 import { storage } from '@lenix/lenix'
+import { installBlurred } from '@/lib/blurred'
+
+const disposeBlurred = installBlurred()
+import.meta.hot?.dispose(disposeBlurred)
 
 library.add(fas, far)
 

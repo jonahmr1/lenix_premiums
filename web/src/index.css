@@ -170,6 +170,26 @@
 }
 
 @layer base {
+	[data-game-blur-panel] {
+		--game-blur: 0;
+		position: relative;
+		isolation: isolate;
+	}
+
+	[data-game-blur='browser'] [data-game-blur-panel] {
+		backdrop-filter: blur(calc(var(--game-blur) * 1px));
+	}
+
+	canvas[data-game-blur-canvas] {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+		pointer-events: none;
+		z-index: -1;
+	}
+
 	* {
 		@apply border-border outline-ring/50;
 	}
@@ -181,6 +201,10 @@
 	html {
 		@apply font-sans;
 	}
+}
+
+@utility blurred-* {
+	--game-blur: --value(integer);
 }
 
 @utility perspective-left-* {
