@@ -44,7 +44,9 @@ export function createGameBlur(canvas: HTMLCanvasElement, resolutionScale = 0.5)
 		antialias: false,
 		depth: false,
 		stencil: false,
-		preserveDrawingBuffer: false,
+		// NUI can composite between game/UI frames. Keep the last complete blur
+		// instead of allowing WebGL to clear it after presentation.
+		preserveDrawingBuffer: true,
 	})
 	if (!gl) throw new Error('WebGL is unavailable')
 
@@ -115,8 +117,8 @@ export function createGameBlur(canvas: HTMLCanvasElement, resolutionScale = 0.5)
 				const width = Math.max(1, Math.ceil(rect.width * resolutionScale))
 				const height = Math.max(1, Math.ceil(rect.height * resolutionScale))
 				if (canvas.width !== width || canvas.height !== height) {
-					canvas.width = width
-					canvas.height = height
+					if (canvas.width !== width) canvas.width = width
+					if (canvas.height !== height) canvas.height = height
 					gl.viewport(0, 0, width, height)
 				}
 				gl.uniform4f(region, rect.left, rect.top, rect.width, rect.height)

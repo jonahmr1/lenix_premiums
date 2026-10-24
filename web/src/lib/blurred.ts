@@ -7,6 +7,7 @@ type Panel = {
 	visible: boolean
 	failed: boolean
 	lost: boolean
+	styles: Map<string, string>
 	renderer?: ReturnType<typeof createGameBlur>
 	cleanup: () => void
 }
@@ -47,12 +48,12 @@ export function installBlurred() {
 			try {
 				// The game texture must sit behind ALL page backgrounds, including ancestors.
 				// Keeping it inside the panel would paint over their gradients and tints.
-				if (!positionCanvas(element, panel.canvas, style)) {
+				if (!positionCanvas(element, panel, style)) {
 					panel.canvas.hidden = true
 					continue
 				}
 				panel.renderer ??= createGameBlur(panel.canvas)
-				panel.canvas.hidden = false
+				if (panel.canvas.hidden) panel.canvas.hidden = false
 				panel.renderer.draw(strength)
 			} catch (error) {
 				panel.failed = true
@@ -103,6 +104,7 @@ export function installBlurred() {
 				visible: false,
 				failed: false,
 				lost: false,
+				styles: new Map(),
 				cleanup: () => {
 					canvas.removeEventListener('webglcontextlost', onLost)
 					canvas.removeEventListener('webglcontextrestored', onRestored)
@@ -159,7 +161,7 @@ export function installBlurred() {
 }
 
 /** Follow the panel in viewport space while its game layer lives behind the UI. */
-function positionCanvas(element: HTMLElement, canvas: HTMLCanvasElement, style: CSSStyleDeclaration) {
+function positionCanvas(element: HTMLElement, panel: Panel, style: CSSStyleDeclaration) {
 	const rect = element.getBoundingClientRect()
 	if (!rect.width || !rect.height || !element.getClientRects().length) return false
 
@@ -187,16 +189,26 @@ function positionCanvas(element: HTMLElement, canvas: HTMLCanvasElement, style: 
 	}
 	if (right <= left || bottom <= top) return false
 
-	const target = canvas.style
-	target.left = `${rect.left}px`
-	target.top = `${rect.top}px`
-	target.width = `${rect.width}px`
-	target.height = `${rect.height}px`
-	target.opacity = String(opacity)
-	target.borderTopLeftRadius = style.borderTopLeftRadius
-	target.borderTopRightRadius = style.borderTopRightRadius
-	target.borderBottomRightRadius = style.borderBottomRightRadius
-	target.borderBottomLeftRadius = style.borderBottomLeftRadius
-	target.clipPath = `inset(${top - rect.top}px ${rect.right - right}px ${rect.bottom - bottom}px ${left - rect.left}px)`
+	const target = panel.canvas.style
+	// Avoid invalidating the compositor's layer when the panel has not moved.
+	const set = (property: string, value: string) => {
+		if (panel.styles.get(property) === value) return
+		target.setProperty(property, value)
+		panel.styles.set(property, value)
+	}
+	set('left', `${rect.left}px`)
+	set('top', `${rect.top}px`)
+	set('width', `${rect.width}px`)
+	set('height', `${rect.height}px`)
+	set('opacity', String(opacity))
+	set('border-top-left-radius', style.borderTopLeftRadius)
+	set('border-top-right-radius', style.borderTopRightRadius)
+	set('border-bottom-right-radius', style.borderBottomRightRadius)
+	set('border-bottom-left-radius', style.borderBottomLeftRadius)
+	const clipping = [top - rect.top, rect.right - right, rect.bottom - bottom, left - rect.left]
+	set(
+		'clip-path',
+		clipping.every(value => value === 0) ? 'none' : `inset(${clipping.map(value => `${value}px`).join(' ')})`,
+	)
 	return true
 }
