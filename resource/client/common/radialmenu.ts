@@ -33,7 +33,7 @@ const radiaItems: Parameters<typeof addRadialItem>[0] = [
 		id: 'weather',
 		label: 'Weather & Time',
 		icon: 'cloud-moon',
-		onSelect: () => notify({ title: 'Not available yet!' }) /* emit('lenix:client:weather:open') */,
+		onSelect: () => emit('lenix:client:weather:open'),
 	},
 	{
 		id: 'emote',

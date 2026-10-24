@@ -1,9 +1,11 @@
 import { repeat } from '@lenix/lenix'
-import type { Vec4 } from 'lenix'
+import type { Vec2, Vec4 } from 'lenix'
 import { cam, emitNui, entity, onEvent } from 'lenix/client'
 import type { Warzone } from 'types/index'
 
-const PED_COORDS: Vec4 = [0, 0, 0, 0]
+const PED_COORDS: Vec4 = [-2279.71, 3177.63, 32.80, 235.1]
+const CAM_OFFSET: Vec4 = [3.619, -1.95, 0.69, 175]
+const CAM_ROTATION: Vec2 = [-8.8, 0]
 
 const load = () => {
 	let disposeCamera: ReturnType<typeof cam.create>[0] | undefined
@@ -13,7 +15,8 @@ const load = () => {
 
 		const [dispose, camHandle] = cam.create({
 			coords: PED_COORDS,
-			offset: [0, 0, 0, 0]
+			offset: CAM_OFFSET,
+			rotation: CAM_ROTATION
 		})
 
 		disposeCamera = dispose
