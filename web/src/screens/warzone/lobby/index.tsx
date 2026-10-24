@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/alert-dialog'
 
 export const Lobby = () => {
-	const [display, setDisplay] = useState(false)
+	const [display, setDisplay] = useState(true)
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
 	const isRelative = useLocation({
@@ -72,7 +72,7 @@ export const Lobby = () => {
 	return (
 		<>
 			<PageScreen
-				className='flex h-screen w-full flex-col'
+				className='flex h-screen w-full flex-col bg-linear-to-b from-background via-background/70 to-transparent via-5% to-30%'
 				kbds={[
 					{
 						icon: 'ESC',
@@ -96,7 +96,7 @@ export const Lobby = () => {
 								<span className='text-primary'>M</span>
 							</p>
 						</div>
-						<div className='flex flex-2 items-center'>
+						<div className='flex flex-2 items-center blurred-5'>
 							<NavButton
 								type='previous'
 								tabs={tabs}
