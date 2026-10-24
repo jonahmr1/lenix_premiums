@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 import { fivemTailwindFallback } from './fivem-tailwind-fallback.ts'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	base: './',
 	plugins: [
 		tanstackRouter({
@@ -21,24 +21,28 @@ export default defineConfig({
 		alias: [
 			{
 				find: /^cn$/,
-				replacement: path.resolve(__dirname, 'src/lib/cn.ts'),
+				replacement: path.resolve(import.meta.dirname, 'src/lib/cn.ts'),
 			},
 			{
 				find: '@',
-				replacement: path.resolve(__dirname, 'src'),
+				replacement: path.resolve(import.meta.dirname, 'src'),
 			},
 			{
 				find: /^common\//,
-				replacement: path.resolve(__dirname, '../resource/common') + '/',
+				replacement: path.resolve(import.meta.dirname, '../resource/common') + '/',
 			},
 		],
 	},
 	build: {
+		minify: mode !== 'development',
+		// The FiveM fallback plugin expects minified CSS, including in watch mode.
+		cssMinify: true,
+		reportCompressedSize: false,
 		rolldownOptions: {
 			input: {
-				main: path.resolve(__dirname, 'index.html'),
-				loading: path.resolve(__dirname, 'loading.html'),
+				main: path.resolve(import.meta.dirname, 'index.html'),
+				loading: path.resolve(import.meta.dirname, 'loading.html'),
 			},
 		},
 	},
-})
+}))

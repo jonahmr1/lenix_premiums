@@ -75,7 +75,7 @@ export default async function () {
 
 				return web.length ? web : null
 			},
-			{ interval: 6500, timeout: 1200000 },
+			{ interval: 250, timeout: 1200000 },
 		)
 	} catch {}
 

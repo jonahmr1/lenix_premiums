@@ -3,6 +3,7 @@ import postBuild from './scripts/postBuild.ts'
 
 const config: Record<string, UserConfig> = {
 	resource: {
+		clean: false,
 		outExtensions() {
 			return { js: '.js' }
 		},
