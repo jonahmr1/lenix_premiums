@@ -15,9 +15,3 @@ onNui('unBlur', () => {
 
 	return null
 })
-
-onEvent('onResourceStop', re => console.warn({ re }))
-
-RegisterCommand('time', args => {
-	NetworkOverrideClockTime(args[0], 0, 0)
-}, false)
