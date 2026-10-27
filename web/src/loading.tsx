@@ -20,7 +20,7 @@ import { ThemeProvider } from './components/theme-provider'
 import { Spinner } from './components/ui/spinner'
 import { AnimatePresence, motion } from 'motion/react'
 import { Howl } from 'howler'
-import { cdn } from './lib'
+import { anim, cdn } from './lib'
 import assets from './lib/assets'
 import { focusNui } from 'lenix/nui'
 
@@ -90,7 +90,7 @@ export function Loading() {
 	}, [preloaded.done])
 
 	useEffect(() => {
-		player.play()
+		// player.play()
 		focusNui()
 
 		const interval = setInterval(() => {
@@ -176,7 +176,13 @@ export function Loading() {
 				/>
 			</AnimatePresence>
 			<Layout className='relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent'>
-				<div className='w-[67vw] space-y-[1vh]'>
+				<motion.div
+					className='w-[67vw] space-y-[1vh]'
+					{...anim}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 1, delay: 2 }}
+				>
 					<div className='flex items-center justify-center gap-[0.5vw] uppercase italic'>
 						<p>{phase}</p>
 						<Spinner />
@@ -238,7 +244,7 @@ export function Loading() {
 							</Card>
 						</HoverCardContent>
 					</HoverCard>
-				</div>
+				</motion.div>
 			</Layout>
 		</div>
 	)
