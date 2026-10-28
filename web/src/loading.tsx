@@ -78,7 +78,7 @@ export function Loading() {
 				const next = {
 					...prev,
 					progress: data.eventName === 'loadProgress' ? (data.loadFraction as number) * 100 : prev.progress,
-					name: typeof data.name === 'string' ? data.name : prev.name,
+					name: typeof data.name === 'string' ? data.name : typeof data.message === 'string' ? data.message : prev.name,
 				}
 				return next.progress === prev.progress && next.name === prev.name ? prev : next
 			})
