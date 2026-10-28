@@ -10,7 +10,7 @@ import assets from './lib/assets'
 import debugEvents from './debug.log.json'
 import { Kbd } from './components/ui/kbd'
 import { Howl } from 'howler'
-import { fetchNui, onKeyDown, setFocus } from 'lenix/nui'
+import { onKeyDown } from 'lenix/nui'
 import type { Start } from 'types'
 
 type Log = Record<string, string | number | boolean>
@@ -118,20 +118,14 @@ export function Loading() {
 	useEffect(() => {
 		if (!ready) return
 
-		fetch(`https://lenix_premiums/__nuiFocus`, {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json; charset=UTF-8'
-			},
-			body: JSON.stringify({ keyboard: true , cursor: false })
-		})
+		window.focus()
 		const dispose = onKeyDown('Space', () => {
 			fetch(`https://lenix_premiums/${'start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1]}`, {
 				method: 'post',
 				headers: {
 					'Content-Type': 'application/json; charset=UTF-8'
 				},
-				body: JSON.stringify({ })
+				body: JSON.stringify({})
 			})
 			audiobility.onMouseDown()
 		})
