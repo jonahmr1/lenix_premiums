@@ -122,6 +122,9 @@ export function Loading() {
 			<Layout className='relative flex size-full flex-col justify-end gap-h-5 items-center bg-linear-to-t from-neutral-950/50 to-transparent'>
 				<motion.div
 					className='gap-w-0.5 flex items-center text-center text-2xl uppercase italic'
+					initial={{ opacity: 0 }}
+					animate={{ opacity: ready ? 1 : 0 }}
+					transition={{ duration: 1, delay: ready ? 2 : 0 }}
 				>
 					<span>Press</span>
 					<Kbd className='invert'>␣</Kbd>
@@ -131,13 +134,13 @@ export function Loading() {
 					className='w-[67vw] space-y-[1vh]'
 					{...anim}
 					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 1, delay: 2 }}
+					animate={{ opacity: ready ? 0 : 1 }}
+					transition={{ duration: 1, delay: 1 }}
 				>
-							<p className='text-muted-foreground text-center text-xs uppercase italic'>
-								{preloaded.done ? state.name : preloaded.name}
-							</p>
-							<Progress value={progress} className='outline outline-offset-1' />
+					<p className='text-muted-foreground text-center text-xs uppercase italic'>
+						{preloaded.done ? state.name : preloaded.name}
+					</p>
+					<Progress value={progress} className='outline outline-offset-1' />
 				</motion.div>
 			</Layout>
 		</div>
