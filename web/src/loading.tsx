@@ -119,28 +119,25 @@ export function Loading() {
 					}}
 				/>
 			</AnimatePresence>
-			<Layout className='relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent'>
+			<Layout className='relative flex size-full flex-col justify-end gap-h-5 items-center bg-linear-to-t from-neutral-950/50 to-transparent'>
 				<motion.div
-					className={`w-[67vw] space-y-[1vh] ${ready ? 'absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2' : ''}`}
+					className='gap-w-0.5 flex items-center text-center text-2xl uppercase italic'
+				>
+					<span>Press</span>
+					<Kbd className='invert'>␣</Kbd>
+					<span>to start</span>
+				</motion.div>
+				<motion.div
+					className='w-[67vw] space-y-[1vh]'
 					{...anim}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 1, delay: 2 }}
 				>
-					{ready ? (
-						<div className='gap-w-0.5 flex items-center justify-center text-center text-2xl uppercase italic'>
-							<span>Press</span>
-							<Kbd className='invert'>␣</Kbd>
-							<span>to start</span>
-						</div>
-					) : (
-						<>
 							<p className='text-muted-foreground text-center text-xs uppercase italic'>
 								{preloaded.done ? state.name : preloaded.name}
 							</p>
 							<Progress value={progress} className='outline outline-offset-1' />
-						</>
-					)}
 				</motion.div>
 			</Layout>
 		</div>
