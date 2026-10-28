@@ -168,6 +168,7 @@ export namespace Start {
 		exitGame: Request<null, 'start:exitGame'>
 		logout: Request<null, 'start:logout'>
 		getModeCharacter: Request<number | null, 'start:getModeCharacter', { mode: Mode; characters: Mapped<Character>[] }>
+		shutdownLoadingScreen: Request<null, 'start:shutdownLoading'>
 	}
 	export type Mode = 'warzone' | 'police' | 'gang' | 'justice' | 'race'
 

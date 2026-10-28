@@ -5,11 +5,13 @@ import './index.css'
 import { Progress } from './components/ui/progress'
 import { ThemeProvider } from './components/theme-provider'
 import { AnimatePresence, motion } from 'motion/react'
-import { anim, cdn } from './lib'
+import { anim, audiobility, cdn } from './lib'
 import assets from './lib/assets'
 import debugEvents from './debug.log.json'
 import { Kbd } from './components/ui/kbd'
 import { Howl } from 'howler'
+import { fetchNui, onKeyDown } from 'lenix/nui'
+import type { Start } from 'types'
 
 type Log = Record<string, string | number | boolean>
 
@@ -23,7 +25,7 @@ const CROSSFADE_INTERVAL = 10
 
 const player = new Howl({
 	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
-	volume: 0.5,
+	volume: 0.0,
 })
 
 export function Loading() {
@@ -102,6 +104,16 @@ export function Loading() {
 	const preloadProgress = assets.length ? (preloaded.loaded / assets.length) * 100 : 100
 	const progress = preloaded.done ? state.progress : preloadProgress
 	const ready = preloaded.done && state.progress >= 100
+
+	useEffect(() => {
+		if (!ready) return
+
+		const dispose = onKeyDown('Space', () => {
+			fetchNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', {})
+			audiobility.onMouseDown()
+		})
+		return dispose
+	}, [ready])
 
 	return (
 		<div className='bg-background relative h-screen overflow-hidden'>

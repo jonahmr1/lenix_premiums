@@ -47,6 +47,11 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 	return null
 })
 
+onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
+	ShutdownLoadingScreen()
+	return null
+})
+
 globalThis.exports('charselect', async (chars: Character[]): Promise<Start.CharacterRespose> => {
 	let keepBlack = true;
 
