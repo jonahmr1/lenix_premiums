@@ -85,12 +85,9 @@ export function Loading() {
 		}
 
 		window.addEventListener('message', handler)
-		const logKey = (event: KeyboardEvent) => console.log('KEY:', event.code)
-		window.addEventListener('keydown', logKey, { capture: true })
 
 		return () => {
 			window.removeEventListener('message', handler)
-			window.removeEventListener('keydown', logKey, { capture: true })
 			clearInterval(interval)
 		}
 	}, [])
