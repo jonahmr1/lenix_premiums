@@ -29,7 +29,7 @@ const player = new Howl({
 })
 
 export function Loading() {
-	const [state, setState] = useState({ progress: 0, name: '' })
+	const [state, setState] = useState({ progress: 0, name: '', fullyLoaded: false })
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
 	const [preloaded, setPreloaded] = useState<{ name: string; loaded: number; done: boolean }>({
 		name: assets[0] ?? '',
@@ -69,8 +69,14 @@ export function Loading() {
 		}, CROSSFADE_INTERVAL * 1000)
 
 		const handler = ({ data }: MessageEvent<Log>) => {
+			if (data.fullyLoaded === true) {
+				setState(prev => ({ ...prev, fullyLoaded: true }))
+				return
+			}
+
 			setState(prev => {
 				const next = {
+					...prev,
 					progress: data.eventName === 'loadProgress' ? (data.loadFraction as number) * 100 : prev.progress,
 					name: typeof data.name === 'string' ? data.name : prev.name,
 				}
@@ -93,6 +99,7 @@ export function Loading() {
 		const interval = setInterval(() => {
 			if (index >= debugEvents.length) {
 				clearInterval(interval)
+				window.postMessage({ fullyLoaded: true }, window.location.origin)
 				return
 			}
 			window.postMessage(debugEvents[index++], window.location.origin)
@@ -103,7 +110,7 @@ export function Loading() {
 
 	const preloadProgress = assets.length ? (preloaded.loaded / assets.length) * 100 : 100
 	const progress = preloaded.done ? state.progress : preloadProgress
-	const ready = preloaded.done && state.progress >= 100
+	const ready = preloaded.done && state.fullyLoaded
 
 	useEffect(() => {
 		if (!ready) return
