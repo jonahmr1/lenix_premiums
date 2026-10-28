@@ -9,6 +9,7 @@ import { anim, cdn } from './lib'
 import assets from './lib/assets'
 import debugEvents from './debug.log.json'
 import { Kbd } from './components/ui/kbd'
+import { Howl } from 'howler'
 
 type Log = Record<string, string | number | boolean>
 
