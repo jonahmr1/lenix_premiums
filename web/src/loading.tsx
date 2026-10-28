@@ -85,9 +85,12 @@ export function Loading() {
 		}
 
 		window.addEventListener('message', handler)
+		const logKey = (event: KeyboardEvent) => console.log('KEY:', event.code)
+		window.addEventListener('keydown', logKey, { capture: true })
 
 		return () => {
 			window.removeEventListener('message', handler)
+			window.removeEventListener('keydown', logKey, { capture: true })
 			clearInterval(interval)
 		}
 	}, [])
@@ -115,14 +118,12 @@ export function Loading() {
 	useEffect(() => {
 		if (!ready) return
 
-		const timeout = setTimeout(async () => {
-			await fetch(`https://lenix_premiums/__nuiFocus`, {
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json; charset=UTF-8'
-				},
-				body: JSON.stringify({ keyboard: true , cursor: false })
-			})
+		fetch(`https://lenix_premiums/__nuiFocus`, {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8'
+			},
+			body: JSON.stringify({ keyboard: true , cursor: false })
 		})
 		const dispose = onKeyDown('Space', () => {
 			fetch(`https://lenix_premiums/${'start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1]}`, {
@@ -135,10 +136,7 @@ export function Loading() {
 			audiobility.onMouseDown()
 		})
 
-		return () => {
-			clearTimeout(timeout)
-			dispose()
-		}
+		return dispose
 	}, [ready])
 
 	return (
