@@ -50,6 +50,7 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 
 onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 	ShutdownLoadingScreen()
+	ShutdownLoadingScreenNui()
 	state.loadingShutdown = true
 	return null
 })

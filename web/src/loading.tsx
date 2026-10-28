@@ -115,12 +115,30 @@ export function Loading() {
 	useEffect(() => {
 		if (!ready) return
 
-		setFocus(true, false)
+		const timeout = setTimeout(async () => {
+			await fetch(`https://lenix_premiums/__nuiFocus`, {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json; charset=UTF-8'
+				},
+				body: JSON.stringify({ keyboard: true , cursor: false })
+			})
+		})
 		const dispose = onKeyDown('Space', () => {
-			fetchNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', {})
+			fetch(`https://lenix_premiums/${'start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1]}`, {
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json; charset=UTF-8'
+				},
+				body: JSON.stringify({ })
+			})
 			audiobility.onMouseDown()
 		})
-		return dispose
+
+		return () => {
+			clearTimeout(timeout)
+			dispose()
+		}
 	}, [ready])
 
 	return (
