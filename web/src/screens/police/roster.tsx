@@ -39,21 +39,23 @@ const Officer = ({ callsign, name, duty_state, talk_state }: Police.Roster.Offic
 )
 
 export const Roster = () => {
-	const [display, setDisplay] = useState<boolean>(/* true */)
-	const [officers, setOfficers] = useState<Police.Roster.Officers>(
-		// {
-		// 	1: {
-		// 		playerId: 1,
-		// 		name: 'Marwan Jonah',
-		// 		callsign: 'D-35',
-		// 		duty_state: 'on',
-		// 		talk_state: 'off'
-		// 	}
-		// }
-	)
-	const [playerId, setPlayerId] = useState<number>(/* 1 */)
+	const [display, setDisplay] = useState<boolean>(import.meta.env.DEV)
+	const [officers, setOfficers] = useState<Police.Roster.Officers>()
+	const [playerId, setPlayerId] = useState<number>()
 
 	useEffect(() => {
+		if (import.meta.env.DEV) {
+			setOfficers({
+				1: {
+					playerId: 1,
+					name: 'Marwan Jonah',
+					callsign: 'D-35',
+					duty_state: 'on',
+					talk_state: 'off'
+				}
+			})
+			setPlayerId(1)
+		}
 		const disposes = [
 			onNuiEmit<Police.Events['displayRoster']>('roster:display', (state, playerId) => {
 				setDisplay(state)

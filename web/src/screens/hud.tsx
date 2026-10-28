@@ -3,7 +3,7 @@ import { Layout } from '@/components/layout'
 import { onNuiEmit } from 'lenix/nui'
 import { useEffect, useState } from 'react'
 import type { Common } from 'types'
-import { storage } from '@lenix/lenix'
+import { random, storage } from '@lenix/lenix'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { zeroed } from '@/lib'
 
@@ -15,25 +15,24 @@ const hudVariants = ['health', 'armor', 'lungs'] as const
 
 export const Hud = () => {
 	const [state, setState] = useState<Common.Hud>()
-	const [display, setDisplay] = useState<{ vitals: boolean; weaponary: boolean }>(
-		// { vitals: true, weaponary: true }
-	)
+	const [display, setDisplay] = useState<{ vitals: boolean; weaponary: boolean }>()
 
 	useEffect(() => {
-		// const interval = setInterval(() => {
-		// 	setState({
-		// 		health: random(0, 100),
-		// 		armor: random(0, 100),
-		// 		lungs: random(0, 100),
-		// 		weapon: {
-		// 			name: 'Glock 17',
-		// 			image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
-		// 			clipAmmo: random(0, 17),
-		// 			clipSize: 17,
-		// 			reserveAmmo: random(40, 10000)
-		// 		}
-		// 	})
-		// }, 1000)
+		if (import.meta.env.DEV) setDisplay({ vitals: true, weaponary: true })
+		const interval = import.meta.env.DEV ? setInterval(() => {
+			setState({
+				health: random(0, 100),
+				armor: random(0, 100),
+				lungs: random(0, 100),
+				weapon: {
+					name: 'Glock 17',
+					image: 'https://docs-backend.fivem.net/weapons/WEAPON_CERAMICPISTOL.png',
+					clipAmmo: random(0, 17),
+					clipSize: 17,
+					reserveAmmo: random(40, 10000)
+				}
+			})
+		}, 1000) : undefined
 
 		storage.set<Storage>('hudVariant', 'progress')
 
@@ -45,7 +44,7 @@ export const Hud = () => {
 		return () => {
 			disposes.forEach(dispose => dispose())
 			storage.destroy<Storage>('hudVariant')
-			// clearInterval(interval)
+			clearInterval(interval)
 		}
 	}, [])
 

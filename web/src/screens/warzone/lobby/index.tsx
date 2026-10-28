@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/alert-dialog'
 
 export const Lobby = () => {
-	const [display, setDisplay] = useState(false)
+	const [display, setDisplay] = useState(import.meta.env.DEV)
 	const [tab, setTab] = useState(0)
 	const nav = useNavigate()
 	const isRelative = useLocation({
