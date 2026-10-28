@@ -1,6 +1,6 @@
 import type { Character } from '@overextended/ox_core'
 import { createPed } from '@overextended/ox_lib/client'
-import { repeat } from '@lenix/lenix'
+import { repeat, State } from '@lenix/lenix'
 import { cam, emitNui, isNuiReady, onNui, player } from 'lenix/client'
 import type { Start } from 'types/index'
 import police from '../police'
@@ -16,6 +16,7 @@ const CAM_OFFSET: Vec4 = [2, 2.5, 0.75, -12.5]
 let character: Start.CharacterRespose | null
 let characters: Character[]
 let logout: () => void = () => {}
+const state = new State({ loadingShutdown: false as boolean })
 
 onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode, character: selectedChar }) => {
 	character = selectedChar
@@ -49,6 +50,7 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 
 onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 	ShutdownLoadingScreen()
+	state.loadingShutdown = true
 	return null
 })
 
@@ -92,6 +94,8 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 
 	character = null
 	characters = chars
+
+	await repeat(() => state.loadingShutdown, true)
 	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters)
 
 	const selected = await repeat(
