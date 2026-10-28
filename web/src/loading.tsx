@@ -25,7 +25,7 @@ const CROSSFADE_INTERVAL = 10
 
 const player = new Howl({
 	src: cdn('assets/loading/welcome_to_los_santos.mp3'),
-	volume: 0.0,
+	volume: import.meta.env.DEV ? 0.0 : 0.5,
 })
 
 export function Loading() {
@@ -87,7 +87,7 @@ export function Loading() {
 	}, [])
 
 	useEffect(() => {
-		if (!import.meta.env.DEV || 'GetParentResourceName' in window || !preloaded.done) return
+		if (!import.meta.env.DEV || !preloaded.done) return
 
 		let index = 0
 		const interval = setInterval(() => {
