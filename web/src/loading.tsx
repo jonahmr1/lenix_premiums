@@ -3,14 +3,12 @@ import { createRoot } from 'react-dom/client'
 import { Layout } from './components/layout'
 import './index.css'
 import { Progress } from './components/ui/progress'
-import { asserts } from '@lenix/lenix'
 import { ThemeProvider } from './components/theme-provider'
 import { AnimatePresence, motion } from 'motion/react'
-import { Howl } from 'howler'
 import { anim, cdn } from './lib'
 import assets from './lib/assets'
-import { focusNui } from 'lenix/nui'
 import debugEvents from './debug.log.json'
+import { Kbd } from './components/ui/kbd'
 
 type Log = Record<string, string | number | boolean>
 
@@ -44,7 +42,7 @@ export function Loading() {
 				assets.map(async src => {
 					const response = await fetch(cdn(src), { cache: 'force-cache' })
 
-					if (!response.ok) throw `Failed to preload: ${src}`
+					if (!response.ok) throw new Error(`Failed to preload ${src}: HTTP ${response.status}`)
 
 					await response.arrayBuffer()
 					setPreloaded(prev => ({
@@ -61,24 +59,20 @@ export function Loading() {
 	}, [preloaded.done])
 
 	useEffect(() => {
-		// player.play()
-		focusNui()
+		player.play()
 
 		const interval = setInterval(() => {
 			setBackgroundIndex(index => (index + 1) % BACKGROUNDS.length)
 		}, CROSSFADE_INTERVAL * 1000)
 
-		const handler = (e: MessageEvent) => {
-			const data = e.data as Log
-			console.log({ data })
-			asserts(data.eventName, `(eventName) doesn't exist in: ${JSON.stringify(data)}`)
-
-			data?.message === 'fullyLoaded' && console.log(e.data.message)
-
-			setState(prev => ({
-				progress: data.eventName === 'loadProgress' ? (data.loadFraction as number) * 100 : prev.progress,
-				name: typeof data.name === 'string' ? data.name : prev.name,
-			}))
+		const handler = ({ data }: MessageEvent<Log>) => {
+			setState(prev => {
+				const next = {
+					progress: data.eventName === 'loadProgress' ? (data.loadFraction as number) * 100 : prev.progress,
+					name: typeof data.name === 'string' ? data.name : prev.name,
+				}
+				return next.progress === prev.progress && next.name === prev.name ? prev : next
+			})
 		}
 
 		window.addEventListener('message', handler)
@@ -86,7 +80,6 @@ export function Loading() {
 		return () => {
 			window.removeEventListener('message', handler)
 			clearInterval(interval)
-			player.stop()
 		}
 	}, [])
 
@@ -107,6 +100,7 @@ export function Loading() {
 
 	const preloadProgress = assets.length ? (preloaded.loaded / assets.length) * 100 : 100
 	const progress = preloaded.done ? state.progress : preloadProgress
+	const ready = preloaded.done && state.progress >= 100
 
 	return (
 		<div className='bg-background relative h-screen overflow-hidden'>
@@ -126,16 +120,26 @@ export function Loading() {
 			</AnimatePresence>
 			<Layout className='relative flex size-full items-end justify-center bg-linear-to-t from-neutral-950/50 to-transparent'>
 				<motion.div
-					className='w-[67vw] space-y-[1vh]'
+					className={`w-[67vw] space-y-[1vh] ${ready ? 'absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2' : ''}`}
 					{...anim}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 1, delay: 2 }}
 				>
-					<p className='text-muted-foreground text-center text-xs uppercase italic'>
-						{preloaded.done ? state.name : preloaded.name}
-					</p>
-					<Progress value={progress} className='outline outline-offset-1' />
+					{ready ? (
+						<div className='gap-w-0.5 flex items-center justify-center text-center text-2xl uppercase italic'>
+							<span>Press</span>
+							<Kbd className='invert'>␣</Kbd>
+							<span>to start</span>
+						</div>
+					) : (
+						<>
+							<p className='text-muted-foreground text-center text-xs uppercase italic'>
+								{preloaded.done ? state.name : preloaded.name}
+							</p>
+							<Progress value={progress} className='outline outline-offset-1' />
+						</>
+					)}
 				</motion.div>
 			</Layout>
 		</div>
