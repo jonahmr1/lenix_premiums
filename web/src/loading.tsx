@@ -10,7 +10,7 @@ import assets from './lib/assets'
 import debugEvents from './debug.log.json'
 import { Kbd } from './components/ui/kbd'
 import { Howl } from 'howler'
-import { fetchNui, onKeyDown } from 'lenix/nui'
+import { fetchNui, onKeyDown, setFocus } from 'lenix/nui'
 import type { Start } from 'types'
 
 type Log = Record<string, string | number | boolean>
@@ -115,6 +115,7 @@ export function Loading() {
 	useEffect(() => {
 		if (!ready) return
 
+		setFocus(true, false)
 		const dispose = onKeyDown('Space', () => {
 			fetchNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', {})
 			audiobility.onMouseDown()
