@@ -8,7 +8,7 @@ const loadMovie = async (name: string) => {
 	console.log(`[keybinds] Loading ${name}`)
 	const handle = RequestScaleformMovie(name)
 	const deadline = Date.now() + 15000
-	await repeat(() => HasScaleformMovieLoaded(handle) || Date.now() >= deadline, true, 0)
+	await repeat(() => !!HasScaleformMovieLoaded(handle) || Date.now() >= deadline, true, 0)
 	if (!HasScaleformMovieLoaded(handle)) {
 		if (handle) SetScaleformMovieAsNoLongerNeeded(handle)
 		throw new Error(`${name} did not load after 15 seconds`)
@@ -31,7 +31,7 @@ const invoke = async (movie: number, name: string, args: (string | number)[] = [
 	}
 	const result = EndScaleformMovieMethodReturnValue()
 	const deadline = Date.now() + 3000
-	await repeat(() => IsScaleformMovieMethodReturnValueReady(result) || Date.now() >= deadline, true, 0)
+	await repeat(() => !!IsScaleformMovieMethodReturnValueReady(result) || Date.now() >= deadline, true, 0)
 	if (!IsScaleformMovieMethodReturnValueReady(result)) throw new Error(`${name} timed out`)
 	return GetScaleformMovieMethodReturnValueString(result)
 }
