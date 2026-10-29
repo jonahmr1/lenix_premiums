@@ -11,6 +11,7 @@ onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 })
 
 onNui<Start.Requests['prepareGame']>('start:prepareGame', async () => {
+	console.log('[keybinds] prepareGame received')
 	state.keybinds = await readKeybinds()
 	return null
 })
