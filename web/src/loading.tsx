@@ -29,16 +29,16 @@ const player = new Howl({
 })
 
 export function Loading() {
-	const [state, setState] = useState({ progress: 0, name: '', fullyLoaded: false })
-	const [backgroundIndex, setBackgroundIndex] = useState(0)
-	const [preloaded, setPreloaded] = useState<{ name: string; loaded: number; done: boolean }>({
-		name: assets[0] ?? '',
-		loaded: 0,
-		done: false,
+	const [state, setState] = useState({
+		progress: 0,
+		name: '',
+		fullyLoaded: false,
+		preloaded: false,
 	})
+	const [backgroundIndex, setBackgroundIndex] = useState(0)
 
 	useEffect(() => {
-		if (preloaded.done) return
+		if (state.preloaded) return
 
 		const timeout = setTimeout(async () => {
 			await Promise.allSettled(
@@ -48,18 +48,18 @@ export function Loading() {
 					if (!response.ok) throw new Error(`Failed to preload ${src}: HTTP ${response.status}`)
 
 					await response.arrayBuffer()
-					setPreloaded(prev => ({
+					setState(prev => ({
 						...prev,
 						name: src,
-						loaded: prev.loaded + 1,
+						progress: Math.min(100, prev.progress + 100 / assets.length),
 					}))
 				}),
 			)
-			setPreloaded(prev => ({ ...prev, done: true }))
+			setState(prev => ({ ...prev, name: '', progress: prev.fullyLoaded ? 100 : 0, preloaded: true }))
 		})
 
 		return () => clearTimeout(timeout)
-	}, [preloaded.done])
+	}, [state.preloaded])
 
 	useEffect(() => {
 		player.play()
@@ -75,6 +75,7 @@ export function Loading() {
 			}
 
 			setState(prev => {
+				if (!prev.preloaded) return prev
 				const next = {
 					...prev,
 					progress: data.eventName === 'loadProgress' ? (data.loadFraction as number) * 100 : prev.progress,
@@ -93,7 +94,7 @@ export function Loading() {
 	}, [])
 
 	useEffect(() => {
-		if (!import.meta.env.DEV || !preloaded.done) return
+		if (!import.meta.env.DEV || !state.preloaded) return
 
 		let index = 0
 		const interval = setInterval(() => {
@@ -106,11 +107,9 @@ export function Loading() {
 		}, 10)
 
 		return () => clearInterval(interval)
-	}, [preloaded.done])
+	}, [state.preloaded])
 
-	const preloadProgress = assets.length ? (preloaded.loaded / assets.length) * 100 : 100
-	const progress = preloaded.done ? state.progress : preloadProgress
-	const ready = preloaded.done && state.fullyLoaded
+	const ready = state.preloaded && state.fullyLoaded
 
 	useEffect(() => {
 		if (!ready) return
@@ -165,9 +164,9 @@ export function Loading() {
 					transition={{ duration: 1, delay: 1 }}
 				>
 					<p className='text-muted-foreground text-center text-xs uppercase italic'>
-						{preloaded.done ? state.name : preloaded.name}
+						{state.name}
 					</p>
-					<Progress value={progress} className='outline outline-offset-1' />
+					<Progress value={state.progress} className='outline outline-offset-1' />
 				</motion.div>
 			</Layout>
 		</div>
