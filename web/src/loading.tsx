@@ -34,8 +34,10 @@ export function Loading() {
 		name: '',
 		fullyLoaded: false,
 		preloaded: false,
+		gameLoaded: false
 	})
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
+	const ready = state.preloaded && state.fullyLoaded && state.gameLoaded
 
 	useEffect(() => {
 		if (state.preloaded) return
@@ -94,24 +96,6 @@ export function Loading() {
 	}, [])
 
 	useEffect(() => {
-		if (!import.meta.env.DEV || !state.preloaded) return
-
-		let index = 0
-		const interval = setInterval(() => {
-			if (index >= debugEvents.length) {
-				clearInterval(interval)
-				window.postMessage({ fullyLoaded: true }, window.location.origin)
-				return
-			}
-			window.postMessage(debugEvents[index++], window.location.origin)
-		}, 10)
-
-		return () => clearInterval(interval)
-	}, [state.preloaded])
-
-	const ready = state.preloaded && state.fullyLoaded
-
-	useEffect(() => {
 		if (!ready) return
 
 		window.focus()
@@ -128,6 +112,22 @@ export function Loading() {
 
 		return dispose
 	}, [ready])
+
+	useEffect(() => {
+		if (!import.meta.env.DEV || !state.preloaded) return
+
+		let index = 0
+		const interval = setInterval(() => {
+			if (index >= debugEvents.length) {
+				clearInterval(interval)
+				window.postMessage({ fullyLoaded: true }, window.location.origin)
+				return
+			}
+			window.postMessage(debugEvents[index++], window.location.origin)
+		}, 10)
+
+		return () => clearInterval(interval)
+	}, [state.preloaded])
 
 	return (
 		<div className='bg-background relative h-screen overflow-hidden'>
