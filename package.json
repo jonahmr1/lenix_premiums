@@ -27,7 +27,7 @@
 		"format": "oxfmt",
 		"tsd": "bun tsdown --",
 		"dev": "bun-tasks tsd --watch ::: webbuild --watch",
-		"webdev": "cd web && bun run tsc -b && bunx vite dev --outDir ../dist/web --emptyOutDir",
+		"webdev": "cd web && bun run tsc -b && bunx vite dev",
 		"webbuild": "cd web && bun run tsc -b && bunx vite build --outDir ../dist/web --emptyOutDir",
 		"webwatch": "bun webbuild --watch",
 		"build": "bun-tasks tsd ::: bun webbuild",

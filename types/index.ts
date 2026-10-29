@@ -1,7 +1,6 @@
 import type { Event, Request } from 'lenix'
 import type { Constants } from '../resource/common/config/constants'
 import type { Character } from '@overextended/ox_core'
-import type { Settings } from '../resource/client/lib/settings'
 
 export type AtLeastOne<T> = {
 	[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
@@ -160,7 +159,7 @@ export namespace Warzone {
 
 export namespace Start {
 	export interface Events {
-		modeSelection: Event<'start:modeSelection', [Character[], Settings]>
+		modeSelection: Event<'start:modeSelection', [Character[], any]>
 		pause: Event<'start:pause', []>
 	}
 	export interface Requests {
