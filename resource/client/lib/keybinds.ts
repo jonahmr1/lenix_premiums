@@ -101,6 +101,7 @@ const scan = async (): Promise<Start.Keybind[]> => {
 				secondary: secondaryFallback ? ['UNBOUND'] : secondary,
 				secondaryFallback,
 			})
+			console.log(`[${source}] Found #${rows.length} ${name}: primary=${JSON.stringify(primary)} secondary=${JSON.stringify(secondaryFallback ? ['UNBOUND'] : secondary)}`)
 		}
 		const seen = new Set<string>()
 		for (const section of catalog.sections)
@@ -118,6 +119,7 @@ const scan = async (): Promise<Start.Keybind[]> => {
 			for (let i = 0; i < batch.length; i++)
 				if (bits[i] === '1') await read('FIVEM', 'PM_PANE_CFX', batch[i]!, lookups[i]!)
 		}
+		console.log(`Found ${rows.length} keybinds`)
 		return rows
 	} finally {
 		if (tick !== undefined) clearTick(tick)
