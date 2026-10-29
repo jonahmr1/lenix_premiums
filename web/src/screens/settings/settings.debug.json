@@ -1,0 +1,7039 @@
+{
+	"schema": 1,
+	"source": {
+		"url": "https://github.com/citizenfx/fivem/blob/2399418a44199d0fedd32bb4bd43d24cabf38340/data/client/citizen/common/data/ui/pausemenu.xml",
+		"sha256": "d1013a6de592e51c737067ffc59672924785dbbf08e4781a769071da7476a998",
+		"revision": "2399418a44199d0fedd32bb4bd43d24cabf38340"
+	},
+	"limitations": [
+		"Definitions, not a snapshot of current selections.",
+		"Contexts and platform conditions are preserved, not evaluated.",
+		"XML choices can be replaced dynamically by game code; device and resolution lists need runtime capture.",
+		"This FiveM source file is not verified identical to the installed client.",
+		"Key binding action names are definitions; assignments use the existing reader."
+	],
+	"sections": [
+		{
+			"key": "keyboardMouse",
+			"name": "Keyboard / Mouse",
+			"labelKey": "PM_PANE_MCON",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_MISC_CONTROLS",
+			"contexts": "*NONE*,StreamingBuild,*ALL*,x64",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "MO_MTYPE",
+					"fields": {
+						"cTextId": "MO_MTYPE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_TYPE",
+						"MenuOption": "MENU_OPTION_MOUSE_TYPE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_MT_RAW",
+							"fields": {
+								"cTextId": "MO_MT_RAW"
+							},
+							"attributes": {},
+							"label": "Raw Input"
+						},
+						{
+							"labelKey": "MO_MT_DI",
+							"fields": {
+								"cTextId": "MO_MT_DI"
+							},
+							"attributes": {},
+							"label": "DirectInput"
+						},
+						{
+							"labelKey": "MO_MT_WIN",
+							"fields": {
+								"cTextId": "MO_MT_WIN"
+							},
+							"attributes": {},
+							"label": "Windows"
+						}
+					],
+					"label": "Mouse Input Method"
+				},
+				{
+					"index": 1,
+					"labelKey": "MO_MONFSENS",
+					"fields": {
+						"cTextId": "MO_MONFSENS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_ON_FOOT_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Look Sensitivity"
+				},
+				{
+					"index": 2,
+					"labelKey": "MO_MOUSEWEIGHT",
+					"fields": {
+						"cTextId": "MO_MOUSEWEIGHT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_WEIGHT_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Smoothing Scale"
+				},
+				{
+					"index": 3,
+					"labelKey": "MO_MOUSEACC",
+					"fields": {
+						"cTextId": "MO_MOUSEACC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_ACCELERATION",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Fine Aiming Control"
+				},
+				{
+					"index": 4,
+					"labelKey": "MO_INVMOUSE",
+					"fields": {
+						"cTextId": "MO_INVMOUSE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_INVERT_MOUSE",
+						"MenuOption": "MENU_OPTION_DISPLAY_INVERT_LOOK",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Invert Mouse Look"
+				},
+				{
+					"index": 5,
+					"labelKey": "MO_KBM_TOGGLAIM",
+					"fields": {
+						"cTextId": "MO_KBM_TOGGLAIM",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_KBM_TOGGLE_AIM",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Toggle Aim"
+				},
+				{
+					"index": 6,
+					"labelKey": "MO_FPS_DEFAULT_AIM_TYPE",
+					"fields": {
+						"cTextId": "MO_FPS_DEFAULT_AIM_TYPE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_DEFAULT_AIM_TYPE",
+						"MenuOption": "MENU_OPTION_FPS_DEFAULT_AIM_TYPE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {
+						"platform": "pc_only"
+					},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_FPS_DEFAULT_AIM_NORMAL",
+							"fields": {
+								"cTextId": "MO_FPS_DEFAULT_AIM_NORMAL"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_FPS_DEFAULT_AIM_IRON",
+							"fields": {
+								"cTextId": "MO_FPS_DEFAULT_AIM_IRON"
+							},
+							"attributes": {},
+							"label": "Iron Sights"
+						}
+					],
+					"label": "First Person Aim Type"
+				},
+				{
+					"index": 7,
+					"labelKey": "MO_MOUSEDRIVE",
+					"fields": {
+						"cTextId": "MO_MOUSEDRIVE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_DRIVE",
+						"MenuOption": "MENU_OPTION_CAM_VEH_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "PM_PANE_CAM",
+							"fields": {
+								"cTextId": "PM_PANE_CAM"
+							},
+							"attributes": {},
+							"label": "Camera"
+						},
+						{
+							"labelKey": "MO_VEHICLE",
+							"fields": {
+								"cTextId": "MO_VEHICLE"
+							},
+							"attributes": {},
+							"label": "Vehicle"
+						},
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						}
+					],
+					"label": "Default Mouse Driving Control"
+				},
+				{
+					"index": 8,
+					"labelKey": "MO_MOUSEFLY",
+					"fields": {
+						"cTextId": "MO_MOUSEFLY",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_FLY",
+						"MenuOption": "MENU_OPTION_CAM_VEH_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "PM_PANE_CAM",
+							"fields": {
+								"cTextId": "PM_PANE_CAM"
+							},
+							"attributes": {},
+							"label": "Camera"
+						},
+						{
+							"labelKey": "MO_VEHICLE",
+							"fields": {
+								"cTextId": "MO_VEHICLE"
+							},
+							"attributes": {},
+							"label": "Vehicle"
+						},
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						}
+					],
+					"label": "Default Mouse Flying Control"
+				},
+				{
+					"index": 9,
+					"labelKey": "MO_MOUSESUB",
+					"fields": {
+						"cTextId": "MO_MOUSESUB",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_SUB",
+						"MenuOption": "MENU_OPTION_CAM_VEH_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "PM_PANE_CAM",
+							"fields": {
+								"cTextId": "PM_PANE_CAM"
+							},
+							"attributes": {},
+							"label": "Camera"
+						},
+						{
+							"labelKey": "MO_VEHICLE",
+							"fields": {
+								"cTextId": "MO_VEHICLE"
+							},
+							"attributes": {},
+							"label": "Vehicle"
+						},
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						}
+					],
+					"label": "Default Mouse Submarine Control"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_MDRVSENS",
+					"fields": {
+						"cTextId": "MO_MDRVSENS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_DRIVING_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Driving Sensitivity"
+				},
+				{
+					"index": 11,
+					"labelKey": "MO_MPPILSENS",
+					"fields": {
+						"cTextId": "MO_MPPILSENS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_PLANE_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Plane Sensitivity"
+				},
+				{
+					"index": 12,
+					"labelKey": "MO_MHPILSEN",
+					"fields": {
+						"cTextId": "MO_MHPILSEN",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_HELI_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Heli Sensitivity"
+				},
+				{
+					"index": 13,
+					"labelKey": "MO_MSUBSENS",
+					"fields": {
+						"cTextId": "MO_MSUBSENS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_SUB_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Mouse Submarine Sensitivity"
+				},
+				{
+					"index": 14,
+					"labelKey": "MO_MOUSEFLYINV",
+					"fields": {
+						"cTextId": "MO_MOUSEFLYINV",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_INVERT_MOUSE_FLYING",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Invert Mouse Flying"
+				},
+				{
+					"index": 15,
+					"labelKey": "MO_MOUSESUBINV",
+					"fields": {
+						"cTextId": "MO_MOUSESUBINV",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_INVERT_MOUSE_SUB",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Invert Mouse Submarine"
+				},
+				{
+					"index": 16,
+					"labelKey": "MO_MOUSEFLYSWAP",
+					"fields": {
+						"cTextId": "MO_MOUSEFLYSWAP",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SWAP_ROLL_YAW_MOUSE_FLYING",
+						"MenuOption": "MENU_OPTION_ROLL_YAW_PITCH",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_ROLLPITCH",
+							"fields": {
+								"cTextId": "MO_ROLLPITCH"
+							},
+							"attributes": {},
+							"label": "Roll / Pitch"
+						},
+						{
+							"labelKey": "MO_YAWPITCH",
+							"fields": {
+								"cTextId": "MO_YAWPITCH"
+							},
+							"attributes": {},
+							"label": "Yaw / Pitch"
+						}
+					],
+					"label": "Mouse Flying Control Type"
+				},
+				{
+					"index": 17,
+					"labelKey": "MO_ACMBIKE",
+					"fields": {
+						"cTextId": "MO_ACMBIKE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_AUTOCENTER_BIKE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Auto Center Mouse On Bikes"
+				},
+				{
+					"index": 18,
+					"labelKey": "MO_ACMCAR",
+					"fields": {
+						"cTextId": "MO_ACMCAR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_AUTOCENTER_CAR",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Auto-Center Mouse In Cars"
+				},
+				{
+					"index": 19,
+					"labelKey": "MO_ACMPLANE",
+					"fields": {
+						"cTextId": "MO_ACMPLANE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MOUSE_AUTOCENTER_PLANE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Auto-Center Mouse In Aircraft"
+				},
+				{
+					"index": 20,
+					"labelKey": "MO_LTE",
+					"fields": {
+						"cTextId": "MO_LTE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CONTROLLER_LIGHT_EFFECT",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,LightEffectHardware"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Light Bar Effects"
+				},
+				{
+					"index": 21,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_MISC_CONTROLS"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Keyboard / Mouse",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "keyBindings",
+			"name": "Key Bindings",
+			"labelKey": "PM_PANE_KEYS",
+			"screen": "MENU_UNIQUE_ID_KEYMAP",
+			"contexts": "*NONE*,StreamingBuild",
+			"attributes": {
+				"platform": "pc_only"
+			},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_FILL_CONTENT"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 1,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_REFERENCE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_KEYMAP_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 2,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_REFERENCE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_KEYMAP_LISTITEM"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				}
+			],
+			"label": "Key Bindings",
+			"current": {
+				"status": "captured",
+				"capturedAt": 1793307637901,
+				"reason": null,
+				"values": [],
+				"bindings": [
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_FRONTEND_PAUSE",
+						"primary": [
+							"t_P"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_NEXT_CAMERA",
+						"primary": [
+							"t_V"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_HUD_SPECIAL",
+						"primary": [
+							"t_Z"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SPECIAL_ABILITY_PC",
+						"primary": [
+							"b_1012"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_CHARACTER_WHEEL",
+						"primary": [
+							"b_1015"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SELECT_CHARACTER_MICHAEL",
+						"primary": [
+							"b_174"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SELECT_CHARACTER_FRANKLIN",
+						"primary": [
+							"b_175"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SELECT_CHARACTER_TREVOR",
+						"primary": [
+							"b_176"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SELECT_CHARACTER_MULTIPLAYER",
+						"primary": [
+							"b_177"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_INTERACTION_MENU",
+						"primary": [
+							"t_M"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_REPLAY_START_STOP_RECORDING",
+						"primary": [
+							"b_170"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_REPLAY_START_STOP_RECORDING_SECONDARY",
+						"primary": [
+							"b_171"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_SAVE_REPLAY_CLIP",
+						"primary": [
+							"b_172"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_FRONTEND_SOCIAL_CLUB_SECONDARY",
+						"primary": [
+							"b_1008"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GENERAL",
+						"name": "INPUT_CONTEXT",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_MOVE_UP_ONLY",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_MOVE_DOWN_ONLY",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_MOVE_LEFT_ONLY",
+						"primary": [
+							"t_A"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_MOVE_RIGHT_ONLY",
+						"primary": [
+							"t_D"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_SPRINT",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_JUMP",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_ENTER",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_DUCK",
+						"primary": [
+							"b_1013"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT",
+						"name": "INPUT_LOOK_BEHIND",
+						"primary": [
+							"t_C"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_AIM",
+						"primary": [
+							"b_101"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_COVER",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_DETONATE",
+						"primary": [
+							"t_G"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_MELEE_ATTACK_LIGHT",
+						"primary": [
+							"t_R"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_MELEE_ATTACK_HEAVY",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_MELEE_BLOCK",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_ATTACK",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_RELOAD",
+						"primary": [
+							"t_R"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_WEAPON_SPECIAL_TWO",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_SNIPER_ZOOM_IN_ONLY",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"t_]"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_COMBAT",
+						"name": "INPUT_SNIPER_ZOOM_OUT_ONLY",
+						"primary": [
+							"b_116"
+						],
+						"secondary": [
+							"t_["
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON",
+						"primary": [
+							"b_1002"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_NEXT_WEAPON",
+						"primary": [
+							"b_116"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_PREV_WEAPON",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_WEAPON_WHEEL_NEXT",
+						"primary": [
+							"b_116"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_WEAPON_WHEEL_PREV",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_UNARMED",
+						"primary": [
+							"t_1"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_MELEE",
+						"primary": [
+							"t_2"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_SHOTGUN",
+						"primary": [
+							"t_3"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_HEAVY",
+						"primary": [
+							"t_4"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_SPECIAL",
+						"primary": [
+							"t_5"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_HANDGUN",
+						"primary": [
+							"t_6"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_SMG",
+						"primary": [
+							"t_7"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_AUTO_RIFLE",
+						"primary": [
+							"t_8"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_FOOT_WEAPONS",
+						"name": "INPUT_SELECT_WEAPON_SNIPER",
+						"primary": [
+							"t_9"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_EXIT",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_SELECT_NEXT_WEAPON",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"b_1002"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_SELECT_PREV_WEAPON",
+						"primary": [
+							"t_["
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_LOOK_BEHIND",
+						"primary": [
+							"t_C"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_NEXT_RADIO",
+						"primary": [
+							"t_."
+						],
+						"secondary": [
+							"b_116"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_PREV_RADIO",
+						"primary": [
+							"t_,"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_NEXT_RADIO_TRACK",
+						"primary": [
+							"t_="
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_PREV_RADIO_TRACK",
+						"primary": [
+							"t_-"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_CIN_CAM",
+						"primary": [
+							"t_R"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_RADIO_WHEEL",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_CINEMATIC_SLOWMO",
+						"primary": [
+							"t_L"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_DUCK",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_SLOWMO_UP_ONLY",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"b_1009"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_SLOWMO_DOWN_ONLY",
+						"primary": [
+							"b_116"
+						],
+						"secondary": [
+							"b_1010"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ANY",
+						"name": "INPUT_VEH_HEADLIGHT",
+						"primary": [
+							"t_H"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_ACCELERATE",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_BRAKE",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_MOVE_LEFT_ONLY",
+						"primary": [
+							"t_A"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_MOVE_RIGHT_ONLY",
+						"primary": [
+							"t_D"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_MOVE_UP_ONLY",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"b_144"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_MOVE_DOWN_ONLY",
+						"primary": [
+							"b_1013"
+						],
+						"secondary": [
+							"b_141"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_ATTACK",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_AIM",
+						"primary": [
+							"b_101"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_HANDBRAKE",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_HORN",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_PUSHBIKE_SPRINT",
+						"primary": [
+							"b_1012"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_PUSHBIKE_FRONT_BRAKE",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH",
+						"name": "INPUT_VEH_MOUSE_CONTROL_OVERRIDE",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_THROTTLE_UP",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_THROTTLE_DOWN",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_YAW_LEFT",
+						"primary": [
+							"t_A"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_YAW_RIGHT",
+						"primary": [
+							"t_D"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_ROLL_LEFT_ONLY",
+						"primary": [
+							"b_140"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_ROLL_RIGHT_ONLY",
+						"primary": [
+							"b_142"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_PITCH_UP_ONLY",
+						"primary": [
+							"b_144"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_PITCH_DOWN_ONLY",
+						"primary": [
+							"b_141"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_ATTACK",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"b_101"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_SELECT_TARGET_LEFT",
+						"primary": [
+							"b_143"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_SELECT_TARGET_RIGHT",
+						"primary": [
+							"b_145"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_UNDERCARRIAGE",
+						"primary": [
+							"t_G"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_GRAPPLING_HOOK",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_ATTACK_CAMERA",
+						"primary": [
+							"b_200"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_AIR",
+						"name": "INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_THROTTLE_UP",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_THROTTLE_DOWN",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_TURN_HARD_LEFT",
+						"primary": [
+							"t_A"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_TURN_HARD_RIGHT",
+						"primary": [
+							"t_D"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_TURN_LEFT_ONLY",
+						"primary": [
+							"b_140"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_TURN_RIGHT_ONLY",
+						"primary": [
+							"b_142"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_PITCH_UP_ONLY",
+						"primary": [
+							"b_144"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_PITCH_DOWN_ONLY",
+						"primary": [
+							"b_141"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_ASCEND",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_DESCEND",
+						"primary": [
+							"b_1013"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_SUB",
+						"name": "INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_PITCH_UP_ONLY",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_PITCH_DOWN_ONLY",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_TURN_LEFT_ONLY",
+						"primary": [
+							"t_A"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_TURN_RIGHT_ONLY",
+						"primary": [
+							"t_D"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_DEPLOY",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"t_F"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_DETACH",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_BRAKE_LEFT",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_BRAKE_RIGHT",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_PRECISION_LANDING",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_PARA",
+						"name": "INPUT_PARACHUTE_SMOKE",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_PHONE",
+						"primary": [
+							"b_194"
+						],
+						"secondary": [
+							"b_102"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_UP",
+						"primary": [
+							"b_194"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_DOWN",
+						"primary": [
+							"b_195"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_LEFT",
+						"primary": [
+							"b_196"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_RIGHT",
+						"primary": [
+							"b_197"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_SELECT",
+						"primary": [
+							"b_1003"
+						],
+						"secondary": [
+							"b_100"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CANCEL",
+						"primary": [
+							"b_1004"
+						],
+						"secondary": [
+							"b_101"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_OPTION",
+						"primary": [
+							"b_198"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_EXTRA_OPTION",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"b_102"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_SCROLL_FORWARD",
+						"primary": [
+							"b_116"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_SCROLL_BACKWARD",
+						"primary": [
+							"b_115"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CAMERA_SELFIE",
+						"primary": [
+							"b_102"
+						],
+						"secondary": [
+							"t_E"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CAMERA_EXPRESSION",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CAMERA_GRID",
+						"primary": [
+							"t_G"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CAMERA_DOF",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CELLPHONE",
+						"name": "INPUT_CELLPHONE_CAMERA_FOCUS_LOCK",
+						"primary": [
+							"t_L"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_MP_TEXT_CHAT_ALL",
+						"primary": [
+							"t_T"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_MP_TEXT_CHAT_TEAM",
+						"primary": [
+							"t_Y"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_PUSH_TO_TALK",
+						"primary": [
+							"t_N"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_SPECIAL_ABILITY_SECONDARY",
+						"primary": [
+							"t_B"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_DROP_WEAPON",
+						"primary": [
+							"b_178"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_DROP_AMMO",
+						"primary": [
+							"b_179"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_SWITCH_VISOR",
+						"primary": [
+							"b_180"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_EAT_SNACK",
+						"primary": [
+							"t_C"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_GTAO",
+						"name": "INPUT_USE_ARMOR",
+						"primary": [
+							"t_V"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_HYDRAULICS_CONTROL_TOGGLE",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_MELEE_HOLD",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_MELEE_LEFT",
+						"primary": [
+							"b_100"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_MELEE_RIGHT",
+						"primary": [
+							"b_101"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_BIKE_WINGS",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_TRANSFORM",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_PARACHUTE",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_CAR_JUMP",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_ROCKET_BOOST",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_SHIFT_GEAR_UP",
+						"primary": [
+							"b_1001"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_SHIFT_GEAR_DOWN",
+						"primary": [
+							"b_1014"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_FLY_BOOST",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_FLY_BOMB_BAY",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_VEH_ONLINE",
+						"name": "INPUT_VEH_FLY_COUNTER",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU",
+						"primary": [
+							"t_M"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ALT_MENU_ENTRY",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU_ACCEPT",
+						"primary": [
+							"b_1003"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU_CANCEL",
+						"primary": [
+							"b_1004"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU_UP",
+						"primary": [
+							"b_194"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU_DOWN",
+						"primary": [
+							"b_195"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_MENU_DELETE",
+						"primary": [
+							"b_198"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_EXTRA_OPTIONS1",
+						"primary": [
+							"b_1013"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_TAB_LEFT",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_TAB_RIGHT",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_CONTEXT_MENU",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_TOGGLE_DESCRIPTIONS",
+						"primary": [
+							"t_M"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_LIST",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_SWITCH_CAMERA",
+						"primary": [
+							"b_1002"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_TOGGLE_ORBIT_CAMERA",
+						"primary": [
+							"b_101"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_FAST_ZOOM",
+						"primary": [
+							"b_1000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_CAMERA_DECREASE",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_CAMERA_INCREASE",
+						"primary": [
+							"t_C"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_FOV_INCREASE",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_FOV_DECREASE",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_RESET_FOV",
+						"primary": [
+							"b_1002"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_FAST_ADJUST",
+						"primary": [
+							"b_1013"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_FINE_ADJUST",
+						"primary": [
+							"b_1015"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_WARP_AND_EDIT",
+						"primary": [
+							"b_2000"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ROTATE_LEFT",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ROTATE_RIGHT",
+						"primary": [
+							"t_E"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ADJUST_LEFT",
+						"primary": [
+							"b_196"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ADJUST_RIGHT",
+						"primary": [
+							"b_197"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ENTITY_RAISE",
+						"primary": [
+							"t_R"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "GTA",
+						"section": "PM_PANE_CREATOR",
+						"name": "INPUT_CREATOR_ENTITY_LOWER",
+						"primary": [
+							"t_F"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+_gizmoLocal",
+						"primary": [
+							"t_Q"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": false
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+_gizmoRotation",
+						"primary": [
+							"t_R"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+_gizmoScale",
+						"primary": [
+							"t_S"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+_gizmoTranslation",
+						"primary": [
+							"t_W"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+gizmoclose",
+						"primary": [
+							"b_1003"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+gizmoCopy",
+						"primary": [
+							"t_C"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+gizmoCursor",
+						"primary": [
+							"t_G"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+gizmoSnap",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+gizmoSnapToGround",
+						"primary": [
+							"b_1015"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+ox_lib-radial",
+						"primary": [
+							"t_Z"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "+ox_target",
+						"primary": [
+							"b_1015"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "cancelprogress",
+						"primary": [
+							"t_X"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					},
+					{
+						"source": "FIVEM",
+						"section": "PM_PANE_CFX",
+						"name": "toggleChat",
+						"primary": [
+							"t_L"
+						],
+						"secondary": [
+							"UNBOUND"
+						],
+						"secondaryFallback": true
+					}
+				]
+			}
+		},
+		{
+			"key": "audio",
+			"name": "Audio",
+			"labelKey": "PM_PANE_AUD",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_AUDIO",
+			"contexts": "",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "MO_SFX",
+					"fields": {
+						"cTextId": "MO_SFX",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SFX_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "SFX Volume"
+				},
+				{
+					"index": 1,
+					"labelKey": "MO_MUS",
+					"fields": {
+						"cTextId": "MO_MUS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MUSIC_VOLUME_IN_MP",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,InMP"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Music Volume"
+				},
+				{
+					"index": 2,
+					"labelKey": "MO_MUS",
+					"fields": {
+						"cTextId": "MO_MUS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MUSIC_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*NONE*,InMP"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Music Volume"
+				},
+				{
+					"index": 3,
+					"labelKey": "MO_DBOOST",
+					"fields": {
+						"cTextId": "MO_DBOOST",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_DIAG_BOOST",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Dialogue Boost"
+				},
+				{
+					"index": 4,
+					"labelKey": "MO_RST",
+					"fields": {
+						"cTextId": "MO_RST",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_RADIO_STATION",
+						"MenuOption": "MENU_OPTION_DISPLAY_RADIO_STATIONS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*NONE*,OnLandingPage"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Radio Station"
+				},
+				{
+					"index": 5,
+					"labelKey": "MO_UR_PLAYMODE",
+					"fields": {
+						"cTextId": "MO_UR_PLAYMODE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_UR_PLAYMODE",
+						"MenuOption": "MENU_OPTION_DISPLAY_UR_PLAYMODE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_URRADIO",
+							"fields": {
+								"cTextId": "MO_URRADIO"
+							},
+							"attributes": {},
+							"label": "Radio"
+						},
+						{
+							"labelKey": "MO_URSEQ",
+							"fields": {
+								"cTextId": "MO_URSEQ"
+							},
+							"attributes": {},
+							"label": "Sequential"
+						},
+						{
+							"labelKey": "MO_URRAND",
+							"fields": {
+								"cTextId": "MO_URRAND"
+							},
+							"attributes": {},
+							"label": "Random"
+						}
+					],
+					"label": "Self Radio Mode"
+				},
+				{
+					"index": 6,
+					"labelKey": "MO_UR_AUTOSCAN",
+					"fields": {
+						"cTextId": "MO_UR_AUTOSCAN",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_UR_AUTOSCAN",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Auto-Scan for Music"
+				},
+				{
+					"index": 7,
+					"labelKey": "MO_UR_QUICKSCAN",
+					"fields": {
+						"cTextId": "MO_UR_QUICKSCAN",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "UR_QUICKSCAN",
+						"Contexts": "*ALL*,x64,*NONE*,AUD_QSCANNING,AUD_FSCANNING"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Perform Quick Scan for Music"
+				},
+				{
+					"index": 8,
+					"labelKey": "MO_UR_QUICKSCAN",
+					"fields": {
+						"cTextId": "MO_UR_QUICKSCAN",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "UR_QUICKSCAN",
+						"Contexts": "*ALL*,x64,AUD_FSCANNING",
+						"Flags": "InitiallyDisabled"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Perform Quick Scan for Music"
+				},
+				{
+					"index": 9,
+					"labelKey": "MO_UR_SCANINPROGRESS",
+					"fields": {
+						"cTextId": "MO_UR_SCANINPROGRESS",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"Contexts": "*ALL*,x64,AUD_QSCANNING",
+						"Flags": "InitiallyDisabled"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Self Radio Scanning for Music..."
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_UR_COMPLETESCAN",
+					"fields": {
+						"cTextId": "MO_UR_COMPLETESCAN",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "UR_COMPLETESCAN",
+						"Contexts": "*ALL*,x64,*NONE*,AUD_FSCANNING,AUD_QSCANNING"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Perform Full Scan for Music"
+				},
+				{
+					"index": 11,
+					"labelKey": "MO_UR_COMPLETESCAN",
+					"fields": {
+						"cTextId": "MO_UR_COMPLETESCAN",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "UR_COMPLETESCAN",
+						"Contexts": "*ALL*,x64,AUD_QSCANNING",
+						"Flags": "InitiallyDisabled"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Perform Full Scan for Music"
+				},
+				{
+					"index": 12,
+					"labelKey": "MO_UR_SCANINPROGRESS",
+					"fields": {
+						"cTextId": "MO_UR_SCANINPROGRESS",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"Contexts": "*ALL*,x64,AUD_FSCANNING",
+						"Flags": "InitiallyDisabled"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Self Radio Scanning for Music..."
+				},
+				{
+					"index": 13,
+					"labelKey": "MO_VOUT",
+					"fields": {
+						"cTextId": "MO_VOUT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_OUTPUT",
+						"MenuOption": "MENU_OPTION_DISPLAY_VOICE_OUTPUT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*NONE*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_VFRV",
+							"fields": {
+								"cTextId": "MO_VFRV"
+							},
+							"attributes": {},
+							"label": "Fade Radio Volume"
+						},
+						{
+							"labelKey": "MO_VRRV",
+							"fields": {
+								"cTextId": "MO_VRRV"
+							},
+							"attributes": {},
+							"label": "Retain Radio Volume"
+						}
+					],
+					"label": "Voice Chat"
+				},
+				{
+					"index": 14,
+					"labelKey": "MO_VOICESPKR",
+					"fields": {
+						"cTextId": "MO_VOICESPKR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_SPEAKERS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,PS3"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Voice Through Speakers"
+				},
+				{
+					"index": 15,
+					"labelKey": "MO_OUTP",
+					"fields": {
+						"cTextId": "MO_OUTP",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SPEAKER_OUTPUT",
+						"MenuOption": "MENU_OPTION_DISPLAY_SPEAKER_OUTPUT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*NONE*,AUD_WIRELESSHEADSET"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Output"
+				},
+				{
+					"index": 16,
+					"labelKey": "MO_CTRLSPKR",
+					"fields": {
+						"cTextId": "MO_CTRLSPKR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CTRL_SPEAKER",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,PS4,PADSPEAKER_ENABLED,*NONE*,HEADPHONE_ENABLED"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Controller Speaker"
+				},
+				{
+					"index": 17,
+					"labelKey": "MO_CTRLSPKR",
+					"fields": {
+						"cTextId": "MO_CTRLSPKR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CTRL_SPEAKER_HEADPHONE",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,PS4,PADSPEAKER_ENABLED,HEADPHONE_ENABLED"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Controller Speaker"
+				},
+				{
+					"index": 18,
+					"labelKey": "MO_CTRLSPKR_VOL",
+					"fields": {
+						"cTextId": "MO_CTRLSPKR_VOL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CTRL_SPEAKER_VOL",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,PS4,PADSPEAKER_ENABLED"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Controller Speaker Volume"
+				},
+				{
+					"index": 19,
+					"labelKey": "MO_PULSEHEADSET",
+					"fields": {
+						"cTextId": "MO_PULSEHEADSET",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_PULSE_HEADSET",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"Contexts": "*ALL*,PS4,HEADPHONE_ENABLED"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Wireless Stereo Headset (CECHYA-0080) Profile"
+				},
+				{
+					"index": 20,
+					"labelKey": "MO_SS_FRONT",
+					"fields": {
+						"cTextId": "MO_SS_FRONT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SS_FRONT",
+						"MenuOption": "MENU_OPTION_DISPLAY_SS_FRONTREAR",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,SS_SUPPORTED,*NONE*,AUD_WIRELESSHEADSET"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Front Speaker Setup"
+				},
+				{
+					"index": 21,
+					"labelKey": "MO_SS_REAR",
+					"fields": {
+						"cTextId": "MO_SS_REAR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SS_REAR",
+						"MenuOption": "MENU_OPTION_DISPLAY_SS_FRONTREAR",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,SS_SUPPORTED,*NONE*,AUD_WIRELESSHEADSET"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Rear Speaker Setup"
+				},
+				{
+					"index": 22,
+					"labelKey": "MO_AUDIO_FOCUS",
+					"fields": {
+						"cTextId": "MO_AUDIO_FOCUS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_AUDIO_MUTE_ON_FOCUS_LOSS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Mute Audio On Focus Loss"
+				},
+				{
+					"index": 23,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_AUDIO"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Audio",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "camera",
+			"name": "Camera",
+			"labelKey": "PM_PANE_CAM",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_CAMERA",
+			"contexts": "",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "MO_FPS_TOGGLE",
+					"fields": {
+						"cTextId": "MO_FPS_TOGGLE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_PERSISTANT_VIEW",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Allow Independent Camera Modes"
+				},
+				{
+					"index": 1,
+					"labelKey": "MO_CAMERAHEIGHT",
+					"fields": {
+						"cTextId": "MO_CAMERAHEIGHT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CAMERA_HEIGHT",
+						"MenuOption": "MENU_OPTION_CAMERA_HEIGHT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_LOW",
+							"fields": {
+								"cTextId": "MO_LOW"
+							},
+							"attributes": {},
+							"label": "Low"
+						},
+						{
+							"labelKey": "MO_HIGH",
+							"fields": {
+								"cTextId": "MO_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						}
+					],
+					"label": "Vehicle Camera Height"
+				},
+				{
+					"index": 2,
+					"labelKey": "MO_FPS_ALVL",
+					"fields": {
+						"cTextId": "MO_FPS_ALVL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_AUTO_LEVEL",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Auto Level Camera"
+				},
+				{
+					"index": 3,
+					"labelKey": "MO_FPS_FOV",
+					"fields": {
+						"cTextId": "MO_FPS_FOV",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_FIELD_OF_VIEW",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "First Person Field of View"
+				},
+				{
+					"index": 4,
+					"labelKey": "MO_FPS_RAG",
+					"fields": {
+						"cTextId": "MO_FPS_RAG",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_RAGDOLL",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Ragdoll"
+				},
+				{
+					"index": 5,
+					"labelKey": "MO_FPS_ROLL",
+					"fields": {
+						"cTextId": "MO_FPS_ROLL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_COMBATROLL",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Combat Roll"
+				},
+				{
+					"index": 6,
+					"labelKey": "MO_FPS_HDB",
+					"fields": {
+						"cTextId": "MO_FPS_HDB",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_HEADBOB",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Head Bobbing"
+				},
+				{
+					"index": 7,
+					"labelKey": "MO_FPS_TPC",
+					"fields": {
+						"cTextId": "MO_FPS_TPC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_THIRD_PERSON_COVER",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Third Person Cover"
+				},
+				{
+					"index": 8,
+					"labelKey": "MO_FPS_VAC",
+					"fields": {
+						"cTextId": "MO_FPS_VAC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_VEH_AUTO_CENTER",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Vehicle Auto-Center"
+				},
+				{
+					"index": 9,
+					"labelKey": "MO_HOOD_CAMERA",
+					"fields": {
+						"cTextId": "MO_HOOD_CAMERA",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_HOOD_CAMERA",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Vehicle Hood"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_FPS_REL_CAM_DRIVEBY",
+					"fields": {
+						"cTextId": "MO_FPS_REL_CAM_DRIVEBY",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_FPS_RELATIVE_VEHICLE_CAMERA_DRIVEBY_AIMING",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "First Person Drive-By Camera Relative to Vehicle"
+				},
+				{
+					"index": 11,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_CAMERA"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Camera",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "display",
+			"name": "Display",
+			"labelKey": "PM_PANE_DIS",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_DISPLAY",
+			"contexts": "",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "MO_RAD",
+					"fields": {
+						"cTextId": "MO_RAD",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_RADAR_MODE",
+						"MenuOption": "MENU_OPTION_DISPLAY_MINIMAP_MODE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						},
+						{
+							"labelKey": "MO_BLI",
+							"fields": {
+								"cTextId": "MO_BLI"
+							},
+							"attributes": {},
+							"label": "Blips"
+						}
+					],
+					"label": "Radar"
+				},
+				{
+					"index": 1,
+					"labelKey": "MO_HUD",
+					"fields": {
+						"cTextId": "MO_HUD",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_DISPLAY_HUD",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "HUD"
+				},
+				{
+					"index": 2,
+					"labelKey": "MO_HUD_TARG",
+					"fields": {
+						"cTextId": "MO_HUD_TARG",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_RETICULE",
+						"MenuOption": "MENU_OPTION_DISPLAY_RETICLE_MODE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_RETICULE_OF",
+							"fields": {
+								"cTextId": "MO_RETICULE_OF"
+							},
+							"attributes": {},
+							"label": "Simple"
+						},
+						{
+							"labelKey": "MO_RETICULE_ON",
+							"fields": {
+								"cTextId": "MO_RETICULE_ON"
+							},
+							"attributes": {},
+							"label": "Complex"
+						}
+					],
+					"label": "Weapon Target"
+				},
+				{
+					"index": 3,
+					"labelKey": "MO_RET_SIZE",
+					"fields": {
+						"cTextId": "MO_RET_SIZE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_RETICULE_SIZE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Simple Reticule Size"
+				},
+				{
+					"index": 4,
+					"labelKey": "MO_DISPGPS",
+					"fields": {
+						"cTextId": "MO_DISPGPS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_DISPLAY_GPS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "GPS Route"
+				},
+				{
+					"index": 5,
+					"labelKey": "PM_SETTING_11",
+					"fields": {
+						"cTextId": "PM_SETTING_11",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_BIG_RADAR",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,InMP"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Expanded Radar"
+				},
+				{
+					"index": 6,
+					"labelKey": "PM_SETTING_12",
+					"fields": {
+						"cTextId": "PM_SETTING_12",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_BIG_RADAR_NAMES",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,InMP"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Player Overhead Display"
+				},
+				{
+					"index": 7,
+					"labelKey": "MO_TEXT_CHAT",
+					"fields": {
+						"cTextId": "MO_TEXT_CHAT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SHOW_TEXT_CHAT",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,InMP,b2699"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Display Text Chat"
+				},
+				{
+					"index": 8,
+					"labelKey": "MO_BRI",
+					"fields": {
+						"cTextId": "MO_BRI",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuPref": "PREF_GAMMA",
+						"MenuUniqueId": "MENU_UNIQUE_ID_BRIGHTNESS_CALIBRATION"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Brightness"
+				},
+				{
+					"index": 9,
+					"labelKey": "MO_SAFEZONE",
+					"fields": {
+						"cTextId": "MO_SAFEZONE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SAFEZONE_SIZE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {
+						"platform": "!ps4"
+					},
+					"xmlChoices": [],
+					"label": "Safezone Size"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_SAFEZONE",
+					"fields": {
+						"cTextId": "MO_SAFEZONE",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "PREF_SAFEZONE_SIZE"
+					},
+					"attributes": {
+						"platform": "ps4"
+					},
+					"xmlChoices": [],
+					"label": "Safezone Size"
+				},
+				{
+					"index": 11,
+					"labelKey": "MO_DOF",
+					"fields": {
+						"cTextId": "MO_DOF",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_DOF",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*NONE*,x64"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "In-Game Depth Of Field Effects"
+				},
+				{
+					"index": 12,
+					"labelKey": "MO_SKFX",
+					"fields": {
+						"cTextId": "MO_SKFX",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SKFX",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Screen Kill Effects"
+				},
+				{
+					"index": 13,
+					"labelKey": "MO_SUB",
+					"fields": {
+						"cTextId": "MO_SUB",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_SUBTITLES",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Subtitles"
+				},
+				{
+					"index": 14,
+					"labelKey": "MO_MEASUREMENT",
+					"fields": {
+						"cTextId": "MO_MEASUREMENT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_MEASUREMENT_SYSTEM",
+						"MenuOption": "MENU_OPTION_DISPLAY_MEASUREMENT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MS_IMPERIAL",
+							"fields": {
+								"cTextId": "MS_IMPERIAL"
+							},
+							"attributes": {},
+							"label": "Imperial"
+						},
+						{
+							"labelKey": "MS_METRIC",
+							"fields": {
+								"cTextId": "MS_METRIC"
+							},
+							"attributes": {},
+							"label": "Metric"
+						}
+					],
+					"label": "Measurement System"
+				},
+				{
+					"index": 15,
+					"labelKey": "MO_LAN",
+					"fields": {
+						"cTextId": "MO_LAN",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_CURRENT_LANGUAGE",
+						"MenuOption": "MENU_OPTION_DISPLAY_LANGUAGE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "LANG_E",
+							"fields": {
+								"cTextId": "LANG_E"
+							},
+							"attributes": {},
+							"label": "English"
+						},
+						{
+							"labelKey": "LANG_F",
+							"fields": {
+								"cTextId": "LANG_F"
+							},
+							"attributes": {},
+							"label": "French"
+						},
+						{
+							"labelKey": "LANG_G",
+							"fields": {
+								"cTextId": "LANG_G"
+							},
+							"attributes": {},
+							"label": "German"
+						},
+						{
+							"labelKey": "LANG_I",
+							"fields": {
+								"cTextId": "LANG_I"
+							},
+							"attributes": {},
+							"label": "Italian"
+						},
+						{
+							"labelKey": "LANG_S",
+							"fields": {
+								"cTextId": "LANG_S"
+							},
+							"attributes": {},
+							"label": "Spanish"
+						},
+						{
+							"labelKey": "LANG_PT",
+							"fields": {
+								"cTextId": "LANG_PT"
+							},
+							"attributes": {},
+							"label": "Portuguese"
+						},
+						{
+							"labelKey": "LANG_PL",
+							"fields": {
+								"cTextId": "LANG_PL"
+							},
+							"attributes": {},
+							"label": "Polish"
+						},
+						{
+							"labelKey": "LANG_R",
+							"fields": {
+								"cTextId": "LANG_R"
+							},
+							"attributes": {},
+							"label": "Russian"
+						},
+						{
+							"labelKey": "LANG_K",
+							"fields": {
+								"cTextId": "LANG_K"
+							},
+							"attributes": {},
+							"label": "Korean"
+						},
+						{
+							"labelKey": "LANG_CH",
+							"fields": {
+								"cTextId": "LANG_CH"
+							},
+							"attributes": {},
+							"label": "Chinese Traditional"
+						},
+						{
+							"labelKey": "LANG_J",
+							"fields": {
+								"cTextId": "LANG_J"
+							},
+							"attributes": {},
+							"label": "Japanese"
+						},
+						{
+							"labelKey": "LANG_MEX",
+							"fields": {
+								"cTextId": "LANG_MEX"
+							},
+							"attributes": {},
+							"label": "Mexican Spanish"
+						},
+						{
+							"labelKey": "LANG_CHS",
+							"fields": {
+								"cTextId": "LANG_CHS"
+							},
+							"attributes": {},
+							"label": "Chinese Simplified"
+						}
+					],
+					"label": "Language"
+				},
+				{
+					"index": 16,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_DISPLAY"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Display",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "graphics",
+			"name": "Graphics",
+			"labelKey": "PM_PANE_GFX",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_GRAPHICS",
+			"contexts": "*NONE*,StreamingBuild,*ALL*,x64",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "GFXVID_OVERRIDE",
+					"fields": {
+						"cTextId": "GFXVID_OVERRIDE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_VID_OVERRIDE",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Ignore Suggested Limits"
+				},
+				{
+					"index": 1,
+					"labelKey": "GFX_DXVERSION",
+					"fields": {
+						"cTextId": "GFX_DXVERSION",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_DXVERSION",
+						"MenuOption": "MENU_OPTION_GFX_DXVERSION",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_DX10",
+							"fields": {
+								"cTextId": "MO_GFX_DX10"
+							},
+							"attributes": {},
+							"label": "DirectX 10"
+						},
+						{
+							"labelKey": "MO_GFX_DX101",
+							"fields": {
+								"cTextId": "MO_GFX_DX101"
+							},
+							"attributes": {},
+							"label": "DirectX 10.1"
+						},
+						{
+							"labelKey": "MO_GFX_DX11",
+							"fields": {
+								"cTextId": "MO_GFX_DX11"
+							},
+							"attributes": {},
+							"label": "DirectX 11"
+						}
+					],
+					"label": "DirectX Version"
+				},
+				{
+					"index": 2,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 3,
+					"labelKey": "GFX_SCALING",
+					"fields": {
+						"cTextId": "GFX_SCALING",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_SCALING",
+						"MenuOption": "MENU_OPTION_GFX_SCALING",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_1o1",
+							"fields": {
+								"cTextId": "MO_GFX_1o1"
+							},
+							"attributes": {},
+							"label": "1920x1080"
+						},
+						{
+							"labelKey": "MO_GFX_1o2",
+							"fields": {
+								"cTextId": "MO_GFX_1o2"
+							},
+							"attributes": {},
+							"label": "960x540 (1/2)"
+						},
+						{
+							"labelKey": "MO_GFX_2o3",
+							"fields": {
+								"cTextId": "MO_GFX_2o3"
+							},
+							"attributes": {},
+							"label": "1280x720 (2/3)"
+						},
+						{
+							"labelKey": "MO_GFX_3o4",
+							"fields": {
+								"cTextId": "MO_GFX_3o4"
+							},
+							"attributes": {},
+							"label": "1440x810 (3/4)"
+						},
+						{
+							"labelKey": "MO_GFX_5o6",
+							"fields": {
+								"cTextId": "MO_GFX_5o6"
+							},
+							"attributes": {},
+							"label": "1600x900 (5/6)"
+						},
+						{
+							"labelKey": "MO_GFX_5o4",
+							"fields": {
+								"cTextId": "MO_GFX_5o4"
+							},
+							"attributes": {},
+							"label": "2400x1350 (5/4)"
+						},
+						{
+							"labelKey": "MO_GFX_3o2",
+							"fields": {
+								"cTextId": "MO_GFX_3o2"
+							},
+							"attributes": {},
+							"label": "2880x1620 (3/2)"
+						},
+						{
+							"labelKey": "MO_GFX_7o4",
+							"fields": {
+								"cTextId": "MO_GFX_7o4"
+							},
+							"attributes": {},
+							"label": "3360x1890 (7/4)"
+						},
+						{
+							"labelKey": "MO_GFX_2o1",
+							"fields": {
+								"cTextId": "MO_GFX_2o1"
+							},
+							"attributes": {},
+							"label": "3840x2160 (2/1)"
+						},
+						{
+							"labelKey": "MO_GFX_5o2",
+							"fields": {
+								"cTextId": "MO_GFX_5o2"
+							},
+							"attributes": {},
+							"label": "4800x2700 (5/2)"
+						}
+					],
+					"label": "Render Resolution"
+				},
+				{
+					"index": 4,
+					"labelKey": "VID_MONITOR",
+					"fields": {
+						"cTextId": "VID_MONITOR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_MONITOR",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Output Monitor"
+				},
+				{
+					"index": 5,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 6,
+					"labelKey": "GFX_FXAA",
+					"fields": {
+						"cTextId": "GFX_FXAA",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_FXAA",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "FXAA"
+				},
+				{
+					"index": 7,
+					"labelKey": "GFX_MSAA",
+					"fields": {
+						"cTextId": "GFX_MSAA",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_MSAA",
+						"MenuOption": "MENU_OPTION_GFX_MSAA",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_X2",
+							"fields": {
+								"cTextId": "MO_GFX_X2"
+							},
+							"attributes": {},
+							"label": "X2"
+						},
+						{
+							"labelKey": "MO_GFX_X4",
+							"fields": {
+								"cTextId": "MO_GFX_X4"
+							},
+							"attributes": {},
+							"label": "X4"
+						},
+						{
+							"labelKey": "MO_GFX_X8",
+							"fields": {
+								"cTextId": "MO_GFX_X8"
+							},
+							"attributes": {},
+							"label": "X8"
+						}
+					],
+					"label": "MSAA"
+				},
+				{
+					"index": 8,
+					"labelKey": "GFX_TXAA",
+					"fields": {
+						"cTextId": "GFX_TXAA",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_TXAA",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ALL*,GFX_SUPPORT_TXAA"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "NVIDIA TXAA"
+				},
+				{
+					"index": 9,
+					"labelKey": "VID_VSYNC",
+					"fields": {
+						"cTextId": "VID_VSYNC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_VSYNC",
+						"MenuOption": "MENU_OPTION_VID_VSYNC",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						},
+						{
+							"labelKey": "MO_VID_VSHALF",
+							"fields": {
+								"cTextId": "MO_VID_VSHALF"
+							},
+							"attributes": {},
+							"label": "Half"
+						}
+					],
+					"label": "VSync"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_STER",
+					"fields": {
+						"cTextId": "MO_STER",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_STEREO",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Contexts": "*ANY*,VID_STEREO"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Stereo 3D"
+				},
+				{
+					"index": 11,
+					"labelKey": "VID_FOCUS",
+					"fields": {
+						"cTextId": "VID_FOCUS",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_PAUSE_ON_FOCUS_LOSS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Pause Game On Focus Loss"
+				},
+				{
+					"index": 12,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 13,
+					"labelKey": "GFX_DENSITY",
+					"fields": {
+						"cTextId": "GFX_DENSITY",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_CITY_DENSITY",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Population Density"
+				},
+				{
+					"index": 14,
+					"labelKey": "GFX_POP_VARIETY",
+					"fields": {
+						"cTextId": "GFX_POP_VARIETY",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_POP_VARIETY",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Population Variety"
+				},
+				{
+					"index": 15,
+					"labelKey": "GFX_DIST_SCALE",
+					"fields": {
+						"cTextId": "GFX_DIST_SCALE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_DIST_SCALE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Distance Scaling"
+				},
+				{
+					"index": 16,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 17,
+					"labelKey": "GFX_BUDGET",
+					"fields": {
+						"cTextId": "GFX_BUDGET",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_STEREO_CONVERGENCE",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Extended Texture Budget"
+				},
+				{
+					"index": 18,
+					"labelKey": "GFX_TXTQ",
+					"fields": {
+						"cTextId": "GFX_TXTQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_TEXTURE_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_NIGHTLIGHTS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Texture Quality"
+				},
+				{
+					"index": 19,
+					"labelKey": "GFX_SHADERQ",
+					"fields": {
+						"cTextId": "GFX_SHADERQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_SHADER_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_SHADERQ",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Shader Quality"
+				},
+				{
+					"index": 20,
+					"labelKey": "GFX_SHADOWQ",
+					"fields": {
+						"cTextId": "GFX_SHADOWQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_SHADOW_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_SHADOWS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Shadow Quality"
+				},
+				{
+					"index": 21,
+					"labelKey": "GFX_REFELECTIONQ",
+					"fields": {
+						"cTextId": "GFX_REFELECTIONQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_REFLECTION_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_REFLECTION",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						},
+						{
+							"labelKey": "MO_GFX_ULTRA",
+							"fields": {
+								"cTextId": "MO_GFX_ULTRA"
+							},
+							"attributes": {},
+							"label": "Ultra"
+						}
+					],
+					"label": "Reflection Quality"
+				},
+				{
+					"index": 22,
+					"labelKey": "GFX_REFLECTION_MSAA",
+					"fields": {
+						"cTextId": "GFX_REFLECTION_MSAA",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_REFLECTION_MSAA",
+						"MenuOption": "MENU_OPTION_GFX_MSAA",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_X2",
+							"fields": {
+								"cTextId": "MO_GFX_X2"
+							},
+							"attributes": {},
+							"label": "X2"
+						},
+						{
+							"labelKey": "MO_GFX_X4",
+							"fields": {
+								"cTextId": "MO_GFX_X4"
+							},
+							"attributes": {},
+							"label": "X4"
+						},
+						{
+							"labelKey": "MO_GFX_X8",
+							"fields": {
+								"cTextId": "MO_GFX_X8"
+							},
+							"attributes": {},
+							"label": "X8"
+						}
+					],
+					"label": "Reflection MSAA"
+				},
+				{
+					"index": 23,
+					"labelKey": "GFX_WATERQ",
+					"fields": {
+						"cTextId": "GFX_WATERQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_WATER_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_SHADERQ",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Water Quality"
+				},
+				{
+					"index": 24,
+					"labelKey": "GFX_PRTQ",
+					"fields": {
+						"cTextId": "GFX_PRTQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_PARTICLES_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_NIGHTLIGHTS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Particles Quality"
+				},
+				{
+					"index": 25,
+					"labelKey": "GFX_GRASSQ",
+					"fields": {
+						"cTextId": "GFX_GRASSQ",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_GRASS_QUALITY",
+						"MenuOption": "MENU_OPTION_GFX_QUALITY",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						},
+						{
+							"labelKey": "MO_GFX_ULTRA",
+							"fields": {
+								"cTextId": "MO_GFX_ULTRA"
+							},
+							"attributes": {},
+							"label": "Ultra"
+						}
+					],
+					"label": "Grass Quality"
+				},
+				{
+					"index": 26,
+					"labelKey": "GFX_SOFT_SHADOW",
+					"fields": {
+						"cTextId": "GFX_SOFT_SHADOW",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_SHADOW_SOFTNESS",
+						"MenuOption": "MENU_OPTION_GFX_SOFTNESS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "GFX_SHARP",
+							"fields": {
+								"cTextId": "GFX_SHARP"
+							},
+							"attributes": {},
+							"label": "Sharp"
+						},
+						{
+							"labelKey": "GFX_SOFT",
+							"fields": {
+								"cTextId": "GFX_SOFT"
+							},
+							"attributes": {},
+							"label": "Soft"
+						},
+						{
+							"labelKey": "GFX_SOFTER",
+							"fields": {
+								"cTextId": "GFX_SOFTER"
+							},
+							"attributes": {},
+							"label": "Softer"
+						},
+						{
+							"labelKey": "GFX_SOFTEST",
+							"fields": {
+								"cTextId": "GFX_SOFTEST"
+							},
+							"attributes": {},
+							"label": "Softest"
+						}
+					],
+					"label": "Soft Shadows"
+				},
+				{
+					"index": 27,
+					"labelKey": "GFX_POST_FX",
+					"fields": {
+						"cTextId": "GFX_POST_FX",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_POST_FX",
+						"MenuOption": "MENU_OPTION_GFX_QUALITY",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						},
+						{
+							"labelKey": "MO_GFX_ULTRA",
+							"fields": {
+								"cTextId": "MO_GFX_ULTRA"
+							},
+							"attributes": {},
+							"label": "Ultra"
+						}
+					],
+					"label": "Post FX"
+				},
+				{
+					"index": 28,
+					"labelKey": "GFX_MB_STR",
+					"fields": {
+						"cTextId": "GFX_MB_STR",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_MB_STRENGTH",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Motion Blur Strength"
+				},
+				{
+					"index": 29,
+					"labelKey": "MO_DOF",
+					"fields": {
+						"cTextId": "MO_DOF",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_DOF",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "In-Game Depth Of Field Effects"
+				},
+				{
+					"index": 30,
+					"labelKey": "GFX_ANISOT",
+					"fields": {
+						"cTextId": "GFX_ANISOT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_ANISOTROPIC_FILTERING",
+						"MenuOption": "MENU_OPTION_GFX_ANISOT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_X2",
+							"fields": {
+								"cTextId": "MO_GFX_X2"
+							},
+							"attributes": {},
+							"label": "X2"
+						},
+						{
+							"labelKey": "MO_GFX_X4",
+							"fields": {
+								"cTextId": "MO_GFX_X4"
+							},
+							"attributes": {},
+							"label": "X4"
+						},
+						{
+							"labelKey": "MO_GFX_X8",
+							"fields": {
+								"cTextId": "MO_GFX_X8"
+							},
+							"attributes": {},
+							"label": "X8"
+						},
+						{
+							"labelKey": "MO_GFX_X16",
+							"fields": {
+								"cTextId": "MO_GFX_X16"
+							},
+							"attributes": {},
+							"label": "X16"
+						}
+					],
+					"label": "Anisotropic Filtering"
+				},
+				{
+					"index": 31,
+					"labelKey": "GFX_AMBIENTOCC",
+					"fields": {
+						"cTextId": "GFX_AMBIENTOCC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_AMBIENT_OCCLUSION",
+						"MenuOption": "MENU_OPTION_GFX_AMBIENTOCC",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						}
+					],
+					"label": "Ambient Occlusion"
+				},
+				{
+					"index": 32,
+					"labelKey": "GFX_TESSELLATION",
+					"fields": {
+						"cTextId": "GFX_TESSELLATION",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_GFX_TESSELLATION",
+						"MenuOption": "MENU_OPTION_GFX_SHADOWS",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_GFX_NORM",
+							"fields": {
+								"cTextId": "MO_GFX_NORM"
+							},
+							"attributes": {},
+							"label": "Normal"
+						},
+						{
+							"labelKey": "MO_CS_HIGH",
+							"fields": {
+								"cTextId": "MO_CS_HIGH"
+							},
+							"attributes": {},
+							"label": "High"
+						},
+						{
+							"labelKey": "MO_GFX_VHIGH",
+							"fields": {
+								"cTextId": "MO_GFX_VHIGH"
+							},
+							"attributes": {},
+							"label": "Very High"
+						}
+					],
+					"label": "Tessellation"
+				},
+				{
+					"index": 33,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 34,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_GRAPHICS"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Graphics",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "advancedGraphics",
+			"name": "Advanced Graphics",
+			"labelKey": "PM_PANE_AGFX",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_ADVANCED_GFX",
+			"contexts": "*NONE*,StreamingBuild,*ALL*,x64",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "VID_SCR_TYPE",
+					"fields": {
+						"cTextId": "VID_SCR_TYPE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_SCREEN_TYPE",
+						"MenuOption": "MENU_OPTION_SCREEN_TYPE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "VID_FULLSCREEN",
+							"fields": {
+								"cTextId": "VID_FULLSCREEN"
+							},
+							"attributes": {},
+							"label": "Full Screen (Exclusive)"
+						},
+						{
+							"labelKey": "VID_SCR_WIN",
+							"fields": {
+								"cTextId": "VID_SCR_WIN"
+							},
+							"attributes": {},
+							"label": "Windowed"
+						},
+						{
+							"labelKey": "VID_SCR_BORDERLESS",
+							"fields": {
+								"cTextId": "VID_SCR_BORDERLESS"
+							},
+							"attributes": {},
+							"label": "Full Screen"
+						}
+					],
+					"label": "Screen Type"
+				},
+				{
+					"index": 1,
+					"labelKey": "VID_RESOLUTION",
+					"fields": {
+						"cTextId": "VID_RESOLUTION",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_RESOLUTION",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Resolution"
+				},
+				{
+					"index": 2,
+					"labelKey": "VID_REFRESH",
+					"fields": {
+						"cTextId": "VID_REFRESH",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_REFRESH",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Refresh Rate"
+				},
+				{
+					"index": 3,
+					"labelKey": "VID_ASPECT",
+					"fields": {
+						"cTextId": "VID_ASPECT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VID_ASPECT",
+						"MenuOption": "MENU_OPTION_VID_ASPECT",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "VID_ASP_AUTO",
+							"fields": {
+								"cTextId": "VID_ASP_AUTO"
+							},
+							"attributes": {},
+							"label": "Auto"
+						},
+						{
+							"labelKey": "VID_ASP_32",
+							"fields": {
+								"cTextId": "VID_ASP_32"
+							},
+							"attributes": {},
+							"label": "3:2"
+						},
+						{
+							"labelKey": "VID_ASP_43",
+							"fields": {
+								"cTextId": "VID_ASP_43"
+							},
+							"attributes": {},
+							"label": "4:3"
+						},
+						{
+							"labelKey": "VID_ASP_53",
+							"fields": {
+								"cTextId": "VID_ASP_53"
+							},
+							"attributes": {},
+							"label": "5:3"
+						},
+						{
+							"labelKey": "VID_ASP_54",
+							"fields": {
+								"cTextId": "VID_ASP_54"
+							},
+							"attributes": {},
+							"label": "5:4"
+						},
+						{
+							"labelKey": "VID_ASP_169",
+							"fields": {
+								"cTextId": "VID_ASP_169"
+							},
+							"attributes": {},
+							"label": "16:9"
+						},
+						{
+							"labelKey": "VID_ASP_1610",
+							"fields": {
+								"cTextId": "VID_ASP_1610"
+							},
+							"attributes": {},
+							"label": "16:10"
+						},
+						{
+							"labelKey": "VID_ASP_179",
+							"fields": {
+								"cTextId": "VID_ASP_179"
+							},
+							"attributes": {},
+							"label": "17:9"
+						},
+						{
+							"labelKey": "VID_ASP_219",
+							"fields": {
+								"cTextId": "VID_ASP_219"
+							},
+							"attributes": {},
+							"label": "21:9"
+						}
+					],
+					"label": "Aspect Ratio"
+				},
+				{
+					"index": 4,
+					"labelKey": "AGFX_WARNING",
+					"fields": {
+						"cTextId": "AGFX_WARNING",
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Changing these options may cause reduced game performance."
+				},
+				{
+					"index": 5,
+					"labelKey": "AGFX_LSHADOW",
+					"fields": {
+						"cTextId": "AGFX_LSHADOW",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_ADV_GFX_LONG_SHADOWS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Long Shadows"
+				},
+				{
+					"index": 6,
+					"labelKey": "AGFX_USHADOW",
+					"fields": {
+						"cTextId": "AGFX_USHADOW",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_ADV_GFX_ULTRA_SHADOWS",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "High Resolution Shadows"
+				},
+				{
+					"index": 7,
+					"labelKey": "AGFX_HD_FLIGHT",
+					"fields": {
+						"cTextId": "AGFX_HD_FLIGHT",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_ADV_GFX_HD_FLIGHT",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "High Detail Streaming While Flying"
+				},
+				{
+					"index": 8,
+					"labelKey": "AGFX_MAXLOD",
+					"fields": {
+						"cTextId": "AGFX_MAXLOD",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_ADV_GFX_MAX_LOD",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Extended Distance Scaling"
+				},
+				{
+					"index": 9,
+					"labelKey": "AGFX_SHADOWS_DIST",
+					"fields": {
+						"cTextId": "AGFX_SHADOWS_DIST",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_ADV_GFX_SHADOWS_DIST_MULT",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Extended Shadows Distance"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_ADVANCED_GFX"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Advanced Graphics",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		},
+		{
+			"key": "voiceChat",
+			"name": "Voice Chat",
+			"labelKey": "MO_VOUT",
+			"screen": "MENU_UNIQUE_ID_SETTINGS_VOICE_CHAT",
+			"contexts": "*ALL*,x64",
+			"attributes": {},
+			"rows": [
+				{
+					"index": 0,
+					"labelKey": "MO_VOICE_ENABLE",
+					"fields": {
+						"cTextId": "MO_VOICE_ENABLE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_ENABLE",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Voice Chat Enabled"
+				},
+				{
+					"index": 1,
+					"labelKey": "MO_VOICE_LISTEN",
+					"fields": {
+						"cTextId": "MO_VOICE_LISTEN",
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "LISTENING"
+				},
+				{
+					"index": 2,
+					"labelKey": "MO_OUTP_DVC",
+					"fields": {
+						"cTextId": "MO_OUTP_DVC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_OUTPUT_DEVICE",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Output Device"
+				},
+				{
+					"index": 3,
+					"labelKey": "MO_CHAT_OVOL",
+					"fields": {
+						"cTextId": "MO_CHAT_OVOL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_OUTPUT_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Voice Chat Volume"
+				},
+				{
+					"index": 4,
+					"labelKey": "MO_SOUND_VOL",
+					"fields": {
+						"cTextId": "MO_SOUND_VOL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_SOUND_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "SFX Volume during Voice Chat"
+				},
+				{
+					"index": 5,
+					"labelKey": "MO_MUSIC_VOL",
+					"fields": {
+						"cTextId": "MO_MUSIC_VOL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_MUSIC_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Music Volume during Voice Chat"
+				},
+				{
+					"index": 6,
+					"labelKey": "MO_VOICE_TALK",
+					"fields": {
+						"cTextId": "MO_VOICE_TALK",
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "TALKING"
+				},
+				{
+					"index": 7,
+					"labelKey": "MO_TLK_ENABLE",
+					"fields": {
+						"cTextId": "MO_TLK_ENABLE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_TALK_ENABLED",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Microphone Enabled"
+				},
+				{
+					"index": 8,
+					"labelKey": "VOX_FEEDBACK",
+					"fields": {
+						"cTextId": "VOX_FEEDBACK",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_FEEDBACK",
+						"MenuOption": "MENU_OPTION_VOICE_FEEDBACK",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST",
+						"Flags": "InitiallyDisabled"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						}
+					],
+					"label": "Voice Volume"
+				},
+				{
+					"index": 9,
+					"labelKey": "MO_INPUT_DVC",
+					"fields": {
+						"cTextId": "MO_INPUT_DVC",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_INPUT_DEVICE",
+						"MenuOption": "MENU_OPTION_DISPLAY_ON_OFF",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_OFF",
+							"fields": {
+								"cTextId": "MO_OFF"
+							},
+							"attributes": {},
+							"label": "Off"
+						},
+						{
+							"labelKey": "MO_ON",
+							"fields": {
+								"cTextId": "MO_ON"
+							},
+							"attributes": {},
+							"label": "On"
+						}
+					],
+					"label": "Input Device"
+				},
+				{
+					"index": 10,
+					"labelKey": "MO_VCHAT_MODE",
+					"fields": {
+						"cTextId": "MO_VCHAT_MODE",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_CHAT_MODE",
+						"MenuOption": "MENU_OPTION_DISPLAY_VOICE_TYPE",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [
+						{
+							"labelKey": "MO_VC_TALK",
+							"fields": {
+								"cTextId": "MO_VC_TALK"
+							},
+							"attributes": {},
+							"label": "Voice Activated"
+						},
+						{
+							"labelKey": "MO_VC_PUSH",
+							"fields": {
+								"cTextId": "MO_VC_PUSH"
+							},
+							"attributes": {},
+							"label": "Push To Talk"
+						}
+					],
+					"label": "Voice Chat Mode"
+				},
+				{
+					"index": 11,
+					"labelKey": "MO_MIC_VOL",
+					"fields": {
+						"cTextId": "MO_MIC_VOL",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_MIC_VOLUME",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Microphone Volume"
+				},
+				{
+					"index": 12,
+					"labelKey": "MO_MIC_SEN",
+					"fields": {
+						"cTextId": "MO_MIC_SEN",
+						"MenuAction": "MENU_OPTION_ACTION_PREF_CHANGE",
+						"MenuPref": "PREF_VOICE_MIC_SENSITIVITY",
+						"MenuOption": "MENU_OPTION_SLIDER",
+						"MenuUniqueId": "MENU_UNIQUE_ID_SETTINGS_LIST"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Microphone Sensitivity"
+				},
+				{
+					"index": 13,
+					"labelKey": "",
+					"fields": {
+						"MenuAction": "MENU_OPTION_ACTION_SEPARATOR"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": ""
+				},
+				{
+					"index": 14,
+					"labelKey": "MO_RDF",
+					"fields": {
+						"cTextId": "MO_RDF",
+						"MenuAction": "MENU_OPTION_ACTION_TRIGGER",
+						"MenuUniqueIdHash": "RESTORE_DEFAULTS_VOICE_CHAT"
+					},
+					"attributes": {},
+					"xmlChoices": [],
+					"label": "Restore Defaults"
+				}
+			],
+			"label": "Voice Chat",
+			"current": {
+				"status": "unavailable",
+				"capturedAt": null,
+				"reason": "Automatic scan requires the pause menu closed and NUI input focus released",
+				"values": [],
+				"bindings": []
+			}
+		}
+	],
+	"keyBindingDefinitions": {
+		"gameBuild": 3889,
+		"sources": {
+			"settings": {
+				"url": "https://raw.githubusercontent.com/citizenfx/fivem/master/data/client/citizen/platform-3889/data/control/settings.meta",
+				"sha256": "457e54789e31f0e2696a3829a628a86add1543267f839ed97296962fd54e356c"
+			},
+			"controlIds": {
+				"url": "https://raw.githubusercontent.com/citizenfx/fivem-docs/master/content/docs/game-references/controls.md",
+				"sha256": "884e87b716c0b5b22edd2588e71605d30d1502c3b53a4c23423e072459f3dba4"
+			},
+			"supplementalControlIds": {
+				"url": "https://raw.githubusercontent.com/alexguirre/rage-parser-dumps/master/dumps/gta5/b3407.json",
+				"sha256": "f4d23bba1e0d78e31ab101121a65c4f313f6c49240fa5887afee5db98ab8a872"
+			}
+		},
+		"sections": [
+			{
+				"name": "PM_PANE_GENERAL",
+				"actions": [
+					{
+						"name": "INPUT_FRONTEND_PAUSE",
+						"controlId": 199
+					},
+					{
+						"name": "INPUT_NEXT_CAMERA",
+						"controlId": 0
+					},
+					{
+						"name": "INPUT_HUD_SPECIAL",
+						"controlId": 48
+					},
+					{
+						"name": "INPUT_SPECIAL_ABILITY_PC",
+						"controlId": 171
+					},
+					{
+						"name": "INPUT_CHARACTER_WHEEL",
+						"controlId": 19
+					},
+					{
+						"name": "INPUT_SELECT_CHARACTER_MICHAEL",
+						"controlId": 166
+					},
+					{
+						"name": "INPUT_SELECT_CHARACTER_FRANKLIN",
+						"controlId": 167
+					},
+					{
+						"name": "INPUT_SELECT_CHARACTER_TREVOR",
+						"controlId": 168
+					},
+					{
+						"name": "INPUT_SELECT_CHARACTER_MULTIPLAYER",
+						"controlId": 169
+					},
+					{
+						"name": "INPUT_INTERACTION_MENU",
+						"controlId": 244
+					},
+					{
+						"name": "INPUT_REPLAY_START_STOP_RECORDING",
+						"controlId": 288
+					},
+					{
+						"name": "INPUT_REPLAY_START_STOP_RECORDING_SECONDARY",
+						"controlId": 289
+					},
+					{
+						"name": "INPUT_SAVE_REPLAY_CLIP",
+						"controlId": 170
+					},
+					{
+						"name": "INPUT_FRONTEND_SOCIAL_CLUB_SECONDARY",
+						"controlId": 213
+					},
+					{
+						"name": "INPUT_CONTEXT",
+						"controlId": 51
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_FOOT",
+				"actions": [
+					{
+						"name": "INPUT_MOVE_UP_ONLY",
+						"controlId": 32
+					},
+					{
+						"name": "INPUT_MOVE_DOWN_ONLY",
+						"controlId": 33
+					},
+					{
+						"name": "INPUT_MOVE_LEFT_ONLY",
+						"controlId": 34
+					},
+					{
+						"name": "INPUT_MOVE_RIGHT_ONLY",
+						"controlId": 35
+					},
+					{
+						"name": "INPUT_SPRINT",
+						"controlId": 21
+					},
+					{
+						"name": "INPUT_JUMP",
+						"controlId": 22
+					},
+					{
+						"name": "INPUT_ENTER",
+						"controlId": 23
+					},
+					{
+						"name": "INPUT_DUCK",
+						"controlId": 36
+					},
+					{
+						"name": "INPUT_LOOK_BEHIND",
+						"controlId": 26
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_FOOT_COMBAT",
+				"actions": [
+					{
+						"name": "INPUT_AIM",
+						"controlId": 25
+					},
+					{
+						"name": "INPUT_COVER",
+						"controlId": 44
+					},
+					{
+						"name": "INPUT_DETONATE",
+						"controlId": 47
+					},
+					{
+						"name": "INPUT_MELEE_ATTACK_LIGHT",
+						"controlId": 140
+					},
+					{
+						"name": "INPUT_MELEE_ATTACK_HEAVY",
+						"controlId": 141
+					},
+					{
+						"name": "INPUT_MELEE_BLOCK",
+						"controlId": 143
+					},
+					{
+						"name": "INPUT_ATTACK",
+						"controlId": 24
+					},
+					{
+						"name": "INPUT_RELOAD",
+						"controlId": 45
+					},
+					{
+						"name": "INPUT_WEAPON_SPECIAL_TWO",
+						"controlId": 54
+					},
+					{
+						"name": "INPUT_SNIPER_ZOOM_IN_ONLY",
+						"controlId": 40
+					},
+					{
+						"name": "INPUT_SNIPER_ZOOM_OUT_ONLY",
+						"controlId": 41
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_FOOT_WEAPONS",
+				"actions": [
+					{
+						"name": "INPUT_SELECT_WEAPON",
+						"controlId": 37
+					},
+					{
+						"name": "INPUT_SELECT_NEXT_WEAPON",
+						"controlId": 16
+					},
+					{
+						"name": "INPUT_SELECT_PREV_WEAPON",
+						"controlId": 17
+					},
+					{
+						"name": "INPUT_WEAPON_WHEEL_NEXT",
+						"controlId": 14
+					},
+					{
+						"name": "INPUT_WEAPON_WHEEL_PREV",
+						"controlId": 15
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_UNARMED",
+						"controlId": 157
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_MELEE",
+						"controlId": 158
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_SHOTGUN",
+						"controlId": 160
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_HEAVY",
+						"controlId": 164
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_SPECIAL",
+						"controlId": 165
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_HANDGUN",
+						"controlId": 159
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_SMG",
+						"controlId": 161
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_AUTO_RIFLE",
+						"controlId": 162
+					},
+					{
+						"name": "INPUT_SELECT_WEAPON_SNIPER",
+						"controlId": 163
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_VEH_ANY",
+				"actions": [
+					{
+						"name": "INPUT_VEH_EXIT",
+						"controlId": 75
+					},
+					{
+						"name": "INPUT_VEH_SELECT_NEXT_WEAPON",
+						"controlId": 99
+					},
+					{
+						"name": "INPUT_VEH_SELECT_PREV_WEAPON",
+						"controlId": 100
+					},
+					{
+						"name": "INPUT_VEH_LOOK_BEHIND",
+						"controlId": 79
+					},
+					{
+						"name": "INPUT_VEH_NEXT_RADIO",
+						"controlId": 81
+					},
+					{
+						"name": "INPUT_VEH_PREV_RADIO",
+						"controlId": 82
+					},
+					{
+						"name": "INPUT_VEH_NEXT_RADIO_TRACK",
+						"controlId": 83
+					},
+					{
+						"name": "INPUT_VEH_PREV_RADIO_TRACK",
+						"controlId": 84
+					},
+					{
+						"name": "INPUT_VEH_CIN_CAM",
+						"controlId": 80
+					},
+					{
+						"name": "INPUT_VEH_RADIO_WHEEL",
+						"controlId": 85
+					},
+					{
+						"name": "INPUT_CINEMATIC_SLOWMO",
+						"controlId": 7
+					},
+					{
+						"name": "INPUT_VEH_DUCK",
+						"controlId": 73
+					},
+					{
+						"name": "INPUT_VEH_SLOWMO_UP_ONLY",
+						"controlId": 335
+					},
+					{
+						"name": "INPUT_VEH_SLOWMO_DOWN_ONLY",
+						"controlId": 336
+					},
+					{
+						"name": "INPUT_VEH_HEADLIGHT",
+						"controlId": 74
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_VEH",
+				"actions": [
+					{
+						"name": "INPUT_VEH_ACCELERATE",
+						"controlId": 71
+					},
+					{
+						"name": "INPUT_VEH_BRAKE",
+						"controlId": 72
+					},
+					{
+						"name": "INPUT_VEH_MOVE_LEFT_ONLY",
+						"controlId": 63
+					},
+					{
+						"name": "INPUT_VEH_MOVE_RIGHT_ONLY",
+						"controlId": 64
+					},
+					{
+						"name": "INPUT_VEH_MOVE_UP_ONLY",
+						"controlId": 61
+					},
+					{
+						"name": "INPUT_VEH_MOVE_DOWN_ONLY",
+						"controlId": 62
+					},
+					{
+						"name": "INPUT_VEH_ATTACK",
+						"controlId": 69
+					},
+					{
+						"name": "INPUT_VEH_AIM",
+						"controlId": 68
+					},
+					{
+						"name": "INPUT_VEH_HANDBRAKE",
+						"controlId": 76
+					},
+					{
+						"name": "INPUT_VEH_HORN",
+						"controlId": 86
+					},
+					{
+						"name": "INPUT_VEH_PUSHBIKE_SPRINT",
+						"controlId": 137
+					},
+					{
+						"name": "INPUT_VEH_PUSHBIKE_FRONT_BRAKE",
+						"controlId": 138
+					},
+					{
+						"name": "INPUT_VEH_MOUSE_CONTROL_OVERRIDE",
+						"controlId": 106
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_AIR",
+				"actions": [
+					{
+						"name": "INPUT_VEH_FLY_THROTTLE_UP",
+						"controlId": 87
+					},
+					{
+						"name": "INPUT_VEH_FLY_THROTTLE_DOWN",
+						"controlId": 88
+					},
+					{
+						"name": "INPUT_VEH_FLY_YAW_LEFT",
+						"controlId": 89
+					},
+					{
+						"name": "INPUT_VEH_FLY_YAW_RIGHT",
+						"controlId": 90
+					},
+					{
+						"name": "INPUT_VEH_FLY_ROLL_LEFT_ONLY",
+						"controlId": 108
+					},
+					{
+						"name": "INPUT_VEH_FLY_ROLL_RIGHT_ONLY",
+						"controlId": 109
+					},
+					{
+						"name": "INPUT_VEH_FLY_PITCH_UP_ONLY",
+						"controlId": 111
+					},
+					{
+						"name": "INPUT_VEH_FLY_PITCH_DOWN_ONLY",
+						"controlId": 112
+					},
+					{
+						"name": "INPUT_VEH_FLY_ATTACK",
+						"controlId": 114
+					},
+					{
+						"name": "INPUT_VEH_FLY_SELECT_TARGET_LEFT",
+						"controlId": 117
+					},
+					{
+						"name": "INPUT_VEH_FLY_SELECT_TARGET_RIGHT",
+						"controlId": 118
+					},
+					{
+						"name": "INPUT_VEH_FLY_UNDERCARRIAGE",
+						"controlId": 113
+					},
+					{
+						"name": "INPUT_VEH_GRAPPLING_HOOK",
+						"controlId": 103
+					},
+					{
+						"name": "INPUT_VEH_FLY_ATTACK_CAMERA",
+						"controlId": 121
+					},
+					{
+						"name": "INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE",
+						"controlId": 122
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_SUB",
+				"actions": [
+					{
+						"name": "INPUT_VEH_SUB_THROTTLE_UP",
+						"controlId": 129
+					},
+					{
+						"name": "INPUT_VEH_SUB_THROTTLE_DOWN",
+						"controlId": 130
+					},
+					{
+						"name": "INPUT_VEH_SUB_TURN_HARD_LEFT",
+						"controlId": 133
+					},
+					{
+						"name": "INPUT_VEH_SUB_TURN_HARD_RIGHT",
+						"controlId": 134
+					},
+					{
+						"name": "INPUT_VEH_SUB_TURN_LEFT_ONLY",
+						"controlId": 124
+					},
+					{
+						"name": "INPUT_VEH_SUB_TURN_RIGHT_ONLY",
+						"controlId": 125
+					},
+					{
+						"name": "INPUT_VEH_SUB_PITCH_UP_ONLY",
+						"controlId": 127
+					},
+					{
+						"name": "INPUT_VEH_SUB_PITCH_DOWN_ONLY",
+						"controlId": 128
+					},
+					{
+						"name": "INPUT_VEH_SUB_ASCEND",
+						"controlId": 131
+					},
+					{
+						"name": "INPUT_VEH_SUB_DESCEND",
+						"controlId": 132
+					},
+					{
+						"name": "INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE",
+						"controlId": 135
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_PARA",
+				"actions": [
+					{
+						"name": "INPUT_PARACHUTE_PITCH_UP_ONLY",
+						"controlId": 150
+					},
+					{
+						"name": "INPUT_PARACHUTE_PITCH_DOWN_ONLY",
+						"controlId": 151
+					},
+					{
+						"name": "INPUT_PARACHUTE_TURN_LEFT_ONLY",
+						"controlId": 147
+					},
+					{
+						"name": "INPUT_PARACHUTE_TURN_RIGHT_ONLY",
+						"controlId": 148
+					},
+					{
+						"name": "INPUT_PARACHUTE_DEPLOY",
+						"controlId": 144
+					},
+					{
+						"name": "INPUT_PARACHUTE_DETACH",
+						"controlId": 145
+					},
+					{
+						"name": "INPUT_PARACHUTE_BRAKE_LEFT",
+						"controlId": 152
+					},
+					{
+						"name": "INPUT_PARACHUTE_BRAKE_RIGHT",
+						"controlId": 153
+					},
+					{
+						"name": "INPUT_PARACHUTE_PRECISION_LANDING",
+						"controlId": 155
+					},
+					{
+						"name": "INPUT_PARACHUTE_SMOKE",
+						"controlId": 154
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_CELLPHONE",
+				"actions": [
+					{
+						"name": "INPUT_PHONE",
+						"controlId": 27
+					},
+					{
+						"name": "INPUT_CELLPHONE_UP",
+						"controlId": 172
+					},
+					{
+						"name": "INPUT_CELLPHONE_DOWN",
+						"controlId": 173
+					},
+					{
+						"name": "INPUT_CELLPHONE_LEFT",
+						"controlId": 174
+					},
+					{
+						"name": "INPUT_CELLPHONE_RIGHT",
+						"controlId": 175
+					},
+					{
+						"name": "INPUT_CELLPHONE_SELECT",
+						"controlId": 176
+					},
+					{
+						"name": "INPUT_CELLPHONE_CANCEL",
+						"controlId": 177
+					},
+					{
+						"name": "INPUT_CELLPHONE_OPTION",
+						"controlId": 178
+					},
+					{
+						"name": "INPUT_CELLPHONE_EXTRA_OPTION",
+						"controlId": 179
+					},
+					{
+						"name": "INPUT_CELLPHONE_SCROLL_FORWARD",
+						"controlId": 180
+					},
+					{
+						"name": "INPUT_CELLPHONE_SCROLL_BACKWARD",
+						"controlId": 181
+					},
+					{
+						"name": "INPUT_CELLPHONE_CAMERA_SELFIE",
+						"controlId": 184
+					},
+					{
+						"name": "INPUT_CELLPHONE_CAMERA_EXPRESSION",
+						"controlId": 186
+					},
+					{
+						"name": "INPUT_CELLPHONE_CAMERA_GRID",
+						"controlId": 183
+					},
+					{
+						"name": "INPUT_CELLPHONE_CAMERA_DOF",
+						"controlId": 185
+					},
+					{
+						"name": "INPUT_CELLPHONE_CAMERA_FOCUS_LOCK",
+						"controlId": 182
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_GTAO",
+				"actions": [
+					{
+						"name": "INPUT_MP_TEXT_CHAT_ALL",
+						"controlId": 245
+					},
+					{
+						"name": "INPUT_MP_TEXT_CHAT_TEAM",
+						"controlId": 246
+					},
+					{
+						"name": "INPUT_PUSH_TO_TALK",
+						"controlId": 249
+					},
+					{
+						"name": "INPUT_SPECIAL_ABILITY_SECONDARY",
+						"controlId": 29
+					},
+					{
+						"name": "INPUT_DROP_WEAPON",
+						"controlId": 56
+					},
+					{
+						"name": "INPUT_DROP_AMMO",
+						"controlId": 57
+					},
+					{
+						"name": "INPUT_SWITCH_VISOR",
+						"controlId": 344
+					},
+					{
+						"name": "INPUT_EAT_SNACK",
+						"controlId": 361
+					},
+					{
+						"name": "INPUT_USE_ARMOR",
+						"controlId": 362
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_VEH_ONLINE",
+				"actions": [
+					{
+						"name": "INPUT_VEH_HYDRAULICS_CONTROL_TOGGLE",
+						"controlId": 337
+					},
+					{
+						"name": "INPUT_VEH_MELEE_HOLD",
+						"controlId": 345
+					},
+					{
+						"name": "INPUT_VEH_MELEE_LEFT",
+						"controlId": 346
+					},
+					{
+						"name": "INPUT_VEH_MELEE_RIGHT",
+						"controlId": 347
+					},
+					{
+						"name": "INPUT_VEH_BIKE_WINGS",
+						"controlId": 354
+					},
+					{
+						"name": "INPUT_VEH_TRANSFORM",
+						"controlId": 357
+					},
+					{
+						"name": "INPUT_VEH_PARACHUTE",
+						"controlId": 353
+					},
+					{
+						"name": "INPUT_VEH_CAR_JUMP",
+						"controlId": 350
+					},
+					{
+						"name": "INPUT_VEH_ROCKET_BOOST",
+						"controlId": 351
+					},
+					{
+						"name": "INPUT_VEH_SHIFT_GEAR_UP",
+						"controlId": 363
+					},
+					{
+						"name": "INPUT_VEH_SHIFT_GEAR_DOWN",
+						"controlId": 364
+					},
+					{
+						"name": "INPUT_VEH_FLY_BOOST",
+						"controlId": 352
+					},
+					{
+						"name": "INPUT_VEH_FLY_BOMB_BAY",
+						"controlId": 355
+					},
+					{
+						"name": "INPUT_VEH_FLY_COUNTER",
+						"controlId": 356
+					}
+				]
+			},
+			{
+				"name": "PM_PANE_CREATOR",
+				"actions": [
+					{
+						"name": "INPUT_CREATOR_MENU",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ALT_MENU_ENTRY",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_MENU_ACCEPT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_MENU_CANCEL",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_MENU_UP",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_MENU_DOWN",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_MENU_DELETE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_EXTRA_OPTIONS1",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_TAB_LEFT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_TAB_RIGHT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_CONTEXT_MENU",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_TOGGLE_DESCRIPTIONS",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_LIST",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_SWITCH_CAMERA",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_TOGGLE_ORBIT_CAMERA",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_FAST_ZOOM",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_CAMERA_DECREASE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_CAMERA_INCREASE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_FOV_INCREASE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_FOV_DECREASE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_RESET_FOV",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_FAST_ADJUST",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_FINE_ADJUST",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_WARP_AND_EDIT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ROTATE_LEFT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ROTATE_RIGHT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ADJUST_LEFT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ADJUST_RIGHT",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ENTITY_RAISE",
+						"controlId": null
+					},
+					{
+						"name": "INPUT_CREATOR_ENTITY_LOWER",
+						"controlId": null
+					}
+				]
+			}
+		]
+	},
+	"appliedState": "unverified"
+}
