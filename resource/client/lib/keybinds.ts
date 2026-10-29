@@ -1,5 +1,6 @@
 import { repeat } from "@lenix/lenix"
 import { LoadFile } from "common/utils"
+import type { Start } from "types/index"
 
 const catalog = LoadFile('public/gta-controls.json')
 
@@ -58,25 +59,16 @@ const readSlot = async (movie: number, name: string, slot: number) => {
 	})
 }
 
-export type Keybind = {
-	source: 'GTA' | 'FIVEM'
-	section: string
-	name: string
-	primary: string[]
-	secondary: string[]
-	secondaryFallback: boolean
-}
-
-let pending: Promise<Keybind[]> | undefined
+let pending: Promise<Start.Keybind[]> | undefined
 
 // Concurrent callers share one scan. Call again to refresh after it finishes.
-export const readKeybinds = (): Promise<Keybind[]> => {
+export const readKeybinds = (): Promise<Start.Keybind[]> => {
 	return (pending ??= scan().finally(() => {
 		pending = undefined
 	}))
 }
 
-const scan = async (): Promise<Keybind[]> => {
+const scan = async (): Promise<Start.Keybind[]> => {
 	let movie = 0,
 		tick: number | undefined
 	try {
@@ -90,8 +82,8 @@ const scan = async (): Promise<Keybind[]> => {
 		if (decodeText(await invoke(movie, 'CHECK_ENCODING', [], true)).slice(0, 3) !== 'Jé|')
 			throw new Error('Keybind text transport failed')
 
-		const rows: Keybind[] = []
-		const read = async (source: Keybind['source'], section: string, name: string, lookup = name) => {
+		const rows: Start.Keybind[] = []
+		const read = async (source: Start.Keybind['source'], section: string, name: string, lookup = name) => {
 			const primary = await readSlot(movie, lookup, 0)
 			const secondary = await readSlot(movie, lookup, 1)
 			// Build 3889: never-assigned FiveM secondary can echo the primary as plain text.

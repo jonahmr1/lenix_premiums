@@ -2,7 +2,7 @@ import type { Character } from '@overextended/ox_core'
 import { createPed } from '@overextended/ox_lib/client'
 import { repeat } from '@lenix/lenix'
 import { cam, emitNui, isNuiReady, onNui, player } from 'lenix/client'
-import type { Start } from 'types/index'
+import type { Mapped, Start } from 'types/index'
 import police from '../police'
 import warzone from '../warzone'
 import gang from '../gang'
@@ -10,7 +10,6 @@ import common from '../common'
 import type { Vec4 } from 'lenix'
 import { hasCollided } from '../lib'
 import { State } from "@lenix/lenix"
-import type { Keybind } from '../lib/keybinds'
 import './loading'
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
@@ -20,7 +19,7 @@ let character: Start.CharacterRespose | null
 let characters: Character[]
 let logout: () => void = () => {}
 
-export const state = new State({ loadingShutdown: false as boolean, keybinds: [] as Keybind[] })
+export const state = new State({ loadingShutdown: false as boolean, keybinds: [] as Mapped<Start.Keybind>[] })
 
 onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode, character: selectedChar }) => {
 	character = selectedChar
@@ -94,7 +93,7 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	characters = chars
 
 	await repeat(() => state.loadingShutdown, true)
-	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters)
+	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters, state.keybinds)
 
 	const selected = await repeat(
 		() => character,

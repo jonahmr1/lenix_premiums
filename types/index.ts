@@ -6,7 +6,7 @@ export type AtLeastOne<T> = {
 	[K in keyof T]-?: { [P in K]: T[P] } & Partial<Omit<T, K>>
 }[keyof T]
 
-type Mapped<T> = {
+export type Mapped<T> = {
 	[K in keyof T]: T[K]
 }
 
@@ -159,7 +159,7 @@ export namespace Warzone {
 
 export namespace Start {
 	export interface Events {
-		modeSelection: Event<'start:modeSelection', [Character[]]>
+		modeSelection: Event<'start:modeSelection', [Character[], Keybind[]]>
 		pause: Event<'start:pause', []>
 	}
 	export interface Requests {
@@ -174,6 +174,15 @@ export namespace Start {
 	export type Mode = 'warzone' | 'police' | 'gang' | 'justice' | 'race'
 
 	export type CharacterRespose = [Mapped<Character>, null] | [null, [string, string, string, number]]
+
+	export interface Keybind {
+		source: 'GTA' | 'FIVEM'
+		section: string
+		name: string
+		primary: string[]
+		secondary: string[]
+		secondaryFallback: boolean
+	}
 }
 
 export namespace Common {
