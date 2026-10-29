@@ -27,10 +27,12 @@ export function App() {
 		if (import.meta.env.DEV) nav({ to: '/warzone/game' })
 
 		const disposes = [
-			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', characters => {
+			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', (characters, keybinds) => {
 				setStates(null, { start: { characters } })
 				nav({ to: '/start' })
 				focusNui()
+				console.log({ keybinds })
+				console.log(JSON.stringify(keybinds))
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
 				focusNui()
