@@ -1,6 +1,6 @@
 import 'common'
 import './start'
-import { onEvent, onNui } from 'lenix/client'
+import { onNui } from 'lenix/client'
 
 onNui('blur', () => {
 	TriggerScreenblurFadeIn(0)

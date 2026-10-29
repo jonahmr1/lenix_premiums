@@ -39,6 +39,14 @@ export function Loading() {
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
 	const ready = state.preloaded && state.fullyLoaded && state.gameLoaded
 
+	const fetchExternal = (id: string, data: object) => fetch(`https://lenix_premiums/${id}`, {
+		method: 'post',
+		headers: {
+			'Content-Type': 'application/json; charset=UTF-8'
+		},
+		body: JSON.stringify(data)
+	})
+
 	useEffect(() => {
 		if (state.preloaded) return
 
@@ -96,17 +104,21 @@ export function Loading() {
 	}, [])
 
 	useEffect(() => {
+		if (!state.fullyLoaded) return
+
+		setTimeout(async () => {
+			setState(prev => ({ ...prev, name: 'Loading Settings...' }))
+			await fetchExternal('start:prepareGame' satisfies Start.Requests['prepareGame'][1], {})
+			setState(prev => ({ ...prev, gameLoaded: true }))
+		})
+	}, [state.fullyLoaded])
+
+	useEffect(() => {
 		if (!ready) return
 
 		window.focus()
 		const dispose = onKeyDown('Space', () => {
-			fetch(`https://lenix_premiums/${'start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1]}`, {
-				method: 'post',
-				headers: {
-					'Content-Type': 'application/json; charset=UTF-8'
-				},
-				body: JSON.stringify({})
-			})
+			fetchExternal('start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1], {})
 			audiobility.onMouseDown()
 		})
 
