@@ -4,6 +4,7 @@ import catalogData from '../../../public/settings-catalog.json'
 import type { Start, Mapped } from 'types/index'
 import { readKeybinds } from './keybinds'
 import { readSettingsMenu } from './settings-menu'
+import { readSavedGraphics, type SavedGraphics } from './settings-xml'
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json }
 type ChoiceDefinition = { labelKey: string; fields: Record<string, string>; attributes: Record<string, string> }
@@ -39,7 +40,7 @@ type CurrentSetting = {
 	value: string | number | boolean | null
 	enabled: boolean | null
 	uiChanged: boolean | null
-	format: 'profileInteger' | 'choice' | 'slider' | 'meter'
+	format: 'profileInteger' | 'convarInteger' | 'choice' | 'slider' | 'meter'
 	selectedIndex: number | null
 	choices: (string | number | boolean | null)[]
 	steps: number | null
@@ -68,6 +69,7 @@ const label = (key: string) => {
 const createCatalog = () => ({
 	...catalog,
 	appliedState: 'unverified' as const,
+	savedGraphics: null as SavedGraphics | null,
 	menuCaptureError: null as string | null,
 	sections: catalog.sections.map(section => ({
 		...section,
@@ -132,16 +134,15 @@ function readPreference(row: RowDefinition & { label: string }): CurrentSetting 
 		result.reason = 'FiveM excludes this graphics preference from profile convars'
 		return result
 	}
-	// FiveM repurposes this menu row for extended texture budget. The old stereo
-	// preference is not a verified getter for that budget.
-	if (row.labelKey === 'GFX_BUDGET') {
-		result.reason = 'No verified background getter for extended texture budget'
-		return result
-	}
+	// PatchExtendedBudgeting.cpp binds this variable to the actual budget slider.
+	// The catalog's PREF_VID_STEREO_CONVERGENCE is repurposed by FiveM.
+	const budget = row.labelKey === 'GFX_BUDGET'
+	if (budget) result.format = 'convarInteger'
 	// HashRageString is CASE-SENSITIVE (FiveM code/client/shared/Utils.h).
 	// HashRageString('PREF_SHOW_TEXT_CHAT') = 0x903b4dcc; GetHashKey lowercases and is wrong here.
-	const name =
-		preference === 'PREF_SHOW_TEXT_CHAT'
+	const name = budget
+		? 'vid_budgetScale'
+		: preference === 'PREF_SHOW_TEXT_CHAT'
 			? 'profile_0x903b4dcc'
 			: 'profile_' +
 				preference
@@ -233,5 +234,6 @@ async function readCatalog(): Promise<Settings> {
 	} catch (error) {
 		data.menuCaptureError = String(error)
 	}
+	data.savedGraphics = await readSavedGraphics()
 	return data
 }
