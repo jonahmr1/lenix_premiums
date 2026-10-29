@@ -1,11 +1,10 @@
-import { repeat } from "@lenix/lenix"
-import { LoadFile } from "common/utils"
-import type { Start } from "types/index"
+import { repeat } from '@lenix/lenix'
+import { LoadFile } from 'common/utils'
+import type { Start } from 'types/index'
 
-const catalog = LoadFile('public/gta-controls.json')
+const catalog = LoadFile('public/settings-catalog.json').keyBindingDefinitions
 
 const loadMovie = async (name: string) => {
-	console.log(`[keybinds] Loading ${name}`)
 	const handle = RequestScaleformMovie(name)
 	const deadline = Date.now() + 15000
 	await repeat(() => !!HasScaleformMovieLoaded(handle) || Date.now() >= deadline, true, 0)
@@ -13,7 +12,6 @@ const loadMovie = async (name: string) => {
 		if (handle) SetScaleformMovieAsNoLongerNeeded(handle)
 		throw new Error(`${name} did not load after 15 seconds`)
 	}
-	console.log(`[keybinds] Loaded ${name}`)
 	return handle
 }
 
@@ -78,17 +76,12 @@ const scan = async (): Promise<Start.Keybind[]> => {
 		SetScaleformMovieAsNoLongerNeeded(builtin)
 		movie = await loadMovie('lenix_keybind_reader_blank')
 		tick = setTick(() => DrawScaleformMovieFullscreen(movie, 255, 255, 255, 0, 0))
-		console.log('[keybinds] Initializing reader')
 		await invoke(movie, 'INIT', [], true)
-		console.log('[keybinds] Checking symbols and text')
 		if ((await invoke(movie, 'CHECK_MARKER', [], true)) !== 'expected=TEXTBTN_1000; actual=TEXTBTN_1000')
 			throw new Error('Keybind symbols failed')
-		if (decodeText(await invoke(movie, 'CHECK_ENCODING', [], true)).slice(0, 3) !== 'Jé|')
-			throw new Error('Keybind text transport failed')
 
 		const rows: Start.Keybind[] = []
 		const read = async (source: Start.Keybind['source'], section: string, name: string, lookup = name) => {
-			console.log(`[keybinds] Reading ${name}`)
 			const primary = await readSlot(movie, lookup, 0)
 			const secondary = await readSlot(movie, lookup, 1)
 			// Build 3889: never-assigned FiveM secondary can echo the primary as plain text.
@@ -106,7 +99,6 @@ const scan = async (): Promise<Start.Keybind[]> => {
 				secondary: secondaryFallback ? ['UNBOUND'] : secondary,
 				secondaryFallback,
 			})
-			console.log(`[${source}] Found #${rows.length} ${name}: primary=${JSON.stringify(primary)} secondary=${JSON.stringify(secondaryFallback ? ['UNBOUND'] : secondary)}`)
 		}
 		const seen = new Set<string>()
 		for (const section of catalog.sections)
@@ -124,11 +116,7 @@ const scan = async (): Promise<Start.Keybind[]> => {
 			for (let i = 0; i < batch.length; i++)
 				if (bits[i] === '1') await read('FIVEM', 'PM_PANE_CFX', batch[i]!, lookups[i]!)
 		}
-		console.log(`Found ${rows.length} keybinds`)
 		return rows
-	} catch (error) {
-		console.error('[keybinds] Scan failed:', error instanceof Error ? error.stack : String(error))
-		throw error
 	} finally {
 		if (tick !== undefined) clearTick(tick)
 		if (movie) SetScaleformMovieAsNoLongerNeeded(movie)
