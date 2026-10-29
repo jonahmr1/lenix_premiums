@@ -1,7 +1,7 @@
-import { onNui } from "lenix/client"
-import type { Start } from "types/index"
-import { state } from "."
-import { readKeybinds } from '../lib/keybinds'
+import { onNui } from 'lenix/client'
+import type { Start } from 'types/index'
+import { state } from '.'
+import { getSettingsCatalog } from '../lib/settings'
 
 onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 	ShutdownLoadingScreen()
@@ -11,7 +11,6 @@ onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 })
 
 onNui<Start.Requests['prepareGame']>('start:prepareGame', async () => {
-	console.log('[keybinds] prepareGame received')
-	state.keybinds = await readKeybinds()
+	state.settings = await getSettingsCatalog()
 	return null
 })

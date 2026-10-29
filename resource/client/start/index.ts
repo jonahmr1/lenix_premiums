@@ -11,15 +11,19 @@ import type { Vec4 } from 'lenix'
 import { hasCollided } from '../lib'
 import { State } from "@lenix/lenix"
 import './loading'
+import type { Settings } from '../lib/settings'
 
 const PED_COORDS: Vec4 = [84.0127, 628.9093, 207.3891, 174.8069]
 const CAM_OFFSET: Vec4 = [2, 2.5, 0.75, -12.5]
 
 let character: Start.CharacterRespose | null
 let characters: Character[]
-let logout: () => void = () => {}
+let logout: () => void = () => { }
 
-export const state = new State({ loadingShutdown: false as boolean, keybinds: [] as Mapped<Start.Keybind>[] })
+export const state = new State({
+	loadingShutdown: false as boolean,
+	settings: null as Settings | null,
+})
 
 onNui<Start.Requests['selectMode']>('start:selectMode', async ({ mode, character: selectedChar }) => {
 	character = selectedChar
@@ -54,19 +58,19 @@ onNui<Start.Requests['logout']>('start:logout', () => {
 globalThis.exports('charselect', async (chars: Character[]): Promise<Start.CharacterRespose> => {
 	let keepBlack = true;
 
-  const blackScreen = repeat(() => {
-    if (!keepBlack) return true;
+	const blackScreen = repeat(() => {
+		if (!keepBlack) return true;
 
-    DoScreenFadeOut(0);
-    return false;
-  }, true)
+		DoScreenFadeOut(0);
+		return false;
+	}, true)
 
 	SetEntityCoords(player.entity(), PED_COORDS[0], PED_COORDS[1], PED_COORDS[2], false, false, false, false)
 	SetEntityHeading(player.entity(), PED_COORDS[3])
 	SetEntityVisible(player.entity(), false, false)
 	const ped = await createPed('mp_m_freemode_01', ...PED_COORDS)
 
-	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]],  ped.handle), 1, 1000)
+	await repeat(() => hasCollided([PED_COORDS[0], PED_COORDS[1], PED_COORDS[2]], ped.handle), 1, 1000)
 
 	const [dispose, camHandle] = cam.create({
 		coords: PED_COORDS,
@@ -85,15 +89,15 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 
 	await repeat(() => isNuiReady(), true, 500)
 
-  keepBlack = false;
-  await blackScreen;
-  DoScreenFadeIn(500);
+	keepBlack = false;
+	await blackScreen;
+	DoScreenFadeIn(500);
 
 	character = null
 	characters = chars
 
 	await repeat(() => state.loadingShutdown, true)
-	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters, state.keybinds)
+	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters, state.settings?.sections.find(section => section.key === 'keyBindings')?.current.bindings ?? [])
 
 	const selected = await repeat(
 		() => character,
