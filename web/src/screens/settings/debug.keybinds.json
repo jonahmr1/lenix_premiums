@@ -1,0 +1,2342 @@
+[
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_FRONTEND_PAUSE",
+		"primary": [
+			"t_P"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_NEXT_CAMERA",
+		"primary": [
+			"t_V"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_HUD_SPECIAL",
+		"primary": [
+			"t_Z"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SPECIAL_ABILITY_PC",
+		"primary": [
+			"b_1012"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_CHARACTER_WHEEL",
+		"primary": [
+			"b_1015"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SELECT_CHARACTER_MICHAEL",
+		"primary": [
+			"b_174"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SELECT_CHARACTER_FRANKLIN",
+		"primary": [
+			"b_175"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SELECT_CHARACTER_TREVOR",
+		"primary": [
+			"b_176"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SELECT_CHARACTER_MULTIPLAYER",
+		"primary": [
+			"b_177"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_INTERACTION_MENU",
+		"primary": [
+			"t_M"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_REPLAY_START_STOP_RECORDING",
+		"primary": [
+			"b_170"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_REPLAY_START_STOP_RECORDING_SECONDARY",
+		"primary": [
+			"b_171"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_SAVE_REPLAY_CLIP",
+		"primary": [
+			"b_172"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_FRONTEND_SOCIAL_CLUB_SECONDARY",
+		"primary": [
+			"b_1008"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GENERAL",
+		"name": "INPUT_CONTEXT",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_MOVE_UP_ONLY",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_MOVE_DOWN_ONLY",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_MOVE_LEFT_ONLY",
+		"primary": [
+			"t_A"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_MOVE_RIGHT_ONLY",
+		"primary": [
+			"t_D"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_SPRINT",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_JUMP",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_ENTER",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_DUCK",
+		"primary": [
+			"b_1013"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT",
+		"name": "INPUT_LOOK_BEHIND",
+		"primary": [
+			"t_C"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_AIM",
+		"primary": [
+			"b_101"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_COVER",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_DETONATE",
+		"primary": [
+			"t_G"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_MELEE_ATTACK_LIGHT",
+		"primary": [
+			"t_R"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_MELEE_ATTACK_HEAVY",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_MELEE_BLOCK",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_ATTACK",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_RELOAD",
+		"primary": [
+			"t_R"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_WEAPON_SPECIAL_TWO",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_SNIPER_ZOOM_IN_ONLY",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"t_รง"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_COMBAT",
+		"name": "INPUT_SNIPER_ZOOM_OUT_ONLY",
+		"primary": [
+			"b_116"
+		],
+		"secondary": [
+			"t_^"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON",
+		"primary": [
+			"b_1002"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_NEXT_WEAPON",
+		"primary": [
+			"b_116"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_PREV_WEAPON",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_WEAPON_WHEEL_NEXT",
+		"primary": [
+			"b_116"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_WEAPON_WHEEL_PREV",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_UNARMED",
+		"primary": [
+			"t_1"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_MELEE",
+		"primary": [
+			"t_2"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_SHOTGUN",
+		"primary": [
+			"t_3"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_HEAVY",
+		"primary": [
+			"t_4"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_SPECIAL",
+		"primary": [
+			"t_5"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_HANDGUN",
+		"primary": [
+			"t_6"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_SMG",
+		"primary": [
+			"t_7"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_AUTO_RIFLE",
+		"primary": [
+			"t_8"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_FOOT_WEAPONS",
+		"name": "INPUT_SELECT_WEAPON_SNIPER",
+		"primary": [
+			"t_9"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_EXIT",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_SELECT_NEXT_WEAPON",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"b_1002"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_SELECT_PREV_WEAPON",
+		"primary": [
+			"t_^"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_LOOK_BEHIND",
+		"primary": [
+			"t_C"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_NEXT_RADIO",
+		"primary": [
+			"t_."
+		],
+		"secondary": [
+			"b_116"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_PREV_RADIO",
+		"primary": [
+			"t_,"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_NEXT_RADIO_TRACK",
+		"primary": [
+			"t_="
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_PREV_RADIO_TRACK",
+		"primary": [
+			"t_-"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_CIN_CAM",
+		"primary": [
+			"t_R"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_RADIO_WHEEL",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_CINEMATIC_SLOWMO",
+		"primary": [
+			"t_L"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_DUCK",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_SLOWMO_UP_ONLY",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"b_1009"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_SLOWMO_DOWN_ONLY",
+		"primary": [
+			"b_116"
+		],
+		"secondary": [
+			"b_1010"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ANY",
+		"name": "INPUT_VEH_HEADLIGHT",
+		"primary": [
+			"t_H"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_ACCELERATE",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_BRAKE",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_MOVE_LEFT_ONLY",
+		"primary": [
+			"t_A"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_MOVE_RIGHT_ONLY",
+		"primary": [
+			"t_D"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_MOVE_UP_ONLY",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"b_144"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_MOVE_DOWN_ONLY",
+		"primary": [
+			"b_1013"
+		],
+		"secondary": [
+			"b_141"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_ATTACK",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_AIM",
+		"primary": [
+			"b_101"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_HANDBRAKE",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_HORN",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_PUSHBIKE_SPRINT",
+		"primary": [
+			"b_1012"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_PUSHBIKE_FRONT_BRAKE",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH",
+		"name": "INPUT_VEH_MOUSE_CONTROL_OVERRIDE",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_THROTTLE_UP",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_THROTTLE_DOWN",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_YAW_LEFT",
+		"primary": [
+			"t_A"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_YAW_RIGHT",
+		"primary": [
+			"t_D"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_ROLL_LEFT_ONLY",
+		"primary": [
+			"b_140"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_ROLL_RIGHT_ONLY",
+		"primary": [
+			"b_142"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_PITCH_UP_ONLY",
+		"primary": [
+			"b_144"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_PITCH_DOWN_ONLY",
+		"primary": [
+			"b_141"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_ATTACK",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"b_101"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_SELECT_TARGET_LEFT",
+		"primary": [
+			"b_143"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_SELECT_TARGET_RIGHT",
+		"primary": [
+			"b_145"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_UNDERCARRIAGE",
+		"primary": [
+			"t_G"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_GRAPPLING_HOOK",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_ATTACK_CAMERA",
+		"primary": [
+			"b_200"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_AIR",
+		"name": "INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_THROTTLE_UP",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_THROTTLE_DOWN",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_TURN_HARD_LEFT",
+		"primary": [
+			"t_A"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_TURN_HARD_RIGHT",
+		"primary": [
+			"t_D"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_TURN_LEFT_ONLY",
+		"primary": [
+			"b_140"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_TURN_RIGHT_ONLY",
+		"primary": [
+			"b_142"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_PITCH_UP_ONLY",
+		"primary": [
+			"b_144"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_PITCH_DOWN_ONLY",
+		"primary": [
+			"b_141"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_ASCEND",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_DESCEND",
+		"primary": [
+			"b_1013"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_SUB",
+		"name": "INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_PITCH_UP_ONLY",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_PITCH_DOWN_ONLY",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_TURN_LEFT_ONLY",
+		"primary": [
+			"t_A"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_TURN_RIGHT_ONLY",
+		"primary": [
+			"t_D"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_DEPLOY",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"t_F"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_DETACH",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_BRAKE_LEFT",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_BRAKE_RIGHT",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_PRECISION_LANDING",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_PARA",
+		"name": "INPUT_PARACHUTE_SMOKE",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_PHONE",
+		"primary": [
+			"b_194"
+		],
+		"secondary": [
+			"b_102"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_UP",
+		"primary": [
+			"b_194"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_DOWN",
+		"primary": [
+			"b_195"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_LEFT",
+		"primary": [
+			"b_196"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_RIGHT",
+		"primary": [
+			"b_197"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_SELECT",
+		"primary": [
+			"b_1003"
+		],
+		"secondary": [
+			"b_100"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CANCEL",
+		"primary": [
+			"b_1004"
+		],
+		"secondary": [
+			"b_101"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_OPTION",
+		"primary": [
+			"b_198"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_EXTRA_OPTION",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"b_102"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_SCROLL_FORWARD",
+		"primary": [
+			"b_116"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_SCROLL_BACKWARD",
+		"primary": [
+			"b_115"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CAMERA_SELFIE",
+		"primary": [
+			"b_102"
+		],
+		"secondary": [
+			"t_E"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CAMERA_EXPRESSION",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CAMERA_GRID",
+		"primary": [
+			"t_G"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CAMERA_DOF",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CELLPHONE",
+		"name": "INPUT_CELLPHONE_CAMERA_FOCUS_LOCK",
+		"primary": [
+			"t_L"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_MP_TEXT_CHAT_ALL",
+		"primary": [
+			"t_T"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_MP_TEXT_CHAT_TEAM",
+		"primary": [
+			"t_Y"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_PUSH_TO_TALK",
+		"primary": [
+			"t_N"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_SPECIAL_ABILITY_SECONDARY",
+		"primary": [
+			"t_B"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_DROP_WEAPON",
+		"primary": [
+			"b_178"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_DROP_AMMO",
+		"primary": [
+			"b_179"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_SWITCH_VISOR",
+		"primary": [
+			"b_180"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_EAT_SNACK",
+		"primary": [
+			"t_C"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_GTAO",
+		"name": "INPUT_USE_ARMOR",
+		"primary": [
+			"t_V"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_HYDRAULICS_CONTROL_TOGGLE",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_MELEE_HOLD",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_MELEE_LEFT",
+		"primary": [
+			"b_100"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_MELEE_RIGHT",
+		"primary": [
+			"b_101"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_BIKE_WINGS",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_TRANSFORM",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_PARACHUTE",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_CAR_JUMP",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_ROCKET_BOOST",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_SHIFT_GEAR_UP",
+		"primary": [
+			"b_1001"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_SHIFT_GEAR_DOWN",
+		"primary": [
+			"b_1014"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_FLY_BOOST",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_FLY_BOMB_BAY",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_VEH_ONLINE",
+		"name": "INPUT_VEH_FLY_COUNTER",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU",
+		"primary": [
+			"t_M"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ALT_MENU_ENTRY",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU_ACCEPT",
+		"primary": [
+			"b_1003"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU_CANCEL",
+		"primary": [
+			"b_1004"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU_UP",
+		"primary": [
+			"b_194"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU_DOWN",
+		"primary": [
+			"b_195"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_MENU_DELETE",
+		"primary": [
+			"b_198"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_EXTRA_OPTIONS1",
+		"primary": [
+			"b_1013"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_TAB_LEFT",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_TAB_RIGHT",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_CONTEXT_MENU",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_TOGGLE_DESCRIPTIONS",
+		"primary": [
+			"t_M"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_LIST",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_SWITCH_CAMERA",
+		"primary": [
+			"b_1002"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_TOGGLE_ORBIT_CAMERA",
+		"primary": [
+			"b_101"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_FAST_ZOOM",
+		"primary": [
+			"b_1000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_CAMERA_DECREASE",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_CAMERA_INCREASE",
+		"primary": [
+			"t_C"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_FOV_INCREASE",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_FOV_DECREASE",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_RESET_FOV",
+		"primary": [
+			"b_1002"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_FAST_ADJUST",
+		"primary": [
+			"b_1013"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_FINE_ADJUST",
+		"primary": [
+			"b_1015"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_WARP_AND_EDIT",
+		"primary": [
+			"b_2000"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ROTATE_LEFT",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ROTATE_RIGHT",
+		"primary": [
+			"t_E"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ADJUST_LEFT",
+		"primary": [
+			"b_196"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ADJUST_RIGHT",
+		"primary": [
+			"b_197"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ENTITY_RAISE",
+		"primary": [
+			"t_R"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "GTA",
+		"section": "PM_PANE_CREATOR",
+		"name": "INPUT_CREATOR_ENTITY_LOWER",
+		"primary": [
+			"t_F"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+_gizmoLocal",
+		"primary": [
+			"t_Q"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": false
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+_gizmoRotation",
+		"primary": [
+			"t_R"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+_gizmoScale",
+		"primary": [
+			"t_S"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+_gizmoTranslation",
+		"primary": [
+			"t_W"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+gizmoclose",
+		"primary": [
+			"b_1003"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+gizmoCopy",
+		"primary": [
+			"t_C"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+gizmoCursor",
+		"primary": [
+			"t_G"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+gizmoSnap",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+gizmoSnapToGround",
+		"primary": [
+			"b_1015"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+ox_lib-radial",
+		"primary": [
+			"t_Z"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "+ox_target",
+		"primary": [
+			"b_1015"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "cancelprogress",
+		"primary": [
+			"t_X"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	},
+	{
+		"source": "FIVEM",
+		"section": "PM_PANE_CFX",
+		"name": "toggleChat",
+		"primary": [
+			"t_L"
+		],
+		"secondary": [
+			"UNBOUND"
+		],
+		"secondaryFallback": true
+	}
+]
