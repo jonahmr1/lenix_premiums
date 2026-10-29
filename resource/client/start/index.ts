@@ -1,6 +1,6 @@
 import type { Character } from '@overextended/ox_core'
 import { createPed } from '@overextended/ox_lib/client'
-import { repeat } from '@lenix/lenix'
+import { asserts, repeat } from '@lenix/lenix'
 import { cam, emitNui, isNuiReady, onNui, player } from 'lenix/client'
 import type { Mapped, Start } from 'types/index'
 import police from '../police'
@@ -97,7 +97,8 @@ globalThis.exports('charselect', async (chars: Character[]): Promise<Start.Chara
 	characters = chars
 
 	await repeat(() => state.loadingShutdown, true)
-	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters, state.settings?.sections.find(section => section.key === 'keyBindings')?.current.bindings ?? [])
+	asserts(state.settings)
+	emitNui<Start.Events['modeSelection']>('start:modeSelection', characters, state.settings)
 
 	const selected = await repeat(
 		() => character,

@@ -24,15 +24,14 @@ export function App() {
 	const path = useLocation({ select: location => location.pathname })
 
 	useEffect(() => {
-		if (import.meta.env.DEV) nav({ to: '/warzone/game' })
+		if (import.meta.env.DEV) nav({ to: '/start' })
 
 		const disposes = [
-			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', (characters, keybinds) => {
+			onNuiEmit<Start.Events['modeSelection']>('start:modeSelection', (characters, settings) => {
 				setStates(null, { start: { characters } })
 				nav({ to: '/start' })
 				focusNui()
-				console.log({ keybinds })
-				console.log(JSON.stringify(keybinds))
+				console.log(JSON.stringify(settings))
 			}),
 			onNuiEmit<Start.Events['pause']>('start:pause', () => {
 				focusNui()
