@@ -2,9 +2,10 @@
 import { repeat } from '@lenix/lenix'
 
 type Values = { graphics: Record<string, number | boolean>; video: Record<string, number | boolean> }
-type Attempt = { loader: 'LoadVars' | 'XML'; status: string; reason: string | null }
+type Attempt = { loader: 'LoadVars' | 'XML' | 'MovieClip.loadVariables'; status: string; reason: string | null }
 type FileResult = { path: string; status: 'loaded' | 'unavailable'; attempts: Attempt[]; values: Values | null }
 export type SavedGraphics = {
+	readerVersion: 'LXML2'
 	status: 'loaded' | 'ambiguous' | 'unavailable'
 	valueState: 'savedFile'
 	appliedState: 'unverified'
@@ -14,6 +15,7 @@ export type SavedGraphics = {
 	files: FileResult[]
 }
 const paths = ['fxd:/gta5_settings.xml', 'user:/settings.xml'] as const
+const loaders = ['LoadVars', 'XML', 'MovieClip.loadVariables'] as const
 const movieName = 'lenix_settings_xml_reader'
 const limit = 16384
 
@@ -57,6 +59,7 @@ function parseSettingsXml(raw: string): Values {
 
 export async function readSavedGraphics(): Promise<SavedGraphics> {
 	const result: SavedGraphics = {
+		readerVersion: 'LXML2',
 		status: 'unavailable',
 		valueState: 'savedFile',
 		appliedState: 'unverified',
@@ -85,13 +88,16 @@ export async function readSavedGraphics(): Promise<SavedGraphics> {
 		if (!HasScaleformMovieLoaded(movie)) throw new Error(`${movieName}.gfx did not load within 5 seconds`)
 		// Advance only this empty movie; it has no visual objects and zero alpha.
 		tick = setTick(() => DrawScaleformMovieFullscreen(movie, 255, 255, 255, 0, 0))
-		if ((await invoke('START')) !== 'LXML1') throw new Error('XML reader version mismatch')
-		const states = Array.from({ length: 4 }, () => ({ status: 'loading', length: 0 }))
+		if ((await invoke('START')) !== 'LXML2') throw new Error('XML reader version mismatch')
+		const states = Array.from({ length: paths.length * loaders.length }, () => ({ status: 'loading', length: 0 }))
 		const fileDeadline = Date.now() + 4000
 		for (let poll = 0; poll < 100; poll++) {
 			for (let i = 0; i < states.length; i++) {
 				if (states[i]!.status !== 'loading') continue
-				const match = /^LXML1\|(loading|ready|failed|unsupported|tooLarge)\|(\d+)$/.exec(await invoke('INFO', [i]))
+				const match =
+					/^LXML2\|(loading|ready|failed|unsupportedConstructor|unsupportedLoad|tooLarge|invalidData)\|(\d+)$/.exec(
+						await invoke('INFO', [i]),
+					)
 				if (!match) throw new Error('Invalid XML reader status')
 				const length = Number(match[2])
 				if (
@@ -109,11 +115,11 @@ export async function readSavedGraphics(): Promise<SavedGraphics> {
 		}
 		for (let fileIndex = 0; fileIndex < paths.length; fileIndex++) {
 			const file = result.files[fileIndex]!
-			for (let loaderIndex = 0; loaderIndex < 2; loaderIndex++) {
-				const index = fileIndex * 2 + loaderIndex
+			for (let loaderIndex = 0; loaderIndex < loaders.length; loaderIndex++) {
+				const index = fileIndex * loaders.length + loaderIndex
 				const state = states[index]!
 				const attempt: Attempt = {
-					loader: loaderIndex === 0 ? 'LoadVars' : 'XML',
+					loader: loaders[loaderIndex]!,
 					status: state.status === 'loading' ? 'timeout' : state.status,
 					reason: null,
 				}
@@ -122,7 +128,9 @@ export async function readSavedGraphics(): Promise<SavedGraphics> {
 					attempt.reason =
 						state.status === 'failed'
 							? 'No file data returned; missing file or denied/unsupported loading cannot be distinguished'
-							: `Loader ${attempt.status}`
+							: state.status === 'invalidData'
+								? 'Legacy loader returned fragmented or non-text data; no values accepted'
+								: `Loader ${attempt.status}`
 					continue
 				}
 				if (file.values) continue
