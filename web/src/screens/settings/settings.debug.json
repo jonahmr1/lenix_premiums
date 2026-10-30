@@ -574,7 +574,7 @@
 			"label": "Keyboard / Mouse",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214575,
 				"reason": null,
 				"values": [
 					{
@@ -963,7 +963,7 @@
 			"label": "Key Bindings",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399037,
+				"capturedAt": 1793371214558,
 				"reason": null,
 				"values": [],
 				"bindings": [
@@ -1371,7 +1371,7 @@
 							"b_115"
 						],
 						"secondary": [
-							"t_]"
+							"t_ç"
 						],
 						"secondaryFallback": false
 					},
@@ -1383,7 +1383,7 @@
 							"b_116"
 						],
 						"secondary": [
-							"t_["
+							"t_^"
 						],
 						"secondaryFallback": false
 					},
@@ -1584,7 +1584,7 @@
 						"section": "PM_PANE_VEH_ANY",
 						"name": "INPUT_VEH_SELECT_PREV_WEAPON",
 						"primary": [
-							"t_["
+							"t_^"
 						],
 						"secondary": [
 							"UNBOUND"
@@ -3811,7 +3811,7 @@
 			"label": "Audio",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214575,
 				"reason": null,
 				"values": [
 					{
@@ -4438,7 +4438,7 @@
 			"label": "Camera",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214575,
 				"reason": null,
 				"values": [
 					{
@@ -5174,7 +5174,7 @@
 			"label": "Display",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214575,
 				"reason": null,
 				"values": [
 					{
@@ -6583,7 +6583,7 @@
 			"label": "Graphics",
 			"current": {
 				"status": "partial",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214576,
 				"reason": "Some profile values are unavailable; see each value reason",
 				"values": [
 					{
@@ -7398,7 +7398,7 @@
 			"label": "Advanced Graphics",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399056,
+				"capturedAt": 1793371214576,
 				"reason": null,
 				"values": [
 					{
@@ -7854,7 +7854,7 @@
 			"label": "Voice Chat",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793313399057,
+				"capturedAt": 1793371214576,
 				"reason": null,
 				"values": [
 					{
@@ -8852,10 +8852,11 @@
 	},
 	"appliedState": "unverified",
 	"savedGraphics": {
+		"readerVersion": "LXML2",
 		"status": "unavailable",
 		"valueState": "savedFile",
 		"appliedState": "unverified",
-		"capturedAt": 1793313399538,
+		"capturedAt": 1793371220040,
 		"source": null,
 		"reason": "Neither settings file could be read and parsed; see attempts",
 		"files": [
@@ -8865,13 +8866,18 @@
 				"attempts": [
 					{
 						"loader": "LoadVars",
-						"status": "unsupported",
-						"reason": "Loader unsupported"
+						"status": "unsupportedConstructor",
+						"reason": "Loader unsupportedConstructor"
 					},
 					{
 						"loader": "XML",
-						"status": "unsupported",
-						"reason": "Loader unsupported"
+						"status": "unsupportedConstructor",
+						"reason": "Loader unsupportedConstructor"
+					},
+					{
+						"loader": "MovieClip.loadVariables",
+						"status": "timeout",
+						"reason": "Loader timeout"
 					}
 				],
 				"values": null
@@ -8882,13 +8888,18 @@
 				"attempts": [
 					{
 						"loader": "LoadVars",
-						"status": "unsupported",
-						"reason": "Loader unsupported"
+						"status": "unsupportedConstructor",
+						"reason": "Loader unsupportedConstructor"
 					},
 					{
 						"loader": "XML",
-						"status": "unsupported",
-						"reason": "Loader unsupported"
+						"status": "unsupportedConstructor",
+						"reason": "Loader unsupportedConstructor"
+					},
+					{
+						"loader": "MovieClip.loadVariables",
+						"status": "timeout",
+						"reason": "Loader timeout"
 					}
 				],
 				"values": null

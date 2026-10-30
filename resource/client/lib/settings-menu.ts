@@ -1,11 +1,12 @@
-// Read-only capture of an ALREADY populated menu. Never opens or navigates it.
-// Graphics decoding was checked against build 3889 captures; new integration is untested in-game.
+// Read-only attempt against the existing frontend, even when the pause menu is closed.
+// Never opens, navigates or creates a menu. Closed-menu capture is UNTESTED in-game.
+// Returned rows may be cached; fresh transport does not prove fresh settings.
 import { repeat, waste } from '@lenix/lenix'
 type Scalar = string | number | boolean | null
 type Row = { dataIndex: number; uiIndex: Scalar; rawRow: Scalar[]; rendered: Record<string, Scalar> | null }
 type Section = { key: string; rows: { label: string; fields: Record<string, string> }[] }
-async function call(method: string, deadline: number, ...args: number[]) {
-	if (!IsPauseMenuActive()) throw 'Settings menu closed during capture'
+async function call(method: string, deadline: number, menuActive: boolean, ...args: number[]) {
+	if (IsPauseMenuActive() !== menuActive) throw 'Pause menu state changed during capture'
 	if (Date.now() >= deadline) throw 'Capture deadline exceeded'
 	if (!BeginScaleformMovieMethodOnFrontend(method)) throw 'Settings frontend unavailable'
 	args.forEach(arg => ScaleformMovieMethodAddParamInt(arg))
@@ -13,13 +14,13 @@ async function call(method: string, deadline: number, ...args: number[]) {
 	const until = Math.min(deadline, Date.now() + 1500)
 	await repeat(() => !!IsScaleformMovieMethodReturnValueReady(ticket) || Date.now() >= until, true, 0)
 	if (!IsScaleformMovieMethodReturnValueReady(ticket)) throw 'Settings bridge did not respond'
-	if (!IsPauseMenuActive()) throw 'Settings menu closed during capture'
+	if (IsPauseMenuActive() !== menuActive) throw 'Pause menu state changed during capture'
 	const value = GetScaleformMovieMethodReturnValueString(ticket)
 	if (typeof value !== 'string' || value.length > 49 || /[^\x20-\x7e]/.test(value)) throw 'Invalid transport frame'
 	return value
 }
-async function readColumn(column: 1 | 2, deadline: number): Promise<Row[]> {
-	const header = await call('GFXSET1_INFO', deadline, column)
+async function readColumn(column: 1 | 2, deadline: number, menuActive: boolean): Promise<Row[]> {
+	const header = await call('GFXSET1_INFO', deadline, menuActive, column)
 	const match = /^S1\|(\d+)\|(\d+)\|269bcc7202be$/.exec(header)
 	if (!match) throw `Settings bridge unavailable: ${header}`
 	const sequence = Number(match![1]),
@@ -31,7 +32,7 @@ async function readColumn(column: 1 | 2, deadline: number): Promise<Row[]> {
 		let json = ''
 		let finished = false
 		for (let chunk = 0; chunk < 1366; chunk++) {
-			const frame = await call('GFXSET1_CHUNK', deadline, sequence, index, json.length)
+			const frame = await call('GFXSET1_CHUNK', deadline, menuActive, sequence, index, json.length)
 			if (!/^[DE]/.test(frame) || (frame[0] === 'D' && frame.length !== 49)) throw 'Truncated or expired snapshot'
 			json += frame.slice(1)
 			total += frame.length - 1
@@ -116,17 +117,17 @@ function matchesSection(rows: Row[], section: Section, sections: Section[]) {
 	return [...own].filter(text => !other.has(text) && labels.has(text)).length >= 2
 }
 
-export async function readSettingsMenu(sections: Section[]) {
-	if (!IsPauseMenuActive()) return null
+export async function readSettingsMenu(sections: Section[], menuActive = IsPauseMenuActive()) {
 	if (GetGameBuildNumber() !== 3889) throw 'Menu capture is verified only against build 3889 data'
 	const deadline = Date.now() + 8000
-	const first = await readColumn(2, deadline)
+	const first = await readColumn(2, deadline, menuActive)
+	if (first.length === 0) throw 'Settings bridge returned no rows'
 	const matches = sections.filter(section => matchesSection(first, section, sections))
 	if (matches.length !== 1) throw 'Loaded settings page could not be identified'
 	const key = matches[0]!.key
 	if (!['graphics', 'advancedGraphics', 'display'].includes(key)) return null
 	// Reject transitions, mixed pages, and values changing during transport.
-	const second = await readColumn(2, deadline)
+	const second = await readColumn(2, deadline, menuActive)
 	if (JSON.stringify(first.map(row => row.rawRow)) !== JSON.stringify(second.map(row => row.rawRow)))
 		throw 'Settings changed during capture'
 	return { key, rows: second.map(decodeSettingsRow) }

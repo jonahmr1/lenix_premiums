@@ -48,6 +48,14 @@ type CurrentSetting = {
 	source: string | null
 	reason: string | null
 }
+type ClosedMenuProbe = {
+	status: 'captured' | 'unavailable'
+	freshness: 'unverified'
+	capturedAt: number | null
+	section: string | null
+	rows: NonNullable<Awaited<ReturnType<typeof readSettingsMenu>>>['rows']
+	reason: string | null
+}
 type CurrentSection = {
 	status: 'notCaptured' | 'captured' | 'partial' | 'unavailable'
 	capturedAt: number | null
@@ -71,6 +79,7 @@ const createCatalog = () => ({
 	appliedState: 'unverified' as const,
 	savedGraphics: null as SavedGraphics | null,
 	menuCaptureError: null as string | null,
+	closedMenuProbe: null as ClosedMenuProbe | null,
 	sections: catalog.sections.map(section => ({
 		...section,
 		label: label(section.labelKey),
@@ -188,9 +197,30 @@ async function readCatalog(): Promise<Settings> {
 				count === values.length && count > 0 ? null : 'Some profile values are unavailable; see each value reason',
 		}
 	}
+	const menuActive = IsPauseMenuActive()
+	if (!menuActive) {
+		data.closedMenuProbe = {
+			status: 'unavailable',
+			freshness: 'unverified',
+			capturedAt: null,
+			section: null,
+			rows: [],
+			reason: null,
+		}
+	}
 	try {
-		const capture = await readSettingsMenu(data.sections)
-		if (capture) {
+		const capture = await readSettingsMenu(data.sections, menuActive)
+		if (data.closedMenuProbe) {
+			// Closed-menu rows may be retained from a previous visit; do not replace current preferences.
+			data.closedMenuProbe = {
+				status: capture ? 'captured' : 'unavailable',
+				freshness: 'unverified',
+				capturedAt: capture ? Date.now() : null,
+				section: capture?.key ?? null,
+				rows: capture?.rows ?? [],
+				reason: capture ? null : 'No supported settings section returned',
+			}
+		} else if (capture) {
 			const section = data.sections.find(section => section.key === capture.key)!
 			const clean = (text: string) => text.replace(/<[^>]*>|~[^~]*~/g, '').trim()
 			const profileValues = section.current.values
@@ -233,6 +263,7 @@ async function readCatalog(): Promise<Settings> {
 		}
 	} catch (error) {
 		data.menuCaptureError = String(error)
+		if (data.closedMenuProbe) data.closedMenuProbe.reason = String(error)
 	}
 	data.savedGraphics = await readSavedGraphics()
 	return data
