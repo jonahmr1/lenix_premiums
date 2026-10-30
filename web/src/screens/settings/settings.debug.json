@@ -574,7 +574,7 @@
 			"label": "Keyboard / Mouse",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214575,
+				"capturedAt": 1793373650257,
 				"reason": null,
 				"values": [
 					{
@@ -963,7 +963,7 @@
 			"label": "Key Bindings",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214558,
+				"capturedAt": 1793373650240,
 				"reason": null,
 				"values": [],
 				"bindings": [
@@ -1371,7 +1371,7 @@
 							"b_115"
 						],
 						"secondary": [
-							"t_ç"
+							"t_]"
 						],
 						"secondaryFallback": false
 					},
@@ -1383,7 +1383,7 @@
 							"b_116"
 						],
 						"secondary": [
-							"t_^"
+							"t_["
 						],
 						"secondaryFallback": false
 					},
@@ -1584,7 +1584,7 @@
 						"section": "PM_PANE_VEH_ANY",
 						"name": "INPUT_VEH_SELECT_PREV_WEAPON",
 						"primary": [
-							"t_^"
+							"t_["
 						],
 						"secondary": [
 							"UNBOUND"
@@ -3811,7 +3811,7 @@
 			"label": "Audio",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214575,
+				"capturedAt": 1793373650257,
 				"reason": null,
 				"values": [
 					{
@@ -4438,7 +4438,7 @@
 			"label": "Camera",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214575,
+				"capturedAt": 1793373650257,
 				"reason": null,
 				"values": [
 					{
@@ -5174,7 +5174,7 @@
 			"label": "Display",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214575,
+				"capturedAt": 1793373650258,
 				"reason": null,
 				"values": [
 					{
@@ -6583,7 +6583,7 @@
 			"label": "Graphics",
 			"current": {
 				"status": "partial",
-				"capturedAt": 1793371214576,
+				"capturedAt": 1793373650258,
 				"reason": "Some profile values are unavailable; see each value reason",
 				"values": [
 					{
@@ -7398,7 +7398,7 @@
 			"label": "Advanced Graphics",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214576,
+				"capturedAt": 1793373650258,
 				"reason": null,
 				"values": [
 					{
@@ -7854,7 +7854,7 @@
 			"label": "Voice Chat",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793371214576,
+				"capturedAt": 1793373650258,
 				"reason": null,
 				"values": [
 					{
@@ -8856,7 +8856,7 @@
 		"status": "unavailable",
 		"valueState": "savedFile",
 		"appliedState": "unverified",
-		"capturedAt": 1793371220040,
+		"capturedAt": 1793373654407,
 		"source": null,
 		"reason": "Neither settings file could be read and parsed; see attempts",
 		"files": [
@@ -8906,5 +8906,13 @@
 			}
 		]
 	},
-	"menuCaptureError": null
+	"menuCaptureError": "Settings frontend unavailable",
+	"closedMenuProbe": {
+		"status": "unavailable",
+		"freshness": "unverified",
+		"capturedAt": null,
+		"section": null,
+		"rows": [],
+		"reason": "Settings frontend unavailable"
+	}
 }
