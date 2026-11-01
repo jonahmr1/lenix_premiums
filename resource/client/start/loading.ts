@@ -15,8 +15,15 @@ onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 onNui<Start.Requests['prepareGame']>('start:prepareGame', async () => {
 	state.settings = await getSettingsCatalog(true)
 	await repeat(() => {
-		console.log({ $: isHiddenSettingsBusy()})
+		console.log(isHiddenSettingsBusy())
 		return isHiddenSettingsBusy()
-	}, true, 1000)
+	})
+	console.log(
+		'[settings]',
+		JSON.stringify({
+			hiddenMenuCapture: state.settings.hiddenMenuCapture,
+			menuCaptureError: state.settings.menuCaptureError,
+		}),
+	)
 	return null
 })
