@@ -34,10 +34,10 @@ export function Loading() {
 		name: '',
 		fullyLoaded: false,
 		preloaded: false,
-		gameLoaded: false
+		gameLoaded: false as boolean | 'closing',
 	})
 	const [backgroundIndex, setBackgroundIndex] = useState(0)
-	const ready = state.preloaded && state.fullyLoaded && state.gameLoaded
+	const ready = state.preloaded && state.fullyLoaded && state.gameLoaded === true
 
 	const fetchExternal = (id: string, data: object) => fetch(`https://lenix_premiums/${id}`, {
 		method: 'post',
@@ -118,7 +118,8 @@ export function Loading() {
 
 		window.focus()
 		const dispose = onKeyDown('Space', () => {
-			fetchExternal('start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1], {})
+			dispose()
+			setState(prev => ({ ...prev, gameLoaded: 'closing' }))
 			audiobility.onMouseDown()
 		})
 
@@ -142,46 +143,61 @@ export function Loading() {
 	}, [state.preloaded])
 
 	return (
-		<div className='bg-background relative h-screen overflow-hidden'>
-			<AnimatePresence>
-				<motion.img
-					key={backgroundIndex}
-					src={cdn(BACKGROUNDS[backgroundIndex])}
-					className='absolute size-full object-cover'
-					initial={{ opacity: 0, scale: 1 }}
-					animate={{ opacity: 1, scale: 1.1 }}
-					exit={{ opacity: 0, scale: 1.15 }}
-					transition={{
-						opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
-						scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
-					}}
-				/>
-			</AnimatePresence>
-			<Layout className='relative flex size-full flex-col justify-end gap-h-5 items-center bg-linear-to-t from-neutral-950/50 to-transparent'>
+		<AnimatePresence
+			onExitComplete={() => {
+				fetchExternal('start:shutdownLoading' satisfies Start.Requests['shutdownLoadingScreen'][1], {})
+			}}
+		>
+			{state.gameLoaded !== 'closing' && (
 				<motion.div
-					className='gap-w-0.5 flex items-center text-center text-2xl uppercase italic'
-					initial={{ opacity: 0 }}
-					animate={{ opacity: ready ? 1 : 0 }}
-					transition={{ duration: 1, delay: ready ? 2 : 0 }}
+					key='loading'
+					className='bg-background relative h-screen overflow-hidden'
+					initial={false}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 1, ease: 'easeInOut' }}
 				>
-					<span>Press</span>
-					<Kbd className='invert'>␣</Kbd>
-					<span>to start</span>
+					<AnimatePresence>
+						<motion.img
+							key={backgroundIndex}
+							src={cdn(BACKGROUNDS[backgroundIndex])}
+							className='absolute size-full object-cover'
+							initial={{ opacity: 0, scale: 1 }}
+							animate={{ opacity: 1, scale: 1.1 }}
+							exit={{ opacity: 0, scale: 1.15 }}
+							transition={{
+								opacity: { duration: CROSSFADE_INTERVAL / 3, ease: 'easeInOut' },
+								scale: { duration: CROSSFADE_INTERVAL, ease: 'linear' },
+							}}
+						/>
+					</AnimatePresence>
+					<Layout className='relative flex size-full flex-col justify-end gap-h-5 items-center bg-linear-to-t from-neutral-950/50 to-transparent'>
+						<motion.div
+							className='gap-w-0.5 flex items-center text-center text-2xl uppercase italic'
+							initial={{ opacity: 0 }}
+							animate={{ opacity: ready ? 1 : 0 }}
+							transition={{ duration: 1, delay: ready ? 2 : 0 }}
+						>
+							<span>Press</span>
+							<Kbd className='invert'>␣</Kbd>
+							<span>to start</span>
+						</motion.div>
+						<motion.div
+							className='w-[67vw] space-y-[1vh]'
+							{...anim}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: ready ? 0 : 1 }}
+							transition={{ duration: 1, delay: 1 }}
+						>
+							<p className='text-muted-foreground text-center text-xs uppercase italic'>
+								{state.name}
+							</p>
+							<Progress value={state.progress} className='outline outline-offset-1' />
+						</motion.div>
+					</Layout>
 				</motion.div>
-				<motion.div
-					className='w-[67vw] space-y-[1vh]'
-					{...anim}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: ready ? 0 : 1 }}
-					transition={{ duration: 1, delay: 1 }}
-				>
-					<p className='text-muted-foreground text-center text-xs uppercase italic'>
-						{state.name}
-					</p>
-					<Progress value={state.progress} className='outline outline-offset-1' />
-				</motion.div>
-			</Layout>
-		</div>
+			)}
+		</AnimatePresence>
 	)
 }
 
