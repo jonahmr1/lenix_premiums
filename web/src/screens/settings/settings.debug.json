@@ -574,7 +574,7 @@
 			"label": "Keyboard / Mouse",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -963,7 +963,7 @@
 			"label": "Key Bindings",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888580,
+				"capturedAt": 1793545294637,
 				"reason": null,
 				"values": [],
 				"bindings": [
@@ -3811,7 +3811,7 @@
 			"label": "Audio",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -4438,7 +4438,7 @@
 			"label": "Camera",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -5174,7 +5174,7 @@
 			"label": "Display",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -6583,7 +6583,7 @@
 			"label": "Graphics",
 			"current": {
 				"status": "partial",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": "Some profile values are unavailable; see each value reason",
 				"values": [
 					{
@@ -7398,7 +7398,7 @@
 			"label": "Advanced Graphics",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -7854,7 +7854,7 @@
 			"label": "Voice Chat",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793542888599,
+				"capturedAt": 1793545294651,
 				"reason": null,
 				"values": [
 					{
@@ -8851,12 +8851,14 @@
 		]
 	},
 	"appliedState": "unverified",
-	"menuCaptureError": "Pause menu state changed during capture",
+	"menuCaptureError": "Some hidden settings pages were not captured",
 	"hiddenMenuCapture": {
 		"testedInGame": false,
 		"sections": [],
 		"errors": {
-			"capture": "Pause menu state changed during capture"
+			"graphics": "Settings bridge unavailable: {\"error\":\"page_unloaded\"}",
+			"advancedGraphics": "Settings bridge unavailable: {\"error\":\"page_unloaded\"}",
+			"display": "Settings bridge unavailable: {\"error\":\"page_unloaded\"}"
 		}
 	}
 }

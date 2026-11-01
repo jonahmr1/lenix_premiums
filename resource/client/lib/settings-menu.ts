@@ -254,7 +254,16 @@ export async function readHiddenSettings(sections: Section[]) {
 					id === 1051
 				)
 					throw 'Missing or ambiguous settings category'
-				PauseMenuceptionGoDeeper(id - 1000)
+				// MENU_INTERACTION's NO_BUTTON_PRESSED path selects column 0 and asks
+				// game code to fill the selected category through LAYOUT_CHANGE_INITIAL_FILL.
+				// Inception replaces the page; settings categories belong to the existing page.
+				if (!BeginScaleformMovieMethodOnFrontend('MENU_INTERACTION'))
+					throw 'Settings navigation unavailable'
+				ScaleformMovieMethodAddParamInt(9999)
+				ScaleformMovieMethodAddParamBool(true)
+				ScaleformMovieMethodAddParamInt(entries[0]!.dataIndex)
+				ScaleformMovieMethodAddParamBool(false)
+				EndScaleformMovieMethod()
 				await waste(450)
 				const sectionDeadline = Math.min(deadline, Date.now() + 30000)
 				let captured: Capture | null = null
