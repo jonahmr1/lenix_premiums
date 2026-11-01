@@ -574,7 +574,7 @@
 			"label": "Keyboard / Mouse",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -963,7 +963,7 @@
 			"label": "Key Bindings",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974670,
+				"capturedAt": 1793542888580,
 				"reason": null,
 				"values": [],
 				"bindings": [
@@ -3811,7 +3811,7 @@
 			"label": "Audio",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -4438,7 +4438,7 @@
 			"label": "Camera",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -5174,7 +5174,7 @@
 			"label": "Display",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -6583,7 +6583,7 @@
 			"label": "Graphics",
 			"current": {
 				"status": "partial",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": "Some profile values are unavailable; see each value reason",
 				"values": [
 					{
@@ -7398,7 +7398,7 @@
 			"label": "Advanced Graphics",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -7854,7 +7854,7 @@
 			"label": "Voice Chat",
 			"current": {
 				"status": "captured",
-				"capturedAt": 1793536974694,
+				"capturedAt": 1793542888599,
 				"reason": null,
 				"values": [
 					{
@@ -8851,68 +8851,12 @@
 		]
 	},
 	"appliedState": "unverified",
-	"savedGraphics": {
-		"readerVersion": "LXML2",
-		"status": "unavailable",
-		"valueState": "savedFile",
-		"appliedState": "unverified",
-		"capturedAt": 1793536978824,
-		"source": null,
-		"reason": "Neither settings file could be read and parsed; see attempts",
-		"files": [
-			{
-				"path": "fxd:/gta5_settings.xml",
-				"status": "unavailable",
-				"attempts": [
-					{
-						"loader": "LoadVars",
-						"status": "unsupportedConstructor",
-						"reason": "Loader unsupportedConstructor"
-					},
-					{
-						"loader": "XML",
-						"status": "unsupportedConstructor",
-						"reason": "Loader unsupportedConstructor"
-					},
-					{
-						"loader": "MovieClip.loadVariables",
-						"status": "timeout",
-						"reason": "Loader timeout"
-					}
-				],
-				"values": null
-			},
-			{
-				"path": "user:/settings.xml",
-				"status": "unavailable",
-				"attempts": [
-					{
-						"loader": "LoadVars",
-						"status": "unsupportedConstructor",
-						"reason": "Loader unsupportedConstructor"
-					},
-					{
-						"loader": "XML",
-						"status": "unsupportedConstructor",
-						"reason": "Loader unsupportedConstructor"
-					},
-					{
-						"loader": "MovieClip.loadVariables",
-						"status": "timeout",
-						"reason": "Loader timeout"
-					}
-				],
-				"values": null
-			}
-		]
-	},
-	"menuCaptureError": "Settings frontend unavailable",
-	"closedMenuProbe": {
-		"status": "unavailable",
-		"freshness": "unverified",
-		"capturedAt": null,
-		"section": null,
-		"rows": [],
-		"reason": "Settings frontend unavailable"
+	"menuCaptureError": "Pause menu state changed during capture",
+	"hiddenMenuCapture": {
+		"testedInGame": false,
+		"sections": [],
+		"errors": {
+			"capture": "Pause menu state changed during capture"
+		}
 	}
 }

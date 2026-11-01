@@ -14,7 +14,7 @@ type Section = {
 	rows: { label: string; fields: Record<string, string> }[]
 }
 async function call(method: string, deadline: number, menuActive: boolean, ...args: number[]) {
-	if (IsPauseMenuActive() !== menuActive) throw 'Pause menu state changed during capture'
+	if (!!IsPauseMenuActive() !== !!menuActive) throw 'Pause menu state changed during capture'
 	if (Date.now() >= deadline) throw 'Capture deadline exceeded'
 	if (!BeginScaleformMovieMethodOnFrontend(method)) throw 'Settings frontend unavailable'
 	args.forEach(arg => ScaleformMovieMethodAddParamInt(arg))
@@ -26,7 +26,7 @@ async function call(method: string, deadline: number, menuActive: boolean, ...ar
 		0,
 	)
 	if (!IsScaleformMovieMethodReturnValueReady(ticket)) throw 'Settings bridge did not respond'
-	if (IsPauseMenuActive() !== menuActive) throw 'Pause menu state changed during capture'
+	if (!!IsPauseMenuActive() !== !!menuActive) throw 'Pause menu state changed during capture'
 	const value = GetScaleformMovieMethodReturnValueString(ticket)
 	if (typeof value !== 'string' || value.length > 49 || /[^\x20-\x7e]/.test(value))
 		throw 'Invalid transport frame'
@@ -139,7 +139,7 @@ function matchesSection(rows: Row[], section: Section, sections: Section[]) {
 
 export async function readSettingsMenu(
 	sections: Section[],
-	menuActive = IsPauseMenuActive(),
+	menuActive = !!IsPauseMenuActive(),
 	deadline = Date.now() + 30000,
 	expectedKey?: string,
 ) {
