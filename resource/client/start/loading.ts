@@ -14,10 +14,7 @@ onNui<Start.Requests['shutdownLoadingScreen']>('start:shutdownLoading', () => {
 
 onNui<Start.Requests['prepareGame']>('start:prepareGame', async () => {
 	state.settings = await getSettingsCatalog(true)
-	await repeat(() => {
-		console.log(isHiddenSettingsBusy())
-		return isHiddenSettingsBusy()
-	})
+	await repeat(isHiddenSettingsBusy, false, 1000)
 	console.log(
 		'[settings]',
 		JSON.stringify({
