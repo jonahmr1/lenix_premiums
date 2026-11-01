@@ -1,13 +1,16 @@
-// Background settings reader. Never opens or navigates the pause menu.
+// GET-only settings reader. prepareGame may capture native rows behind the loading screen.
 import { repeat } from '@lenix/lenix'
 import catalogData from '../../../public/settings-catalog.json'
 import type { Start, Mapped } from 'types/index'
 import { readKeybinds } from './keybinds'
-import { readSettingsMenu } from './settings-menu'
-import { readSavedGraphics, type SavedGraphics } from './settings-xml'
+import { readSettingsMenu, readHiddenSettings } from './settings-menu'
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json }
-type ChoiceDefinition = { labelKey: string; fields: Record<string, string>; attributes: Record<string, string> }
+type ChoiceDefinition = {
+	labelKey: string
+	fields: Record<string, string>
+	attributes: Record<string, string>
+}
 type RowDefinition = {
 	index: number
 	labelKey: string
@@ -48,14 +51,6 @@ type CurrentSetting = {
 	source: string | null
 	reason: string | null
 }
-type ClosedMenuProbe = {
-	status: 'captured' | 'unavailable'
-	freshness: 'unverified'
-	capturedAt: number | null
-	section: string | null
-	rows: NonNullable<Awaited<ReturnType<typeof readSettingsMenu>>>['rows']
-	reason: string | null
-}
 type CurrentSection = {
 	status: 'notCaptured' | 'captured' | 'partial' | 'unavailable'
 	capturedAt: number | null
@@ -77,9 +72,12 @@ const label = (key: string) => {
 const createCatalog = () => ({
 	...catalog,
 	appliedState: 'unverified' as const,
-	savedGraphics: null as SavedGraphics | null,
 	menuCaptureError: null as string | null,
-	closedMenuProbe: null as ClosedMenuProbe | null,
+	hiddenMenuCapture: null as {
+		testedInGame: false
+		sections: string[]
+		errors: Record<string, string>
+	} | null,
 	sections: catalog.sections.map(section => ({
 		...section,
 		label: label(section.labelKey),
@@ -161,7 +159,10 @@ function readPreference(row: RowDefinition & { label: string }): CurrentSetting 
 	result.source = name
 	const raw = GetConvar(name, missing)
 	if (!/^-?\d+$/.test(raw) || !Number.isSafeInteger(Number(raw)) || Number(raw) === -999) {
-		result.reason = raw === missing ? 'Preference unavailable on this client' : 'Invalid or unset profile preference'
+		result.reason =
+			raw === missing
+				? 'Preference unavailable on this client'
+				: 'Invalid or unset profile preference'
 		return result
 	}
 	result.value = Number(raw)
@@ -169,21 +170,29 @@ function readPreference(row: RowDefinition & { label: string }): CurrentSetting 
 	return result
 }
 let pending: Promise<Settings> | null = null
-export function getSettingsCatalog(): Promise<Settings> {
-	return (pending ??= readCatalog().finally(() => {
+export function getSettingsCatalog(captureDuringLoading = false): Promise<Settings> {
+	return (pending ??= readCatalog(captureDuringLoading).finally(() => {
 		pending = null
 	}))
 }
-async function readCatalog(): Promise<Settings> {
+async function readCatalog(captureDuringLoading: boolean): Promise<Settings> {
 	let data = createCatalog()
 	try {
 		data = setCatalogKeyBindings(data, await readKeybinds())
 	} catch (error) {
-		data = replaceCurrent(data, 'keyBindings', { ...emptyCurrent(), status: 'unavailable', reason: String(error) })
+		data = replaceCurrent(data, 'keyBindings', {
+			...emptyCurrent(),
+			status: 'unavailable',
+			reason: String(error),
+		})
 	}
 	// Give FiveM's per-frame profile registration a bounded chance to finish.
 	const deadline = Date.now() + 1500
-	await repeat(() => GetConvar('profile_sfxVolume', missing) !== missing || Date.now() >= deadline, true, 0)
+	await repeat(
+		() => GetConvar('profile_sfxVolume', missing) !== missing || Date.now() >= deadline,
+		true,
+		0,
+	)
 	for (const section of data.sections) {
 		if (section.key === 'keyBindings') continue
 		const values = section.rows.filter(row => row.fields.MenuPref).map(readPreference)
@@ -192,79 +201,77 @@ async function readCatalog(): Promise<Settings> {
 			...emptyCurrent(),
 			values,
 			capturedAt: Date.now(),
-			status: count === values.length && count > 0 ? 'captured' : count > 0 ? 'partial' : 'unavailable',
+			status:
+				count === values.length && count > 0 ? 'captured' : count > 0 ? 'partial' : 'unavailable',
 			reason:
-				count === values.length && count > 0 ? null : 'Some profile values are unavailable; see each value reason',
-		}
-	}
-	const menuActive = IsPauseMenuActive()
-	if (!menuActive) {
-		data.closedMenuProbe = {
-			status: 'unavailable',
-			freshness: 'unverified',
-			capturedAt: null,
-			section: null,
-			rows: [],
-			reason: null,
+				count === values.length && count > 0
+					? null
+					: 'Some profile values are unavailable; see each value reason',
 		}
 	}
 	try {
-		const capture = await readSettingsMenu(data.sections, menuActive)
-		if (data.closedMenuProbe) {
-			// Closed-menu rows may be retained from a previous visit; do not replace current preferences.
-			data.closedMenuProbe = {
-				status: capture ? 'captured' : 'unavailable',
-				freshness: 'unverified',
-				capturedAt: capture ? Date.now() : null,
-				section: capture?.key ?? null,
-				rows: capture?.rows ?? [],
-				reason: capture ? null : 'No supported settings section returned',
-			}
-		} else if (capture) {
-			const section = data.sections.find(section => section.key === capture.key)!
-			const clean = (text: string) => text.replace(/<[^>]*>|~[^~]*~/g, '').trim()
-			const profileValues = section.current.values
-			section.current = {
-				...emptyCurrent(),
-				status: 'captured',
-				capturedAt: Date.now(),
-				values: capture.rows
-					.map((row): CurrentSetting | null => {
-						const definitions = section.rows.filter(
-							definition => definition.fields.MenuPref && clean(definition.label) === clean(row.label),
-						)
-						const definition = definitions.length === 1 ? definitions[0] : null
-						// Brightness opens a subpage; retain its background value instead of losing it.
-						if (row.kind === 'other')
-							return definition ? (profileValues.find(value => value.rowIndex === definition.index) ?? null) : null
-						return {
-							rowIndex: definition?.index ?? null,
-							preference: definition?.fields.MenuPref ?? null,
-							label: row.label,
-							status: 'available',
-							value: 'value' in row ? row.value! : row.selectedIndex!,
-							enabled: row.enabled,
-							uiChanged: row.uiChanged,
-							format: row.kind,
-							selectedIndex: row.selectedIndex!,
-							choices: 'choices' in row ? row.choices! : [],
-							steps: 'steps' in row ? row.steps! : null,
-							percent: 'percent' in row ? row.percent! : null,
-							source: 'settingsMenu',
-							reason: null,
-						}
-					})
-					.filter(value => value !== null),
-			}
-			if (section.current.values.some(value => value.status === 'unavailable')) {
-				section.current.status = 'partial'
-				section.current.reason = 'Some visible settings have no readable value'
-			}
+		if (captureDuringLoading) {
+			data.hiddenMenuCapture = { testedInGame: false, sections: [], errors: {} }
+			const result = await readHiddenSettings(data.sections)
+			data.hiddenMenuCapture.sections = result.captures.map(capture => capture.key)
+			data.hiddenMenuCapture.errors = result.errors
+			for (const capture of result.captures) applyMenuCapture(data, capture)
+			if (Object.keys(result.errors).length)
+				data.menuCaptureError = 'Some hidden settings pages were not captured'
+		} else if (IsPauseMenuActive()) {
+			const capture = await readSettingsMenu(data.sections, true)
+			if (capture) applyMenuCapture(data, capture)
 		}
 	} catch (error) {
 		data.menuCaptureError = String(error)
-		if (data.closedMenuProbe) data.closedMenuProbe.reason = String(error)
+		if (data.hiddenMenuCapture) data.hiddenMenuCapture.errors.capture = String(error)
 	}
-	data.savedGraphics = await readSavedGraphics()
 	return data
+}
+
+function applyMenuCapture(
+	data: Settings,
+	capture: NonNullable<Awaited<ReturnType<typeof readSettingsMenu>>>,
+) {
+	const section = data.sections.find(section => section.key === capture.key)!
+	const clean = (text: string) => text.replace(/<[^>]*>|~[^~]*~/g, '').trim()
+	// Retain missing/conditional rows and existing profile values. Never report completeness
+	// merely because the frontend supplied a smaller subset of the catalog.
+	const values = [...section.current.values]
+	for (const row of capture.rows) {
+		if (row.kind === 'other') continue
+		const definitions = section.rows.filter(
+			definition => definition.fields.MenuPref && clean(definition.label) === clean(row.label),
+		)
+		const definition = definitions.length === 1 ? definitions[0] : null
+		const value: CurrentSetting = {
+			rowIndex: definition?.index ?? null,
+			preference: definition?.fields.MenuPref ?? null,
+			label: row.label,
+			status: 'available',
+			value: 'value' in row ? row.value! : row.selectedIndex!,
+			enabled: row.enabled,
+			uiChanged: row.uiChanged,
+			format: row.kind,
+			selectedIndex: row.selectedIndex!,
+			choices: 'choices' in row ? row.choices! : [],
+			steps: 'steps' in row ? row.steps! : null,
+			percent: 'percent' in row ? row.percent! : null,
+			source: 'settingsMenu',
+			reason: null,
+		}
+		const index = definition ? values.findIndex(value => value.rowIndex === definition.index) : -1
+		if (index >= 0) values[index] = value
+		else values.push(value)
+	}
+	const missing = values.some(value => value.status !== 'available')
+	section.current = {
+		...emptyCurrent(),
+		values,
+		capturedAt: Date.now(),
+		status: missing ? 'partial' : 'captured',
+		reason: missing
+			? 'Some catalog settings were not supplied by this client; see each value reason'
+			: null,
+	}
 }
