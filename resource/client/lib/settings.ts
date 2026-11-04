@@ -36,6 +36,9 @@ type Catalog = {
 const catalog = catalogData as unknown as Catalog
 
 type CurrentSetting = {
+	// A definition list is not proof that every option is enabled on this client.
+	choicesSource: 'settingsMenu' | 'menuDefinition' | null
+	choicesAvailability: 'reported' | 'unverified' | null
 	rowIndex: number | null
 	preference: string | null
 	label: string
@@ -43,7 +46,7 @@ type CurrentSetting = {
 	value: string | number | boolean | null
 	enabled: boolean | null
 	uiChanged: boolean | null
-	format: 'profileInteger' | 'convarInteger' | 'choice' | 'slider' | 'meter'
+	format: 'profileInteger' | 'convarInteger' | 'choice' | 'slider' | 'meter' | 'currentValue'
 	selectedIndex: number | null
 	choices: (string | number | boolean | null)[]
 	steps: number | null
@@ -125,6 +128,8 @@ function readPreference(row: RowDefinition & { label: string }): CurrentSetting 
 		format: 'profileInteger',
 		selectedIndex: null,
 		choices: [],
+		choicesSource: null,
+		choicesAvailability: null,
 		steps: null,
 		percent: null,
 		source: null,
@@ -255,11 +260,17 @@ function applyMenuCapture(
 			format: row.kind,
 			selectedIndex: row.selectedIndex!,
 			choices: 'choices' in row ? row.choices! : [],
+			choicesSource: row.kind === 'choice' ? 'settingsMenu' : null,
+			choicesAvailability: row.kind === 'choice' ? 'reported' : null,
 			steps: 'steps' in row ? row.steps! : null,
 			percent: 'percent' in row ? row.percent! : null,
 			source: 'settingsMenu',
-			reason: null,
+			reason:
+				row.kind === 'currentValue'
+					? 'Only the current menu value was captured; available alternatives and engine index are unknown'
+					: null,
 		}
+		if (row.kind === 'currentValue' && definition) addDefinedChoices(value, definition)
 		const index = definition ? values.findIndex(value => value.rowIndex === definition.index) : -1
 		if (index >= 0) values[index] = value
 		else values.push(value)
@@ -274,4 +285,43 @@ function applyMenuCapture(
 			? 'Some catalog settings were not supplied by this client; see each value reason'
 			: null,
 	}
+}
+
+// Actual menu definitions, localized through GetLabelText in createCatalog().
+// Do not use XML placeholders for monitor/resolution/refresh, legacy DX options,
+// or shadow softness (native game code adds vendor-specific choices).
+const definedChoicePreferences = new Set([
+	'PREF_GFX_SCALING',
+	'PREF_GFX_MSAA',
+	'PREF_GFX_REFLECTION_MSAA',
+	'PREF_GFX_GRASS_QUALITY',
+	'PREF_GFX_POST_FX',
+	'PREF_GFX_DOF',
+	'PREF_GFX_TESSELLATION',
+	'PREF_VID_SCREEN_TYPE',
+	'PREF_VID_ASPECT',
+])
+function addDefinedChoices(
+	value: CurrentSetting,
+	definition: Settings['sections'][number]['rows'][number],
+) {
+	if (!value.preference || !definedChoicePreferences.has(value.preference)) return
+	const choices = definition.xmlChoices.map(choice => choice.label)
+	if (
+		choices.length < 2 ||
+		new Set(choices).size !== choices.length ||
+		definition.xmlChoices.some(
+			choice => !choice.label || choice.label === 'NULL' || choice.label === choice.labelKey,
+		)
+	)
+		return
+	const selectedIndex = choices.indexOf(String(value.value))
+	// A mismatch may mean stale dynamic labels or an extra native option. Do not guess.
+	if (selectedIndex < 0) return
+	value.format = 'choice'
+	value.choices = choices
+	value.selectedIndex = selectedIndex // Index in this label list, not a verified native setter value.
+	value.choicesSource = 'menuDefinition'
+	value.choicesAvailability = 'unverified'
+	value.reason = 'Menu-defined options; client-specific availability has not been verified'
 }

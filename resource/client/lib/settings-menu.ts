@@ -100,6 +100,16 @@ function decodeSettingsRow(row: Row) {
 		if (!integer) throw 'Invalid choice index'
 		const choices = d.slice(7)
 		if (index >= choices.length) throw 'Choice index out of range'
+		// A one-label payload exposes only the current value. It does not establish
+		// the available alternatives or an engine preference index.
+		if (choices.length === 1)
+			return {
+				...base,
+				kind: 'currentValue' as const,
+				selectedIndex: null,
+				value: choices[0]!,
+				choices: [] as Scalar[],
+			}
 		return {
 			...base,
 			kind: 'choice' as const,
